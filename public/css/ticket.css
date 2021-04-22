@@ -1,0 +1,30 @@
+
+.receipt {
+  width: 80%;
+  min-height: 80vh;
+  height:80%;
+  background: #fff;
+  margin: 0 auto;
+  box-shadow: 5px 5px 15px #ccc;
+  padding: 15px;
+  /* font-size: 9pt; */
+}
+
+.logo {
+  text-align: center;
+  padding: 15px;
+}
+
+
+.address {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+
+.feedback {
+  margin: 20px auto;
+}
+
+
+
