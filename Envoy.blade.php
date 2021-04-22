@@ -32,7 +32,7 @@
 @task('git:clone', ['on' => $on])
     cd {{ $app_dir1 }}
     echo "hemos entrado al directorio /var/www";
-    git clone {{ $origin }};
+   sudo git clone {{ $origin }};
     echo "repositorio clonado correctamente";
 @endtask
 
@@ -46,7 +46,7 @@
 @task('git:pull', ['on' => $on])
     cd {{ $app_dir }}
     echo "hemos entrado al directorio {{ $app_dir }}";
-    git pull origin {{ $branch }}
+    sudo git pull origin {{ $branch }}
     echo "código actualizado correctamente";
 @endtask
 
@@ -63,7 +63,7 @@
 @endtask
 
 @task('ls', ['on' => $on])
-    cd {{ $app_dir }}
+    cd {{ $app_dir1 }}
     ls -la
 @endtask
 
@@ -131,6 +131,6 @@
 
 @task('rm', ['on' => $on])
 
-    sudo rm -r {{ $app_dir1 }}
+    sudo rm -r {{ $app_dir }}
 
 @endtask
