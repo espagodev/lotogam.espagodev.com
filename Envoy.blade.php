@@ -5,7 +5,6 @@
 @include('vendor/autoload.php')
 
 @setup
-    // $origin = 'https://espagodev:Y7323529KespG%40@github.com/espagodev/lotogam_espagodev_com.git';
      $origin = 'https://espagodev:Y7323529KespG%40@github.com/espagodev/lotogam.espagodev.com.git';
     $branch = isset($branch) ? $branch : 'master';
     $app_dir1 = '/var/www';
@@ -128,4 +127,10 @@
     php artisan config:cache
     php artisan cache:clear
     echo "caché limpiada correctamente";
+@endtask
+
+@task('rm', ['on' => $on])
+
+    sudo rm -r {{ $app_dir1 }}
+
 @endtask
