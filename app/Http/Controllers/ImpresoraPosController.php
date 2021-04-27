@@ -44,7 +44,7 @@ class ImpresoraPosController extends Controller
 
         return redirect()
             ->route(
-            'impresoraPos')
+            'impresoraPos.index')
             ->with('success', ['Impresora Creada Satisfactoriamente']);
     }
 
@@ -81,8 +81,7 @@ class ImpresoraPosController extends Controller
         $empresas_id = session()->get('user.emp_id');
         $bancas_id =  session()->get('user.banca');
 
-        $impresora = $this->marketService->getImpresoraDetalle($empresas_id, $id);
-
+        $impresora = $this->marketService->getImpresoraDetalle($id);
         $conexiones = Util::tipoConexion();
         $capacidades = Util::perfilCapacidad();
 
