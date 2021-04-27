@@ -69,7 +69,7 @@
                 @endcomponent --}}
 
                 @component('components.sidebar', [
-                    'route' => 'impresoraPos',
+                    'route' => 'impresoraPos.index',
                     'icon' => 'fa fa-print',
                     'title' => 'Impresoras Pos'])
                 @endcomponent

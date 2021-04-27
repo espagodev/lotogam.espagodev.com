@@ -65,21 +65,19 @@ Route::get('ajustes/superpales', 'EmpresaSuperPaleController@index')->name('supe
 Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('superPaleEmpresa.store');
 
 //IMPRESORAS
-Route::get('ajustes/impresoraPos', 'ImpresoraPosController@index')->name('impresoraPos');
-// Route::post('impresoraPos', 'ImpresoraPosController@store')->name('impresoraPos.store');
-    Route::resource('impresoraPos', 'ImpresoraPosController');
+//     Route::get('ajustes/impresoraPos', 'ImpresoraPosController@index')->name('impresoraPos');
+// // Route::post('impresoraPos', 'ImpresoraPosController@store')->name('impresoraPos.store');
+//     Route::resource('impresoraPos', 'ImpresoraPosController');
     //ajustes ticket
 
     Route::get('getEmpresaLoteriaEstado', 'EmpresaLoteriasController@getEmpresaLoteriaEstado');
 
-    // Route::post('ajustesTicket', 'TicketConfiguracionController@store')->name('ajustesTicket.store');
-    // Route::put('ajustesTicket/{ticket}', 'TicketConfiguracionController@update')->name('ajustesTicket.update');
-
-    // Route::get('ajustes/formatoTicket', 'TicketConfiguracionController@index')->name('formatoTicket');
-    // Route::get('ajustes/formatoTicket', 'TicketConfiguracionController@edit')->name('formatoTicket.edit');
 
     Route::prefix('ajustes')->group(function () {
+        Route::get('impresoraPos/{impresora}', 'ImpresoraPosController@getModificarImpresoraPos');
+        Route::resource('impresoraPos','ImpresoraPosController', ['except' => ['show','destroy','create','edit']]);
         Route::resource('formatoTicket', 'TicketConfiguracionController');
+        Route::get('ajustesTicket/{esquema}', 'AppEsquemaTicketController@getModificarEsquema');
         Route::resource('ajustesTicket', 'AppEsquemaTicketController');
         Route::resource('premios', 'PremiosController');
         Route::resource('ajustesLoterias', 'EmpresaLoteriasController');
@@ -94,18 +92,15 @@ Route::get('ajustes/impresoraPos', 'ImpresoraPosController@index')->name('impres
     Route::resource('resultados', 'ResultadosController', ['except' => ['show']]);
     Route::get('validaHoraCierre', 'ResultadosController@validaHoraCierre');
     Route::post('guardarResultados', 'ResultadosController@guardarResultados');
-// Route::post('resultados', 'ResultadosController@store')->name('resultados.store');
-// Route::post('resultados/imprimir', 'ResultadosController@imprimir')->name('resultados.imprimir');
 
-Route::resource('appConfigEmpresas', 'AppConfigEmpresasController');
-Route::resource('appConfigFacturas', 'AppConfigFacturasController');
+
+    Route::resource('appConfigEmpresas', 'AppConfigEmpresasController');
+    Route::resource('appConfigFacturas', 'AppConfigFacturasController');
 
 
 
     Route::resource('empresas', 'EmpresasController');
-
     Route::resource('planes', 'PlanesController');
-
     Route::resource('bancas', 'BancasController');
     Route::resource('usuarios', 'UsuariosController');
     Route::resource('suscripcion', 'SuscripcionController');
@@ -115,8 +110,6 @@ Route::resource('appConfigFacturas', 'AppConfigFacturasController');
     Route::resource('modalidades', 'ModalidadesController', ['except' => ['show']]);
 
     //ajustes bancas
-
-
 
     Route::get('ajustesBanca/{banca}', 'AjustesBancaController@index')->name('ajustesBanca');
     Route::get('ajustesBanca/ajsutes/{banca}', 'AjustesBancaController@bancaAjustes')->name('bancaAjustes');
@@ -207,5 +200,8 @@ Route::resource('appConfigFacturas', 'AppConfigFacturasController');
     Route::get('showDuplicarTicket/{ticket}', 'Ticket\TicketController@showDuplicarTicket');
 
     Route::resource('Ticket', 'Ticket\TicketController');
+
+
+    Route::get('/sells/{transaction_id}/print', 'SellPosController@printInvoice')->name('sell.printInvoice');
 
 });

@@ -56,7 +56,9 @@ class PosController extends Controller
         $bancas = $this->bancaUtil->forDropdown($empresas_id);
         $estadosTicket = Util::estadosTicket();
         $estadosPromocionTicket = Util::estadosPromocionTicket();
-        return view('sale_pos.index')->with(['tickets' => $tickets, 'loterias' => $loterias, 'bancas' => $bancas, 'estadosTicket' => $estadosTicket, 'estadosPromocionTicket'=> $estadosPromocionTicket]);
+        $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
+
+        return view('sale_pos.index')->with(['tickets' => $tickets, 'loterias' => $loterias, 'bancas' => $bancas, 'estadosTicket' => $estadosTicket, 'estadosPromocionTicket'=> $estadosPromocionTicket, 'usuarios' => $usuarios]);
     }
 
     /**

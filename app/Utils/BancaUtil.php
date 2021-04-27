@@ -121,16 +121,27 @@ class BancaUtil
     /**
      * @param string $fecha_creacion
      */
-    static function calcularMinutos($fecha_creacion)
+    static function calcularMinutos($fecha_creacion )
     {
         $created = new Carbon($fecha_creacion);
         $now =  Carbon::now()->toDateTimeString();
 
 
         if ($created->diffInMinutes($now) > self::tiempoAnular()) {
-            return $created->diffInMinutes($now);
+            return 1;
         } else {
             return 0;
         }
+    }
+
+
+    public static function htmlContent($receipt) {
+
+        // $layout = !empty($receipt_details->design) ? 'sale_pos.receipts.' . $receipt_details->design : 'sale_pos.receipts.classic';
+        $receipt = $receipt[0]->data;
+        // dd($receipt);
+        $output['html_content'] = view('sale_pos.receipts.classic', compact('receipt'))->render();
+
+        return $output;
     }
 }

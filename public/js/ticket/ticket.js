@@ -89,8 +89,6 @@ $(document).ready(function() {
             });
     });
 
-
-
     $(document).on('click', '.pagarPremio', function(e) {
 
         var tickets_id = $('#tickets_id').val();
@@ -137,9 +135,6 @@ $(document).ready(function() {
                 }
             });
     });
-
-
-
 
      $(document).on('click', '.anularTicket', function(e) {
 
@@ -263,4 +258,7 @@ $(document).ready(function() {
             },
         });
     });
+
+
+
 

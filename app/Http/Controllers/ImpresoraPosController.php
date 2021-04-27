@@ -64,8 +64,29 @@ class ImpresoraPosController extends Controller
 
         return redirect()
             ->route(
-            'impresoraPos'
+            'impresoraPos.index'
             )
             ->with('success', ['La Impresora se ha modificado Satisfactoriamente']);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getModificarImpresoraPos($id)
+    {
+
+        $empresas_id = session()->get('user.emp_id');
+        $bancas_id =  session()->get('user.banca');
+
+        $impresora = $this->marketService->getImpresoraDetalle($empresas_id, $id);
+
+        $conexiones = Util::tipoConexion();
+        $capacidades = Util::perfilCapacidad();
+
+
+        return view('ajustes.impresoraPos.impresorapos_modificar')->with(['impresora' => $impresora,  'conexiones' => $conexiones, 'capacidades' => $capacidades]);
     }
 }

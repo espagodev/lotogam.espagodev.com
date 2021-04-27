@@ -68,14 +68,14 @@
 @endtask
 
 
-@task('composer:install', ['on' => $on])
+@task('composer', ['on' => $on])
     cd {{ $app_dir }}
-    composer install
+  sudo  composer install
 @endtask
 
-@task('composer:autoload', ['on' => $on])
+@task('autoload', ['on' => $on])
     cd {{ $app_dir }}
-    composer dump-autoload
+  sudo  composer dump-autoload
 @endtask
 
 @task('env', ['on' => $on])
@@ -84,7 +84,7 @@
     echo "Se crea archivo env";
 @endtask
 
-@task('key:generate', ['on' => $on])
+@task('key', ['on' => $on])
     cd {{ $app_dir }}
     sudo php artisan key:generate
 @endtask
@@ -95,13 +95,13 @@
     sudo php artisan migrate:refresh --seed
 @endtask
 
-@task('permiso:storage', ['on' => $on])
+@task('storage', ['on' => $on])
     cd {{ $app_dir }}
     sudo chown -R www-data storage/
      echo "Se dieron permisos a storage";
 @endtask
 
-@task('permiso:bootstrap', ['on' => $on])
+@task('bootstrap', ['on' => $on])
     cd {{ $app_dir }}
     sudo chown -R www-data bootstrap/cache/
      echo "Se dieron permisos a bootstrap";
@@ -124,8 +124,8 @@
 
 @task('cache', ['on' => $on])
     cd {{ $app_dir }}
-    php artisan config:cache
-    php artisan cache:clear
+ sudo   php artisan config:cache
+    {{-- php artisan cache:clear --}}
     echo "caché limpiada correctamente";
 @endtask
 

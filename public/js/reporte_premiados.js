@@ -13,7 +13,7 @@ $(document).ready(function() {
         });
     }
 
-    $('#reporte_premiados, #bancas_id, #loterias_id, #promocion').change(
+    $('#reporte_premiados, #bancas_id, #loterias_id, #promocion, #users_id').change(
         function() {
             reporte_premiados.ajax.reload();
         }
@@ -31,6 +31,7 @@ $(document).ready(function() {
 
                  d.loterias_id = $('select#loterias_id').val();
                 d.bancas_id = $('select#bancas_id').val();
+                d.users_id = $('select#users_id').val();
                 d.promocion = $('select#promocion').val();
                 var start = '';
                 var end = '';

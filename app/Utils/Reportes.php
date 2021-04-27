@@ -32,11 +32,11 @@ class Reportes
         return $data;
     }
 
-    public static function getReporteResultados($empresas_id, $start_date, $end_date, $loterias_id = null)
+    public static function getReporteResultados($data)
     {
         // dd($empresas_id, $start_date, $end_date, $bancas_id, $users_id);
         $marketService = resolve(MarketService::class);
-        $data =  $marketService->getReporteResultados($empresas_id, $start_date, $end_date, $loterias_id);
+        $data =  $marketService->getReporteResultados($data);
 
         return $data;
     }
@@ -128,11 +128,11 @@ class Reportes
     }
 
  //REPORTE DE VENTAS PARA IMPRIMIR
-    public static function getReporteVentasPrint($empresas_id, $start_date, $end_date, $bancas_id = null, $users_id = null)
+    public static function getReporteVentasPrint($data)
     {
         // dd($empresas_id, $start_date, $end_date, $bancas_id, $users_id);
         $marketService = resolve(MarketService::class);
-        $data =  $marketService->getReporteVentasPrint($empresas_id, $start_date, $end_date, $bancas_id, $users_id);
+        $data =  $marketService->getReporteVentasPrint($data);
 
         return $data;
     }

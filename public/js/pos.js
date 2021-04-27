@@ -288,6 +288,9 @@ $(document).ready(function () {
 
                 d.loterias_id = $('select#loterias_id').val();
                 d.bancas_id = $('select#bancas_id').val();
+                d.users_id = $('select#users_id').val();
+                d.estado = $('select#estado').val();
+                d.promocion = $('select#promocion').val();
                 var start = '';
                 var end = '';
                 if ($('input#spr_date_filter').val()) {

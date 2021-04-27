@@ -13,7 +13,7 @@ $(document).ready(function() {
         });
     }
 
-    $('#reporte_tickets, #bancas_id, #loterias_id, #estado, #promocion  ').change(
+    $('#reporte_tickets, #bancas_id, #loterias_id, #estado, #promocion, #users_id').change(
         function() {
             reporte_tickets.ajax.reload();
         }
@@ -33,6 +33,7 @@ $(document).ready(function() {
                 d.bancas_id = $('select#bancas_id').val();
                 d.estado = $('select#estado').val();
                 d.promocion = $('select#promocion').val();
+                d.users_id = $('select#users_id').val();
 
                 var start = '';
                 var end = '';

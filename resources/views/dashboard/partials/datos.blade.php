@@ -110,9 +110,9 @@
 
                 <div class="card-title">Reporte de venta mes Actual
 				    <div class="card-action">
-					 {{-- <a type="button" class="ventas_print" data-href="{{action('HomeController@getVentasMesPrint')}}">
+					 <a href="#" type="button" class="print-invoice" data-href="{{action('HomeController@getVentasMesPrint')}}">
 					  <i class="fa fa-print"></i>
-                     </a> --}}
+                     </a>
                     </div>
 				</div>
                       <div class="table-responsive">

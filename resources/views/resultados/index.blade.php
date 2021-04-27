@@ -15,7 +15,7 @@
 
       @include('reportes.partials.resultados')
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                             <div class="table-responsive">
@@ -30,24 +30,6 @@
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
-                                </table>
-                            </div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                            <div class="table-responsive">
-                                 <table class="table table-sm table-striped  fixed_header">
-                                    <thead>
-                                        <tr>
-                                            <th>Loteria</th>
-                                            <th>Resultados</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="resultado_fecha">
-                                    </tbody>
                                 </table>
                             </div>
                     </div>
@@ -74,7 +56,6 @@
 
       function fn_saltar(pre_premio,orden)
         {
-
             if(orden == 1 && pre_premio.value.length == 2)
                 $("#res_premio2").focus();
             else if(orden == 2 && pre_premio.value.length == 2)

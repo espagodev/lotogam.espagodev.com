@@ -16,7 +16,7 @@ $(document).ready(function() {
          reporteModalidades();
         }
 
-        $('#bancas_id, #loterias_id').change(function() {
+        $('#bancas_id, #loterias_id, #users_id, #estado, #promocion').change(function() {
             reporteModalidades();
         });
 
@@ -32,6 +32,9 @@ $(document).ready(function() {
 
     var bancas_id = $('#bancas_id').val();
     var loterias_id = $('#loterias_id').val();
+    var users_id = $('select#users_id').val();
+    var estado = $('select#estado').val();
+    var promocion = $('select#promocion').val();
     var start = $('#spr_date_filter')
         .data('daterangepicker')
         .startDate.format('YYYY-MM-DD');
@@ -39,7 +42,7 @@ $(document).ready(function() {
         .data('daterangepicker')
         .endDate.format('YYYY-MM-DD');
 
-    var data = { start_date: start, end_date: end, bancas_id: bancas_id, loterias_id: loterias_id };
+    var data = { start_date: start, end_date: end, bancas_id: bancas_id, loterias_id: loterias_id, users_id: users_id, promocion: promocion, estado: estado };
 
     var loader = __fa_awesome();
 

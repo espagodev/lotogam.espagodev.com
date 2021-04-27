@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\MarketService;
 use App\Utils\BancaUtil;
 use Illuminate\Http\Request;
 use App\Utils\Reportes;
@@ -19,11 +20,12 @@ class ReportesController extends Controller
      * @return void
      */
     public function __construct(
-
+        MarketService $marketService,
         Reportes $reportes
     ) {
         $this->reportes = $reportes;
         $this->middleware('auth');
+        parent::__construct($marketService);
     }
 
     /**
@@ -36,10 +38,14 @@ class ReportesController extends Controller
 
         if ($request->ajax()) {
 
-            $data = $request->only(['start_date', 'end_date',  'loterias_id']);
+            if(session()->get('user.TipoUsuario') == 2){
+                $data = $request->only(['start_date', 'end_date',  'loterias_id','users_id', 'estado', 'promocion', 'bancas_id']);
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id']);
+                $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
+            }
             $data['empresas_id'] = session()->get('user.emp_id');
-            $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
-            $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
 
             $reporteVentas = $this->reportes->getReporteVentas($data);
 
@@ -74,7 +80,9 @@ class ReportesController extends Controller
         $loterias =  $this->reportes->getloteriasEmpresaReporte($empresas_id);
         $estadosTicket = Util::estadosTicket();
         $estadosPromocionTicket = Util::estadosPromocionTicket();
-        return view('reportes/reporte-ventas', compact('bancas', 'loterias', 'estadosPromocionTicket', 'estadosTicket'));
+        $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
+
+        return view('reportes/reporte-ventas', compact('bancas', 'loterias', 'estadosPromocionTicket','estadosTicket', 'usuarios'));
     }
 
     public function reporteTickets(Request $request)
@@ -82,13 +90,17 @@ class ReportesController extends Controller
 
         if ($request->ajax()) {
 
-            $data = $request->only(['start_date', 'end_date', 'loterias_id', 'estado', 'promocion']);
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
+                $isAnular = 0;
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data = $request->only(['start_date', 'end_date','loterias_id', 'estado', 'promocion',]);
+                $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
+            }
             $data['empresas_id'] = session()->get('user.emp_id');
-            $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
-            $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
 
             $reporteTickets = $this->reportes->getReporteTickets($data);
-
 
             return $datatable = dataTables::of($reporteTickets)
                 ->editColumn('loteria', '$loteria')
@@ -121,8 +133,11 @@ class ReportesController extends Controller
                     }
                 })
                 ->addColumn('action', function ($row) {
-
-                    $isAnular = BancaUtil::calcularMinutos($row->created_at);
+                    if (session()->get('user.TipoUsuario') == 2) {
+                        $isAnular = 0;
+                    } elseif (session()->get('user.TipoUsuario') == 3) {
+                        $isAnular = BancaUtil::calcularMinutos($row->created_at);
+                    }
                     $estado = '';
                     if ($row->tic_estado == 1) {
                         $estado .= '   <button type="button" data-href="' . action('Ticket\TicketController@show', [$row->id]) . '"  class="btn btn-sm btn-outline-info btn-modal"
@@ -150,7 +165,7 @@ class ReportesController extends Controller
                     $estado .= ' <button type="button" data-href="' . action('Ticket\TicketController@showDuplicarTicket', [$row->id]) . '" class="btn btn-sm btn-outline-secondary btn-modal"
                                 data-container=".view_register"><i class="fa fa-clone"></i></button>';
 
-                    if ($isAnular == 0) {
+                    if (($isAnular == 0) && $row->tic_estado != 0 ) {
                         $estado .= ' <button type="button" href="' . action('Ticket\TicketController@getAnularTicket', [$row->id]) . '" class="btn btn-sm btn-outline-danger anular_ticket_modal"
                                     ><i class="fa fa-window-close"></i></button>';
                     }
@@ -166,19 +181,25 @@ class ReportesController extends Controller
         $empresas_id = session()->get('user.emp_id');
         $bancas = BancaUtil::forDropdown($empresas_id);
         $loterias =  $this->reportes->getloteriasEmpresaReporte($empresas_id);
+        $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
         $estadosTicket = Util::estadosTicket();
         $estadosPromocionTicket = Util::estadosPromocionTicket();
-        return view('reportes/reporte-tickets', compact('bancas', 'loterias', 'estadosTicket', 'estadosPromocionTicket'));
+
+        return view('reportes/reporte-tickets', compact('bancas', 'loterias', 'estadosTicket', 'estadosPromocionTicket', 'usuarios'));
     }
 
     public function reportePremiados(Request $request)
     {
         if ($request->ajax()) {
 
-            $data = $request->only(['start_date', 'end_date',  'loterias_id',  'estado', 'promocion']);
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id']);
+                $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
+            }
             $data['empresas_id'] = session()->get('user.emp_id');
-            $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
-            $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
 
             $reportePremiados = $this->reportes->getReportePremiados($data);
 
@@ -224,33 +245,35 @@ class ReportesController extends Controller
         $loterias =  $this->reportes->getloteriasEmpresaReporte($empresas_id);
         $estadosTicket = Util::estadosTicket();
         $estadosPromocionTicket = Util::estadosPromocionTicket();
+        $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
 
-
-        return view('reportes/reporte-premiados', compact('bancas', 'loterias', 'estadosPromocionTicket', 'estadosTicket'));
+        return view('reportes/reporte-premiados', compact('bancas', 'loterias', 'estadosPromocionTicket', 'estadosTicket', 'usuarios'));
     }
 
     public function reporteResultados(Request $request)
     {
         if ($request->ajax()) {
 
-            $start_date = $request->get('start_date');
-            $end_date = $request->get('end_date');
-            $mostrar = $request->get('mostrar');
-            $empresas_id = session()->get('user.emp_id');
-            $loterias_id = $request->get('loterias_id', null);
-            $reporteResultados = $this->reportes->getReporteResultados($empresas_id, $start_date, $end_date, $loterias_id);
+
+            $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
+            $data['empresas_id'] = session()->get('user.emp_id');
+
+            $reporteResultados = $this->reportes->getReporteResultados($data);
 
             return $datatable = dataTables::of($reporteResultados)
 
-                ->editColumn('lot_nombre', function ($row) use ($mostrar) {
-                    if (empty($mostrar)) {
-                        return '<a data-loteria=' . $row->loterias_id . ' href="#" class="detalle-resultados">' . $row->lot_nombre  . ' (' . $row->lot_abreviado . ')  </a>';
-                    } else {
+                ->editColumn('lot_nombre', function ($row) {
+
                         return $row->lot_nombre . ' (' . $row->lot_abreviado . ')';
-                    }
+
                 })
                 ->editColumn('res_fecha', '{{@format_date($res_fecha)}}')
-                ->rawColumns(['lot_nombre', 'res_fecha'])
+                ->addColumn(
+                    'action',
+                    '<button data-href="" class="btn btn-xs btn-danger delete_category_button"><i class="fa fa-trash"></i></button>
+                    '
+                )
+                ->rawColumns(['lot_nombre', 'res_fecha', 'action'])
                 ->make(true);
         }
 
@@ -265,10 +288,14 @@ class ReportesController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = $request->only(['start_date', 'end_date', 'loterias_id']);
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id']);
+                $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
+            }
             $data['empresas_id'] = session()->get('user.emp_id');
-            $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
-            $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
 
             $reporteModalidades = $this->reportes->getReporteModalidades($data);
 
@@ -290,8 +317,9 @@ class ReportesController extends Controller
         $loterias =  $this->reportes->getloteriasEmpresaReporte($empresas_id);
         $estadosTicket = Util::estadosTicket();
         $estadosPromocionTicket = Util::estadosPromocionTicket();
+         $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
 
-        return view('reportes/reporte-modalidades', compact('bancas', 'loterias', 'estadosPromocionTicket', 'estadosTicket'));
+        return view('reportes/reporte-modalidades', compact('bancas', 'loterias', 'estadosPromocionTicket','estadosTicket', 'usuarios'));
     }
 
     public function reporteJugadas(Request $request)
@@ -299,11 +327,14 @@ class ReportesController extends Controller
         if ($request->ajax()) {
 
 
-            $data = $request->only(['start_date', 'end_date',  'loterias_id']);
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id','users_id', 'estado', 'promocion',  'bancas_id']);
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id']);
+                $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
+            }
             $data['empresas_id'] = session()->get('user.emp_id');
-            $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
-            $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
-
             $reporteJugadas = $this->reportes->getReporteJugadas($data);
             return $datatable = dataTables::of($reporteJugadas)
 
@@ -320,8 +351,9 @@ class ReportesController extends Controller
         $bancas = BancaUtil::forDropdown($empresas_id);
         $estadosTicket = Util::estadosTicket();
         $estadosPromocionTicket = Util::estadosPromocionTicket();
+        $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
 
-        return view('reportes/reporte-modalidades', compact('bancas', 'estadosPromocionTicket', 'estadosTicket'));
+        return view('reportes/reporte-modalidades', compact('bancas', 'estadosPromocionTicket','estadosTicket', 'usuarios'));
     }
 
 

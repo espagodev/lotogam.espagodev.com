@@ -40,6 +40,9 @@ class AppEsquemaTicketController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        if($data['eqt_tipo'] == 'year') {
+           $data['eqt_prefijo'] = date('Y') . '-';
+        }
         $data['empresas_id'] =  request()->session()->get('user.emp_id');
 
         $data = $this->marketService->nuevaAppEsquemaTickets($data);
@@ -80,19 +83,34 @@ class AppEsquemaTicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request , $id)
     {
-        //
+        $data = $request->all();
+
+        $this->marketService->ModificarAppEsquemaTickets($id, $data);
+
+        return redirect()
+            ->route(
+            'ajustesTicket.index'
+            )
+            ->with('success', ['El esquema  se ha Modificado Satisfactoriamente']);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function getModificarEsquema($id)
     {
-        //
+        $empresas_id = session()->get('user.emp_id');
+        $bancas_id =  session()->get('user.banca');
+
+        $esquema = $this->marketService->getAppEsquemaTickets($id);
+
+        $totalDigitos = Util::totalDigitos();
+
+        return view('ajustes.ajustesTicket.esquema_modificar')->with(compact('totalDigitos','esquema'));
     }
 }

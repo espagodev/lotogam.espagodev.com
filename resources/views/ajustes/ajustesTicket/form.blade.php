@@ -5,7 +5,7 @@
             <div class="form-group">
               <div class="option-div">
                 <h5>FORMATO: <br>XXXX <i class="fa fa-check-circle pull-right icon"></i></h5>
-               <input type="radio" name="scheme_type" value="blank">
+               <input type="radio" name="eqt_tipo" value="blank">
               </div>
             </div>
           </div>
@@ -13,7 +13,7 @@
             <div class="form-group">
               <div class="option-div">
                 <h5>FORMATO: <br>{{ date('Y') }}-XXXX <i class="fa fa-check-circle pull-right icon"></i></h5>
-                <input type="radio" name="scheme_type" value="year">
+                <input type="radio" name="eqt_tipo" value="year">
               </div>
             </div>
           </div>
@@ -39,13 +39,13 @@
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <div class="form-group">
                     <strong>Prefijo:</strong>
-                    <input type="text" class="form-control{{ $errors->has('eqt_prefijo') ? ' is-invalid' : '' }}"  id="prefix" name="eqt_prefijo" value="{{ old('eqt_prefijo') }}" >
+                    <input type="text" class="form-control{{ $errors->has('eqt_prefijo') ? ' is-invalid' : '' }}"  id="eqt_prefijo" name="eqt_prefijo" value="{{ old('eqt_prefijo') }}" >
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="form-group">
                     <strong>Iniciar desde:</strong>
-                    <input type="text" class="form-control{{ $errors->has('eqt_ticket_inicial') ? ' is-invalid' : '' }}" min="0" id="start_number" name="eqt_ticket_inicial" value="1" >
+                    <input type="text" class="form-control{{ $errors->has('eqt_ticket_inicial') ? ' is-invalid' : '' }}" min="0" id="eqt_ticket_inicial" name="eqt_ticket_inicial" value="1" >
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
             <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
                     <strong>Numero de Dígitos Ticket:</strong>
-                            <select class="form-control " name="eqt_ticket_digitos" id="total_digits" required>
+                            <select class="form-control " name="eqt_ticket_digitos" id="eqt_ticket_digitos" required>
                                 @foreach($totalDigitos as $key => $totalDigito)
                                 <option value="{{ $key }}">{{ $totalDigito }}</option>
                                 @endforeach

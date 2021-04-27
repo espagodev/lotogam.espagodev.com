@@ -1,30 +1,58 @@
 
-.receipt {
-  width: 80%;
-  min-height: 80vh;
-  height:80%;
-  background: #fff;
-  margin: 0 auto;
-  box-shadow: 5px 5px 15px #ccc;
-  padding: 15px;
-  /* font-size: 9pt; */
-}
 
-.logo {
-  text-align: center;
-  padding: 15px;
-}
+    .lista-scroll {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    height: 450px;
+    }
+    .receipt {
 
+        width: 65%;
+        min-height: 80vh;
+        height:80%;
+        background: #fff;
+        margin: 0 auto;
+        box-shadow: 5px 5px 15px #ccc;
+        padding: 15px;
+        font-size: 11pt;
+    }
 
-.address {
-  text-align: center;
-  margin-bottom: 5px;
-}
+    .logo {
+    text-align: center;
+    padding: 15px;
+    }
 
+    .flex-box-encabezado {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    }
 
-.feedback {
-  margin: 20px auto;
-}
+    .f-right {
+    float: right;
+    }
+
+    .f-left {
+    float: left;
+    }
+
+    .centered {
+    text-align: center;
+    align-content: center;
+    }
+
+    .center-block {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    }
+
+    .flex-box {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    }
 
 
 

@@ -71,53 +71,80 @@ $(document).ready(function() {
             });
     });
 
-     $(document).on('click', '.ventas_print', function(e) {
+    //  $(document).on('click', '.ventas_print', function(e) {
 
-        var start = moment().startOf('month').format('YYYY-MM-DD');
-        var end = moment().endOf('month').format('YYYY-MM-DD');
+    //     var start = moment().startOf('month').format('YYYY-MM-DD');
+    //     var end = moment().endOf('month').format('YYYY-MM-DD');
 
-        var data = { start_date: start, end_date: end};
+    //     var data = { start_date: start, end_date: end};
 
-            $.ajax({
-                method: 'GET',
-                url: $(this).data('href'),
+    //         $.ajax({
+    //             method: 'GET',
+    //             url: $(this).data('href'),
 
-                dataType: 'json',
-                data: data,
-                success: function(result) {
+    //             dataType: 'json',
+    //             data: data,
+    //             success: function(result) {
 
-                     if (result.success === 1) {
-                        var receipt = result.receipt;
-                            Lobibox.notify("success", {
-                                pauseDelayOnHover: true,
-                                size: "mini",
-                                rounded: true,
-                                delayIndicator: false,
-                                continueDelayOnInactiveTab: false,
-                                position: "top right",
-                                msg: "Se Genero El Reporte de Ventas",
-                            });
-                            receipt.forEach(function(elemento, index, arr) {
-                                //    console.log(arr[index] = elemento);
-                                    if (arr[index].is_enabled){
-                                        // console.log(arr[index].data)
-                                        __pos_print(arr[index] = elemento);
-                                    }
-                            });
-                        } else {
-                            // toastr.error(result.msg);
-                             Lobibox.notify("error", {
-                                pauseDelayOnHover: true,
-                                size: "mini",
-                                rounded: true,
-                                delayIndicator: false,
-                                continueDelayOnInactiveTab: false,
-                                position: "top right",
-                                msg: "No hay Resultados paramostrar",
-                            });
-                        }
+    //                  if (result.success === 1) {
+    //                     var receipt = result.receipt;
+    //                         Lobibox.notify("success", {
+    //                             pauseDelayOnHover: true,
+    //                             size: "mini",
+    //                             rounded: true,
+    //                             delayIndicator: false,
+    //                             continueDelayOnInactiveTab: false,
+    //                             position: "top right",
+    //                             msg: "Se Genero El Reporte de Ventas",
+    //                         });
+    //                         receipt.forEach(function(elemento, index, arr) {
+    //                             //    console.log(arr[index] = elemento);
+    //                                 if (arr[index].is_enabled){
+    //                                     // console.log(arr[index].data)
+    //                                     __pos_print(arr[index] = elemento);
+    //                                 }
+    //                         });
+    //                     } else {
+    //                         // toastr.error(result.msg);
+    //                          Lobibox.notify("error", {
+    //                             pauseDelayOnHover: true,
+    //                             size: "mini",
+    //                             rounded: true,
+    //                             delayIndicator: false,
+    //                             continueDelayOnInactiveTab: false,
+    //                             position: "top right",
+    //                             msg: "No hay Resultados paramostrar",
+    //                         });
+    //                     }
+    //             }
+    //         });
+    // });
+
+    //Used for Purchase & Sell invoice.
+    $(document).on('click', 'a.print-invoice', function(e) {
+        e.preventDefault();
+        var href = $(this).data('href');
+        
+        var bancas_id = '';
+            if ($('#dashboard_location').length > 0) {
+                bancas_id = $('#dashboard_location').val();
+            }
+        var data = { bancas_id: bancas_id};
+        $.ajax({
+            method: 'GET',
+            url: href,
+            data: data,
+            dataType: 'json',
+            success: function(result) {
+                if (result.success == 1 && result.receipt.html_content != '') {
+                    $('#receipt_section').html(result.receipt.html_content);
+                    __currency_convert_recursively($('#receipt_section'));
+                    __print_receipt('receipt_section');
+                } else {
+                    // toastr.error(result.msg);
                 }
-            });
+            },
+        });
     });
 
 });

@@ -81,18 +81,23 @@ class FormatoTickets
         //Información del ticket
         $output['invoice_no'] = $transaction->tic_ticket;
 
-         $output['pin_no'] = '';
-         if($isAnular == 1){
+        $output['pin_no_prefix'] = '';
+        $output['pin_no'] = '';
+
+         if($isAnular == 0){
+            $output['pin_no_prefix'] = $il->tcon_etiqueta_pin;
             $output['pin_no'] = $transaction->tic_pin;
          }
 
         $output['invoice_no_prefix'] = $il->tcon_etiqueta_ticket;
         $output['invoice_eslogan'] = $il->tcon_slogan;
-        $output['pin_no_prefix'] = $il->tcon_etiqueta_pin;
+
 
 
         $output['date_label'] = $il->tcon_date_label;
         $output['invoice_date'] = \Carbon::createFromFormat('Y-m-d H:i:s', $transaction->updated_at)->format($il->tcon_date_time_format);
+        $output['time_label'] = 'Hora:';
+        $output['time_date'] = \Carbon::createFromFormat('Y-m-d H:i:s', $transaction->updated_at)->format('H:i:s');
 
         $output['sorteo_label'] = '';
          $output['sorte_date'] = '';
@@ -267,7 +272,7 @@ class FormatoTickets
 
     public static function drawLine()
     {
-        $char_per_line = 60;
+        $char_per_line = 57 ;
         $new = '';
         for ($i = 1; $i < $char_per_line; $i++) {
             $new .= '-';
@@ -302,9 +307,10 @@ class FormatoTickets
 
         $moneda = $marketService->getEmpresaMoneda($empresas_id);
 
-        $banca = $marketService->getBanca($bancas_id);
+        $banca = $marketService->getBanca( !empty($bancas_id) ? $bancas_id : $tickets[0]->bancas_id);
 
-        $invoice_layout = BancaUtil::invoiceLayout($empresas_id,  $banca->app_config_tickets_id);
+        $invoice_layout = BancaUtil::invoiceLayout($empresas_id,   !empty($banca->app_config_tickets_id) ? $banca->app_config_tickets_id : null);
+
 
         $detalle_ticket = self::getReceiptDetails($tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $detalle, $isAnular);
 

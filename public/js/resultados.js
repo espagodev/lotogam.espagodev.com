@@ -185,7 +185,7 @@ $('#modificarPremio').on('show.bs.modal', function (event) {
                         dataType: "json",
                     data: function(d) {
 
-                        d.loterias_id = $('select#loterias_id').val();
+
                         var mostrar = 1;
                         var start = '';
                         var end = '';
@@ -200,6 +200,7 @@ $('#modificarPremio').on('show.bs.modal', function (event) {
                         d.start_date = start;
                         d.end_date = end;
                         d.mostrar = mostrar;
+                         d.loterias_id = $('select#loterias_id').val();
                     },
                 },
                 columns: [
@@ -208,6 +209,7 @@ $('#modificarPremio').on('show.bs.modal', function (event) {
                         { data: 'res_premio1', name: 'res_premio1', orderable: false, searchable: false  },
                         { data: 'res_premio2', name: 'res_premio2', orderable: false, searchable: false  },
                         { data: 'res_premio3', name: 'res_premio3', orderable: false, searchable: false  },
+                        { data: 'action', name: 'action' },
 
                 ],
                 fnDrawCallback: function(oSettings) {

@@ -39,13 +39,7 @@
                                                 <input type="checkbox" data-id="{{$impresora->id}}" {{ $impresora->imp_estado ? 'checked' : '' }} data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" >
                                             </td>
                                             <td>
-                                                   <a href="#" data-toggle="modal"  data-target="#actualizar" data-whatever="Actualizar Impresora" data-botton="Actualizar"
-                                                data-nombre="{{ $impresora->imp_nombre }}" data-conexion="{{ $impresora->imp_conexion }}" data-prefil="{{ $impresora->imp_perfil }}"
-                                                data-caracteres="{{ $impresora->imp_caracteres }}" data-ip="{{ $impresora->imp_ip }}" data-port="{{ $impresora->imp_port }}"
-                                                data-ruta="{{ $impresora->imp_ruta }}"
-                                             class="btn btn-outline-warning" rel="tooltip" title="Editar Impresora" >
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
+                                                <a data-href="{{action('ImpresoraPosController@getModificarImpresoraPos', [$impresora->id]) }}"  class="btn btn-outline-warning modificar-impresora" rel="tooltip" title="Editar Impresora" ><i class="fa fa-pencil"></i></a>
                                             </td>
                                             </tr>
                                         @endforeach
@@ -56,9 +50,14 @@
                 </div>
             </div>
       </div><!--End Row-->
+          <div class="modal fade modificar_modal" tabindex="-1" role="dialog"
+        aria-labelledby="gridSystemModalLabel">
+    </div>
    @endsection
    @include('ajustes.impresoraPos.partials.modal')
+
 @section('scripts')
+ <script src="{{ asset('js/ajustes/impresoraPos/impresoraPos.js?v=' . $asset_v) }}"></script>
  <script>
     $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
      </script>
@@ -76,30 +75,6 @@
 
                 });
 
-                $('#actualizar').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget) // Button that triggered the modal
-                var recipient = button.data('whatever')
-                var botton = button.data('botton')
-                var nombre = button.data('nombre')
-                var conexion = button.data('conexion')
-                var prefil = button.data('prefil')
-                var caracteres = button.data('caracteres')
-                var ip = button.data('ip')
-                var port = button.data('port')
-                var ruta = button.data('ruta')
-                printer_connection_type_field(conexion);
-
-                var modal = $(this)
-                modal.find('.modal-body #imp_nombre').val(nombre)
-                modal.find('.modal-body #imp_conexion').val(conexion)
-                modal.find('.modal-body #imp_prefil').val(prefil)
-                modal.find('.modal-body #imp_caracteres').val(caracteres)
-                modal.find('.modal-body #imp_ip').val(ip)
-                modal.find('.modal-body #imp_port').val(port)
-                modal.find('.modal-body #imp_ruta').val(ruta)
-                modal.find('.modal-title').text(recipient)
-                modal.find('.btn-primary').text(botton)
-                });
             });
 
         </script>

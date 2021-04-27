@@ -24,6 +24,8 @@
    <link  href="{{ asset('assets/plugins/jquery-timepicker/jquery.timepicker.css?v=' . $asset_v) }}" rel="stylesheet"/>
     <!-- skins CSS-->
   <link href="{{ asset('css/loto.css') }}" rel="stylesheet"/>
+
+  <link href="{{ asset('css/ticket.css')}}" rel="stylesheet" />
 <!-- Toastr -->
 <link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css') }}">
   <!--Bootstrap Datepicker-->
@@ -40,6 +42,8 @@
     <!--Data Tables -->
   <link href="{{ asset('assets/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
   <link href="{{ asset('assets/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
+
+
 @yield('styles')
 
 <!-- app css -->

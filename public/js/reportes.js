@@ -13,7 +13,7 @@ $(document).ready(function() {
         });
     }
 
-    $('#reporte_ventas, #bancas_id, #loterias_id ').change(
+    $('#reporte_ventas, #bancas_id, #loterias_id, #users_id').change(
         function() {
             reporte_ventas.ajax.reload();
         }
@@ -31,6 +31,7 @@ $(document).ready(function() {
 
                 d.loterias_id = $('select#loterias_id').val();
                 d.bancas_id = $('select#bancas_id').val();
+                d.users_id = $('select#users_id').val();
                 var start = '';
                 var end = '';
                 if ($('input#spr_date_filter').val()) {

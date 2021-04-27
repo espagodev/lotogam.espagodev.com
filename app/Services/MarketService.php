@@ -30,6 +30,12 @@ class MarketService
         return $this->makeRequest('GET', "me");
     }
 
+    //LOTERIAS
+    public function getUsuariosEmpresa($empresas_id)
+    {
+        return $this->makeRequest('GET', "getUsuariosEmpresa/{$empresas_id}");
+    }
+
     /**
      * * Retrieve a user information from the API
      * @return stdClass
@@ -421,7 +427,6 @@ class MarketService
     //appConfigTickets
     public function nuevaAppEsquemaTickets($data)
     {
-
         return $this->makeRequest(
             'POST',
             "appEsquemaTickets",
@@ -431,6 +436,28 @@ class MarketService
             false
         );
     }
+
+     //appConfigTickets editar
+    public function getAppEsquemaTickets($id)
+    {
+        return $this->makeRequest('GET', "appEsquemaTickets/{$id}");
+    }
+
+
+     //appConfigTickets editar
+    public function ModificarAppEsquemaTickets($id, $data)
+    {
+        $data['_method'] = 'PUT';
+        return $this->makeRequest(
+            'POST',
+            "appEsquemaTickets/{$id}",
+            $data,
+            [],
+            [],
+            false
+        );
+    }
+
 
     //appConfigTickets Banca
     public function getAppEsquemaTicketsBanca($banca)
@@ -663,10 +690,10 @@ class MarketService
         return $this->makeRequest('GET', "getImpresorasEmpresa/{$empresa}");
     }
 
-    public function getImpresoraDetalle($empresa,$impresora)
+    public function getImpresoraDetalle($impresora)
     {
 
-        return $this->makeRequest('GET', "getImpresoraDetalle/{$empresa}/{$impresora}");
+        return $this->makeRequest('GET', "ImpresorasPos/{$impresora}");
     }
 
     public function nuevaImpresora($data)
@@ -751,11 +778,11 @@ class MarketService
         );
     }
 
-    //Usuarios Empresa
-    public function getUsuariosEmpresa($empresa)
-    {
-        return $this->makeRequest('GET', "usuario/{$empresa}/empresa");
-    }
+    // //Usuarios Empresa
+    // public function getUsuariosEmpresa($empresa)
+    // {
+    //     return $this->makeRequest('GET', "usuario/{$empresa}/empresa");
+    // }
 
 
     //usuarios
@@ -1093,9 +1120,9 @@ class MarketService
         return $this->makeRequest('GET', "getReportePremiados", $data);
     }
 
-    public function getReporteResultados($empresas_id, $start_date, $end_date, $loterias_id)
+    public function getReporteResultados($data)
     {
-        return $this->makeRequest('GET', "getReporteResultados/{$empresas_id}/{$start_date}/{$end_date}/{$loterias_id}");
+        return $this->makeRequest('GET', "getReporteResultados", $data);
     }
 
     public function getReporteModalidades($data)
@@ -1104,9 +1131,9 @@ class MarketService
         return $this->makeRequest('GET', "getReporteModalidades", $data);
     }
 
-        public function getReporteJugadas($empresas_id, $start_date,$end_date, $loterias_id, $bancas_id, $users_id)
+        public function getReporteJugadas($data)
     {
-        return $this->makeRequest('GET', "getReporteJugadas/{$empresas_id}/{$start_date}/{$end_date}/{$loterias_id}/{$bancas_id}/{$users_id}");
+        return $this->makeRequest('GET', "getReporteJugadas", $data);
     }
 
     //REPORTE DETALLES
@@ -1140,9 +1167,9 @@ class MarketService
         return $this->makeRequest('GET', "getResultadosFechaPrint/{$empresas_id}/{$start_date}/{$end_date}");
     }
 
-    public function getReporteVentasPrint($empresas_id, $start_date, $end_date, $bancas_id, $users_id)
+    public function getReporteVentasPrint($data)
     {
-        return $this->makeRequest('GET', "getReporteVentasPrint/{$empresas_id}/{$start_date}/{$end_date}/{$bancas_id}/{$users_id}");
+        return $this->makeRequest('GET', "getReporteVentasPrint", $data);
     }
 
     //reportes utilidades
