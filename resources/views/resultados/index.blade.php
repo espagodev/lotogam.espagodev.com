@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-body">
                             <div class="table-responsive">
-                                 <table class="table table-bordered table-striped"  id="reporte_resultados">
+                                 <table class="table table-bordered table-striped"  id="reporte_resultados"> 
                                     <thead>
                                         <tr>
                                             <th>Loteria</th>

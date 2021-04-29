@@ -1125,6 +1125,13 @@ class MarketService
         return $this->makeRequest('GET', "getReporteResultados", $data);
     }
 
+    //BORRAR resultados
+    public function deleteResultadosLoteria($empresas_id, $resultado_id)
+    {
+
+        return $this->makeRequest('DELETE', "getResultados/{$empresas_id}/{$resultado_id}");
+    }
+
     public function getReporteModalidades($data)
     {
 
@@ -1184,10 +1191,11 @@ class MarketService
     }
 
     //horario loterias empresa por dia
-    public function  getHorarioLoteriasDia($empresas_id, $dia, $bancas_id)
+    public function  getHorarioLoteriasDia($empresas_id, $dia)
     {
-        return $this->makeRequest('GET', "getHorarioLoteriasDia/{$empresas_id}/{$dia}/{$bancas_id}");
+        return $this->makeRequest('GET', "getHorarioLoteriasDia/{$empresas_id}/{$dia}");
     }
+
 
     /**
      * ESTADOS

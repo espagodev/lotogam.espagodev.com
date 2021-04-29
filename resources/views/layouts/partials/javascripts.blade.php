@@ -61,6 +61,11 @@
     <script src="{{ asset('assets/plugins/pace/pace.js?v=' . $asset_v) }}"></script>
 
 
+      <!--Sweet Alerts -->
+  <script src="{{ asset('assets/plugins/alerts-boxes/js/sweetalert.min.js?v=' . $asset_v) }}"></script>
+
+
+
      {{-- <!--Multi Select Js-->
     <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.multi-select.js?v=' . $asset_v) }}"></script>
     <script src="{{ asset('assets/plugins/jquery-multi-select/jquery.quicksearch.js?v=' . $asset_v) }}"></script> --}}

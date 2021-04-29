@@ -220,70 +220,38 @@ $('#modificarPremio').on('show.bs.modal', function (event) {
             __reporteResultadosDetalle();
     });
 
-       //Reportes dia anterior
+     $(document).on('click', 'button.delete_resultado_button', function() {
+        swal({
+            title: "Estás seguro ?",
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        }).then(willDelete => {
+            if (willDelete) {
+                var href = $(this).data('href');
+                var data = $(this).serialize();
+
+                $.ajax({
+                    method: 'GET',
+                    url: href,
+                    dataType: 'json',
+                    data: data,
+                    success: function(result) {
+
+                        if (result.success === true) {
+
+                            // toastr.success(result.msg);
+                            reporte_resultados.ajax.reload();
+                        } else {
+                            // toastr.error(result.msg);
+                        }
+                    },
+                });
+            }
+        });
+    });
 
 
-    // $(document).ready(function() {
 
-    //     $(".ModificarPremiados").click(function (e) {
-
-    //         var fecha = $('input#pre_fecha').val();
-    //         var loteria = document.getElementById("lot_id").value//obtener valor del input
-    //         var premio1 = $('#pre_premio1').val();
-    //         var premio2 = $('#pre_premio2').val();
-    //         var premio3 = $('#pre_premio3').val();
-    //         var id = $('#id').val();
-    //         var token = '{{ csrf_token() }}';
-
-    //         $.ajax({
-    //             type: "POST",
-    //             url: '{{ url('/admin/modificarPremiados') }}',
-
-    //             data:{
-    //                     '_token': token,
-    //                     'fecha': fecha,
-    //                     'loteria': loteria,
-    //                     'premio1': premio1,
-    //                     'premio2': premio2,
-    //                     'premio3': premio3,
-    //                     'id': id,
-    //                 },
-    //                 success: function (data) {
-    //                     $('#modificarPremio').modal('hide');
-    //                     $("#divid").load(" #divid");
-
-    //                 }
-    //         });
-    //     });
-    // });
-
-    // $(document).ready(function() {
-    //     $(document).on('click', '.BorrarPremiados', function(){
-    //     // $(".BorrarPremiados").click(function (e) {
-
-    //         var id = $(this).attr("data-record-id");
-    //         var fecha = $(this).attr("data-record-fecha");
-    //         var loteria = $(this).attr("data-record-loteria");
-
-    //         var token = '{{ csrf_token() }}';
-    //         $.ajax({
-    //             type: "POST",
-    //             url: '{{ url('/admin/borrarPremiados') }}',
-
-    //             data:{
-    //                     '_token': token,
-    //                     'id': id,
-    //                     'fecha': fecha,
-    //                     'loteria': loteria,
-
-    //                 },
-    //                 success: function (data) {
-
-    //                     $("#divid").load(" #divid");
-
-    //                 }
-    //         });
-    //     });
-    // });
 
 

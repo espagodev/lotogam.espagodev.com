@@ -228,6 +228,9 @@ class PosController extends Controller
         }
     }
 
+
+
+
     /**
      * Checks if ref_number and supplier combination already exists.
      *

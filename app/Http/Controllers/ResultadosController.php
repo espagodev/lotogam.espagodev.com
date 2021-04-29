@@ -204,4 +204,15 @@ class ResultadosController extends Controller
             return $output;
         }
     }
+
+    public function getResultadosDelete($id)
+    {
+        if (request()->ajax()) {
+            $empresas_id = session()->get('user.emp_id');
+
+            $data = $this->marketService->deleteResultadosLoteria($empresas_id, $id);
+
+            return response()->json($data);
+        }
+    }
 }

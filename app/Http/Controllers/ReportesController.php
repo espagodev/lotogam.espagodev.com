@@ -268,11 +268,14 @@ class ReportesController extends Controller
 
                 })
                 ->editColumn('res_fecha', '{{@format_date($res_fecha)}}')
-                ->addColumn(
-                    'action',
-                    '<button data-href="" class="btn btn-xs btn-danger delete_category_button"><i class="fa fa-trash"></i></button>
-                    '
-                )
+                ->addColumn( 'action',function ($row) {
+                $action = '';
+                $action .= '<button data-href="'.action('ResultadosController@getResultadosDelete', [$row->id]). '" class="btn btn-xs btn-danger delete_resultado_button"><i class="fa fa-trash"></i></button>
+                    ';
+                     return  $action;
+                })
+
+
                 ->rawColumns(['lot_nombre', 'res_fecha', 'action'])
                 ->make(true);
         }

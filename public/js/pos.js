@@ -528,9 +528,31 @@ $(document).on('show.bs.modal', '#recent_transactions_modal', function () {
                 },
 
             });
-
     }
 
+
+    function horarioSuperPale() {
+
+        var bancas_id = $('#bancas_id').val();
+
+        var data = {  bancas_id: bancas_id };
+
+        var loader = __fa_awesome();
+
+            $('.superPale').html(loader);
+
+                $.ajax({
+                    method: 'GET',
+                    url: '/pos/getLoteriasSuperPale',
+                    dataType: 'html',
+                    data: data,
+                    success: function(data) {
+                        $('.superPale').html(data);
+
+                    },
+
+                });
+    }
 
     function __pos_print(receipt) {
 

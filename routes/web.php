@@ -153,6 +153,8 @@ Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('super
 
 
     Route::get('pos/getHorarioLoteriasDia', 'PosController@getHorarioLoteriasDia');
+    Route::get('pos/getLoteriasSuperPale', 'PosController@getLoteriasSuperPale');
+
     Route::get('/pos/{ticket}/ticket', 'PosController@printTicket')->name('pos.printTicket');
     Route::resource('pos','PosController', ['except' => ['edit', 'show', 'destroy']]);
 
@@ -185,7 +187,8 @@ Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('super
      * RESULTADOS POR FECHA
      */
     Route::get('/resultados/resultados-fecha', 'ResultadosController@getResultadosFecha');
-    Route::get('/resultados/resultados-fecha-imprimir', 'ResultadosController@getResultadosFechaPrint');
+    Route::get('getResultadosFechaPrint', 'ResultadosController@getResultadosFechaPrint');
+    Route::get('getResultadosDelete/{resultado_id}', 'ResultadosController@getResultadosDelete');
 
     /**
      * MODIFICAR ESTADOS
