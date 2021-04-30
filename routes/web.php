@@ -155,6 +155,8 @@ Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('super
     Route::get('pos/getHorarioLoteriasDia', 'PosController@getHorarioLoteriasDia');
     Route::get('pos/getLoteriasSuperPale', 'PosController@getLoteriasSuperPale');
 
+    Route::get('pos/getLoteriasSuperPale', 'PosController@getLoteriasSuperPale');
+
     Route::get('/pos/{ticket}/ticket', 'PosController@printTicket')->name('pos.printTicket');
     Route::resource('pos','PosController', ['except' => ['edit', 'show', 'destroy']]);
 

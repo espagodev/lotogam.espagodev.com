@@ -18,7 +18,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                         </div>
-                                         <input type="text" id="tic_fecha_sorteo"  class="form-control" name="tic_fecha_sorteo" value="" data-date-format="dd/mm/yyyy">
+                                         <input type="text" id="tic_fecha_sorteo"  class="form-control" name="tic_fecha_sorteo" value="{{ $fechaActual }}" data-date-format="dd/mm/yyyy">
                                     </div>
                                 </div>
                                 @endif
@@ -86,6 +86,11 @@
                         @include('sale_pos.partials.lista_loterias')
                     </div>
               </div>
+               <div class="card">
+                    <div class="card-body">
+                        @include('sale_pos.partials.lista_superpale')
+                    </div>
+              </div>
 
         </div>
     </div>
@@ -110,7 +115,6 @@
         var token = '{{ csrf_token() }}';
         // $('#tic_fecha_sorteo').datepicker('setDate', new Date());
          $('#tic_fecha_sorteo').datepicker({
-
         autoclose: true,
         todayHighlight: true,
         startDate: '0d',

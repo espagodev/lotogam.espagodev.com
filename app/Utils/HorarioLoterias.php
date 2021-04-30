@@ -124,4 +124,12 @@ class HorarioLoterias
         return $data;
     }
 
+    public static function getLoteriasSuperPaleDia($empresas_id, $dia)
+    {
+        // dd($empresas_id, $dia);
+        $marketService = resolve(MarketService::class);
+        $data =  $marketService->getLoteriasSuperPaleDia($empresas_id, $dia);
+
+        return $data;
+    }
 }

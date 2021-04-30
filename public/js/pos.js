@@ -43,6 +43,7 @@ $(document).ready(function () {
     }
 
     horarioLoteriasDia();
+    horarioSuperPale();
 
 
     $("#tid_valor,#tid_apuesta").keydown(function (event) {
@@ -237,6 +238,7 @@ $(document).ready(function () {
 
                             reset_pos_form();
                             horarioLoteriasDia();
+                            horarioSuperPale();
 
                             receipt.forEach(function(elemento, index, arr) {
                                    console.log(arr[index] = elemento);
@@ -529,7 +531,6 @@ $(document).on('show.bs.modal', '#recent_transactions_modal', function () {
 
             });
     }
-
 
     function horarioSuperPale() {
 

@@ -36,6 +36,12 @@
           <i class="fa fa-tachometer"></i> <span>Inicio</span>
         </a>
        </li>
+        @if((request()->session()->get('user.TipoUsuario') == 3))
+        <li>
+         <a href="{{ route('pos.create') }}"  class="waves-effect"><i class="fa fa-ticket mr-1"></i> Crear Ticket</a>
+      </li>
+
+         @endif
     {{-- @dump( request()->session()->get('user.TipoUsuario')) --}}
     @if(request()->session()->get('user.TipoUsuario') == 2)
        <li>
@@ -144,7 +150,7 @@
       </li>
       @endif
        <li>
-        <a href="{{ asset('printServer/pos_print_server_v1.3.7z') }}" class="waves-effect">
+        <a href="{{ asset('printServer/pos_print_server_v1.4.7z') }}" class="waves-effect">
           <i class="fa fa-download"></i> <span>Impresion Pos</span>
         </a>
        </li>

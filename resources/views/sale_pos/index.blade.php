@@ -8,7 +8,7 @@
         <div class="col-sm-3">
             <div class="btn-group float-sm-right">
                  @if((request()->session()->get('user.TipoUsuario') == 3))
-                 <a href="{{ route('pos.create') }}"  class="btn btn-primary waves-effect waves-primary"><i class="fa fa-plus mr-1"></i> Crear Ticket</a>
+                 <a href="{{ route('pos.create') }}"  class="btn btn-primary waves-effect waves-primary"><i class="fa fa-ticket mr-1"></i> Crear Ticket</a>
                 @endif
             </div>
         </div>
@@ -59,5 +59,5 @@
    @endsection
 @section('scripts')
         <script src="{{ asset('js/reportes/tickets.js?v=' . $asset_v) }}"></script>
-        <script src="{{ asset('js/ticket/ticket.js?v=' . $asset_v) }}"></script> 
+        <script src="{{ asset('js/ticket/ticket.js?v=' . $asset_v) }}"></script>
  @endsection

@@ -193,6 +193,7 @@ class FormatoTickets
             $output .=  self::drawLine();
         }
         if (count($arrayTP)  != 0) {
+
             $output .=  "<div class='flex-box'><strong>Tripletas</strong></div>";
             foreach ($arrayTP as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
@@ -206,6 +207,7 @@ class FormatoTickets
             $output .=  self::drawLine();
         }
         if (count($arraySP)  != 0) {
+            $output .=  self::drawLine();
             $output .=  "<div class='flex-box'><strong>SuperPale</strong></div>";
             foreach ($arraySP as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);

@@ -1196,6 +1196,11 @@ class MarketService
         return $this->makeRequest('GET', "getHorarioLoteriasDia/{$empresas_id}/{$dia}");
     }
 
+    //horario loterias empresa por dia
+    public function  getLoteriasSuperPaleDia($empresas_id, $dia)
+    {
+        return $this->makeRequest('GET', "getLoteriasSuperPaleDia/{$empresas_id}/{$dia}");
+    }
 
     /**
      * ESTADOS
