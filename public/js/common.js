@@ -50,24 +50,24 @@ $(document).ready(function() {
     // };
 
     // Play notification sound on success, error and warning
-    Lobibox.notify = function() {
-        if ($(this).hasClass('success')) {
-            var audio = $('#success-audio')[0];
-            if (audio !== undefined) {
-                audio.play();
-            }
-        } else if ($(this).hasClass('error')) {
-            var audio = $('#error-audio')[0];
-            if (audio !== undefined) {
-                audio.play();
-            }
-        } else if ($(this).hasClass('warning')) {
-            var audio = $('#warning-audio')[0];
-            if (audio !== undefined) {
-                audio.play();
-            }
-        }
-    };
+    // Lobibox.notify = function() {
+    //     if ($(this).hasClass('success')) {
+    //         var audio = $('#success-audio')[0];
+    //         if (audio !== undefined) {
+    //             audio.play();
+    //         }
+    //     } else if ($(this).hasClass('error')) {
+    //         var audio = $('#error-audio')[0];
+    //         if (audio !== undefined) {
+    //             audio.play();
+    //         }
+    //     } else if ($(this).hasClass('warning')) {
+    //         var audio = $('#warning-audio')[0];
+    //         if (audio !== undefined) {
+    //             audio.play();
+    //         }
+    //     }
+    // };
 
     //Default setting for jQuey validator
     // jQuery.validator.setDefaults({

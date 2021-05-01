@@ -1099,8 +1099,9 @@ class MarketService
 
 
     //Home reportes
-    public function getHomereportes($empresas_id, $start_date, $end_date, $bancas_id, $users_id)
+    public function getHomereportes($data)
     {
+        // return $this->makeRequest('GET', "getPurchaseTotals", $data);
         return $this->makeRequest('GET', "getPurchaseTotals/{$empresas_id}/{$start_date}/{$end_date}/{$bancas_id}/{$users_id}");
     }
 

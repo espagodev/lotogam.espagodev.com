@@ -124,7 +124,7 @@ $(document).ready(function() {
     $(document).on('click', 'a.print-invoice', function(e) {
         e.preventDefault();
         var href = $(this).data('href');
-        
+
         var bancas_id = '';
             if ($('#dashboard_location').length > 0) {
                 bancas_id = $('#dashboard_location').val();
@@ -159,9 +159,9 @@ $(document).ready(function() {
 
         var loader = '<i class="fa-spin fa fa-refresh fa-fw margin-bottom"></i>';
         $('.total_tickets').html(loader);
-        $('.purchase_due').html(loader);
-        $('.total_sell').html(loader);
-        $('.invoice_due').html(loader);
+        $('.total_premios').html(loader);
+        $('.total_venta').html(loader);
+        $('.total_comision').html(loader);
 
         $.ajax({
             method: 'get',
@@ -171,11 +171,11 @@ $(document).ready(function() {
             success: function(data) {
 
                 $('.total_tickets').html(__number_uf(data.total_tickets));
-                $('.purchase_due').html(__currency_trans_from_en(data.purchase_due, true));
+                $('.total_premios').html(__currency_trans_from_en(data.total_premios, true));
 
                 //sell details
-                $('.total_sell').html(__currency_trans_from_en(data.total_sell, true));
-                $('.invoice_due').html(__currency_trans_from_en(data.invoice_due, true));
+                $('.total_venta').html(__currency_trans_from_en(data.total_venta, true));
+                $('.total_comision').html(__currency_trans_from_en(data.total_comision, true));
 
             },
         });
@@ -213,8 +213,11 @@ $(document).ready(function() {
 
     function getTicketsPremiados() {
 
-    var start = moment().subtract(1, 'days').format('YYYY-MM-DD');
-    var end = moment().subtract(1, 'days').format('YYYY-MM-DD');
+    var end= moment().format('YYYY-MM-DD');
+    var start = moment().subtract(29, 'days').format('YYYY-MM-DD');
+
+    // var start = moment().startOf('month').format('YYYY-MM-DD');
+    // var end = moment().endOf('month').format('YYYY-MM-DD');
 
     var data = { start_date: start, end_date: end};
 

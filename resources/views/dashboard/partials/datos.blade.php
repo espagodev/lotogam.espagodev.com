@@ -63,7 +63,7 @@
           <div class="media align-items-center">
             <div class="w-icon"><i class="fa fa-money text-white"></i></div>
             <div class="media-body ml-3 border-left-xs border-white-2">
-              <h4 class="mb-0 ml-3 text-white total_sell"></h4>
+              <h4 class="mb-0 ml-3 text-white total_venta"></h4>
               <p class="mb-0 ml-3 extra-small-font text-white">Total Ventas</p>
             </div>
           </div>
@@ -77,7 +77,7 @@
           <div class="media align-items-center">
             <div class="w-icon"><i class="fa fa-money text-white"></i></div>
             <div class="media-body ml-3 border-left-xs border-white-2">
-              <h4 class="mb-0 ml-3 text-white invoice_due"></h4>
+              <h4 class="mb-0 ml-3 text-white total_comision"></h4>
               <p class="mb-0 ml-3 extra-small-font text-white">Total Comisiones</p>
             </div>
           </div>
@@ -91,7 +91,7 @@
           <div class="media align-items-center">
             <div class="w-icon"><i class="fa fa-money text-white"></i></div>
             <div class="media-body ml-3 border-left-xs border-white-2">
-              <h4 class="mb-0 ml-3 text-white  purchase_due"></h4>
+              <h4 class="mb-0 ml-3 text-white  total_premios"></h4>
               <p class="mb-0 ml-3 extra-small-font text-white">Total Premios</p>
             </div>
           </div>

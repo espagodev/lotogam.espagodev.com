@@ -30,7 +30,7 @@ class ResultadosController extends Controller
     {
 
         // $data = $request->all();
-        $data['empresas_id'] = $this->marketService->getUserInformation()->idEmpresa;
+        $data['empresas_id'] =  request()->session()->get('user.emp_id');
         $data['loterias_id'] =  $request->loterias_id;
         $data['res_fecha'] = $request->fecha;
         $data['res_premio1'] = $request->premio1;
@@ -56,6 +56,7 @@ class ResultadosController extends Controller
     public function validaHoraCierre(Request $request)
     {
 
+
         $fecha = Carbon::createFromFormat('d/m/Y', $request->fecha)->format('Y-m-d');
 
         $loterias_id = $request->loterias_id;
@@ -69,7 +70,7 @@ class ResultadosController extends Controller
         $horaRD = HorarioLoterias::horaRD();
         // $hoy = date(session()->get('business.date_format'));
         $dia = HorarioLoterias::dia($request->fecha);
-
+        // dd($horaCierre, $horaRD);
 
         $compararFechas = HorarioLoterias::compararFechas($fecha);
 
@@ -84,7 +85,7 @@ class ResultadosController extends Controller
 
         }
 
-        if ($compararFechas == '1') {
+        // if ($compararFechas == '1') {
             if ($horaRD <=  $horaCierre) {
 
                 return response()->json(
@@ -93,7 +94,7 @@ class ResultadosController extends Controller
                         'status' => 'cierre',
                     )
                 );
-            }
+            // }
         }else{
             return response()->json(
                 array(

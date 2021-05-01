@@ -94,7 +94,7 @@ class ReportesController extends Controller
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
                 $isAnular = 0;
             } else if (session()->get('user.TipoUsuario') == 3) {
-                $data = $request->only(['start_date', 'end_date','loterias_id', 'estado', 'promocion',]);
+                $data = $request->only(['start_date', 'end_date','loterias_id', 'estado', 'promocion']);
                 $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
                 $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
             }

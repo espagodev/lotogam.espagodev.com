@@ -61,6 +61,24 @@ class HomeController extends Controller
     public function getTotals()
     {
         if (request()->ajax()) {
+
+            // if (session()->get('user.TipoUsuario') == 2) {
+            //     $data = request()->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
+            // } else if (session()->get('user.TipoUsuario') == 3) {
+            //     $data = request()->only(['start_date', 'end_date']);
+            //     $data['bancas_id'] = !empty(request()->bancas_id) ? request()->bancas_id : session()->get('user.banca');
+            //     $data['users_id'] = !empty(request()->users_id) ? request()->users_id : session()->get('user.id');
+            // }
+            // $data['empresas_id'] = session()->get('user.emp_id');
+
+            // // $start = request()->start;
+            // // $end = request()->end;
+            // // $bancas_id = request()->bancas_id;
+            // // $empresas_id = session()->get('user.emp_id');
+            // // $users_id = Null;
+
+            // $purchase_details = $this->homeReports->getPurchaseTotals($data);
+
             $start = request()->start;
             $end = request()->end;
             $bancas_id = request()->bancas_id;
@@ -71,9 +89,9 @@ class HomeController extends Controller
 
 
             $output['total_tickets'] = !empty($purchase_details->total_tickets) ? $purchase_details->total_tickets : 0;
-            $output['total_sell'] =    !empty($purchase_details->total_apostado) ? $purchase_details->total_apostado : 0;
-            $output['invoice_due'] =   !empty($purchase_details->total_comision) ? $purchase_details->total_comision : 0;
-            $output['total_expense'] = !empty($purchase_details->total_sin_comision) ? $purchase_details->total_sin_comision : 0;
+            $output['total_venta'] =    !empty($purchase_details->total_apostado) ? $purchase_details->total_apostado : 0;
+            $output['total_comision'] =   !empty($purchase_details->total_comision) ? $purchase_details->total_comision : 0;
+            $output['total_premios'] = !empty($purchase_details->total_sin_comision) ? $purchase_details->total_sin_comision : 0;
 
 
             return $output;
