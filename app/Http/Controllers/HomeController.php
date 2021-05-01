@@ -62,23 +62,7 @@ class HomeController extends Controller
     {
         if (request()->ajax()) {
 
-            // if (session()->get('user.TipoUsuario') == 2) {
-            //     $data = request()->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
-            // } else if (session()->get('user.TipoUsuario') == 3) {
-            //     $data = request()->only(['start_date', 'end_date']);
-            //     $data['bancas_id'] = !empty(request()->bancas_id) ? request()->bancas_id : session()->get('user.banca');
-            //     $data['users_id'] = !empty(request()->users_id) ? request()->users_id : session()->get('user.id');
-            // }
-            // $data['empresas_id'] = session()->get('user.emp_id');
-
-            // // $start = request()->start;
-            // // $end = request()->end;
-            // // $bancas_id = request()->bancas_id;
-            // // $empresas_id = session()->get('user.emp_id');
-            // // $users_id = Null;
-
-            // $purchase_details = $this->homeReports->getPurchaseTotals($data);
-
+            
             $start = request()->start;
             $end = request()->end;
             $bancas_id = request()->bancas_id;
