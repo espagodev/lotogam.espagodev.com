@@ -62,20 +62,33 @@ class HomeController extends Controller
     {
         if (request()->ajax()) {
 
-            
-            $start = request()->start;
-            $end = request()->end;
-            $bancas_id = request()->bancas_id;
-            $empresas_id = session()->get('user.emp_id');
-            $users_id = Null;
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data = request()->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
+                $isAnular = 0;
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data = request()->only(['start_date', 'end_date','loterias_id', 'estado', 'promocion',]);
+                $data['bancas_id'] = !empty(request()->bancas_id) ? request()->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty(request()->users_id) ? request()->users_id : session()->get('user.id');
+            }
 
-            $purchase_details = $this->homeReports->getPurchaseTotals($empresas_id, $start, $end, $bancas_id);
+            $data['empresas_id'] = session()->get('user.emp_id');
 
+            // $start = request()->start;
+            // $end = request()->end;
+            // $bancas_id = request()->bancas_id;
+            // $empresas_id = session()->get('user.emp_id');
+            // $users_id = Null;
 
-            $output['total_tickets'] = !empty($purchase_details->total_tickets) ? $purchase_details->total_tickets : 0;
-            $output['total_venta'] =    !empty($purchase_details->total_apostado) ? $purchase_details->total_apostado : 0;
-            $output['total_comision'] =   !empty($purchase_details->total_comision) ? $purchase_details->total_comision : 0;
-            $output['total_premios'] = !empty($purchase_details->total_sin_comision) ? $purchase_details->total_sin_comision : 0;
+            // $purchase_details = $this->homeReports->getPurchaseTotals($empresas_id, $start, $end, $bancas_id);
+            // dump($data);
+            $detalle_ventas = $this->homeReports->getPurchaseTotals($data);
+
+            // dump($detalle_ventas);
+
+            $output['total_tickets'] = $detalle_ventas->total_tickets;
+            $output['total_venta'] =    $detalle_ventas->total_venta;
+            $output['total_comision'] =  $detalle_ventas->total_comision;
+            $output['total_premios'] = $detalle_ventas->total_premios;
 
 
             return $output;
@@ -86,40 +99,50 @@ class HomeController extends Controller
     {
         if ($request->ajax()) {
 
-
-
             $TotalVenta = 0;
             $TotalComision = 0;
-            $TotalGanado = 0;
+            $TotalPremios = 0;
             $TotalGanancia = 0;
 
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data =  $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
 
-            $data = $request->only(['start_date', 'end_date', 'bancas_id', 'loterias_id', 'users_id']);
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data =  $request->only(['start_date', 'end_date', 'loterias_id', 'estado', 'promocion',]);
+                $data['bancas_id'] = !empty( $request->bancas_id) ?  $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty( $request->users_id) ?  $request->users_id : session()->get('user.id');
+            }
+
             $data['empresas_id'] = session()->get('user.emp_id');
+
+            // $data = $request->only(['start_date', 'end_date', 'bancas_id', 'loterias_id', 'users_id']);
+            // $data['empresas_id'] = session()->get('user.emp_id');
 
             $reporteVentas = Reportes::getReporteVentas($data);
 
             $output = '';
             foreach ($reporteVentas as  $detalle) {
 
-                $TotalVenta = $TotalVenta + $detalle->venta;
-                $TotalComision = $TotalComision + $detalle->comision;
-                $TotalGanado = $TotalGanado +$detalle->ganado;
-                $TotalGanancia = $TotalGanancia + $detalle->ganancia;
+                $ganancia = $detalle->total_venta - $detalle->total_comision - $detalle->total_premios;
+                $TotalVenta = $TotalVenta + $detalle->total_venta;
+                $TotalComision = $TotalComision + $detalle->total_comision;
+                $TotalPremios = $TotalPremios +$detalle->total_premios;
+
+                $TotalGanancia = $TotalGanancia + $ganancia;
 
                 $output .= '<tr>' .
                 '<td>' . $detalle->lot_nombre . '</td>' .
-                '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->venta . ' data-currency_symbol=true> ' . $detalle->venta . '</td>' .
-                '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->comision . ' data-currency_symbol=true> ' . $detalle->comision . '</td>' .
-                '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->ganado . ' data-currency_symbol=true> ' . $detalle->ganado . '</td>' .
-                '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->ganancia . ' data-currency_symbol=true> ' . $detalle->ganancia . '</td>' .
+                '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->total_venta . ' data-currency_symbol=true> ' . $detalle->total_venta . '</td>' .
+                '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->total_comision . ' data-currency_symbol=true> ' . $detalle->total_comision . '</td>' .
+                '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->total_premios . ' data-currency_symbol=true> ' . $detalle->total_premios . '</td>' .
+                '<td class="text-center"><span class="display_currency" data-orig-value=' . $ganancia . ' data-currency_symbol=true> ' . $ganancia . '</td>' .
                 '</tr>';
             }
                 $output .= '<tr>' .
                 '<td><h5> Total Venta </h5> </td>' .
             '<td class="text-center"><h5><span class="display_currency" data-orig-value=' . $TotalVenta . ' data-currency_symbol=true> ' . $TotalVenta . '</h5> </td>' .
                 '<td class="text-center"><h5><span class="display_currency" data-orig-value=' . $TotalComision . ' data-currency_symbol=true> ' . $TotalComision . '</h5> </td>' .
-                '<td class="text-center"><h5><span class="display_currency" data-orig-value=' . $TotalGanado . ' data-currency_symbol=true> ' . $TotalGanado . '</h5> </td>' .
+                '<td class="text-center"><h5><span class="display_currency" data-orig-value=' . $TotalPremios . ' data-currency_symbol=true> ' . $TotalPremios . '</h5> </td>' .
                 '<td class="text-center"><h5><span class="display_currency" data-orig-value=' . $TotalGanancia . ' data-currency_symbol=true> ' . $TotalGanancia . '</h5> </td>' .
                 '</tr>';
             return $output;

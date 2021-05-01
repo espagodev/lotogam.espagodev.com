@@ -82,7 +82,8 @@ class TicketController extends Controller
         $bancas_id =  session()->get('user.banca');
 
         $ticket = $this->marketService->getTicket($tickets_id);
-        $jugadas = $this->marketService->getTicketDetalle($tickets_id);
+        $jugadas = $this->marketService->getTicketDetallePremiado($tickets_id);
+        $jugada = $this->marketService->getTicketDetalle($tickets_id);
 
         if (session()->get('user.TipoUsuario') == 2) {
             $isAnular = 0;
@@ -91,8 +92,8 @@ class TicketController extends Controller
             $isAnular = BancaUtil::calcularMinutos($ticket[0]->created_at, $parametros->ban_tiempo_anular);
         }
 
-        $receipt_details = FormatoTickets::receiptContent($empresas_id, $ticket, $bancas_id, $jugadas, $isAnular );
-
+        $receipt_details = FormatoTickets::receiptContent($empresas_id, $ticket, $bancas_id, $jugada, $isAnular );
+        // dd($receipt_details, $tickets_id, $ticket, $jugadas, $isAnular);
         return view('ticket.tiket_premiado')->with(compact('receipt_details', 'tickets_id', 'ticket', 'jugadas', 'isAnular'));
     }
 

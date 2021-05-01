@@ -159,9 +159,9 @@ $(document).ready(function() {
 
         var loader = '<i class="fa-spin fa fa-refresh fa-fw margin-bottom"></i>';
         $('.total_tickets').html(loader);
-        $('.total_premios').html(loader);
         $('.total_venta').html(loader);
         $('.total_comision').html(loader);
+        $('.total_premios').html(loader);
 
         $.ajax({
             method: 'get',
@@ -171,11 +171,11 @@ $(document).ready(function() {
             success: function(data) {
 
                 $('.total_tickets').html(__number_uf(data.total_tickets));
-                $('.total_premios').html(__currency_trans_from_en(data.total_premios, true));
+                $('.total_venta').html(__currency_trans_from_en(data.total_venta, true));
 
                 //sell details
-                $('.total_venta').html(__currency_trans_from_en(data.total_venta, true));
                 $('.total_comision').html(__currency_trans_from_en(data.total_comision, true));
+                $('.total_premios').html(__currency_trans_from_en(data.total_premios, true));
 
             },
         });
