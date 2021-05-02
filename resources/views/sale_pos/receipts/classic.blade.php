@@ -72,7 +72,7 @@
                     @endforeach
                     <tr>
                         <td><h5>Total</h5></td>
-                        <td><h5></h5>{{ $TotalVenta }}</h5></td>
+                        <td><h5>{{ $TotalVenta }}</h5></td>
                         <td><h5>{{ $TotalComision }}</h5></td>
                         <td><h5>{{ $TotalPremios }}</h5></td>
                         <td><h5>{{ $TotalGanancia }}</h5></td>
