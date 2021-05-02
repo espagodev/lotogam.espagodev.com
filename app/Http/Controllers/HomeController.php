@@ -63,15 +63,16 @@ class HomeController extends Controller
         if (request()->ajax()) {
 
             if (session()->get('user.TipoUsuario') == 2) {
-                $data = request()->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
-                $isAnular = 0;
+                $data = request()->only([ 'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
-                $data = request()->only(['start_date', 'end_date','loterias_id', 'estado', 'promocion',]);
+                $data = request()->only(['loterias_id', 'estado', 'promocion']);
                 $data['bancas_id'] = !empty(request()->bancas_id) ? request()->bancas_id : session()->get('user.banca');
                 $data['users_id'] = !empty(request()->users_id) ? request()->users_id : session()->get('user.id');
             }
 
             $data['empresas_id'] = session()->get('user.emp_id');
+            $data['start_date'] = request()->start;
+            $data['end_date'] = request()->end;
 
             // $start = request()->start;
             // $end = request()->end;
@@ -80,7 +81,7 @@ class HomeController extends Controller
             // $users_id = Null;
 
             // $purchase_details = $this->homeReports->getPurchaseTotals($empresas_id, $start, $end, $bancas_id);
-            // dump($data);
+
             $detalle_ventas = $this->homeReports->getPurchaseTotals($data);
 
             // dump($detalle_ventas);
