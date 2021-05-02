@@ -105,7 +105,7 @@ class HomeController extends Controller
             $TotalGanancia = 0;
 
             if (session()->get('user.TipoUsuario') == 2) {
-                $data =  $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
+                $data =  $request->only(['start_date', 'end_date', 'users_id',  'bancas_id']);
 
             } else if (session()->get('user.TipoUsuario') == 3) {
                 $data =  $request->only(['start_date', 'end_date', 'loterias_id', 'estado', 'promocion',]);
@@ -126,7 +126,7 @@ class HomeController extends Controller
                 $ganancia = $detalle->total_venta - $detalle->total_comision - $detalle->total_premios;
                 $TotalVenta = $TotalVenta + $detalle->total_venta;
                 $TotalComision = $TotalComision + $detalle->total_comision;
-                $TotalPremios = $TotalPremios +$detalle->total_premios;
+                $TotalPremios = $TotalPremios + $detalle->total_premios;
 
                 $TotalGanancia = $TotalGanancia + $ganancia;
 
@@ -149,9 +149,7 @@ class HomeController extends Controller
         }
     }
 
-    public function getVentasMesPrint(Request $request)
-    {
-
+    public function getVentasMesPrint(Request $request){
 
         if ($request->ajax()) {
             try {
@@ -165,6 +163,7 @@ class HomeController extends Controller
                     $data = $request->only(['users_id', 'bancas_id']);
 
                 } else if (session()->get('user.TipoUsuario') == 3) {
+
                     $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
                     $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
                 }
@@ -172,7 +171,7 @@ class HomeController extends Controller
                 $data['start_date'] = date('Y-m-01');
                 $data['end_date'] = date('Y-m-t');
 
-                // dd($data);
+
                 $receipt = Reportes::getReporteVentasPrint($data);
 
                 $formatoPdf = BancaUtil::HtmlContent($receipt);

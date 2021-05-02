@@ -52,18 +52,41 @@
                 </tr>
                 </thead>
                 <tbody>
-            @foreach($receipt->lines as $line)
-                <tr>
-                    <td>{{ $line->nombre }}</td>
-                    <td>{{ $line->venta }}</td>
-                    <td>{{ $line->comision }}</td>
-                    <td>{{ $line->ganado }}</td>
-                    <td>{{ $line->ganancia }}</td>
-                </tr>
-            @endforeach
-                </tr>
+                     @php
+                        $TotalVenta = 0;
+                        $TotalComision = 0;
+                        $TotalPremios = 0;
+                        $TotalGanancia = 0;
+                    @endphp
+                    @foreach($receipt->lines as $line)
+                        @php
+
+                            $ganancia =  $line->venta - $line->comision - $line->ganado;
+
+                            $TotalVenta = $TotalVenta + $line->venta;
+                            $TotalComision = $TotalComision + $line->comision;
+                            $TotalPremios = $TotalPremios + $line->ganado;
+                            $TotalGanancia = $TotalGanancia + $ganancia;
+
+                        @endphp
+                        <tr>
+                            <td>{{ $line->nombre }}</td>
+                            <td>{{ $line->venta }}</td>
+                            <td>{{ $line->comision }}</td>
+                            <td>{{ $line->ganado }}</td>
+                            <td>{{ $line->ganancia }}</td>
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td>Total</td>
+                        <td>{{ $TotalVenta }}</td>
+                        <td>{{ $TotalComision }}</td>
+                        <td>{{ $TotalPremios }}</td>
+                        <td>{{ $TotalGanancia }}</td>
+                    </tr>
                 </tbody>
             </table>
+            <p>VALORES SIN TICKET DE PROMOCION</p>
             </div><!-- /.col -->
         </div><!-- /.row -->
 
