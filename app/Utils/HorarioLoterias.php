@@ -30,19 +30,18 @@ class HorarioLoterias
         return Carbon::createFromFormat('d/m/Y', $fecha)->format('Y-m-d');
     }
 
-    static function compararFechas($fechaVigencia)
+    static function compararFechas($fechaSeleccionada, $fecha_actual)
     {
 
-        $fecha_actual = date('Y-m-d');
 
         // $fecha_actual = Carbon::parse($hoy);
         // $fechaVigencia =  Carbon::createFromFormat('d/m/Y', $fechaInicial)->format('d-m-Y');
         // $fechaVigencia =  Carbon::createFromFormat('d/m/Y', $fechaInicial)->format('d-m-Y');
 
         // dd(($fecha_actual==$fechaVigencia), $fecha_actual, $fechaVigencia);
-        if (($fecha_actual == $fechaVigencia) == 'true') {
+        if (($fecha_actual == $fechaSeleccionada) == 'true') {
             return 1;
-        } if(($fecha_actual > $fechaVigencia) == 'true'){
+        } if(($fecha_actual > $fechaSeleccionada) == 'true'){
             return 0;
         }
 

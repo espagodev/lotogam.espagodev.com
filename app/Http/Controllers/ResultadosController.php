@@ -58,22 +58,23 @@ class ResultadosController extends Controller
 
 
         $fecha = Carbon::createFromFormat('d/m/Y', $request->fecha)->format('Y-m-d');
+        $fechaActual = date('Y-m-d');
 
         $loterias_id = $request->loterias_id;
         $horaCierre = $request->horaCierre;
         $empresa_id = request()->session()->get('user.emp_id');
 
-        // dd($fecha, $loterias_id, $empresa_id);
+
         $consultaResultados =  $this->marketService->getResultadosFecha($fecha, $loterias_id, $empresa_id);
 
-        // dd($consultaResultados->rowCount());
         $horaRD = HorarioLoterias::horaRD();
-        // $hoy = date(session()->get('business.date_format'));
-        $dia = HorarioLoterias::dia($request->fecha);
-        // dd($horaCierre, $horaRD);
 
-        $compararFechas = HorarioLoterias::compararFechas($fecha);
+        $dia = HorarioLoterias::dia($fecha);
 
+        // dd($fecha, $loterias_id, $empresa_id, $horaRD, $dia, $fechaActual);
+
+        $compararFechas = HorarioLoterias::compararFechas($fecha, $fechaActual);
+// dd($compararFechas);
         if (!empty($consultaResultados)) {
 
                 return response()->json(
@@ -84,9 +85,8 @@ class ResultadosController extends Controller
                 );
 
         }
-
-        // if ($compararFechas == '1') {
-            if ($horaRD <=  $horaCierre) {
+        // dd($compararFechas, $horaRD, $horaCierre);
+        if (($compararFechas == '1') && ($horaRD <=  $horaCierre)) {
 
                 return response()->json(
                     array(
@@ -94,7 +94,7 @@ class ResultadosController extends Controller
                         'status' => 'cierre',
                     )
                 );
-            // }
+
         }else{
             return response()->json(
                 array(
