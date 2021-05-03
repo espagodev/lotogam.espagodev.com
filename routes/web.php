@@ -185,6 +185,11 @@ Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('super
     Route::get('reportes/reporte-modalidades-detalle', 'ReportesController@reporteModalidadesDetalle');
     Route::get('reportes/reporte-tickets-detalle', 'ReportesController@reporteTicketsDetalle');
 
+
+    /**
+    *imprimir reportes
+    */
+    Route::get('reportes/getVentasPrint', 'ReportesController@getVentasPrint');
     /**
      * RESULTADOS POR FECHA
      */

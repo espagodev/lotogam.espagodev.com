@@ -4,16 +4,16 @@ $(document).ready(function() {
 
     update_statistics(start, end);
 
-    $(document).on('change', 'input[name="date-filter"], #dashboard_location', function() {
+    $(document).on('change', 'input[name="date-filter"], #bancas_id', function() {
         var start = $('input[name="date-filter"]:checked').data('start');
         var end = $('input[name="date-filter"]:checked').data('end');
         update_statistics(start, end);
-        if ($('#quotation_table').length && $('#dashboard_location').length) {
+        if ($('#quotation_table').length && $('#bancas_id').length) {
             quotation_datatable.ajax.reload();
         }
     });
 
-     $(document).on('change', '#dashboard_location', function() {
+     $(document).on('change', '#bancas_id', function() {
         getVentasMes()
     });
 
@@ -27,7 +27,6 @@ $(document).ready(function() {
         var end = moment().subtract(1, 'days').format('YYYY-MM-DD');
 
         var data = { start_date: start, end_date: end};
-
             $.ajax({
                 method: 'GET',
                 url: $(this).data('href'),
@@ -126,8 +125,8 @@ $(document).ready(function() {
         var href = $(this).data('href');
 
         var bancas_id = '';
-            if ($('#dashboard_location').length > 0) {
-                bancas_id = $('#dashboard_location').val();
+            if ($('#bancas_id').length > 0) {
+                bancas_id = $('#bancas_id').val();
             }
         var data = { bancas_id: bancas_id};
         $.ajax({
@@ -151,8 +150,8 @@ $(document).ready(function() {
     function update_statistics(start, end) {
 
         var bancas_id = '';
-        if ($('#dashboard_location').length > 0) {
-            bancas_id = $('#dashboard_location').val();
+        if ($('#bancas_id').length > 0) {
+            bancas_id = $('#bancas_id').val();
         }
         var data = { start: start, end: end, bancas_id: bancas_id };
         //get purchase details
@@ -188,8 +187,8 @@ $(document).ready(function() {
             var end   = moment().endOf('month').format('YYYY-MM-DD');
 
             var bancas_id = '';
-            if ($('#dashboard_location').length > 0) {
-                bancas_id = $('#dashboard_location').val();
+            if ($('#bancas_id').length > 0) {
+                bancas_id = $('#bancas_id').val();
             }
 
             var data = { start_date: start, end_date: end, bancas_id: bancas_id};

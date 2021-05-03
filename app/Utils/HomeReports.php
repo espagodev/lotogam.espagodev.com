@@ -13,16 +13,6 @@ class HomeReports
      *
      * @return array
      */
-    // public function getPurchaseTotals($empresas_id, $start_date, $end_date, $bancas_id, $users_id = null)
-    // {
-    //     // $data = json_encode(['empresas_id'=> $empresas_id, 'start_date' => $start_date, 'end_date' => $end_date, 'bancas_id' => $bancas_id, 'user_id' => $user_id]);
-
-    //     $marketService = resolve(MarketService::class);
-    //     $data =  $marketService->getHomereportes($empresas_id, $start_date, $end_date, $bancas_id, $users_id);
-
-    //     return $data;
-
-    // }
 
     public function getPurchaseTotals($data)
     {
@@ -35,13 +25,4 @@ class HomeReports
     }
 
 
-    // public function getPurchaseTotals($data)
-    // {
-    //     // $data = json_encode(['empresas_id'=> $empresas_id, 'start_date' => $start_date, 'end_date' => $end_date, 'bancas_id' => $bancas_id, 'user_id' => $user_id]);
-
-    //     $marketService = resolve(MarketService::class);
-    //     $data =  $marketService->getHomereportes($data);
-
-    //     return $data;
-    // }
 }

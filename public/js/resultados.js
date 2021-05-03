@@ -26,24 +26,24 @@ $('#modificarPremio').on('show.bs.modal', function (event) {
 
     $(document).ready(function() {
 
-            if ($('#spr_date_filter').length == 1) {
-                $('#spr_date_filter').daterangepicker(dateRangeSettings, function(start, end) {
-                    $('#spr_date_filter span').val(
-                        start.format(moment_date_format) + ' ~ ' + end.format(moment_date_format)
-                    );
-                    reporte_resultados.ajax.reload();
-                });
-                $('#spr_date_filter').on('cancel.daterangepicker', function(ev, picker) {
-                    $('#spr_date_filter').val('');
-                    reporte_resultados.ajax.reload();
-                });
-            }
+        if ($('#spr_date_filter').length == 1) {
+            $('#spr_date_filter').daterangepicker(dateRangeSettings, function(start, end) {
+                $('#spr_date_filter span').val(
+                    start.format(moment_date_format) + ' ~ ' + end.format(moment_date_format)
+                );
+                reporte_resultados.ajax.reload();
+            });
+            $('#spr_date_filter').on('cancel.daterangepicker', function(ev, picker) {
+                $('#spr_date_filter').val('');
+                reporte_resultados.ajax.reload();
+            });
+        }
 
-            $('#reporte_resultados, #loterias_id').change(
-                function() {
-                    reporte_resultados.ajax.reload();
-                }
-            );
+        $('#reporte_resultados, #loterias_id').change(
+            function() {
+                reporte_resultados.ajax.reload();
+            }
+        );
 
 
         $(".loterias_id").hide();
@@ -60,7 +60,7 @@ $('#modificarPremio').on('show.bs.modal', function (event) {
         });
 
 
-        $("#loterias_id ").bind("change", function() {
+        $("#loterias_id").bind("change", function() {
 
             var loterias_id = $('#loterias_id').val();
             var fecha = $('#res_fecha').val();
@@ -175,49 +175,105 @@ $('#modificarPremio').on('show.bs.modal', function (event) {
 
         });
 
-            //Reporte de resultados
-            reporte_resultados =  $('#reporte_resultados').DataTable({
-                processing: true,
-                serverSide: true,
-                aaSorting: false,
-                ajax: {
-                        url: '/reportes/reporte-resultados',
-                        dataType: "json",
-                    data: function(d) {
+        //Reporte de resultados
+        reporte_resultados =  $('#reporte_resultados').DataTable({
+            processing: true,
+            serverSide: true,
+            aaSorting: false,
+            ajax: {
+                    url: '/reportes/reporte-resultados',
+                    dataType: "json",
+                data: function(d) {
 
 
-                        var mostrar = 1;
-                        var start = '';
-                        var end = '';
-                        if ($('input#spr_date_filter').val()) {
-                            start = $('input#spr_date_filter')
-                                .data('daterangepicker')
-                                .startDate.format('YYYY-MM-DD');
-                            end = $('input#spr_date_filter')
-                                .data('daterangepicker')
-                                .endDate.format('YYYY-MM-DD');
-                        }
-                        d.start_date = start;
-                        d.end_date = end;
-                        d.mostrar = mostrar;
-                         d.loterias_id = $('select#loterias_id').val();
-                    },
+                    var mostrar = 1;
+                    var start = '';
+                    var end = '';
+                    if ($('input#spr_date_filter').val()) {
+                        start = $('input#spr_date_filter')
+                            .data('daterangepicker')
+                            .startDate.format('YYYY-MM-DD');
+                        end = $('input#spr_date_filter')
+                            .data('daterangepicker')
+                            .endDate.format('YYYY-MM-DD');
+                    }
+                    d.start_date = start;
+                    d.end_date = end;
+                    d.mostrar = mostrar;
+                        d.loterias_id = $('select#loterias_id').val();
                 },
-                columns: [
-                        { data: 'lot_nombre', name: 'lot_nombre', orderable: false, searchable: false  },
-                        { data: 'res_fecha', name: 'res_fecha', orderable: false, searchable: false  },
-                        { data: 'res_premio1', name: 'res_premio1', orderable: false, searchable: false  },
-                        { data: 'res_premio2', name: 'res_premio2', orderable: false, searchable: false  },
-                        { data: 'res_premio3', name: 'res_premio3', orderable: false, searchable: false  },
-                        { data: 'action', name: 'action' },
+            },
+            columns: [
+                    { data: 'lot_nombre', name: 'lot_nombre', orderable: false, searchable: false  },
+                    { data: 'res_fecha', name: 'res_fecha', orderable: false, searchable: false  },
+                    { data: 'res_premio1', name: 'res_premio1', orderable: false, searchable: false  },
+                    { data: 'res_premio2', name: 'res_premio2', orderable: false, searchable: false  },
+                    { data: 'res_premio3', name: 'res_premio3', orderable: false, searchable: false  },
+                    { data: 'action', name: 'action' },
 
-                ],
-                fnDrawCallback: function(oSettings) {
-                    __currency_convert_recursively($('#reporte_resultados'));
-                },
-            });
+            ],
+            fnDrawCallback: function(oSettings) {
+                __currency_convert_recursively($('#reporte_resultados'));
+            },
+        });
 
-            __reporteResultadosDetalle();
+        __reporteResultadosDetalle();
+
+        $(document).on('click', '.resultados_print', function(e) {
+
+            var loterias_id = $('select#loterias_id').val();
+
+            var start = $('#spr_date_filter')
+                .data('daterangepicker')
+                .startDate.format('YYYY-MM-DD');
+            var end = $('#spr_date_filter')
+                .data('daterangepicker')
+                .endDate.format('YYYY-MM-DD');
+
+            var data = { start_date: start, end_date: end, loterias_id: loterias_id};
+
+                $.ajax({
+                    method: 'GET',
+                    url: $(this).data('href'),
+
+                    dataType: 'json',
+                    data: data,
+                    success: function(result) {
+
+
+                        if (result.success === 1) {
+                            var receipt = result.receipt;
+                                Lobibox.notify("success", {
+                                    pauseDelayOnHover: true,
+                                    size: "mini",
+                                    rounded: true,
+                                    delayIndicator: false,
+                                    continueDelayOnInactiveTab: false,
+                                    position: "top right",
+                                    msg: "Se Genero el Listado",
+                                });
+                                receipt.forEach(function(elemento, index, arr) {
+                                    //    console.log(arr[index] = elemento);
+                                        if (arr[index].is_enabled){
+                                            // console.log(arr[index].data)
+                                            __pos_print(arr[index] = elemento);
+                                        }
+                                });
+                            } else {
+                                // toastr.error(result.msg);
+                                Lobibox.notify("error", {
+                                    pauseDelayOnHover: true,
+                                    size: "mini",
+                                    rounded: true,
+                                    delayIndicator: false,
+                                    continueDelayOnInactiveTab: false,
+                                    position: "top right",
+                                    msg: "No hay Resultados paramostrar",
+                                });
+                            }
+                    }
+                });
+        });
     });
 
      $(document).on('click', 'button.delete_resultado_button', function() {

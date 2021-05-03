@@ -7,7 +7,9 @@
 	   </div>
         <div class="col-sm-3">
             <div class="btn-group float-sm-right">
-                <button type="button" class="btn btn-info waves-effect waves-light"   id="resultados" ><i class="fa fa-print m-1"></i></button>
+                <a href="#" type="button" class="btn btn-info  resultados_print" data-href="{{action('ResultadosController@getResultadosFechaPrint')}}">
+					  <i class="fa fa-print"></i> Imprimir Resultados
+                </a>
                 <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#nuevo"><i class="fa fa-plus m-1"></i> Nuevo Resultado</button>
             </div>
         </div>
@@ -19,7 +21,7 @@
                 <div class="card">
                     <div class="card-body">
                             <div class="table-responsive">
-                                 <table class="table table-bordered table-striped"  id="reporte_resultados"> 
+                                 <table class="table table-bordered table-striped"  id="reporte_resultados">
                                     <thead>
                                         <tr>
                                             <th>Loteria</th>

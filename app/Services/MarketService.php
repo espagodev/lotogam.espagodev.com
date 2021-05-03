@@ -1177,14 +1177,14 @@ class MarketService
         return $this->makeRequest('GET', "getReporteModalidadesDetalle", $data);
     }
 
-    public function getResultadosFecha($empresas_id, $start_date, $end_date)
+    public function getResultadosFecha($data)
     {
-        return $this->makeRequest('GET', "getResultadosFecha/{$empresas_id}/{$start_date}/{$end_date}");
+        return $this->makeRequest('GET', "getResultadosFecha", $data);
     }
 
-    public function getResultadosFechaPrint($empresas_id, $start_date, $end_date)
+    public function getResultadosFechaPrint($data)
     {
-        return $this->makeRequest('GET', "getResultadosFechaPrint/{$empresas_id}/{$start_date}/{$end_date}");
+        return $this->makeRequest('GET', "getResultadosFechaPrint", $data);
     }
 
     public function getReporteVentasPrint($data)

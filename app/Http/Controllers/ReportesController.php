@@ -41,7 +41,7 @@ class ReportesController extends Controller
             if(session()->get('user.TipoUsuario') == 2){
                 $data = $request->only(['start_date', 'end_date',  'loterias_id','users_id', 'estado', 'promocion', 'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
-                $data = $request->only(['start_date', 'end_date',  'loterias_id']);
+                $data = $request->only(['start_date', 'end_date','loterias_id', 'estado', 'promocion']);
                 $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
                 $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
             }
@@ -55,19 +55,20 @@ class ReportesController extends Controller
                     return '<a data-loteria=' . $row->loterias_id . ' href="#" class="detalle-ventas">' . $row->lot_nombre  . ' (' . $row->lot_abreviado . ')  </a>';
                 })
                 ->editColumn('venta', function ($row) {
-                    $venta = $row->venta ? $row->venta : 0;
+                    $venta = $row->total_venta ? $row->total_venta : 0;
                     return '<span class="display_currency venta"  data-orig-value="' . $venta . '" data-currency_symbol = true>' . $venta . '</span>';
                 })
                 ->editColumn('comision', function ($row) {
-                    $comision = $row->comision ? $row->comision : 0;
+                    $comision = $row->total_comision ? $row->total_comision : 0;
                     return '<span class="display_currency comision" data-orig-value="' . $comision . '" data-currency_symbol = true>' . $comision . '</span>';
                 })
                 ->editColumn('ganado', function ($row) {
-                    $ganado = $row->ganado ? $row->ganado : 0;
+                    $ganado = $row->total_premios ? $row->total_premios : 0;
                     return '<span class="display_currency premios" data-orig-value="' . $ganado . '" data-currency_symbol = true>' . $ganado . '</span>';
                 })
                 ->editColumn('ganancia', function ($row) {
-                    $ganancia = $row->ganancia ? $row->ganancia : 0;
+                    $totalGanancia =  $row->total_venta - $row->total_comision - $row->total_premios;
+                    $ganancia = $totalGanancia ? $totalGanancia : 0;
                     return '<span class="display_currency ganancia" data-orig-value="' . $ganancia . '" data-currency_symbol = true>' . $ganancia . '</span>';
                 })
                 ->rawColumns(['lot_nombre', 'venta', 'comision', 'ganado', 'ganancia'])
@@ -492,4 +493,44 @@ class ReportesController extends Controller
 
         return view('reportes/reporte-modalidades', compact('bancas'));
     }
+
+    //REPORTES PARA IMPRIMIRÁ
+
+    public function getVentasPrint(Request $request)
+    {
+
+        if ($request->ajax()) {
+            try {
+                $output = [
+                    'success' => 0,
+                    'msg' =>
+                    'Algo salió Mal'
+                ];
+
+                if (session()->get('user.TipoUsuario') == 2) {
+                    $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
+                } else if (session()->get('user.TipoUsuario') == 3) {
+                    $data = $request->only(['start_date', 'end_date', 'loterias_id', 'estado', 'promocion']);
+                    $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+                    $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
+                }
+                $data['empresas_id'] = session()->get('user.emp_id');
+
+                $receipt = Reportes::getReporteVentasPrint($data);
+
+                $formatoPdf = BancaUtil::HtmlContent($receipt);
+
+                $output = ['success' => 1, 'receipt' => $formatoPdf];
+            } catch (\Exception $e) {
+                \Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
+
+                $output = [
+                    'success' => 0,
+                    'msg' => 'Algo salió Mal aqui'
+                ];
+            }
+            return $output;
+        }
+    }
+
 }

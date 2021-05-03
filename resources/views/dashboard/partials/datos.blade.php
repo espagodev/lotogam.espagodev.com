@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-4 col-xs-12">
              @if((request()->session()->get('user.TipoUsuario') == 2) && (count((array)$bancas) > 1))
-                 <select class="form-control" name="dashboard_location" id="dashboard_location" >
+                 <select class="form-control" name="bancas_id" id="bancas_id" >
                     <option value="">Seleccione</option>
                     @foreach($bancas as  $banca)
                     <option value="{{ $banca->id }}"  >{{ $banca->ban_nombre}}</option>

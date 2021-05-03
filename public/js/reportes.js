@@ -13,7 +13,7 @@ $(document).ready(function() {
         });
     }
 
-    $('#reporte_ventas, #bancas_id, #loterias_id, #users_id').change(
+    $('#reporte_ventas, #bancas_id, #loterias_id, #users_id, #estado, #promocion').change(
         function() {
             reporte_ventas.ajax.reload();
         }
@@ -32,6 +32,8 @@ $(document).ready(function() {
                 d.loterias_id = $('select#loterias_id').val();
                 d.bancas_id = $('select#bancas_id').val();
                 d.users_id = $('select#users_id').val();
+                d.estado = $('select#estado').val();
+                d.promocion = $('select#promocion').val();
                 var start = '';
                 var end = '';
                 if ($('input#spr_date_filter').val()) {
@@ -110,3 +112,44 @@ $(document).ready(function() {
     }
 
 
+//Used for Purchase & Sell invoice.
+    $(document).on('click', 'a.print-invoice', function(e) {
+        e.preventDefault();
+        var href = $(this).data('href');
+
+        var loterias_id = $('select#loterias_id').val();
+                var bancas_id = $('select#bancas_id').val();
+                var users_id = $('select#users_id').val();
+                var estado = $('select#estado').val();
+                var promocion = $('select#promocion').val();
+                var start = '';
+                var end = '';
+                if ($('input#spr_date_filter').val()) {
+                    start = $('input#spr_date_filter')
+                        .data('daterangepicker')
+                        .startDate.format('YYYY-MM-DD');
+                    end = $('input#spr_date_filter')
+                        .data('daterangepicker')
+                        .endDate.format('YYYY-MM-DD');
+                }
+               var start_date = start;
+               var end_date = end;
+
+
+        var data = { start_date: start, end_date: end, loterias_id: loterias_id, bancas_id: bancas_id, users_id: users_id, promocion: promocion};
+        $.ajax({
+            method: 'GET',
+            url: href,
+            data: data,
+            dataType: 'json',
+            success: function(result) {
+                if (result.success == 1 && result.receipt.html_content != '') {
+                    $('#receipt_section').html(result.receipt.html_content);
+                    __currency_convert_recursively($('#receipt_section'));
+                    __print_receipt('receipt_section');
+                } else {
+                    // toastr.error(result.msg);
+                }
+            },
+        });
+    });

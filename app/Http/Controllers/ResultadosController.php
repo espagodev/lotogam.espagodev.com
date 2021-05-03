@@ -164,11 +164,13 @@ class ResultadosController extends Controller
     {
         if ($request->ajax()) {
 
-            $empresas_id = session()->get('user.emp_id');
-            $start_date = $request->get('start_date');
-            $end_date = $request->get('end_date');
 
-            $resultadoFechas = Reportes::getResultadosFecha($empresas_id, $start_date, $end_date);
+            $data['empresas_id'] = session()->get('user.emp_id');
+            $data['start_date'] =  $request->get('start_date');
+            $data['end_date'] =   $request->get('end_date');
+            $data['loterias_id'] =   $request->get('loterias_id');
+
+            $resultadoFechas = Reportes::getResultadosFecha($data);
 
             $output = '';
             foreach ($resultadoFechas as  $detalle) {
@@ -192,12 +194,13 @@ class ResultadosController extends Controller
     {
         if ($request->ajax()) {
 
-            $empresas_id = session()->get('user.emp_id');
+            $data['empresas_id'] = session()->get('user.emp_id');
+            $data['start_date'] =  $request->get('start_date');
+            $data['end_date'] =   $request->get('end_date');
+            $data['loterias_id'] =   $request->get('loterias_id');
 
-            $start_date = $request->get('start_date');
-            $end_date = $request->get('end_date');
 
-            $data = Reportes::getResultadosFechaPrint($empresas_id, $start_date, $end_date);
+            $data = Reportes::getResultadosFechaPrint($data);
 
 
             $output = ['success' => 1, 'receipt' => $data];

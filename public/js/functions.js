@@ -296,7 +296,7 @@ function incrementImageCounter() {
 function __reporteResultadosDetalle() {
 
     var start = moment().subtract(1, 'days').format('YYYY-MM-DD');
-        var end = moment().subtract(1, 'days').format('YYYY-MM-DD');
+    var end = moment().subtract(1, 'days').format('YYYY-MM-DD');
 
     var data = { start_date: start, end_date: end};
 

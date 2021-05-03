@@ -7,7 +7,7 @@ class Reportes
 {
     public static function getReporteVentas($data)
     {
-        // dd($empresas_id, $start_date, $end_date, $bancas_id, $users_id);
+        // dd($data);
         $marketService = resolve(MarketService::class);
         $data =  $marketService->getReporteVentas($data);
 
@@ -108,21 +108,21 @@ class Reportes
     }
 
     //REULTADOS POR FECHA
-    public static function getResultadosFecha($empresas_id, $start_date, $end_date)
+    public static function getResultadosFecha($data)
     {
         // dd($empresas_id, $start_date, $end_date, $bancas_id, $users_id);
         $marketService = resolve(MarketService::class);
-        $data =  $marketService->getResultadosFecha($empresas_id, $start_date, $end_date);
+        $data =  $marketService->getResultadosFecha($data);
 
         return $data;
     }
 
     //REULTADOS POR FECHA PARA IMPRIMIR
-    public static function getResultadosFechaPrint($empresas_id,  $start_date, $end_date)
+    public static function getResultadosFechaPrint($data)
     {
         // dd($empresas_id, $start_date, $end_date, $bancas_id, $users_id);
         $marketService = resolve(MarketService::class);
-        $data =  $marketService->getResultadosFechaPrint($empresas_id,  $start_date, $end_date);
+        $data =  $marketService->getResultadosFechaPrint($data);
 
         return $data;
     }
