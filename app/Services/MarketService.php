@@ -1157,9 +1157,9 @@ class MarketService
     }
 
     //REPORTE DETALLES
-    public function getreporteVentasDetalle($empresas_id, $start_date, $end_date, $bancas_id, $users_id, $loterias_id)
+    public function getreporteVentasDetalle($data)
     {
-        return $this->makeRequest('GET', "getreporteVentasDetalle/{$empresas_id}/{$start_date}/{$end_date}/{$loterias_id}/{$bancas_id}/{$users_id}");
+        return $this->makeRequest('GET', "getreporteVentasDetalle", $data);
     }
 
     public function getreporteResultadosDetalle($empresas_id, $start_date, $end_date, $loterias_id)

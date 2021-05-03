@@ -60,11 +60,11 @@ class Reportes
     }
 
     //DETALLES
-    public static function getreporteVentasDetalle($empresas_id, $start_date, $end_date, $loterias_id, $bancas_id = null, $users_id = null)
+    public static function getreporteVentasDetalle($data)
     {
         // dd($empresas_id, $start_date, $end_date, $loterias_id);
         $marketService = resolve(MarketService::class);
-        $data =  $marketService->getreporteVentasDetalle($empresas_id, $start_date, $end_date, $loterias_id, $bancas_id, $users_id);
+        $data =  $marketService->getreporteVentasDetalle($data);
 
         return $data;
     }

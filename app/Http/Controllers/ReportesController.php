@@ -368,15 +368,24 @@ class ReportesController extends Controller
     {
         if ($request->ajax()) {
 
-            $empresas_id = session()->get('user.emp_id');
-            $start_date = $request->get('start_date');
-            $end_date = $request->get('end_date');
-            $loterias_id = $request->get('loterias_id', null);
-            $bancas_id = $request->get('bancas_id', null);
-            $users_id = $request->get('users_id', null);
+            // $empresas_id = session()->get('user.emp_id');
+            // $start_date = $request->get('start_date');
+            // $end_date = $request->get('end_date');
+            // $loterias_id = $request->get('loterias_id', null);
+            // $bancas_id = $request->get('bancas_id', null);
+            // $users_id = $request->get('users_id', null);
+
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data = $request->only(['start_date', 'end_date', 'loterias_id']);
+                $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
+            }
+            $data['empresas_id'] = session()->get('user.emp_id');
 
 
-            $reporteVentasDetalle = $this->reportes->getreporteVentasDetalle($empresas_id, $start_date, $end_date, $loterias_id, $bancas_id, $users_id);
+            $reporteVentasDetalle = $this->reportes->getreporteVentasDetalle($data);
 
             $output = '';
             foreach ($reporteVentasDetalle as $key => $detalles) {
