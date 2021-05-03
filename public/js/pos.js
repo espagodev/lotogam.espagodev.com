@@ -263,6 +263,12 @@ $(document).ready(function () {
 
                         $("div.pos-processing").hide();
                         $("#pos-save").removeAttr("disabled");
+                        $("span#total_payable").text(__currency_trans_from_en(0, true));
+                        $("span#total_loterias").text(0);
+                        $("input[name='tic_promocion']").each(function () {
+                            this.checked = false;
+                        });
+
                     },
                 });
             }
@@ -418,6 +424,7 @@ $(document).on('show.bs.modal', '#recent_transactions_modal', function () {
                 });
             }
             MostrarJugadas();
+
         });
 
     }
@@ -434,13 +441,10 @@ $(document).on('show.bs.modal', '#recent_transactions_modal', function () {
 
         });
 
-            $("span.price_total").text(
-                __currency_trans_from_en(price_total, false)
-            );
-
+            $("span.price_total").text(__currency_trans_from_en(price_total, true));
 
         $("input[name='lot_id[]']").on("click", function () {
-        // $(".loteria").on("click", function () {
+
             if ($(this).is(":checked")) {
                 contador++;
             } else {
@@ -448,7 +452,7 @@ $(document).on('show.bs.modal', '#recent_transactions_modal', function () {
             }
 
             if (contador == 0) {
-                total_payable = price_total;
+                total_payable = 0;
             } else {
                 total_payable = price_total * contador;
             }
@@ -505,6 +509,7 @@ $(document).on('show.bs.modal', '#recent_transactions_modal', function () {
             })
             ).then(function (resp) {
                 MostrarJugadas();
+
             });
         }
 
