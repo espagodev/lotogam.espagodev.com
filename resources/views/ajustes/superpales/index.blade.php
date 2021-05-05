@@ -29,6 +29,7 @@
                                             <th scope="col">Combinación</th>
                                             <th scope="col">Abreviado</th>
                                             <th scope="col">Estado</th>
+                                            <th scope="col">Opciones</th>
 
                                         </tr>
                                     </thead>
@@ -48,6 +49,10 @@
                                                             <td>{{ $superpale->lot_abreviado}} </td>
                                                         <td  class="card-body bt-switch">
                                                                 <input type="checkbox" data-id="{{$superpale->loterias_id}}" {{ $superpale->lot_estado ? 'checked' : '' }} data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" >
+                                                            </td>
+                                                            <td>
+                                                                <a data-href=""  class="btn btn-outline-warning modificar-impresora" rel="tooltip" title="Editar Impresora" ><i class="fa fa-pencil"></i></a>
+                                                                <a data-href=""  class="btn btn-outline-warning modificar-impresora" rel="tooltip" title="Editar Impresora" ><i class="fa fa-pencil"></i></a>
                                                             </td>
                                                         </tr>
                                                     @endif

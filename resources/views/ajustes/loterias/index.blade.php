@@ -77,7 +77,9 @@
 
                         dataType: 'json',
                         data: data,
+
                         success: function(result) {
+                             console.log(result);
                                 if (result.success == true) {
 
 

@@ -78,8 +78,11 @@ class EmpresaLoteriasController extends Controller
 
         $data = $request->all();
         $data['empresas_id'] = session()->get('user.emp_id');
-   
-        $loteria = $this->marketService->getEmpresaLoteriaEstado($data);
+
+        $estado = $this->marketService->getEmpresaLoteriaEstado($data);
+
+
+        return json_encode($estado);
 
     }
 }

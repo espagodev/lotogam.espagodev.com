@@ -6,7 +6,14 @@
         @elseif((request()->session()->get('user.TipoUsuario') == 3))
             @include('reportes.partials.opcionesBanca')
         @endif
-    <div class="row">
+         <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-4">
+                <a href="#" type="button" class="btn btn-info print-invoice" data-href="{{action('ReportesController@getVentasPrint')}}">
+					<i class="fa fa-print"></i> Imprimir Reporte
+                </a>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">

@@ -172,8 +172,15 @@ class FormatoTickets
             $output .=  "<div class='flex-box'><strong>Quiniela</strong></div>";
             foreach ($arrayQ as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
+
+                if ($numeros->tid_ganado != 0) {
+                    $clase =  'success';
+                } else {
+                    $clase =  '';
+                }
+
                 $output .=
-                    "<div class='flex-box'>" .
+                    "<div class='flex-box  badge-$clase'>" .
                     "<p>$numeros->tid_apuesta</p>" .
                     "<p>$valor</p>" .
                     "</div>";
@@ -184,8 +191,15 @@ class FormatoTickets
             $output .=  "<div class='flex-box'><strong>Pales</strong></div>";
             foreach ($arrayPL as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
+
+                if ($numeros->tid_ganado != 0) {
+                    $clase =  'success';
+                } else {
+                    $clase =  '';
+                }
+
                 $output .=
-                    "<div class='flex-box'>" .
+                    "<div class='flex-box  badge-$clase'>" .
                     "<p>$numeros->tid_apuesta</p>" .
                     "<p>$valor</p>" .
                     "</div>";
@@ -197,8 +211,15 @@ class FormatoTickets
             $output .=  "<div class='flex-box'><strong>Tripletas</strong></div>";
             foreach ($arrayTP as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
+
+                if ($numeros->tid_ganado != 0) {
+                    $clase =  'success';
+                } else {
+                    $clase =  '';
+                }
+
                 $output .=
-                    "<div class='flex-box'>" .
+                    "<div class='flex-box  badge-$clase'>" .
                     "<p>$numeros->tid_apuesta</p>" .
                     "<p>$valor</p>" .
                     "</div>";
@@ -211,8 +232,15 @@ class FormatoTickets
             $output .=  "<div class='flex-box'><strong>SuperPale</strong></div>";
             foreach ($arraySP as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
+
+                if ($numeros->tid_ganado != 0) {
+                    $clase =  'success';
+                } else {
+                    $clase =  '';
+                }
+
                 $output .=
-                    "<div class='flex-box'>" .
+                    "<div class='flex-box  badge-$clase'>" .
                     "<p>$numeros->tid_apuesta</p>" .
                     "<p>$valor</p>" .
                     "</div>";

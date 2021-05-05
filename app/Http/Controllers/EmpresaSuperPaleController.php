@@ -27,7 +27,7 @@ class EmpresaSuperPaleController extends Controller
     {
 
         $data = $request->all();
-        $data['empresas_id'] = $this->marketService->getUserInformation()->idEmpresa;
+        $data['empresas_id'] =   session()->get('user.emp_id');
         $data['lot_superpale'] = '1';
 
         $data = $this->marketService->nuevaLoteriaSuperpale($data);
