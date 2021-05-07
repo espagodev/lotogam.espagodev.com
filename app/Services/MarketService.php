@@ -1182,6 +1182,11 @@ class MarketService
         return $this->makeRequest('GET', "getResultadosFecha", $data);
     }
 
+    public function getConsultaResultados($data)
+    {
+        return $this->makeRequest('GET', "getConsultaResultados", $data);
+    }
+
     public function getResultadosFechaPrint($data)
     {
         return $this->makeRequest('GET', "getResultadosFechaPrint", $data);

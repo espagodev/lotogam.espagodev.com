@@ -89,6 +89,7 @@ Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('super
      * validaciones resultados
      */
 
+    Route::get('getNuevoResultado', 'ResultadosController@getNuevoResultado');
     Route::resource('resultados', 'ResultadosController', ['except' => ['show']]);
     Route::get('validaHoraCierre', 'ResultadosController@validaHoraCierre');
     Route::post('guardarResultados', 'ResultadosController@guardarResultados');

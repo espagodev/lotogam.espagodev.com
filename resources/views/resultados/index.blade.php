@@ -10,7 +10,8 @@
                 <a href="#" type="button" class="btn btn-info  resultados_print" data-href="{{action('ResultadosController@getResultadosFechaPrint')}}">
 					  <i class="fa fa-print"></i> Imprimir Resultados
                 </a>
-                <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#nuevo"><i class="fa fa-plus m-1"></i> Nuevo Resultado</button>
+                <a href="#" data-href="{{action('ResultadosController@getNuevoResultado') }}"  class="btn btn-primary waves-effect waves-light nuevo-resultado" rel="tooltip" title="ingresar Resultado" ><i class="fa fa-plus m-1"></i>Nuevo Resultado</a>
+
             </div>
         </div>
      </div>
@@ -38,32 +39,18 @@
                 </div>
             </div>
       </div><!--End Row-->
+       <div class="modal fade nuevo_modal" tabindex="-1" role="dialog"
+        aria-labelledby="gridSystemModalLabel">
+    </div>
    @endsection
-      @include('resultados.partials.modal')
-   @section('scripts')
+ @section('scripts')
     <script src="{{ asset('js/resultados.js?v=' . $asset_v) }}"></script>
      <script type="text/javascript">
         var token = '{{ csrf_token() }}';
     </script>
-    <script>
 
-      $('#res_fecha').datepicker({
-        autoclose: true,
-        todayHighlight: true,
-         format: 'dd/mm/yyyy',
-        startDate: '-4d',
-        endDate: '0d',
-        language: "es"
-      });
-
-      function fn_saltar(pre_premio,orden)
-        {
-            if(orden == 1 && pre_premio.value.length == 2)
-                $("#res_premio2").focus();
-            else if(orden == 2 && pre_premio.value.length == 2)
-                $("#res_premio3").focus();
-	    }
-      </script>
    @endsection
+
+
 
 

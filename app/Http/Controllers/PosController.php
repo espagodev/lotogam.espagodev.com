@@ -285,8 +285,6 @@ class PosController extends Controller
                 $bancas_id =  session()->get('user.banca');
 
                 $receipt = $this->marketService->getGenerarTicket($empresas_id, $tickets_id, $bancas_id );
-                // dd($receipt);
-
 
                 if (!empty($receipt)) {
                     $output = ['success' => 1, 'receipt' => $receipt];
@@ -296,7 +294,7 @@ class PosController extends Controller
 
                 $output = [
                     'success' => 0,
-                    'msg' => "Algo salió mal, por favor intente de nuevo más tarde"
+                    'msg' => "Algo salió mal, por favor intente de nuevo más tarde aqui"
                 ];
             }
 

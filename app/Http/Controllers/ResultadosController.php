@@ -52,7 +52,6 @@ class ResultadosController extends Controller
         }
     }
 
-
     public function validaHoraCierre(Request $request)
     {
 
@@ -60,12 +59,13 @@ class ResultadosController extends Controller
         $fecha = Carbon::createFromFormat('d/m/Y', $request->fecha)->format('Y-m-d');
         $fechaActual = date('Y-m-d');
 
-        $loterias_id = $request->loterias_id;
         $horaCierre = $request->horaCierre;
-        $empresa_id = request()->session()->get('user.emp_id');
 
+        $data['empresas_id'] = session()->get('user.emp_id');
+        $data['res_fecha'] =  $fecha;
+        $data['loterias_id'] =  $request->loterias_id;
 
-        $consultaResultados =  $this->marketService->getResultadosFecha($fecha, $loterias_id, $empresa_id);
+        $consultaResultados =  $this->marketService->getConsultaResultados($data);
 
         $horaRD = HorarioLoterias::horaRD();
 
@@ -74,15 +74,10 @@ class ResultadosController extends Controller
         // dd($fecha, $loterias_id, $empresa_id, $horaRD, $dia, $fechaActual);
 
         $compararFechas = HorarioLoterias::compararFechas($fecha, $fechaActual);
-// dd($compararFechas);
+
         if (!empty($consultaResultados)) {
 
-                return response()->json(
-                    array(
-                        'mensaje' => 'Esta Loteria ya cuenta con resultados para la fecha seleccionada '. $fecha,
-                        'status' => 'resultados',
-                    )
-                );
+            return response()->json($consultaResultados);
 
         }
         // dd($compararFechas, $horaRD, $horaCierre);
@@ -218,5 +213,26 @@ class ResultadosController extends Controller
 
             return response()->json($data);
         }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getNuevoResultado()
+    {
+        $empresas_id = session()->get('user.emp_id');
+        $loterias  = $this->marketService->getloteriasEmpresaHorario($empresas_id);
+        // $empresas_id = session()->get('user.emp_id');
+        // $bancas_id =  session()->get('user.banca');
+
+        // $impresora = $this->marketService->getImpresoraDetalle($id);
+        // $conexiones = Util::tipoConexion();
+        // $capacidades = Util::perfilCapacidad();
+
+
+        return view('resultados.resultados_create')->with(['loterias' => $loterias]);
     }
 }
