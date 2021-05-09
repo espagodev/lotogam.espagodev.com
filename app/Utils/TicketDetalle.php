@@ -127,7 +127,7 @@ class TicketDetalle
     }
 
     /**
-     * Monto de Apuesta por Modalidad
+     * Monto individual de Apuesta por Modalidad
      */
     public static function MontoApuestaModalidad($modalidad)
     {
@@ -143,6 +143,24 @@ class TicketDetalle
             return 0;
         } else {
             return $data[0]->mti_valor;
+        }
+    }
+
+    /**
+     * Monto global de Apuesta por Modalidad
+     */
+    public static function MontoGlobalModalidad($modalidad)
+    {
+        $marketService = resolve(MarketService::class);
+        $banca_id = request()->session()->get('user.banca');
+
+        $data = $marketService->getMontoGlobalApuesta($banca_id,  $modalidad);
+
+        if (is_null($data)) {
+
+            return 0;
+        } else {
+            return $data[0]->mtg_valor;
         }
     }
 

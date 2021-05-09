@@ -976,10 +976,17 @@ class MarketService
             "ticket/{$ticket}/detalle/{$numero}/modificar/{$data}/comision/{$nueva_comision}"
         );
     }
-
+    //monto individual permitido
     public function getMontoApuestaModalidad($banca, $modalidad)    {
 
         return $this->makeRequest('GET', "monto/{$banca}/individual/{$modalidad}/modalidad");
+    }
+
+    //monto global permitido
+    public function getMontoGlobalApuesta($banca, $modalidad)
+    {
+
+        return $this->makeRequest('GET', "monto/{$banca}/global/{$modalidad}/modalidad");
     }
 
     public function getMontoComisionModalidad($banca, $modalidad)
@@ -1058,10 +1065,12 @@ class MarketService
 
     //control juegos
 
-    public function getConsultaControlJugada($usuario, $numero, $loteria, $fecha)
+    public function getConsultaControlJugada($data)
     {
-        return $this->makeRequest('GET', "getConsultaControlJugada/{$usuario}/{$numero}/{$loteria}/{$fecha}");
+        return $this->makeRequest('GET', "getConsultaControlJugada", $data);
     }
+    //
+
 
     //nuevo ticketdetalle
     public function nuevoControlJugadas($data)

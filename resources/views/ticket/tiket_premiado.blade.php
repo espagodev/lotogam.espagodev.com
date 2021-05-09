@@ -41,9 +41,9 @@
                                     <tbody>
                                          @foreach ($jugadas as  $jugada)
                                            <tr>
-                                                <td> {{  $jugadas[0]->tid_apuesta}} </td>
-                                                <td><span class="display_currency" data-orig-value='{{  $jugadas[0]->tid_valor}}' data-currency_symbol=true>{{  $jugadas[0]->tid_valor}}</span> </td>
-                                                <td><span class="display_currency" data-orig-value='{{  $jugadas[0]->tid_ganado}}' data-currency_symbol=true>{{  $jugadas[0]->tid_ganado}} </span></td>
+                                                <td> {{  $jugada->tid_apuesta}} </td>
+                                                <td><span class="display_currency" data-orig-value='{{  $jugada->tid_valor}}' data-currency_symbol=true>{{  $jugada->tid_valor}}</span> </td>
+                                                <td><span class="display_currency" data-orig-value='{{  $jugada->tid_ganado}}' data-currency_symbol=true>{{  $jugada->tid_ganado}} </span></td>
 
                                             </tr>
                                         @endforeach
@@ -60,8 +60,15 @@
                         <div class="card">
                             <div class="card-body ">
                                 <h5 class="card-title">Total a Pagar:</h5>
-                                <h3><span class="display_currency badge badge-pill badge-success m-1" data-orig-value='{{ $ticket[0]->tic_ganado}}' data-currency_symbol=true>{{ $ticket[0]->tic_ganado }}</span></h3>
-
+                                    @php
+                                        $total = 0;
+                                    @endphp
+                                @foreach ($jugadas as  $jugada)
+                                    @php
+                                     $total = $total + $jugada->tid_ganado;
+                                    @endphp
+                                @endforeach
+                                <h3><span class="display_currency badge badge-pill badge-success m-1" data-orig-value='{{ $total }}' data-currency_symbol=true>{{ $total }}</span></h3>
                             </div>
                         </div>
                     </div>

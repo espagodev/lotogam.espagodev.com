@@ -25,7 +25,6 @@ class ApuestaDetalleTempController extends Controller
     {
 
         $row_count = request()->get('product_row');
-
         $ticketsDetalles = '';
         $ticketsDetalles = $this->marketService->getApuestaDetalleTemp($request->banca, $request->usuario);
 
@@ -61,17 +60,35 @@ class ApuestaDetalleTempController extends Controller
         $empresas_id = session()->get('user.emp_id');
         $users_id = request()->session()->get('user.id');
         $bancas_id = request()->session()->get('user.banca');
-        //VALIDA SI EL NUMERO ESTA EN EL LISTADO DE NUMEROS CALIENTES DE LA EMPRESA
-        // $numeroCaliente = NumerosCalientes::cnumeroCaliente($request->apd_numero);
-        $numeroCaliente =  $this->marketService->getNumeroCalienteEmpresa($request->tid_apuesta, $empresas_id);
 
-        //VALIDA SI EL NUMERO TIENE 1 DIGITO LE AÑADE EL 0
+
+        /**
+         * VALIDA SI EL NUMERO TIENE 1 DIGITO LE AÑADE EL 0
+         */
         $NumeroValidado = Util::numeroValido($request->tid_apuesta);
 
         /**
          * confirmo la modalidad de la jugada
          */
         $modalidad = Util::modalidad($NumeroValidado);
+
+        /**
+         * SI EL NUMERO ES TRIPLETA O PALE ORDENA DE MAYO A MENOR LOS NUMEROS
+         */
+        $numeroOrdenado = Util::ordenarNumeros($NumeroValidado, $modalidad);
+
+        /**
+         * VALIDA SI EL NUMERO ESTA EN EL LISTADO DE NUMEROS CALIENTES DE LA EMPRESA
+         */
+        $numeroCaliente =  $this->marketService->getNumeroCalienteEmpresa($request->tid_apuesta, $empresas_id);
+        if ($numeroCaliente == 1) {
+            return response()->json(
+                array(
+                    'mensaje' => 'Este Numero No Puede ser Jugado en Este Momento',
+                    'status' => 'NumeroCaliente',
+                )
+            );
+        }
 
         /**
          * consulto la comision por modalidad
@@ -86,13 +103,10 @@ class ApuestaDetalleTempController extends Controller
                 )
             );
         }
-        //SI EL NUMERO ES TRIPLETA O PALE ORDENA DE MAYO A MENOR LOS NUMEROS
-        $numeroOrdenado = Util::ordenarNumeros($NumeroValidado, $modalidad);
 
-        //TRAE EL MONTO MAXIMO PERMITIDO DE APUESTA POR MODALIDAD
-        $montoModalidad = TicketDetalle::MontoApuestaModalidad($modalidad);
-
-        if ($montoModalidad == 0) {
+        //TRAE EL MONTO MAXIMO PERMITIDO DE APUESTA POR MODALIDAD INDIVIDUAL
+        $montoIndividual = TicketDetalle::MontoApuestaModalidad($modalidad);
+        if ($montoIndividual == 0) {
             return response()->json(
                 array(
                     'mensaje' => 'No tiene un Monto de apuesta minimo asignada para esta modalidad',
@@ -100,22 +114,69 @@ class ApuestaDetalleTempController extends Controller
                 )
             );
         }
-        // COMPARA EL MONTO PERMITIDO Y EL MONTO DE LA APUESTA
-        $compararValores = Util::compararValores($montoModalidad, $request->tid_valor);
 
-        // dd($compararValores, $montoModalidad, $request->tid_valor);
-        // dd($request->bancas_id, $request->users_id, $numeroOrdenado);
-        $apuesta = Util::numeroJugado($bancas_id, $users_id, $numeroOrdenado);
-        // dd($apuesta);
-        if ($numeroCaliente == 1) {
+        //TRAE EL MONTO MAXIMO PERMITIDO DE APUESTA POR MODALIDAD INDIVIDUAL
+        $montoGlobal = TicketDetalle::MontoGlobalModalidad($modalidad);
+        if ($montoGlobal == 0) {
             return response()->json(
                 array(
-                    'mensaje' => 'Este Numero No Puede ser Jugado en Este Momento',
-                    'status' => 'NumeroCaliente',
+                    'mensaje' => 'No tiene un Monto Global de apuesta minimo asignada para esta modalidad',
+                    'status' => 'MontoIndividual',
                 )
             );
         }
-        if (($compararValores == 1)) {
+
+        /**
+         * CONSULTA EL NUMERO JUGADO EN CONTROL DE NUMEROS
+         */
+        $controlNumero = Util::ControlNumeroJugado($bancas_id, $numeroOrdenado);
+
+        /**
+         * CONSULTA EL NUMERO JUGADO EN APUESTA TEMPORAL
+         */
+        $apuestaTemporal = Util::numeroJugado($bancas_id, $users_id, $numeroOrdenado);
+
+        if (empty($apuestaTemporal)) {
+            $apt_valor = 0;
+        } else {
+            $apt_valor =  $apuestaTemporal->apt_valor;
+        }
+
+        /**
+         * COMPARA EL MONTO PERMITIDO Y EL MONTO DE LA APUESTA
+         */
+        if (!empty($controlNumero)) {
+        $compararGlobal = Util::compararValores($montoGlobal, $controlNumero->cnj_contador);
+
+            if (($compararGlobal == 1)) {
+                return response()->json(
+                    array(
+                        'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
+                        'status' => 'LimiteSuperado',
+                    )
+                );
+            }
+        }
+
+        /**
+         * COMPARA EL MONTO INDIVIDUAL PERMITIDO Y EL MONTO DE LA APUESTA
+         */
+        if (empty($controlNumero)) {
+            $controlNumero = 0;
+        }else{
+            $controlNumero =  $controlNumero->cnj_contador;
+        }
+
+        /**
+         *$controlNumero la venta del numero por banca
+         *$apt_valor valor de la apuesta temporal
+         */
+        $apuestaTotal = $controlNumero + $apt_valor;
+
+        /**
+         * comparo que la venta temporal no supere los limites permitdos
+         */
+        if(($apuestaTotal > $montoIndividual )&&($apuestaTotal > $montoGlobal)){
             return response()->json(
                 array(
                     'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
@@ -123,15 +184,31 @@ class ApuestaDetalleTempController extends Controller
                 )
             );
         }
-        // else {
 
-        if (empty($apuesta)) {
+
+        /**
+         *$request->tid_valor el monto que se esta apostado en este momento
+         *$apt_valor valor de la apuesta temporal
+         */
+            $totalApuestaTemporal = $apt_valor + $request->tid_valor;
+
+        // $totalApuesta = $controlNumero + $request->tid_valor;
+        if (($totalApuestaTemporal > $montoIndividual) && ($totalApuestaTemporal > $montoGlobal)) {
+            return response()->json(
+                array(
+                    'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
+                    'status' => 'LimiteSuperado',
+                )
+            );
+        }
+
+        if (empty($apuestaTemporal)) {
             TicketDetalle::GenerarApuesta($request, $numeroOrdenado, $modalidad, $comision);
         } else {
-
-           TicketDetalle::ModificarApuesta($apuesta->id, $request->tid_valor, $apuesta->apt_valor,  $comision);
-
+            TicketDetalle::ModificarApuesta($apuestaTemporal->id, $request->tid_valor, $apuestaTemporal->apt_valor,  $comision);
         }
+
+
         return
             response()->json(
                 array(
@@ -139,7 +216,7 @@ class ApuestaDetalleTempController extends Controller
                     'status' => 'success',
                 )
             );
-        // }
+  
     }
 
     /**

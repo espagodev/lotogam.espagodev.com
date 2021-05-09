@@ -3,6 +3,7 @@
 namespace App\Utils;
 
 use App\Services\MarketService;
+use Carbon\Carbon;
 
 class Util
 {
@@ -64,6 +65,24 @@ class Util
             return 0;
         } else {
             return $data;
+        }
+    }
+
+    public static function ControlNumeroJugado($bancas_id,  $cnj_numero)
+    {
+        $marketService = resolve(MarketService::class);
+
+        $data['cnj_fecha'] = date('Y-m-d');
+        $data['bancas_id'] = $bancas_id;
+        $data['cnj_numero'] = $cnj_numero;
+        $data['empresas_id'] = session()->get('user.emp_id');
+
+        $control = $marketService->getConsultaControlJugada($data);
+
+        if (is_null($control)) {
+            return  0;
+        } else {
+            return $control;
         }
     }
 

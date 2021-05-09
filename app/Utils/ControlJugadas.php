@@ -10,24 +10,26 @@ class ControlJugadas
     public static function ConsultaJugadas($numeros, $loteria)
     {
         $marketService = resolve(MarketService::class);
-        $users_id = request()->session()->get('user.id');
-        $fecha =  date(Carbon::parse());
+
+        $data['cnj_fecha'] = date(Carbon::parse());
+        $data['loterias_id'] = $loteria;
+        $data['users_id'] =   session()->get('user.id');
+        $data['empresas_id'] = session()->get('user.emp_id');
+
         foreach ($numeros as $numero) {
 
-            $data = $marketService->getConsultaControlJugada($users_id, $numero->apt_apuesta, $loteria, $fecha);
+            $data['apt_apuesta'] = $numero->apt_apuesta;
 
-            if (!empty($data)) {
-                // No está vacía (true)
-                // dd('hay algo vamos por aqui');
-               self::updateControlNumero($numero, $data);
+            $control= $marketService->getConsultaControlJugada($data);
+
+            if (!empty($control)) {
+                self::updateControlNumero($numero, $control);
             } else {
-                // Está vacía (false)
-                // dd('no hay nada vamos por aqui');
-              self::createControlNumero($numero, $loteria);
+                self::createControlNumero($numero, $loteria);
             }
         }
 
-        return $data;
+        return $control;
     }
 
 
@@ -52,34 +54,12 @@ class ControlJugadas
     {
         $marketService = resolve(MarketService::class);
 
-        // dd($numeros);
-        // if ($consultaNumero['cnj_numero'] <= $monto) {
-        //     $apuestaFaltante = ($monto - $consultaNumero['cnu_contador']);
-        //     if ($numeros['apd_valor'] <= $apuestaFaltante) {
-        //         $total = $numeros['apd_valor'];
-        //         $total = $consultaNumero['cnu_contador'] + $total;
-        //     } else {
-        //         $total = $apuestaFaltante;
-        //         $total = $consultaNumero['cnu_contador'] + $total;
-        //     }
-        // }
-
-            // dd($consultaNumero->cnj_contador, $numero->apt_valor);
         $total = $consultaNumero->cnj_contador + $numero->apt_valor;
 
         $data = ['cnj_contador' => $total];
 
         $data = $marketService->actualizarControlJugadas($consultaNumero->id, $data);
 
-
-
-        // $Control = ControlNumeros::where('lot_id', $loteria['lot_id'])
-        // ->where([
-        //     'cnu_numero' => $numeros['apd_numero'],
-        //     'cnu_fecha' => date("Y-m-d"),
-        //     'usu_id' => auth()->user()->id
-        // ])
-        //     ->update(array('cnu_contador' => $total));
     }
 
 

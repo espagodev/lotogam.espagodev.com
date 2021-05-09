@@ -82,7 +82,9 @@ class TicketController extends Controller
         $bancas_id =  session()->get('user.banca');
 
         $ticket = $this->marketService->getTicket($tickets_id);
+       
         $jugadas = $this->marketService->getTicketDetallePremiado($tickets_id);
+
         $jugada = $this->marketService->getTicketDetalle($tickets_id);
 
         if (session()->get('user.TipoUsuario') == 2) {
