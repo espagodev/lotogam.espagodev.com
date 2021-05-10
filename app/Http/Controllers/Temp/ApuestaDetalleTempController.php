@@ -145,18 +145,18 @@ class ApuestaDetalleTempController extends Controller
         /**
          * COMPARA EL MONTO PERMITIDO Y EL MONTO DE LA APUESTA
          */
-        if (!empty($controlNumero)) {
-        $compararGlobal = Util::compararValores($montoGlobal, $controlNumero->cnj_contador);
+        // if (!empty($controlNumero)) {
+        // $compararGlobal = Util::compararValores($montoGlobal, $controlNumero->cnj_contador);
 
-            if (($compararGlobal == 1)) {
-                return response()->json(
-                    array(
-                        'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
-                        'status' => 'LimiteSuperado',
-                    )
-                );
-            }
-        }
+        //     if (($compararGlobal == 1)) {
+        //         return response()->json(
+        //             array(
+        //                 'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
+        //                 'status' => 'LimiteSuperado',
+        //             )
+        //         );
+        //     }
+        // }
 
         /**
          * COMPARA EL MONTO INDIVIDUAL PERMITIDO Y EL MONTO DE LA APUESTA
@@ -176,14 +176,14 @@ class ApuestaDetalleTempController extends Controller
         /**
          * comparo que la venta temporal no supere los limites permitdos
          */
-        if(($apuestaTotal > $montoIndividual )&&($apuestaTotal > $montoGlobal)){
-            return response()->json(
-                array(
-                    'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
-                    'status' => 'LimiteSuperado',
-                )
-            );
-        }
+        // if(($apuestaTotal > $montoIndividual )&&($apuestaTotal > $montoGlobal)){
+        //     return response()->json(
+        //         array(
+        //             'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
+        //             'status' => 'LimiteSuperado',
+        //         )
+        //     );
+        // }
 
 
         /**
@@ -193,14 +193,14 @@ class ApuestaDetalleTempController extends Controller
             $totalApuestaTemporal = $apt_valor + $request->tid_valor;
 
         // $totalApuesta = $controlNumero + $request->tid_valor;
-        if (($totalApuestaTemporal > $montoIndividual) && ($totalApuestaTemporal > $montoGlobal)) {
-            return response()->json(
-                array(
-                    'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
-                    'status' => 'LimiteSuperado',
-                )
-            );
-        }
+        // if (($totalApuestaTemporal > $montoIndividual) && ($totalApuestaTemporal > $montoGlobal)) {
+        //     return response()->json(
+        //         array(
+        //             'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
+        //             'status' => 'LimiteSuperado',
+        //         )
+        //     );
+        // }
 
         if (empty($apuestaTemporal)) {
             TicketDetalle::GenerarApuesta($request, $numeroOrdenado, $modalidad, $comision);
@@ -216,7 +216,7 @@ class ApuestaDetalleTempController extends Controller
                     'status' => 'success',
                 )
             );
-  
+
     }
 
     /**

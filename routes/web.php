@@ -178,6 +178,8 @@ Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('super
     Route::get('reportes/reporte-resultados', 'ReportesController@reporteResultados');
     Route::get('reportes/reporte-jugadas', 'ReportesController@reporteJugadas');
 
+    Route::get('reportes/informe-ventas-pagos', 'ReportesController@informeVentasPagos');
+
     /**
      * Reportes Detalle
      */
