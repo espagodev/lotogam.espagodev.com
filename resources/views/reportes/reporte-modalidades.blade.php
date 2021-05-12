@@ -88,7 +88,7 @@
                              <table class="table table-sm table-striped  fixed_header">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Loteria</th>
+                                        <th class="text-center">Loteria</th> 
                                         <th class="text-center">Fecha</th>
                                         <th class="text-center">Numero</th>
                                         <th class="text-center">Apuesta</th>

@@ -32,7 +32,7 @@
                                         <th class="text-center">Premio</th>
                                     </tr>
                                 </thead>
-                                 <tbody class="detalle">
+                                 <tbody class="detalle_resultados">
                                 </tbody>
                             </table>
                         </div>

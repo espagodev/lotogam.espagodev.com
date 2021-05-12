@@ -69,11 +69,11 @@ class Reportes
         return $data;
     }
 
-    public static function getreporteResultadosDetalle($empresas_id, $start_date, $end_date, $loterias_id)
+    public static function getreporteResultadosDetalle($data)
     {
         // dd($empresas_id, $start_date, $end_date, $loterias_id);
         $marketService = resolve(MarketService::class);
-        $data =  $marketService->getreporteResultadosDetalle($empresas_id, $start_date, $end_date, $loterias_id);
+        $data =  $marketService->getreporteResultadosDetalle($data);
 
         return $data;
     }
@@ -89,7 +89,6 @@ class Reportes
 
     public static function getReporteModalidadesDetalle($data)
     {
-        // dd($empresas_id, $start_date, $end_date, $bancas_id, $users_id);
         $marketService = resolve(MarketService::class);
         $data =  $marketService->getReporteModalidadesDetalle($data);
 

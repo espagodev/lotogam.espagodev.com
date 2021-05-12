@@ -263,9 +263,8 @@ class ReportesController extends Controller
 
             return $datatable = dataTables::of($reporteResultados)
 
-                ->editColumn('lot_nombre', function ($row) {
-
-                    return $row->lot_nombre . ' (' . $row->lot_abreviado . ')';
+                ->editColumn('loteria', function ($row) {
+                return '<a data-loteria=' . $row->loterias_id . ' href="#" class="detalle-resultados">' . $row->lot_nombre  . ' (' . $row->lot_abreviado . ')  </a>';
                 })
                 ->editColumn('res_fecha', '{{@format_date($res_fecha)}}')
                 ->addColumn('action', function ($row) {
@@ -276,7 +275,7 @@ class ReportesController extends Controller
                 })
 
 
-                ->rawColumns(['lot_nombre', 'res_fecha', 'action'])
+                ->rawColumns(['loteria', 'res_fecha', 'action'])
                 ->make(true);
         }
 
@@ -377,13 +376,6 @@ class ReportesController extends Controller
     {
         if ($request->ajax()) {
 
-            // $empresas_id = session()->get('user.emp_id');
-            // $start_date = $request->get('start_date');
-            // $end_date = $request->get('end_date');
-            // $loterias_id = $request->get('loterias_id', null);
-            // $bancas_id = $request->get('bancas_id', null);
-            // $users_id = $request->get('users_id', null);
-
             if (session()->get('user.TipoUsuario') == 2) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
@@ -425,8 +417,16 @@ class ReportesController extends Controller
             $end_date = $request->get('end_date');
             $loterias_id = $request->get('loterias_id', null);
 
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data = $request->only(['start_date', 'end_date', 'loterias_id']);
+                $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
+            }
+            $data['empresas_id'] = session()->get('user.emp_id');
 
-            $reporteResultadosDetalle = $this->reportes->getreporteResultadosDetalle($empresas_id, $start_date, $end_date, $loterias_id);
+            $reporteResultadosDetalle = $this->reportes->getreporteResultadosDetalle($data);
 
             $output = '';
             foreach ($reporteResultadosDetalle as $key => $detalles) {
@@ -489,7 +489,7 @@ class ReportesController extends Controller
 
 
             $reporteModalidadesDetalle = $this->reportes->getReporteModalidadesDetalle($data);
-            // dd($reporteModalidadesDetalle);
+
             $output = '';
             foreach ($reporteModalidadesDetalle as $key => $detalles) {
                 $tid_fecha_sorteo =  Carbon::createFromFormat('Y-m-d', $detalles->tid_fecha_sorteo)->format(session('business.date_format'));

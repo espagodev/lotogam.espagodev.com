@@ -347,7 +347,6 @@ class Util
     public static function estadosTicket()
     {
         return [
-            '0' => 'Anulado',
             '1' => 'Normal',
             '2' => 'Premiado',
             '3' => 'Pagado',

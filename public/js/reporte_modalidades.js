@@ -21,7 +21,7 @@ $(document).ready(function() {
         });
 
         $('.detalle-modalidades').click(function() {
-             var modalidades_id = $(this).attr("data-modalidad");
+             var modalidades_id = $(this).attr("data-modalidad"); 
 
             reporteModalidadesDetalle(modalidades_id);
         });

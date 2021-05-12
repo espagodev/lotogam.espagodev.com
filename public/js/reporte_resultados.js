@@ -45,7 +45,7 @@ $(document).ready(function() {
             },
         },
         columns: [
-                { data: 'lot_nombre', name: 'loteria', orderable: false, searchable: false  },
+                { data: 'loteria', name: 'loteria', orderable: false, searchable: false  },
                 { data: 'res_fecha', name: 'res_fecha', orderable: false, searchable: false  },
                 { data: 'res_premio1', name: 'res_premio1', orderable: false, searchable: false  },
                 { data: 'res_premio2', name: 'res_premio2', orderable: false, searchable: false  },
@@ -81,7 +81,7 @@ $(document).ready(function() {
 
     var loader = __fa_awesome();
 
-        $('.detalle').html(loader);
+        $('.detalle_resultados').html(loader);
 
             $.ajax({
                 method: 'GET',
@@ -89,8 +89,8 @@ $(document).ready(function() {
                 dataType: 'html',
                 data: data,
                 success: function(data) {
-                    $('.detalle').html(data);
-                    __currency_convert_recursively($('.detalle'));
+                    $('.detalle_resultados').html(data);
+                    __currency_convert_recursively($('.detalle_resultados'));
                 },
 
             });
