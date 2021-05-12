@@ -131,65 +131,91 @@ $(document).ready(function() {
 
     __currency_convert_recursively($(document), $('input#p_symbol').length);
 
-    // var buttons = [
-    //     {
-    //         extend: 'copy',
-    //         text: '<i class="fa fa-files-o" aria-hidden="true"></i> ' + LANG.copy,
-    //         className: 'bg-info',
-    //         exportOptions: {
-    //             columns: ':visible',
-    //         },
-    //         footer: true,
-    //     },
-    //     {
-    //         extend: 'csv',
-    //         text: '<i class="fa fa-file-text-o" aria-hidden="true"></i> ' + LANG.export_to_csv,
-    //         className: 'bg-info',
-    //         exportOptions: {
-    //             columns: ':visible',
-    //         },
-    //         footer: true,
-    //     },
-    //     {
-    //         extend: 'excel',
-    //         text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i> ' + LANG.export_to_excel,
-    //         className: 'bg-info',
-    //         exportOptions: {
-    //             columns: ':visible',
-    //         },
-    //         footer: true,
-    //     },
-    //     {
-    //         extend: 'print',
-    //         text: '<i class="fa fa-print" aria-hidden="true"></i> ' + LANG.print,
-    //         className: 'bg-info',
-    //         exportOptions: {
-    //             columns: ':visible',
-    //             stripHtml: false,
-    //         },
-    //         footer: true,
-    //     },
-    //     {
-    //         extend: 'colvis',
-    //         text: '<i class="fa fa-columns" aria-hidden="true"></i> ' + LANG.col_vis,
-    //         className: 'bg-info',
-    //     },
-    // ];
+    var buttons = [
+        {
+            extend: 'copy',
+            text: '<i class="fa fa-files-o" aria-hidden="true"></i> ' + "Copiar",
+            className: 'bg-info',
+            exportOptions: {
+                columns: ':visible',
+            },
+            footer: true,
+        },
+        {
+            extend: 'csv',
+            text: '<i class="fa fa-file-text-o" aria-hidden="true"></i> ' + "Exportar a CSV",
+            className: 'bg-info',
+            exportOptions: {
+                columns: ':visible',
+            },
+            footer: true,
+        },
+        {
+            extend: 'excel',
+            text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i> ' + "Exportar a Excel",
+            className: 'bg-info',
+            exportOptions: {
+                columns: ':visible',
+            },
+            footer: true,
+        },
+        {
+            extend: 'print',
+            text: '<i class="fa fa-print" aria-hidden="true"></i> ' + "Impresión",
+            className: 'bg-info',
+            exportOptions: {
+                columns: ':visible',
+                stripHtml: false,
+            },
+            footer: true,
+        },
+        {
+            extend: 'colvis',
+            text: '<i class="fa fa-columns" aria-hidden="true"></i> ' + "Visibilidad de columna",
+            className: 'bg-info',
+        },
+    ];
 
-    // var pdf_btn = {
-    //     extend: 'pdf',
-    //     text: '<i class="fa fa-file-pdf-o" aria-hidden="true"></i> ' + LANG.export_to_pdf,
-    //     className: 'bg-info',
-    //     exportOptions: {
-    //         columns: ':visible',
-    //     },
-    //     footer: true,
-    // };
+    var pdf_btn = {
+        extend: 'pdf',
+        text: '<i class="fa fa-file-pdf-o" aria-hidden="true"></i> ' + "Exportar a PDF",
+        className: 'bg-info',
+        exportOptions: {
+            columns: ':visible',
+        },
+        footer: true,
+    };
 
     // if (non_utf8_languages.indexOf(app_locale) == -1) {
     //     buttons.push(pdf_btn);
     // }
 
+        //Datables
+    jQuery.extend($.fn.dataTable.defaults, {
+        fixedHeader: true,
+        dom:
+            '<"row margin-bottom-20 text-center"<"col-sm-2"l><"col-sm-7"B><"col-sm-3"f> r>tip',
+        // buttons: buttons,
+        aLengthMenu: [[25, 50, 100, 200, 500, 1000, -1], [25, 50, 100, 200, 500, 1000, "Todas"]],
+        iDisplayLength: __datos_pagina_predeterminado,
+        language: {
+            searchPlaceholder: "Buscar...",
+            search: '',
+            lengthMenu: "Mostrando" + ' _MENU_ ' + "Entradas",
+            emptyTable: "No hay datos disponibles para mostrar",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+            infoEmpty: "Mostrando 0 a 0 de 0 entradas",
+            loadingRecords: "Cargando...",
+            processing: "Processando...",
+            zeroRecords: "Mostrando 0 a 0 de 0 entradas",
+            paginate: {
+                first: "Primero",
+                last: "Ultimo",
+                next: "Siguiente",
+                previous: "Anterior",
+            },
+        },
+    });
 
     //Input number
     $(document).on('click', '.input-number .quantity-up, .input-number .quantity-down', function() {
@@ -236,6 +262,8 @@ $(document).ready(function() {
             .addClass('active');
     });
 });
+
+
 
 //Configuración predeterminada para daterangePicker
 var ranges = {};

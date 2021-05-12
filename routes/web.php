@@ -79,6 +79,7 @@ Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('super
         Route::resource('formatoTicket', 'TicketConfiguracionController');
         Route::get('ajustesTicket/{esquema}', 'AppEsquemaTicketController@getModificarEsquema');
         Route::resource('ajustesTicket', 'AppEsquemaTicketController');
+        Route::get('ajustesComunes', 'EmpresasController@ajustesComunes')->name('ajustesComunes');
         Route::resource('premios', 'PremiosController');
         Route::resource('ajustesLoterias', 'EmpresaLoteriasController');
     });

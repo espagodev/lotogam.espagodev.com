@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ConfigEmpresa\ConfigEmpresa;
 use App\ConfigFacturas\ConfigFacturas;
 use App\Services\MarketService;
+use App\Utils\Util;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,6 @@ class EmpresasController extends Controller
     public function index()
     {
         $empresas = $this->marketService->getEmpresas();
-
 
         return view('empresas.index')->with(['empresas' => $empresas]);
     }
@@ -58,9 +58,6 @@ class EmpresasController extends Controller
 
     public function store(Request $request)
     {
-
-
-
         $data = $request->all();
 
         if ($request->hasFile('emp_imagen')) {
@@ -123,4 +120,25 @@ class EmpresasController extends Controller
             )
             ->with('success', ['La Banca se ha modificado Satisfactoriamente']);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function ajustesComunes()
+    {
+        $empresas_id = session()->get('user.emp_id');
+        $empresa = $this->marketService->getEmpresaDetalle($empresas_id);
+
+        $registrosPorPagina = Util::registrosPorPagina();
+        $themeColors = Util::themeColors();
+
+        $emp_ajustes_comunes = !empty($empresa->emp_ajustes_comunes) ? $empresa->emp_ajustes_comunes : [];
+
+        return view('ajustes.ajustesComunes.index')->with(compact('registrosPorPagina', 'themeColors', 'emp_ajustes_comunes'));
+    }
 }
+
+

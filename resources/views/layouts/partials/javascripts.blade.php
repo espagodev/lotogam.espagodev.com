@@ -45,14 +45,14 @@
     <!--Data Tables js-->
   <script src="{{ asset('assets/plugins/bootstrap-datatable/js/jquery.dataTables.min.js?v=' . $asset_v) }}"></script>
   <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js?v=' . $asset_v) }}"></script>
-  <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js?v=' . $asset_v) }}"></script>
+  {{-- <script src="{{ asset('assets/plugins/bootstrap-datatable/js/dataTables.buttons.min.js?v=' . $asset_v) }}"></script>
   <script src="{{ asset('assets/plugins/bootstrap-datatable/js/buttons.bootstrap4.min.js?v=' . $asset_v) }}"></script>
   <script src="{{ asset('assets/plugins/bootstrap-datatable/js/jszip.min.js?v=' . $asset_v) }}"></script>
   <script src="{{ asset('assets/plugins/bootstrap-datatable/js/pdfmake.min.js?v=' . $asset_v) }}"></script>
   <script src="{{ asset('assets/plugins/bootstrap-datatable/js/vfs_fonts.js?v=' . $asset_v) }}"></script>
   <script src="{{ asset('assets/plugins/bootstrap-datatable/js/buttons.html5.min.js?v=' . $asset_v) }}"></script>
   <script src="{{ asset('assets/plugins/bootstrap-datatable/js/buttons.print.min.js?v=' . $asset_v) }}"></script>
-  <script src="{{ asset('assets/plugins/bootstrap-datatable/js/buttons.colVis.min.js?v=' . $asset_v) }}"></script>
+  <script src="{{ asset('assets/plugins/bootstrap-datatable/js/buttons.colVis.min.js?v=' . $asset_v) }}"></script> --}}
 
       <!--Select Plugins Js-->
     <script src="{{ asset('assets/plugins/select2/js/select2.min.js?v=' . $asset_v) }}"></script>
@@ -91,6 +91,10 @@
         $moment_time_format = 'hh:mm A';
     }
 
+    $emp_ajustes_comunes = !empty(session('business.emp_ajustes_comunes')) ? session('business.emp_ajustes_comunes') : [];
+
+    $datos_pagina_predeterminado = !empty($emp_ajustes_comunes['datos_pagina_predeterminado']) ? $emp_ajustes_comunes['datos_pagina_predeterminado'] : 25;
+
     @endphp
 <script>
 
@@ -116,6 +120,7 @@ moment.tz.setDefault('{{ Session::get("business.time_zone") }}');
         end: moment('{{ Session::get("financial_year.end") }}'),
     }
 
+    var __datos_pagina_predeterminado = "{{$datos_pagina_predeterminado}}";
     </script>
      <script>
         $(".bt-switch input[type='checkbox']").bootstrapSwitch();

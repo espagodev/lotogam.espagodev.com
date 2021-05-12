@@ -12,6 +12,11 @@
                         'icon' => 'fa fa-cogs',
                         'title' => 'Ajustes Tickets' ])
                 @endcomponent
+                  @component('components.sidebar', [
+                        'route' => 'ajustesComunes',
+                        'icon' => 'fa fa-cogs',
+                        'title' => 'Ajustes Comunes' ])
+                @endcomponent
 
                 @component('components.sidebar', [
                         'route' => 'formatoTicket.index',

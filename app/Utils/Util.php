@@ -361,10 +361,37 @@ class Util
     public static function estadosPromocionTicket()
     {
         return [
-
             '1' => 'Promocion',
-
         ];
     }
 
+    public static function registrosPorPagina()
+    {
+        return [
+            '25' => '25',
+            '50' => '50',
+            '100' => '100',
+            '200' => '200',
+            '500' => '500',
+            '1000' => '1000',
+            '-1' => 'Todos'
+        ];
+    }
+
+    public static function themeColors()
+    {
+            return[
+            'blue' => 'Blue',
+            'black' => 'Black',
+            'purple' => 'Purple',
+            'green' => 'Green',
+            'red' => 'Red',
+            'yellow' => 'Yellow',
+            'blue-light' => 'Blue Light',
+            'black-light' => 'Black Light',
+            'purple-light' => 'Purple Light',
+            'green-light' => 'Green Light',
+            'red-light' => 'Red Light'
+        ];
+    }
 }
