@@ -68,7 +68,7 @@ class Util
         }
     }
 
-    public static function ControlNumeroJugado($bancas_id,  $cnj_numero)
+    public static function ControlNumeroJugado($loterias_id, $bancas_id,  $cnj_numero)
     {
         $marketService = resolve(MarketService::class);
 
@@ -76,22 +76,38 @@ class Util
         $data['bancas_id'] = $bancas_id;
         $data['cnj_numero'] = $cnj_numero;
         $data['empresas_id'] = session()->get('user.emp_id');
-
+        $data['users_id'] =  session()->get('user.id');
+        $data['loterias_id'] =  $loterias_id;
+        // dump($data);
         $control = $marketService->getConsultaControlJugada($data);
 
-        if (is_null($control)) {
+        if (empty($control)) {
             return  0;
         } else {
-            return $control;
+            return $control->cnj_contador;
         }
     }
 
     public static function compararValores($monto, $apuesta)
     {
+
         if ($apuesta > $monto) {
-            return $resultado = 1;
+            $resultado = 1;
         } else {
-            return $resultado = 0;
+             $resultado = 0;
+        }
+
+        return $resultado;
+    }
+
+    public static function totalApuesta($apuesta, $vendido)
+    {
+
+        if ($vendido != 0) {
+            return ($apuesta + $vendido);
+        } else {
+
+            return  $apuesta;
         }
     }
 

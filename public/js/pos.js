@@ -15,7 +15,7 @@ $(document).ready(function () {
             );
             reporte_tickets.ajax.reload();
         });
-        $('#spr_date_filter').on('cancel.daterangepicker', function(ev, picker) {
+        $('#spr_date_filter').on('cancel.daterangepicker', function(_ev, _picker) {
             $('#spr_date_filter').val('');
             reporte_tickets.ajax.reload();
         });
@@ -150,8 +150,10 @@ $(document).ready(function () {
                 msg:
                     "No se Agregaron Jugadas, Agregue Algunas Jugadas Primero.",
             });
+
             return false;
         }
+
     });
 
     //Cancelar la apuesta --> SI
@@ -167,6 +169,8 @@ $(document).ready(function () {
             msg: "Borrar Apuestas.",
         });
     });
+
+
 
     //Finalize without showing payment options
     $("button.pos-express-finalize").click(function () {
@@ -272,7 +276,11 @@ $(document).ready(function () {
                     },
                 });
             }
+                $("div.pos-processing").hide();
+                $("#pos-save").removeAttr("disabled");
+                 $("input[name=tid_valor]").focus();
             return false;
+
         },
     });
 
@@ -322,16 +330,16 @@ $(document).ready(function () {
                 { data: 'tic_estado', name: 'estado', orderable: false, searchable: false  },
                 { data: 'action', name: 'action' },
          ],
-          fnDrawCallback: function(oSettings) {
+          fnDrawCallback: function(_oSettings) {
             __currency_convert_recursively($('#reporte_tickets'));
         },
     });
 
-});
+    });
 
-$(document).on('show.bs.modal', '#recent_transactions_modal', function () {
-   reporte_tickets.ajax.reload();
-});
+        $(document).on('show.bs.modal', '#recent_transactions_modal', function () {
+        reporte_tickets.ajax.reload();
+        });
 
 
  //BORRAR
@@ -380,6 +388,12 @@ $(document).on('show.bs.modal', '#recent_transactions_modal', function () {
            });
         });
     });
+
+
+
+
+
+
 
     function reset_pos_form() {
 
@@ -507,7 +521,7 @@ $(document).on('show.bs.modal', '#recent_transactions_modal', function () {
                     $("input#ticket").val(result);
                 },
             })
-            ).then(function (resp) {
+            ).then(function (_resp) {
                 MostrarJugadas();
 
             });
@@ -585,3 +599,5 @@ $(document).on('show.bs.modal', '#recent_transactions_modal', function () {
             __print_receipt('receipt_section');
         }
     }
+
+

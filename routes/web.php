@@ -143,6 +143,8 @@ Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('super
      * consultas ticketDetalle
      */
 
+    Route::get('validar', 'Temp\ApuestaDetalleTempController@getvalidarMontos');
+
     Route::resource('apuestaTemp', 'Temp\ApuestaTempController', ['only' => ['index']]);
     Route::get('duplicarTicket/{ticket}', 'Temp\ApuestaDetalleTempController@duplicarTicket');
     Route::resource('apuestaDetalleTemp', 'Temp\ApuestaDetalleTempController', ['only' => ['index', 'store', 'update', 'destroy']]);

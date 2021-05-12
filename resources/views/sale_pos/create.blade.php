@@ -111,6 +111,7 @@
 @section('scripts')
 	<script src="{{ asset('js/pos.js?v=' . $asset_v) }}"></script>
     <script src="{{ asset('js/ticket/ticket.js?v=' . $asset_v) }}"></script>
+     <script src="{{ asset('js/validarMontos.js?v=' . $asset_v) }}"></script>
     <script type="text/javascript">
         var token = '{{ csrf_token() }}';
         // $('#tic_fecha_sorteo').datepicker('setDate', new Date());

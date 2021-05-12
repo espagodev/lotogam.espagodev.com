@@ -14,7 +14,7 @@
                     <div class="card">
                             <div class="card-header d-flex align-items-left">
                                 <div class="d-flex justify-content-left col">
-                                    <div class=" m-0 text-left">Ventas</div>
+                                    <div class="h4 m-0 text-left">Ventas</div>
                                 </div>
                             </div>
                         <div class="card-body">

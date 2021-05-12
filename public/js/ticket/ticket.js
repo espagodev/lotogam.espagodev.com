@@ -189,7 +189,6 @@ $(document).ready(function() {
 
         var tickets_id = $('#tickets_id').val();
 
-
         var data = { tickets_id: tickets_id};
 
             $.ajax({

@@ -42,7 +42,7 @@ class ApuestaDetalleTempController extends Controller
                 '<td>
                     <span class="btn btn-sm btn-outline-danger waves-effect waves-light borrar" data-record-id="' . $detalle->id . '"><i class="fa fa-trash"></i></span>
                 </td>' .
-            '</tr>';
+                '</tr>';
         }
         $datos = ['ticketDetalles' => $ticketDetalles, 'row_count' => $row_count];
         return  $datos;
@@ -129,7 +129,7 @@ class ApuestaDetalleTempController extends Controller
         /**
          * CONSULTA EL NUMERO JUGADO EN CONTROL DE NUMEROS
          */
-        $controlNumero = Util::ControlNumeroJugado($bancas_id, $numeroOrdenado);
+        $controlNumero = Util::ControlNumeroJugado($loterias_id = null, $bancas_id, $numeroOrdenado);
 
         /**
          * CONSULTA EL NUMERO JUGADO EN APUESTA TEMPORAL
@@ -163,8 +163,8 @@ class ApuestaDetalleTempController extends Controller
          */
         if (empty($controlNumero)) {
             $controlNumero = 0;
-        }else{
-            $controlNumero =  $controlNumero->cnj_contador;
+        } else {
+            $controlNumero =  $controlNumero;
         }
 
         /**
@@ -190,17 +190,17 @@ class ApuestaDetalleTempController extends Controller
          *$request->tid_valor el monto que se esta apostado en este momento
          *$apt_valor valor de la apuesta temporal
          */
-            $totalApuestaTemporal = $apt_valor + $request->tid_valor;
+        $totalApuestaTemporal = $apt_valor + $request->tid_valor;
 
-        // $totalApuesta = $controlNumero + $request->tid_valor;
-        // if (($totalApuestaTemporal > $montoIndividual) && ($totalApuestaTemporal > $montoGlobal)) {
-        //     return response()->json(
-        //         array(
-        //             'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
-        //             'status' => 'LimiteSuperado',
-        //         )
-        //     );
-        // }
+
+        if ($totalApuestaTemporal > $montoIndividual) {
+            return response()->json(
+                array(
+                    'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
+                    'status' => 'LimiteSuperado',
+                )
+            );
+        }
 
         if (empty($apuestaTemporal)) {
             TicketDetalle::GenerarApuesta($request, $numeroOrdenado, $modalidad, $comision);
@@ -216,7 +216,6 @@ class ApuestaDetalleTempController extends Controller
                     'status' => 'success',
                 )
             );
-
     }
 
     /**
@@ -265,7 +264,8 @@ class ApuestaDetalleTempController extends Controller
     }
 
 
-    public function duplicarTicket(Request $request, $tickets_id){
+    public function duplicarTicket(Request $request, $tickets_id)
+    {
 
 
         $users_id = request()->session()->get('user.id');
@@ -277,5 +277,66 @@ class ApuestaDetalleTempController extends Controller
 
 
         return redirect()->action('PosController@create');
+    }
+
+
+    public function getvalidarMontos(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $arrayVendidos = array();
+            $arraySupera = array();
+
+            $ticketsDetalles = $this->marketService->getApuestaDetalleTemp($request->bancas_id, $request->users_id);
+
+            foreach ($ticketsDetalles as $detalle) {
+
+                if ($request->lot_superpale == 1) {
+                    $modalidades_id = 4;
+                } else {
+                    $modalidades_id = $detalle->modalidades_id;
+                }
+
+                $montoIndividual = TicketDetalle::MontoApuestaModalidad($modalidades_id);
+                // dump($montoIndividual);
+                $controlNumero = Util::ControlNumeroJugado($request->loterias_id, $request->bancas_id, $detalle->apt_apuesta);
+
+                $totalApuesta = Util::totalApuesta($detalle->apt_valor, $controlNumero);
+
+
+                $comparacion = Util::compararValores($montoIndividual, $controlNumero);
+                // dump($comparacion, $montoIndividual, $controlNumero);
+
+                if ($comparacion == 1) {
+                    $arrayVendidos[] = $detalle->apt_apuesta;
+                }
+
+                if ($totalApuesta > $montoIndividual) {
+                    $arraySupera[] = $detalle->apt_apuesta . ' Supera Limite de Apuesta Permitido  de ' . $montoIndividual;
+                }
+            }
+
+            $vendidos = trim(implode(" , ", $arrayVendidos));
+            $vendidos = "'" . $vendidos . "'";
+
+            $supera = trim(implode(" , ", $arraySupera));
+            $supera = "$supera ";
+
+            if (count($arrayVendidos) != "0") {
+                return response()->json([
+                    'numero' => $vendidos,
+                    'loteria' => $request->lot_nombre,
+                    'status' => 1,
+                ]);
+            }
+
+            if (count($arraySupera) != "0") {
+                return response()->json([
+                    'numero' => $supera,
+                    'loteria' => $request->lot_nombre,
+                    'status' => 2,
+                ]);
+            }
+        }
     }
 }
