@@ -19,7 +19,7 @@
             <div class="col-xs-6 col-sm-6 col-md-6 loterias_id">
                 <div class="form-group loterias-id">
                         <label>Loterias </label>
-                        <select class="form-control{{ $errors->has('loterias_id') ? ' is-invalid' : '' }} validar" name="loterias_id" id="loterias_id" required>
+                        <select class="form-control{{ $errors->has('loterias_id') ? ' is-invalid' : '' }} validar_horario_loterias" name="loterias_cierre_id" id="loterias_cierre_id" required>
                                 <option value="">Seleccione</option>
                                 @foreach($loterias as $key => $loteria)
                                     <option value="{{ $loteria->loterias_id }}" data-hora="{{ $loteria->hlo_hora_fin }}" @if($loteria->id == old('loterias_id')) selected @endif >{{ $loteria->lot_nombre }} </option>

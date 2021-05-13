@@ -71,7 +71,7 @@ class Reportes
 
     public static function getreporteResultadosDetalle($data)
     {
-        // dd($empresas_id, $start_date, $end_date, $loterias_id);
+
         $marketService = resolve(MarketService::class);
         $data =  $marketService->getreporteResultadosDetalle($data);
 

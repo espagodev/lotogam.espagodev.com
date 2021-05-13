@@ -78,7 +78,7 @@ $(document).ready(function() {
 
 
     var data = { start_date: start, end_date: end, loterias_id: loterias_id };
-    console.log(data);
+
     var loader = __fa_awesome();
 
         $('.detalle_resultados').html(loader);

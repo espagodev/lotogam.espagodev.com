@@ -1193,6 +1193,7 @@ class MarketService
 
     public function getConsultaResultados($data)
     {
+
         return $this->makeRequest('GET', "getConsultaResultados", $data);
     }
 

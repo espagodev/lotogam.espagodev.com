@@ -37,8 +37,6 @@
 
 
 
-
-
         //Reporte de resultados
         reporte_resultados =  $('#reporte_resultados').DataTable({
             processing: true,
@@ -48,7 +46,6 @@
                     url: '/reportes/reporte-resultados',
                     dataType: "json",
                 data: function(d) {
-
 
                     var mostrar = 1;
                     var start = '';
@@ -73,16 +70,13 @@
                     { data: 'res_premio1', name: 'res_premio1', orderable: false, searchable: false  },
                     { data: 'res_premio2', name: 'res_premio2', orderable: false, searchable: false  },
                     { data: 'res_premio3', name: 'res_premio3', orderable: false, searchable: false  },
-                    { data: 'action', name: 'action' },
+                    { data: 'action', name: 'action', orderable: false },
 
             ],
             fnDrawCallback: function(oSettings) {
                 __currency_convert_recursively($('#reporte_resultados'));
             },
         });
-
-        __reporteResultadosDetalle();
-
 
 
         $(document).on('click', '.resultados_print', function(e) {
@@ -157,10 +151,12 @@
                             $(".enproceso").hide();
                             $(".procesado").hide();
 
-                    validar_loteria();
-                    guardar_resultados();
                     datepicker();
+                    validar_loteria();
                     fn_saltar();
+                    guardar_resultados();
+
+
                 },
             });
         });
@@ -200,11 +196,11 @@
 
 
     function validar_loteria() {
-        $("#loterias_id").bind("change", function() {
+        $("#loterias_cierre_id").bind("change", function() {
 
-            var loterias_id = $('#loterias_id').val();
+            var loterias_id = $('#loterias_cierre_id').val();
             var fecha = $('#res_fecha').val();
-            var HoraCierre = $(".loterias-id select#loterias_id option:selected").data("hora");
+            var HoraCierre = $(".loterias-id select#loterias_cierre_id option:selected").data("hora");
             var horaDetalle = HoraCierre.split(" ");
             var horaCierre = horaDetalle[0];
             var token = '{{ csrf_token() }}';
@@ -276,7 +272,7 @@
             $(".GuardarResultados").hide();
             $(".cancelar").hide();
 
-            var loterias_id = $('#loterias_id').val();
+            var loterias_id = $('#loterias_cierre_id').val();
             var fecha = $('#res_fecha').val();
             var premio1 = $('#res_premio1').val();
             var premio2 = $('#res_premio2').val();

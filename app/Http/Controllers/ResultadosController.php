@@ -55,7 +55,6 @@ class ResultadosController extends Controller
     public function validaHoraCierre(Request $request)
     {
 
-
         $fecha = Carbon::createFromFormat('d/m/Y', $request->fecha)->format('Y-m-d');
         $fechaActual = date('Y-m-d');
 
@@ -225,13 +224,6 @@ class ResultadosController extends Controller
     {
         $empresas_id = session()->get('user.emp_id');
         $loterias  = $this->marketService->getloteriasEmpresaHorario($empresas_id);
-        // $empresas_id = session()->get('user.emp_id');
-        // $bancas_id =  session()->get('user.banca');
-
-        // $impresora = $this->marketService->getImpresoraDetalle($id);
-        // $conexiones = Util::tipoConexion();
-        // $capacidades = Util::perfilCapacidad();
-
 
         return view('resultados.resultados_create')->with(['loterias' => $loterias]);
     }

@@ -255,16 +255,24 @@ class ReportesController extends Controller
     {
         if ($request->ajax()) {
 
-
-            $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id']);
+                $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
+            }
             $data['empresas_id'] = session()->get('user.emp_id');
 
             $reporteResultados = $this->reportes->getReporteResultados($data);
 
             return $datatable = dataTables::of($reporteResultados)
 
-                ->editColumn('loteria', function ($row) {
+                   ->editColumn('loteria', function ($row) {
                 return '<a data-loteria=' . $row->loterias_id . ' href="#" class="detalle-resultados">' . $row->lot_nombre  . ' (' . $row->lot_abreviado . ')  </a>';
+                })
+                ->editColumn('lot_nombre', function ($row) {
+                    return $row->lot_nombre . ' (' . $row->lot_abreviado . ')';
                 })
                 ->editColumn('res_fecha', '{{@format_date($res_fecha)}}')
                 ->addColumn('action', function ($row) {
@@ -412,12 +420,7 @@ class ReportesController extends Controller
     {
         if ($request->ajax()) {
 
-            $empresas_id = session()->get('user.emp_id');
-            $start_date = $request->get('start_date');
-            $end_date = $request->get('end_date');
-            $loterias_id = $request->get('loterias_id', null);
-
-            if (session()->get('user.TipoUsuario') == 2) {
+             if (session()->get('user.TipoUsuario') == 2) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
                 $data = $request->only(['start_date', 'end_date', 'loterias_id']);
@@ -425,6 +428,13 @@ class ReportesController extends Controller
                 $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
             }
             $data['empresas_id'] = session()->get('user.emp_id');
+
+
+            // $empresas_id = session()->get('user.emp_id');
+            // $start_date = $request->get('start_date');
+            // $end_date = $request->get('end_date');
+            // $loterias_id = $request->get('loterias_id', null);
+
 
             $reporteResultadosDetalle = $this->reportes->getreporteResultadosDetalle($data);
 
