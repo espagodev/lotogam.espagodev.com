@@ -269,7 +269,7 @@ class ReportesController extends Controller
             return $datatable = dataTables::of($reporteResultados)
 
                    ->editColumn('loteria', function ($row) {
-                return '<a data-loteria=' . $row->loterias_id . ' href="#" class="detalle-resultados">' . $row->lot_nombre  . ' (' . $row->lot_abreviado . ')  </a>';
+                return '<a data-loteria=' . $row->loterias_id . ' data-fecha=' . $row->res_fecha . ' href="#" class="detalle-resultados">' . $row->lot_nombre  . ' (' . $row->lot_abreviado . ')  </a>';
                 })
                 ->editColumn('lot_nombre', function ($row) {
                     return $row->lot_nombre . ' (' . $row->lot_abreviado . ')';
@@ -370,6 +370,22 @@ class ReportesController extends Controller
     public function informeVentasPagos(Request $request)
     {
 
+        if ($request->ajax()) {
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id']);
+                $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
+            }
+            $data['empresas_id'] = session()->get('user.emp_id');
+
+            $informeVentasPagos = $this->reportes->getInformeVentasPagos($data);
+
+            return [
+                'ventas' => $informeVentasPagos
+            ];
+        }
 
         $empresas_id = session()->get('user.emp_id');
         $bancas = BancaUtil::forDropdown($empresas_id);

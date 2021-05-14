@@ -1,15 +1,21 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-             <div class="col-xs-12 col-sm-12 col-md-4">
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-4">
-                  @if((request()->session()->get('user.TipoUsuario') == 2))
-                    @include('reportes.partials.__bancas')
-                  @endif
-            </div>
+            @if((request()->session()->get('user.TipoUsuario') == 2))
+                <div class="col-xs-12 col-sm-12 col-md-4">
+                        @include('reportes.partials.__bancas')
+                </div>
+                 <div class="col-xs-12 col-sm-12 col-md-4">
+                        @include('reportes.partials.__usuarios')
+                </div>
+            @endif
             <div class="col-xs-12 col-sm-12 col-md-4">
                 @include('reportes.partials.__fechas')
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4">
+                <a href="#" type="button" class="btn btn-info print-invoice" data-href="{{action('ReportesController@getVentasPrint')}}">
+					<i class="fa fa-print"></i> Imprimir Reporte
+                </a>
             </div>
         </div>
      </div>

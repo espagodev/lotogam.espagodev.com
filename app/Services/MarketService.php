@@ -1165,6 +1165,12 @@ class MarketService
         return $this->makeRequest('GET', "getReporteJugadas", $data);
     }
 
+    public function getInformeVentasPagos($data)
+    {
+        return $this->makeRequest('GET', "getInformeVentasPagos", $data);
+    }
+
+
     //REPORTE DETALLES
     public function getreporteVentasDetalle($data)
     {

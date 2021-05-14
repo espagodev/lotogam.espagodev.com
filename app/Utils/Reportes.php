@@ -59,6 +59,19 @@ class Reportes
         return $data;
     }
 
+    public static function getInformeVentasPagos($data)
+    {
+        $marketService = resolve(MarketService::class);
+        $data =  $marketService->getInformeVentasPagos($data);
+
+        return $data;
+    }
+
+
+
+
+
+
     //DETALLES
     public static function getreporteVentasDetalle($data)
     {

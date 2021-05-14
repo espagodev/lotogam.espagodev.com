@@ -57,7 +57,7 @@
                         <div class="card-body">
                             <table class="table table-bordered table-striped"  id="informe_pagos">
                                 <tr>
-                                    <th>Pagado Total:</th>
+                                    <th>Premios Pagados Total:</th>
                                     <td>
                                         <span class="pago_total">
                                             <i class="fas fa-sync fa-spin fa-fw"></i>
@@ -65,17 +65,9 @@
                                     </td>
                                 </tr>
                                  <tr>
-                                    <th>Pagos Propios:</th>
+                                    <th>Premios Pendiente de Pago:</th>
                                     <td>
-                                        <span class="pago_propio">
-                                            <i class="fas fa-sync fa-spin fa-fw"></i>
-                                        </span>
-                                    </td>
-                                </tr>
-                                 <tr>
-                                    <th>Pagos Otras Bancas:</th>
-                                    <td>
-                                        <span class="pago_otras">
+                                        <span class="pago_pendiente">
                                             <i class="fas fa-sync fa-spin fa-fw"></i>
                                         </span>
                                     </td>
@@ -83,13 +75,6 @@
                             </table>
                         </div>
                     </div>
-            </div>
-        </div>
-          <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-4">
-                <a href="#" type="button" class="btn btn-info print-invoice" data-href="{{action('ReportesController@getVentasPrint')}}">
-					<i class="fa fa-print"></i> Imprimir Reporte
-                </a>
             </div>
         </div>
     @endsection

@@ -60,24 +60,19 @@ $(document).ready(function() {
      //Reporte de resultados detalle
      $(document).on('click', '.detalle-resultados', function() {
             var loterias_id = $(this).attr("data-loteria");
+            var fecha = $(this).attr("data-fecha");
 
-            reporteResultadosDetalle(loterias_id);
+            reporteResultadosDetalle(loterias_id,fecha);
         });
 
 });
 
    //Reporte Detalle
-  function reporteResultadosDetalle(loterias_id) {
-
-    var start = $('#spr_date_filter')
-        .data('daterangepicker')
-        .startDate.format('YYYY-MM-DD');
-    var end = $('#spr_date_filter')
-        .data('daterangepicker')
-        .endDate.format('YYYY-MM-DD');
+  function reporteResultadosDetalle(loterias_id, fecha) {
 
 
-    var data = { start_date: start, end_date: end, loterias_id: loterias_id };
+
+    var data = { start_date: fecha, end_date: fecha, loterias_id: loterias_id };
 
     var loader = __fa_awesome();
 

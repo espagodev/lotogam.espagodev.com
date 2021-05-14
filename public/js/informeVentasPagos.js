@@ -38,35 +38,27 @@ function updatePurchaseSell() {
     $('.venta_promocion').html(loader);
     $('.venta_futuro').html(loader);
     $('.pago_total').html(loader);
-    $('.pago_propio').html(loader);
-    $('.pago_otras').html(loader);
+    $('.pago_pendiente').html(loader);
+
 
     $.ajax({
         method: 'GET',
-        url: '/reports/purchase-sell',
+        url: '/reportes/informe-ventas-pagos',
         dataType: 'json',
         data: data,
         success: function(data) {
-            $('.venta_total').html(__currency_trans_from_en(data.purchase.total_purchase_exc_tax, true)
-            );
-            $('.venta_promocion').html(__currency_trans_from_en(data.purchase.total_purchase_inc_tax, true)
-            );
-            $('.venta_futuro').html(__currency_trans_from_en(data.purchase.purchase_due, true));
+            $('.venta_total').html(__currency_trans_from_en(data.ventas.venta_total, true));
+            $('.venta_promocion').html(__currency_trans_from_en(data.ventas.venta_promocion, true));
+            $('.venta_futuro').html(__currency_trans_from_en(data.ventas.venta_futuro, true));
+            $('.pago_total').html(__currency_trans_from_en(data.ventas.pago_total, true));
+            $('.pago_pendiente').html(__currency_trans_from_en(data.ventas.pago_pendiente, true));
 
-            $('.pago_total').html(__currency_trans_from_en(data.sell.total_sell_exc_tax, true));
-            $('.pago_propio').html(__currency_trans_from_en(data.sell.total_sell_inc_tax, true));
-            $('.pago_otras').html(__currency_trans_from_en(data.sell.invoice_due, true));
-            $('.purchase_return_inc_tax').html(__currency_trans_from_en(data.total_purchase_return, true)
-            );
-            $('.total_sell_return').html(__currency_trans_from_en(data.total_sell_return, true));
 
-            $('.sell_minus_purchase').html(__currency_trans_from_en(data.difference.total, true));
-            __highlight(data.difference.total, $('.sell_minus_purchase'));
+            // $('.pago_total').html(__currency_trans_from_en(data.sell.pago_total, true));
+            // $('.pago_propio').html(__currency_trans_from_en(data.sell.pago_propio, true));
+            // $('.pago_otras').html(__currency_trans_from_en(data.sell.pago_otras, true));
 
-            $('.difference_due').html(__currency_trans_from_en(data.difference.due, true));
-            __highlight(data.difference.due, $('.difference_due'));
 
-            // $('.purchase_due').html( __currency_trans_from_en(data.purchase_due, true));
         },
     });
 }
