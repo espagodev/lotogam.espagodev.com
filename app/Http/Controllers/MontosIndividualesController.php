@@ -30,7 +30,8 @@ class MontosIndividualesController extends Controller
     {
 
         $data = $request->all();
-        $data['empresas_id'] = $this->marketService->getUserInformation()->idEmpresa;
+        $data['empresas_id'] =  session()->get('user.emp_id');
+
         $data = $this->marketService->nuevoMontoIndividual($data);
 
         return redirect()

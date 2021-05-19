@@ -596,7 +596,7 @@ class MarketService
 
         return $this->makeRequest(
             'POST',
-            "montosindividuales",
+            "montosIndividuales",
             $data,
             [],
             [],

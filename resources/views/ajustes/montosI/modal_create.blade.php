@@ -5,7 +5,7 @@
                 <h3 class="modal-title text-white">Nuevo Monto Indivdual</h3>
                 <button type="button" class="close text-white no-print" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-            <form method="post" action="{{ route('montosIndividuales.store')}}"  id="store">
+            <form method="post" action="{{ route('montosIndividuales.store')}}"  id="store"> 
              @csrf
              <div class="modal-body">
                    @include('ajustes.montosI.partials.form_create')
