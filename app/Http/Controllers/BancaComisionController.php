@@ -29,9 +29,7 @@ class BancaComisionController extends Controller
 
         $comisiones  = $this->marketService->getComisionesEmpresa($empresas_id);
 
-        $comisionesBancas = $this->marketService->getComisionesBanca($banca->id);
-
-        return view('ajustesBanca.comisiones.index')->with(compact('banca','comisiones', 'comisionesBancas'));
+        return view('ajustesBanca.comisiones.index')->with(compact('banca','comisiones'));
     }
 
 

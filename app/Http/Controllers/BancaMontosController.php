@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\MarketService;
 use Illuminate\Http\Request;
 
-class BancaMontoGlobalController extends Controller
+class BancaMontosController extends Controller
 {
     public function __construct(MarketService $marketService)
     {
@@ -21,17 +21,14 @@ class BancaMontoGlobalController extends Controller
      */
     public function index($banca)
     {
-        $empresa = session()->get('user.emp_id');
+        $empresas_id = session()->get('user.emp_id');
 
         $banca  = $this->marketService->getBancaDetalle($banca);
 
-        $modalidades  = $this->marketService->getModalidades();
+        $montosGlobales  = $this->marketService->getMontosGlobalesEmpresa($empresas_id);
+        $montosIndividuales  = $this->marketService->getMontosIndividualesEmpresa($empresas_id);
 
-        $montoGlobalBancas  = $this->marketService->getMontoGlobalBanca($banca->id);
-
-        $montosGlobales  = $this->marketService->getMontosGlobalesEmpresa($empresa);
-
-        return view('ajustesBanca.montosG.index')->with([ 'banca' => $banca, 'modalidades' => $modalidades, 'montosGlobales' => $montosGlobales,'montoGlobalBancas' => $montoGlobalBancas ]);
+        return view('ajustesBanca.montos.index')->with([ 'banca' => $banca, 'montosGlobales' => $montosGlobales, 'montosIndividuales' => $montosIndividuales]);
     }
 
 

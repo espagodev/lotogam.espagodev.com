@@ -37,25 +37,10 @@ Route::get('authorization', 'Auth\LoginController@authorization')->name('authori
 //ajustes Empresa
  Route::get('ajustesEmpresa', 'AjustesEmpresaController@index')->name('ajustesEmpresa');
 
-//comisiones
- Route::get('ajustes/comisiones/', 'ComisionesController@index')->name('comisiones');
- Route::post('comisiones', 'ComisionesController@store')->name('comisiones.store');
-
-//montos globales
-Route::get('ajustes/montosGlobales/', 'MontosGlobalesController@index')->name('montosGlobales');
-Route::post('montosGlobales', 'MontosGlobalesController@store')->name('montosGlobales.store');
-
-//montos individuales
-Route::get('ajustes/montos/', 'MontosIndividualesController@index')->name('montosIndividuales');
-Route::post('montosIndividuales', 'MontosIndividualesController@store')->name('montosIndividuales.store');
 
 //numeros calientes
 Route::get('ajustes/calientes', 'NumerosCalientesController@index')->name('NumerosCalientes');
 Route::post('NumerosCalientes', 'NumerosCalientesController@store')->name('NumerosCalientes.store');
-
-//premios
-// Route::get('ajustes/premios', 'PremiosController@index')->name('premios');
-// Route::post('premios', 'PremiosController@store')->name('premios.store');
 
 //loterias empresa
 Route::get('ajustes/loterias', 'EmpresaLoteriasController@index')->name('loteriasEmpresa');
@@ -74,8 +59,24 @@ Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('super
 
 
     Route::prefix('ajustes')->group(function () {
+
+
+        Route::get('comisiones/{comision}', 'ComisionesController@getModificarComision');
+        Route::get('getNuevaComision', 'ComisionesController@getNuevaComision');
+        Route::resource('comisiones', 'ComisionesController');
+
+        Route::get('montosGlobales/{montoGlobal}', 'MontosGlobalesController@getModificarMontoGlobal');
+        Route::get('getNuevoMontoGlobal', 'MontosGlobalesController@getNuevoMontoGlobal');
+        Route::resource('montosGlobales', 'MontosGlobalesController');
+
+        Route::get('montosIndividuales/{montoIndividual}', 'MontosIndividualesController@getModificarMontoIndividual');
+        Route::get('getNuevoMontoIndividual', 'MontosIndividualesController@getNuevoMontoIndividual');
+        Route::resource('montosIndividuales', 'MontosIndividualesController');
+
+
         Route::get('impresoraPos/{impresora}', 'ImpresoraPosController@getModificarImpresoraPos');
         Route::resource('impresoraPos','ImpresoraPosController', ['except' => ['show','destroy','create','edit']]);
+
         Route::resource('formatoTicket', 'TicketConfiguracionController');
         Route::get('ajustesTicket/{esquema}', 'AppEsquemaTicketController@getModificarEsquema');
         Route::resource('ajustesTicket', 'AppEsquemaTicketController');
@@ -120,11 +121,11 @@ Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('super
     Route::post('ajustesBanca/comisiones', 'BancaComisionController@store')->name('bancaComision.store');
 
 
-    Route::get('ajustesBanca/montosG/{banca}', 'BancaMontoGlobalController@index')->name('bancaMontoG');
-    Route::post('ajustesBanca/montosG', 'BancaMontoGlobalController@store')->name('bancaMontoG.store');
+    Route::get('ajustesBanca/montos/{banca}', 'BancaMontosController@index')->name('bancaMonto');
+    // Route::post('ajustesBanca/montos', 'BancaMontoGlobalController@store')->name('bancaMontoG.store');
 
-    Route::get('ajustesBanca/montosI/{banca}', 'BancaMontoIndividualController@index')->name('bancaMontoI');
-    Route::post('ajustesBanca/montosI', 'BancaMontoIndividualController@store')->name('bancaMontoI.store');
+    // Route::get('ajustesBanca/montosI/{banca}', 'BancaMontoIndividualController@index')->name('bancaMontoI');
+    // Route::post('ajustesBanca/montosI', 'BancaMontoIndividualController@store')->name('bancaMontoI.store');
 
     Route::get('ajustesBanca/impresoraPos/{banca}', 'BancaImpresoraPosController@index')->name('bancaImpresoraPos');
     Route::post('ajustesBanca/impresoraPos', 'BancaImpresoraPosController@store')->name('bancaImpresoraPos.store');
@@ -216,8 +217,5 @@ Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('super
     Route::get('showDuplicarTicket/{ticket}', 'Ticket\TicketController@showDuplicarTicket');
 
     Route::resource('Ticket', 'Ticket\TicketController');
-
-
-    Route::get('/sells/{transaction_id}/print', 'SellPosController@printInvoice')->name('sell.printInvoice');
 
 });

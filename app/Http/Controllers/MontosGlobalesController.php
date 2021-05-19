@@ -23,32 +23,53 @@ class MontosGlobalesController extends Controller
     {
         $empresas_id = session()->get('user.emp_id');
         $montosGlobales  = $this->marketService->getMontosGlobalesEmpresa($empresas_id);
-        
-        // $montosGlobales = $this->marketService->getMontosGlobales();
-        // return view('ajustes/empresas.index')->with(compact('montosGlobales', 'documentos'));
          return view('ajustes/montosG.index')->with(compact('montosGlobales'));
     }
 
      public function store(Request $request)
     {
 
-        // $rules = [
-        //     'lot_codigo' => 'required',
-        //     'lot_nombre' => 'required',
-        //     'lot_abreviado' => 'required'
-        // ];
-
-        // $data = $this->validate($request, $rules);
 
         $data = $request->all();
-        $data['empresas_id'] = $this->marketService->getUserInformation()->idEmpresa;
+        $data['empresas_id'] = session()->get('user.emp_id');
         $data = $this->marketService->nuevoMontoGlobal($data);
-
-
 
         return redirect()
             ->route(
-            'montosGlobales')
+            'montosGlobales.index')
             ->with('success', ['El Monto Global se creo Satisfactoriamente']);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        $data = $request->except('_token');
+
+        $this->marketService->ModificarMontoGlobal($id, $data);
+
+        return redirect()
+            ->route(
+            'montosGlobales.index'
+            )
+            ->with('success', ['El Monto se ha modificado Satisfactoriamente']);
+    }
+
+    public function getNuevoMontoGlobal (){
+
+        return view('ajustes.montosG.modal_create');
+    }
+
+    public function getModificarMontoGlobal($id)
+    {
+        $montoGlobal = $this->marketService->getMontoGlobalDetalle($id);
+
+        return view('ajustes.montosG.modal_edit')->with(['montoGlobal' => $montoGlobal]);
     }
 }

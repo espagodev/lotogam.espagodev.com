@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Temp;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\MarketService;
+use App\Utils\Montos;
 use App\Utils\TicketDetalle;
 use App\Utils\Util;
 
@@ -62,6 +63,9 @@ class ApuestaDetalleTempController extends Controller
         $bancas_id = request()->session()->get('user.banca');
 
 
+        $parametrosBanca = $this->marketService->getParametrosBanca($bancas_id);
+
+
         /**
          * VALIDA SI EL NUMERO TIENE 1 DIGITO LE AÑADE EL 0
          */
@@ -93,7 +97,8 @@ class ApuestaDetalleTempController extends Controller
         /**
          * consulto la comision por modalidad
          */
-        $comision = TicketDetalle::MontoComisionModalidad($modalidad);
+
+        $comision = Montos::Comision($parametrosBanca->comisiones_id, $modalidad);
 
         if ($comision == 0) {
             return response()->json(
@@ -104,118 +109,21 @@ class ApuestaDetalleTempController extends Controller
             );
         }
 
-        //TRAE EL MONTO MAXIMO PERMITIDO DE APUESTA POR MODALIDAD INDIVIDUAL
-        $montoIndividual = TicketDetalle::MontoApuestaModalidad($modalidad);
-        if ($montoIndividual == 0) {
-            return response()->json(
-                array(
-                    'mensaje' => 'No tiene un Monto de apuesta minimo asignada para esta modalidad',
-                    'status' => 'MontoIndividual',
-                )
-            );
-        }
-
-        //TRAE EL MONTO MAXIMO PERMITIDO DE APUESTA POR MODALIDAD INDIVIDUAL
-        $montoGlobal = TicketDetalle::MontoGlobalModalidad($modalidad);
-        if ($montoGlobal == 0) {
-            return response()->json(
-                array(
-                    'mensaje' => 'No tiene un Monto Global de apuesta minimo asignada para esta modalidad',
-                    'status' => 'MontoIndividual',
-                )
-            );
-        }
-
-        /**
-         * CONSULTA EL NUMERO JUGADO EN CONTROL DE NUMEROS
-         */
-        $controlNumero = Util::ControlNumeroJugado($loterias_id = null, $bancas_id, $numeroOrdenado);
-
-        /**
-         * CONSULTA EL NUMERO JUGADO EN APUESTA TEMPORAL
-         */
-        $apuestaTemporal = Util::numeroJugado($bancas_id, $users_id, $numeroOrdenado);
-
-        if (empty($apuestaTemporal)) {
-            $apt_valor = 0;
-        } else {
-            $apt_valor =  $apuestaTemporal->apt_valor;
-        }
-
-        /**
-         * COMPARA EL MONTO PERMITIDO Y EL MONTO DE LA APUESTA
-         */
-        // if (!empty($controlNumero)) {
-        // $compararGlobal = Util::compararValores($montoGlobal, $controlNumero->cnj_contador);
-
-        //     if (($compararGlobal == 1)) {
-        //         return response()->json(
-        //             array(
-        //                 'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
-        //                 'status' => 'LimiteSuperado',
-        //             )
-        //         );
-        //     }
-        // }
-
-        /**
-         * COMPARA EL MONTO INDIVIDUAL PERMITIDO Y EL MONTO DE LA APUESTA
-         */
-        if (empty($controlNumero)) {
-            $controlNumero = 0;
-        } else {
-            $controlNumero =  $controlNumero;
-        }
-
-        /**
-         *$controlNumero la venta del numero por banca
-         *$apt_valor valor de la apuesta temporal
-         */
-        $apuestaTotal = $controlNumero + $apt_valor;
-
-        /**
-         * comparo que la venta temporal no supere los limites permitdos
-         */
-        // if(($apuestaTotal > $montoIndividual )&&($apuestaTotal > $montoGlobal)){
-        //     return response()->json(
-        //         array(
-        //             'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
-        //             'status' => 'LimiteSuperado',
-        //         )
-        //     );
-        // }
+         $validacionMontos = Montos::validarMonto($parametrosBanca, $modalidad, $numeroOrdenado, $users_id, $bancas_id, $comision, $request);
 
 
-        /**
-         *$request->tid_valor el monto que se esta apostado en este momento
-         *$apt_valor valor de la apuesta temporal
-         */
-        $totalApuestaTemporal = $apt_valor + $request->tid_valor;
 
-
-        if ($totalApuestaTemporal > $montoIndividual) {
-            return response()->json(
-                array(
-                    'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
-                    'status' => 'LimiteSuperado',
-                )
-            );
-        }
-
-        if (empty($apuestaTemporal)) {
-            TicketDetalle::GenerarApuesta($request, $numeroOrdenado, $modalidad, $comision);
-        } else {
-            TicketDetalle::ModificarApuesta($apuestaTemporal->id, $request->tid_valor, $apuestaTemporal->apt_valor,  $comision);
-        }
-
-
-        return
-            response()->json(
+        if (!empty($validacionMontos)) {
+            return $validacionMontos;
+        }else{
+           return response()->json(
                 array(
                     'mensaje' => '',
                     'status' => 'success',
                 )
             );
+        }
+
     }
 
     /**
@@ -288,7 +196,7 @@ class ApuestaDetalleTempController extends Controller
             $arraySupera = array();
 
             $ticketsDetalles = $this->marketService->getApuestaDetalleTemp($request->bancas_id, $request->users_id);
-
+            $parametrosBanca = $this->marketService->getParametrosBanca($request->bancas_id);
             foreach ($ticketsDetalles as $detalle) {
 
                 if ($request->lot_superpale == 1) {
@@ -297,8 +205,9 @@ class ApuestaDetalleTempController extends Controller
                     $modalidades_id = $detalle->modalidades_id;
                 }
 
-                $montoIndividual = TicketDetalle::MontoApuestaModalidad($modalidades_id);
-                // dump($montoIndividual);
+                // $montoIndividual = TicketDetalle::MontoApuestaModalidad($modalidades_id);
+                $montoIndividual = Montos::MontoIndividual($parametrosBanca->montos_individuales_id, $modalidades_id);
+
                 $controlNumero = Util::ControlNumeroJugado($request->loterias_id, $request->bancas_id, $detalle->apt_apuesta);
 
                 $totalApuesta = Util::totalApuesta($detalle->apt_valor, $controlNumero);

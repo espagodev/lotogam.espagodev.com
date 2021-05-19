@@ -78,9 +78,6 @@ class ImpresoraPosController extends Controller
     public function getModificarImpresoraPos($id)
     {
 
-        $empresas_id = session()->get('user.emp_id');
-        $bancas_id =  session()->get('user.banca');
-
         $impresora = $this->marketService->getImpresoraDetalle($id);
         $conexiones = Util::tipoConexion();
         $capacidades = Util::perfilCapacidad();

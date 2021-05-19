@@ -117,6 +117,18 @@ $(document).ready(function () {
                         msg: resp.mensaje,
                     });
                 }
+                if (resp.status == "LimiteGlobal") {
+                    $("input[name=tid_valor]").focus();
+                    Lobibox.notify("info", {
+                        pauseDelayOnHover: true,
+                        size: "mini",
+                        rounded: true,
+                        delayIndicator: false,
+                        continueDelayOnInactiveTab: false,
+                        position: "top right",
+                        msg: resp.mensaje,
+                    });
+                }
                 if (resp.status == "success") {
                     $("input[name=tid_apuesta]").val("");
                     $("input[name=tid_valor]").focus().val("");

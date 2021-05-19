@@ -78,7 +78,7 @@ class Util
         $data['empresas_id'] = session()->get('user.emp_id');
         $data['users_id'] =  session()->get('user.id');
         $data['loterias_id'] =  $loterias_id;
-        // dump($data);
+
         $control = $marketService->getConsultaControlJugada($data);
 
         if (empty($control)) {
@@ -87,6 +87,8 @@ class Util
             return $control->cnj_contador;
         }
     }
+
+
 
     public static function compararValores($monto, $apuesta)
     {

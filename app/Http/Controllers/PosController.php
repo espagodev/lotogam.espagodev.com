@@ -243,23 +243,23 @@ class PosController extends Controller
 
             foreach ($horarioLoteria as $key => $detalle) {
                 // dd($detalle->hlo_hora_fin, $horaRD);
-                // $horariocierre = HorarioLoterias::compararHoras($detalle->hlo_hora_fin, $horaRD);
+                $horariocierre = HorarioLoterias::compararHoras($detalle->hlo_hora_fin, $horaRD);
 
-                // if ($horariocierre == 0) {
+                if ($horariocierre == 0) {
                     $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                 <div class="icheck-material-info">
                                     <input type="checkbox" id="' . $detalle->lot_nombre . '" name="lot_id[]" value="' . $detalle->loterias_id . '|' . $detalle->lot_superpale . '"/>
                                     <label class="validar_monto" for="' . $detalle->lot_nombre . '" data-loteria="' . $detalle->lot_nombre . '" data-loterias_id="' . $detalle->loterias_id . '" data-superpale="' . $detalle->lot_superpale . '" ><span class="badge badge-info m-1 "><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
                                 </div>
                             </div>';
-                // } else {
-                //     $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                //                 <div class="icheck-material-danger">
-                //                     <input type="checkbox" id="' . $detalle->lot_nombre . '" disabled/>
-                //                     <label class="validar" for="' . $detalle->lot_nombre . '"><span class="badge badge-danger m-1"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
-                //                 </div>
-                //             </div>';
-                // }
+                } else {
+                    $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                <div class="icheck-material-danger">
+                                    <input type="checkbox" id="' . $detalle->lot_nombre . '" disabled/>
+                                    <label class="validar" for="' . $detalle->lot_nombre . '"><span class="badge badge-danger m-1"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
+                                </div>
+                            </div>';
+                }
             }
             return $output;
         }

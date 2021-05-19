@@ -46,16 +46,9 @@
 
 
                 @component('components.sidebarBanca', [
-                    'route' => 'bancaMontoG',
+                    'route' => 'bancaMonto',
                     'icon' => 'fa fa-hashtag',
-                    'title' => 'Montos Globales',
-                    'banca' => $banca->ban_url])
-                @endcomponent
-
-                @component('components.sidebarBanca', [
-                    'route' => 'bancaMontoI',
-                    'icon' => 'fa fa-hashtag',
-                    'title' => 'Montos Individual',
+                    'title' => 'Montos',
                     'banca' => $banca->ban_url])
                 @endcomponent
 

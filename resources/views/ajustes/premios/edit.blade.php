@@ -17,7 +17,6 @@
                  @include('ajustes._sidebar')
             </div>
             <div class="col-lg-9">
-                @dump($premio)
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Modificar Premio</h5>

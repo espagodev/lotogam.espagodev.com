@@ -10,7 +10,14 @@ class BancaUtil
 {
 
 
+    public static function parametrosBanca($bancas_id){
 
+        $marketService = resolve(MarketService::class);
+
+        $parametrosBanca = $marketService->getParametrosBanca($bancas_id);
+
+        return $parametrosBanca;
+    }
 
     /**
      * Return the printer configuration

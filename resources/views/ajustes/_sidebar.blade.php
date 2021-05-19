@@ -26,19 +26,19 @@
 
 
                 @component('components.sidebar', [
-                    'route' => 'comisiones',
+                    'route' => 'comisiones.index',
                     'icon' => 'fa fa-percent',
                     'title' => 'Comisiones'])
                 @endcomponent
 
                  @component('components.sidebar', [
-                    'route' => 'montosGlobales',
+                    'route' => 'montosGlobales.index',
                     'icon' => 'fa fa-hashtag',
                     'title' => 'Montos Globales'])
                 @endcomponent
 
                 @component('components.sidebar', [
-                    'route' => 'montosIndividuales',
+                    'route' => 'montosIndividuales.index',
                     'icon' => 'fa fa-hashtag',
                     'title' => 'Montos Individuales'])
                 @endcomponent

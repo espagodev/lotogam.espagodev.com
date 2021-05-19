@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Comisiones Empresa')
     @section('content')
      <div class="row pt-2 pb-2">
         <div class="col-sm-9">
@@ -6,7 +7,7 @@
 	   </div>
         <div class="col-sm-3">
             <div class="btn-group float-sm-right">
-                <button type="button" class="btn btn-primary waves-effect waves-primary" data-toggle="modal" data-target="#nuevo"><i class="fa fa-undo"></i> Nueva Comision</button>
+               <button type="button" class="btn btn-primary waves-effect waves-primary nuevo-modal" data-href="{{action('ComisionesController@getNuevaComision') }}"><i class="fa fa-plus mr-1"></i> Nueva Comisión</button>
             </div>
         </div>
      </div>
@@ -22,17 +23,21 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Valor %</th>
+                                            <th scope="col">Descripción</th>
                                             <th scope="col">Estado</th>
+                                            <th scope="col">Opciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($comisiones as $key => $comision)
-                                        <tr>
-                                            <td>{{ $comision->com_valor}}</td>
-                                            <td  class="card-body bt-switch">
-                                                <input type="checkbox" data-id="{{$comision->id}}" {{ $comision->com_estado ? 'checked' : '' }} data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" >
-                                            </td>
+                                         <tr>
+                                            <td>{{$comision->com_nombre }}</td>
+                                             <td  class="card-body bt-switch">
+                                                    <input type="checkbox" data-id="{{$comision->id}}" {{ $comision->com_estado ? 'checked' : '' }} data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" >
+                                                </td>
+                                                <td>
+                                                    <a data-href="{{action('ComisionesController@getModificarComision', [$comision->id]) }}"  class="btn btn-outline-warning modificar-modal" rel="tooltip" title="Editar Comision" ><i class="fa fa-pencil"></i></a>
+                                                </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -42,22 +47,16 @@
                 </div>
             </div>
       </div><!--End Row-->
-   @endsection
-    <div class="modal fade" id="nuevo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Agregar Comisión</h4><button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="{{ route('comisiones.store')}}" id="store">
-                    @include('ajustes.comisiones.form')
-                </div>
-                <div class="modal-footer"><button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-primary" type="submit">Crear</button></div>
-            </div>
-            </form>
-        </div>
+    <div class="modal fade nuevo_modal" tabindex="-1" role="dialog"
+        aria-labelledby="gridSystemModalLabel">
     </div>
+    <div class="modal fade modificar_modal" tabindex="-1" role="dialog"
+        aria-labelledby="gridSystemModalLabel">
+    </div>
+   @endsection
+@section('scripts')
+ <script src="{{ asset('js/ajustes/comisiones/comisiones.js?v=' . $asset_v) }}"></script>
+@endsection
+
 
 

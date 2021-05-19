@@ -30,14 +30,6 @@ class ComisionesController extends Controller
      public function store(Request $request)
     {
 
-        // $rules = [
-        //     'lot_codigo' => 'required',
-        //     'lot_nombre' => 'required',
-        //     'lot_abreviado' => 'required'
-        // ];
-
-        // $data = $this->validate($request, $rules);
-
         $data = $request->all();
         $data['empresas_id'] =  session()->get('user.emp_id');
 
@@ -47,7 +39,41 @@ class ComisionesController extends Controller
 
         return redirect()
             ->route(
-            'comisiones')
+            'comisiones.index')
             ->with('success', ['Comision Creada Satisfactoriamente']);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        $data = $request->except('_token');
+
+        $this->marketService->ModificarComision($id, $data);
+
+        return redirect()
+            ->route(
+                'comisiones.index'
+            )
+            ->with('success', ['La Comision se ha modificado Satisfactoriamente']);
+    }
+
+    public function getNuevaComision()
+    {
+
+        return view('ajustes.comisiones.modal_create');
+    }
+
+    public function getModificarComision($id)
+    {
+        $comision = $this->marketService->getComisionDetalle($id);
+
+        return view('ajustes.comisiones.modal_edit')->with(['comision' => $comision]);
     }
 }

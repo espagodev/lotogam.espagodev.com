@@ -521,6 +521,24 @@ class MarketService
         );
     }
 
+    public function getComisionDetalle($comision)
+    {
+        return $this->makeRequest('GET', "comisiones/{$comision}");
+    }
+
+    public function ModificarComision($comision, $data)
+    {
+        $data['_method'] = 'PUT';
+
+        return $this->makeRequest(
+            'POST',
+            "comisiones/{$comision}",
+            [],
+            $data,
+            []
+        );
+    }
+
      public function nuevaComisionBanca($data)
     {
 
@@ -861,11 +879,51 @@ class MarketService
         return $this->makeRequest('GET', "montosGlobales/{$empresa}/empresa");
     }
 
+    //MONTOS GLOBALES
+    public function getMontoGlobalDetalle($montoGlobal)
+    {
+        return $this->makeRequest('GET', "montosGlobales/{$montoGlobal}");
+    }
+
+    public function ModificarMontoGlobal($montoGlobal, $data)
+    {
+
+        $data['_method'] = 'PUT';
+
+        return $this->makeRequest(
+            'POST',
+            "montosGlobales/{$montoGlobal}",
+            [],
+            $data,
+            []
+        );
+    }
+
          //MONTOSINDIVIDUALES EMPRESA
     public function getMontosIndividualesEmpresa($empresa)
     {
         return $this->makeRequest('GET', "montosIndividuales/{$empresa}/empresa");
     }
+
+    //MONTOS individuales
+    public function getMontoIndividualDetalle($montoIndividual)
+    {
+        return $this->makeRequest('GET', "montosIndividuales/{$montoIndividual}");
+    }
+
+    public function ModificarMontoIndividual($montoIndividual, $data)
+    {
+        $data['_method'] = 'PUT';
+
+        return $this->makeRequest(
+            'POST',
+            "montosIndividuales/{$montoIndividual}",
+            [],
+            $data,
+            []
+        );
+    }
+
 
     //NUMEROS CALIENTES EMPRESA
     public function getNumerosCalientesEmpresa($empresa)
@@ -1070,7 +1128,10 @@ class MarketService
         return $this->makeRequest('GET', "getConsultaControlJugada", $data);
     }
     //
-
+    public function getControlJugadaGlobal($data)
+    {
+        return $this->makeRequest('GET', "getControlJugadaGlobal", $data);
+    }
 
     //nuevo ticketdetalle
     public function nuevoControlJugadas($data)
