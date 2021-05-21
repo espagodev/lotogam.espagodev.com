@@ -20,9 +20,9 @@
     <!-- loto scripts -->
   <script src="{{ asset('js/loto.js') }}"></script>
 
-<script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js?v=' . $asset_v) }}"></script>
-  <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js?v=' . $asset_v) }}"></script>
-  <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js?v=' . $asset_v) }}"></script>
+<script src="{{ asset('assets/plugins/lobibox-master/js/lobibox.js?v=' . $asset_v) }}"></script>
+  <script src="{{ asset('assets/plugins/lobibox-master/js/notifications.js?v=' . $asset_v) }}"></script>
+  {{-- <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js?v=' . $asset_v) }}"></script> --}}
 
 
    <!--Bootstrap Switch Buttons-->

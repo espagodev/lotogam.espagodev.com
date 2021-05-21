@@ -59,6 +59,7 @@ class Util
     public static function numeroJugado($bancas_id, $users_id, $numero)
     {
         $marketService = resolve(MarketService::class);
+
         $data = $marketService->getApuestaDetalleTempJugada($bancas_id, $users_id, $numero);
 
         if (is_null($data)) {
@@ -68,7 +69,7 @@ class Util
         }
     }
 
-    public static function ControlNumeroJugado($loterias_id, $bancas_id,  $cnj_numero)
+    public static function ControlNumeroJugado($loterias_id, $bancas_id = null, $users_id = null, $cnj_numero)
     {
         $marketService = resolve(MarketService::class);
 
@@ -76,7 +77,7 @@ class Util
         $data['bancas_id'] = $bancas_id;
         $data['cnj_numero'] = $cnj_numero;
         $data['empresas_id'] = session()->get('user.emp_id');
-        $data['users_id'] =  session()->get('user.id');
+        $data['users_id'] =  $users_id;
         $data['loterias_id'] =  $loterias_id;
 
         $control = $marketService->getConsultaControlJugada($data);

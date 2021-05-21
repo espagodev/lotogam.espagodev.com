@@ -95,7 +95,7 @@
     @endif
 
 
-    <audio id="success-audio">
+    {{-- <audio id="success-audio">
         <source src="{{ asset('/audio/success.ogg?v=' . $asset_v) }}" type="audio/ogg">
         <source src="{{ asset('/audio/success.mp3?v=' . $asset_v) }}" type="audio/mpeg">
     </audio>
@@ -106,7 +106,7 @@
     <audio id="warning-audio">
         <source src="{{ asset('/audio/warning.ogg?v=' . $asset_v) }}" type="audio/ogg">
         <source src="{{ asset('/audio/warning.mp3?v=' . $asset_v) }}" type="audio/mpeg">
-    </audio>
+    </audio> --}}
 
   </div><!--End wrapper-->
 

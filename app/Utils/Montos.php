@@ -54,7 +54,7 @@ class Montos
         /**
          * CONSULTA EL NUMERO JUGADO EN CONTROL DE NUMEROS POR LA BANCA
          */
-        $totalndividual = Util::ControlNumeroJugado($loterias_id = null, $bancas_id, $numeroOrdenado);
+        $totalndividual = Util::ControlNumeroJugado($loterias_id = null, $bancas_id, $users_id, $numeroOrdenado);
 
 
         //COMPARACIONES
@@ -62,33 +62,34 @@ class Montos
         /**
          * COMPARA EL MONTO GLOBAL CON LO YA APOSTADO DEL NUMERO
          */
-        if (!empty($totalGlobal)) {
-            $compararGlobal = Util::compararValores($montoGlobal, $totalGlobal);
+        // if (!empty($totalGlobal)) {
+        //     $compararGlobal = Util::compararValores($montoGlobal, $totalGlobal);
 
-            if (($compararGlobal == 1)) {
-                return response()->json(
-                    array(
-                        'mensaje' => 'El Numero no esta Disponible por el Momento',
-                        'status' => 'LimiteGlobal',
-                    )
-                );
-            }
-        }
+        //     if (($compararGlobal == 1)) {
+        //         return response()->json(
+        //             array(
+        //                 'mensaje' => 'El Numero no esta Disponible por el Momento',
+        //                 'status' => 'LimiteGlobal',
+        //             )
+        //         );
+        //     }
+        // }
 
         /**
          * COMPARA EL MONTO GLOBAL CON LO YA APOSTADO DEL NUMERO
          */
-        $totalApuestaTemporal = $apt_valor + $request->tid_valor + $totalGlobal;
-        $comparacionGlobalTemp = Util::compararValores($montoGlobal, $totalApuestaTemporal);
+        // $totalApuestaTemporal = $apt_valor + $request->tid_valor + $totalGlobal;
+        // $totalApuestaTemporal = $apt_valor + $request->tid_valor ;
+        // $comparacionGlobalTemp = Util::compararValores($montoGlobal, $totalApuestaTemporal);
 
-        if ($comparacionGlobalTemp == 1) {
-            return response()->json(
-                array(
-                    'mensaje' => 'La Apuesta Supera el Tope de Venta',
-                    'status' => 'LimiteSuperado',
-                )
-            );
-        }
+        // if ($comparacionGlobalTemp == 1) {
+        //     return response()->json(
+        //         array(
+        //             'mensaje' => 'La Apuesta Supera el Tope de Venta',
+        //             'status' => 'LimiteSuperado',
+        //         )
+        //     );
+        // }
 
         /**
          * COMPARA EL MONTO INDIVIDUAL CON LO YA APOSTADO DEL NUMERO

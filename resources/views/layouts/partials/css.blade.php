@@ -1,6 +1,6 @@
   <link href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet"/>
    <!-- notifications css -->
-  <link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css?v=' . $asset_v) }}"/>
+
 
     <!--Switchery-->
   <link href="{{ asset('assets/plugins/switchery/css/switchery.min.css?v=' . $asset_v) }}" rel="stylesheet" />
@@ -27,7 +27,7 @@
 
   <link href="{{ asset('css/ticket.css')}}" rel="stylesheet" />
 <!-- Toastr -->
-<link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/plugins/lobibox-master/css/lobibox.css') }}">
   <!--Bootstrap Datepicker-->
   <link href="{{ asset('assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css">
    <!--daterangepicker-->

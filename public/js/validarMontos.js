@@ -23,6 +23,7 @@ $(document).ready(function() {
                     },
                 })
                  ).then(function (result) {
+                      var SOUND = 'public/audio/';
 
                         if(result.status  == 1){
                             swal(
@@ -35,6 +36,24 @@ $(document).ready(function() {
                             'Los siguientes Numeros:',
                             '  ' + result.numero + '  en la Loteria   ' + result.loteria +' ',
                             )
+                        }
+                        if(result.status  == 3){
+                                Lobibox.notify("info", {
+                                    pauseDelayOnHover: true,
+                                    size: "mini",
+                                    rounded: true,
+                                    delayIndicator: false,
+                                    continueDelayOnInactiveTab: false,
+                                    position: "top center",
+                                    msg: result.numero + '  en la Loteria   ' + result.loteria +' ',
+                                });
+                        }
+
+                        if(result.status  == 4){
+                                Lobibox.alert("error", {
+                                    title: 'Error de Montos',
+                                    msg: result.numero,
+                                });
                         }
 
                 });
