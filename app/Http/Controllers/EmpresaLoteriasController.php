@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\MarketService;
 use App\Utils\HorarioLoterias;
 use App\Utils\Util;
+use Yajra\DataTables\Facades\DataTables;
 
 class EmpresaLoteriasController extends Controller
 {
@@ -19,13 +20,28 @@ class EmpresaLoteriasController extends Controller
 
      public function index()
     {
-        $empresa  =  $this->marketService->getUserInformation()->idEmpresa;
+        $empresa  =   session()->get('user.emp_id');
 
-        // $loteriasEmpresa  = $this->marketService->getLoteriasEmpresa($empresa);
-        $loteriasEmpresa  = $this->marketService->getLoteriasEmpresaFaltantes($empresa);
+        if (request()->ajax()) {
 
-        // return view('ajustes/empresas.index')->with(compact('empresa', 'documentos'));
-         return view('ajustes/loterias.index')->with(compact('loteriasEmpresa'));
+            $loteriasEmpresa  = $this->marketService->getLoteriasEmpresaFaltantes($empresa);
+            
+            return Datatables::of($loteriasEmpresa)
+            ->addColumn('horario', function ($row) {
+                    if ($row->loe_estado != null) {
+                        return ' <a href="' . route('ajustesLoterias.show', [$row->id]) .'" class="btn btn-outline-info btn-sm" rel="tooltip" title="Horario de la Loteria" > <i class="fa fa-clock-o"></i> </a>';
+                    } 
+                })
+                 ->addColumn(
+                     'action',
+                    '<button type="button" data-href="{{action(\'EmpresaLoteriasController@activarDesactivarLoteria\', [$id])}}" class="btn btn-sm activar-inactivar-loteria @if($loe_estado) btn-danger @else btn-success @endif"><i class="fa fa-power-off"></i> @if($loe_estado) Inactivar Loteria @else Activar Loteria @endif </button>'
+
+                )
+                ->rawColumns(['action', 'horario'])
+                ->make(true);
+        }
+
+        return view('ajustes/loterias.index');
     }
 
 
@@ -66,17 +82,14 @@ class EmpresaLoteriasController extends Controller
          $data = HorarioLoterias::getActualizarHorarioLoteria($loteria, $data);
 
         return back()
-        // return redirect()
-        //     ->route(
-        //     'ajustesLoterias.index'
-        //     )
             ->with('success', ['El Horario se ha Modificado Satisfactoriamente']);
     }
 
 
-    public function getEmpresaLoteriaEstado(Request $request){
+    public function activarDesactivarLoteria($loterias_id){
 
-        $data = $request->all();
+
+        $data['loterias_id'] = $loterias_id;
         $data['empresas_id'] = session()->get('user.emp_id');
 
         $estado = $this->marketService->getEmpresaLoteriaEstado($data);

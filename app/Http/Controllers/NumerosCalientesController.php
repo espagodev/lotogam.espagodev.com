@@ -46,6 +46,29 @@ class NumerosCalientesController extends Controller
         return redirect()
             ->route(
             'NumerosCalientes')
-            ->with('success', ['Comision Creada Satisfactoriamente']);
+            ->with('success', ['Numero Ingresado al Listado']);
+    }
+
+        public function getNumerosCalientesEstado(Request $request){
+
+        $data = $request->all();
+        $data['empresas_id'] = session()->get('user.emp_id');
+
+        $estado = $this->marketService->getNumerosCalientesEstado($data);
+
+
+        return json_encode($estado);
+
+    }
+
+        public function getNumerosCalientesDelete($id)
+    {
+        
+            $empresas_id = session()->get('user.emp_id');
+
+            $data = $this->marketService->deleteNumerosCalientes($empresas_id, $id);
+
+            return json_encode($data);
+        
     }
 }

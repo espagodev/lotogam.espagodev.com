@@ -57,6 +57,7 @@
       <!--Select Plugins Js-->
     <script src="{{ asset('assets/plugins/select2/js/select2.min.js?v=' . $asset_v) }}"></script>
 
+
       <!--Pace Plugins Js-->
     <script src="{{ asset('assets/plugins/pace/pace.js?v=' . $asset_v) }}"></script>
 

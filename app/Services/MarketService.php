@@ -636,10 +636,24 @@ class MarketService
         );
     }
 
+      //ESTADO NUMERO CALIENTE
+    public function  getNumerosCalientesEstado($data)
+    {
+        return $this->makeRequest('GET', "getNumerosCalientesEstado", $data);
+    }
+
+
     //numeros calientes  EMPRESA
     public function getNumeroCalienteEmpresa($apuesta,$empresa)
     {
         return $this->makeRequest('GET', "numero/{$apuesta}/caliente/{$empresa}/empresa");
+    }
+
+     //BORRAR resultados
+    public function deleteNumerosCalientes($empresas_id, $numero_id)
+    {
+        
+        return $this->makeRequest('DELETE', "getNumerosCalientes/{$empresas_id}/{$numero_id}");
     }
 
     //LOTERIAS EMPRESA

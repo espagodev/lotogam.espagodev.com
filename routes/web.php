@@ -41,13 +41,20 @@ Route::get('authorization', 'Auth\LoginController@authorization')->name('authori
 //numeros calientes
 Route::get('ajustes/calientes', 'NumerosCalientesController@index')->name('NumerosCalientes');
 Route::post('NumerosCalientes', 'NumerosCalientesController@store')->name('NumerosCalientes.store');
+ Route::get('getNumerosCalientesEstado', 'NumerosCalientesController@getNumerosCalientesEstado'); 
+ Route::get('getNumerosCalientesDelete/{resultado_id}', 'NumerosCalientesController@getNumerosCalientesDelete');
+ 
 
 //loterias empresa
 Route::get('ajustes/loterias', 'EmpresaLoteriasController@index')->name('loteriasEmpresa');
 
 //loterias superpale empresa
+
 Route::get('ajustes/superpales', 'EmpresaSuperPaleController@index')->name('superPaleEmpresa');
 Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('superPaleEmpresa.store');
+Route::get('getSuperPaleEmpresaDelete/{loterias_id}', 'EmpresaSuperPaleController@getSuperPaleEmpresaDelete');
+Route::get('superPaleEmpresa/{loteria_id}', 'EmpresaSuperPaleController@getModificarLoteriaSuperPale');
+Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['show','destroy','create','edit']]);
 
 //IMPRESORAS
 //     Route::get('ajustes/impresoraPos', 'ImpresoraPosController@index')->name('impresoraPos');
@@ -55,7 +62,8 @@ Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('super
 //     Route::resource('impresoraPos', 'ImpresoraPosController');
     //ajustes ticket
 
-    Route::get('getEmpresaLoteriaEstado', 'EmpresaLoteriasController@getEmpresaLoteriaEstado');
+   
+    Route::get('activarDesactivarLoteria/{loterias_id}', 'EmpresaLoteriasController@activarDesactivarLoteria'); 
 
 
     Route::prefix('ajustes')->group(function () {

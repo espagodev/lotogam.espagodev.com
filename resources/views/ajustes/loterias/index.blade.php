@@ -21,7 +21,7 @@
                 <div class="card">
                     <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table table-striped" id="loterias">
                                     <thead>
                                         <tr>
                                             <th scope="col">Loteria</th>
@@ -32,26 +32,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($loteriasEmpresa as $key => $loteriaEmpresa)
-                                        {{-- @dump($loteriasEmpresa) --}}
-                                         @if($loteriaEmpresa->lot_superpale == '0')
-                                            <tr>
-                                                <td>{{ $loteriaEmpresa->lot_nombre }}</td>
-                                                <td>{{ $loteriaEmpresa->lot_abreviado }}</td>
-                                                <td>
-                                                    @if($loteriaEmpresa->loe_estado != null)
-                                                <a href="{{ route('ajustesLoterias.show', $loteriaEmpresa->id) }}" class="btn btn-outline-info btn-sm" rel="tooltip" title="Horario de la Loteria" >
-                                                <i class="fa fa-clock-o"></i>
-                                                </a>
-                                                @endif
-                                            </td>
-                                            <td  class="card-body bt-switch">
-                                                    <input type="checkbox" data-href="{{ action('EmpresaLoteriasController@getEmpresaLoteriaEstado') }}" data-id="{{$loteriaEmpresa->id}}" {{ $loteriaEmpresa->loe_estado ? 'checked' : '' }} data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" >
 
-                                                </td>
-                                            </tr>
-                                            @endif
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -61,52 +42,72 @@
       </div><!--End Row-->
    @endsection
     @section('scripts')
-     {{-- <script src="{{ asset('js/ajustes/loterias/loteriasEmpresa.js?v=' . $asset_v) }}"></script> --}}
- <script>
-
-        $(function() {
-
-           $(".bt-switch input[type='checkbox']").on('switchChange.bootstrapSwitch', function (e, data) {
-                    var loe_estado = $(this).prop('checked') == true ? 1 : 0;
-                    var loterias_id = $(this).data('id');
-
-                     var data =  {'loe_estado': loe_estado, 'loterias_id': loterias_id};
-                     $.ajax({
-                        method: 'GET',
-                        url: $(this).data('href'),
-
-                        dataType: 'json',
-                        data: data,
-
-                        success: function(result) {
-                             console.log(result);
-                                if (result.success == true) {
-
-
-                                    Lobibox.notify("success", {
-                                        pauseDelayOnHover: true,
-                                        size: "mini",
-                                        rounded: true,
-                                        delayIndicator: false,
-                                        continueDelayOnInactiveTab: false,
-                                        position: "top right",
-                                        msg: result.msg,
-                                    });
-                                } else {
-                                    // toastr.error(result.msg);
-                                        Lobibox.notify("error", {
-                                        pauseDelayOnHover: true,
-                                        size: "mini",
-                                        rounded: true,
-                                        delayIndicator: false,
-                                        continueDelayOnInactiveTab: false,
-                                        position: "top right",
-                                        msg: result.msg,
-                                    });
-                                }
-                        }
-                    });
+    <script type="text/javascript">
+    $(document).ready( function(){
+        //Status table
+         loterias = $('#loterias').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{action('EmpresaLoteriasController@index')}}",
+                columnDefs: [ {
+                    "targets": 3,
+                    "orderable": false,
+                    "searchable": false
+                } ],
+                columns: [
+                    { data: 'lot_nombre', name: 'lot_nombre' },
+                    { data: 'lot_abreviado', name: 'lot_abreviado' },
+                    { data: 'horario', name: 'horario' },
+                    { data: 'action', name: 'action' },
+                ]
             });
     });
+
+     $(document).on('click', 'button.activar-inactivar-loteria', function(){
+        swal({
+            title: "Estás seguro ?",
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        }).then(willDelete => {
+            if (willDelete) {
+                $.ajax({
+                    url: $(this).data('href'),
+                    dataType: 'json',
+                    success: function(result) {
+                        if (result.success == "estado") {
+                            Lobibox.notify("success", {
+                                position: "top right",
+                                title:false,
+                                icon:false,
+                                size: "mini",
+                                rounded: true,
+                                msg: result.msg,
+                                });
+                            loterias.ajax.reload();
+                        }
+                        if(result.success == "activo") {
+                            Lobibox.notify("info", {                                      
+                                position: "top right",
+                                title:false,
+                                icon:false,
+                                size: "mini",
+                                rounded: true,
+                                msg: result.msg,
+                                        });
+                                loterias.ajax.reload();
+                        }
+                        // if (result.success == true) {
+                        //     Lobibox.success(result.msg);
+                        //     loterias.ajax.reload();
+                        // } else {
+                        //     toastr.error(result.msg);
+                        // }
+                    },
+                });
+            }
+        });
+    });
+
    </script>
     @endsection
