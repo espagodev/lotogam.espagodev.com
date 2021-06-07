@@ -12,7 +12,7 @@
         <div class="ticket">
         	<div class="text-box">
         	@if(!empty($detalle_ticket->logo))
-        		<img class="logo" src="{{$detalle_ticket->logo}}" alt="Logo">
+        		<img style="max-height: 100px; width: auto;" src="{{$detalle_ticket->logo}}" alt="Logo">
         	@endif
         	<!-- Logo -->
             <p class="@if(!empty($detalle_ticket->logo)) text-with-image @else centered @endif">
@@ -159,8 +159,8 @@
                 <p>*****************************</p>
                 </div>
 			    @endif
-
-             <br>
+                <br>
+                <br>
             	@if(!empty($detalle_ticket->footer_text))
 				<p class="centered">
 					 <strong> {!! $detalle_ticket->footer_text !!}  </strong>
@@ -237,7 +237,7 @@ img {
 
 .logo {
 	float: left;
-	width:100%;
+	width:35%;
 	padding: 10px;
 }
 
