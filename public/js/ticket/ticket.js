@@ -4,26 +4,6 @@ $(document).ready(function() {
         __currency_convert_recursively($(this));
     });
 
-    //usa para imprimir ticket desde modal.
-    $(document).on('click', 'a.print-ticket', function(e) {
-        e.preventDefault();
-        var href = $(this).data('href');
-
-        $.ajax({
-            method: 'GET',
-            url: href,
-            dataType: 'json',
-            success: function(result) {
-                if (result.success == 1 && result.receipt.html_content != '') {
-                    $('#receipt_section').html(result.receipt.html_content);
-                    __currency_convert_recursively($('#receipt_section'));
-                    __print_receipt('receipt_section');
-                } else {
-                    // toastr.error(result.msg);
-                }
-            },
-        });
-    });
 
      $(document).on('click', '.btn-modal', function(e) {
         e.preventDefault();
@@ -229,29 +209,28 @@ $(document).ready(function() {
                 }
             });
     });
-});
 
-
- $(document).on('click', '.print-invoice-link', function(e) {
+    $(document).on('click', '.print-invoice-link', function (e) {
         e.preventDefault();
         $.ajax({
             url: $(this).attr('href') + "?check_location=true",
             dataType: 'json',
-            success: function(result) {
-                 var receipt = result.receipt;
+            success: function (result) {
+
 
                 if (result.success == 1) {
+                    pos_print(result.receipt);
 
-                    receipt.forEach(function(elemento, index, arr) {
-                            console.log(arr[index] = elemento);
-                            if (arr[index].is_enabled){
-                                // console.log(arr[index].data)
-                                __pos_print(arr[index] = elemento);
-                            }
-
-                    });
                 } else {
-                    // toastr.error(result.msg);
+                    Lobibox.notify("error", {
+                        pauseDelayOnHover: true,
+                        size: "mini",
+                        rounded: true,
+                        delayIndicator: false,
+                        continueDelayOnInactiveTab: false,
+                        position: "top right",
+                        msg: result.msg,
+                    });
                 }
 
             },
@@ -259,5 +238,64 @@ $(document).ready(function() {
     });
 
 
+    //Se utiliza para el ticket
+    $(document).on('click', 'a.print-invoice', function (e) {
+        e.preventDefault();
+        var href = $(this).data('href');
+
+        $.ajax({
+            method: 'GET',
+            url: href,
+            dataType: 'json',
+            success: function (result) {
+
+                if (result.success == 1 && result.receipt.html_content != '') {
+                    $('#receipt_section').html(result.receipt.html_content);
+
+                    __currency_convert_recursively($('#receipt_section'));
+                    __print_receipt('receipt_section');
+                } else {
+                    Lobibox.notify("error", {
+                        pauseDelayOnHover: true,
+                        size: "mini",
+                        rounded: true,
+                        delayIndicator: false,
+                        continueDelayOnInactiveTab: false,
+                        position: "top right",
+                        msg: result.msg,
+                    });
+                }
+            },
+        });
+    });
+});
 
 
+
+
+function pos_print(receipt) {
+
+
+    //Si es tipo de impresora, conéctese con websocket
+    if (receipt.print_type == 'printer') {
+        var content = receipt;
+        content.type = 'print-receipt';
+
+        //Compruebe si está listo o no, luego imprima.
+        if (socket != null && socket.readyState == 1) {
+            socket.send(JSON.stringify(content));
+        } else {
+            initializeSocket();
+            setTimeout(function () {
+                socket.send(JSON.stringify(content));
+            }, 700);
+        }
+
+    } else if (receipt.html_content != '') {
+        //Si la impresora escribe un navegador, imprima el contenido
+
+        $('#receipt_section').html(receipt.html_content);
+        __currency_convert_recursively($('#receipt_section'));
+        __print_receipt('receipt_section');
+    }
+}

@@ -266,6 +266,7 @@ function __sum_status_html(table, class_name) {
 
 
 function __print_receipt(section_id = null) {
+
     if (section_id) {
         var imgs = document.getElementById(section_id).getElementsByTagName("img");
     } else {
@@ -273,6 +274,7 @@ function __print_receipt(section_id = null) {
     }
 
     img_len = imgs.length;
+
     if (img_len) {
         img_counter = 0;
 
@@ -282,6 +284,7 @@ function __print_receipt(section_id = null) {
     } else {
         setTimeout(function () {
             window.print();
+
         }, 1000);
     }
 }
@@ -289,7 +292,9 @@ function __print_receipt(section_id = null) {
 function incrementImageCounter() {
     img_counter++;
     if (img_counter === img_len) {
+
         window.print();
+
     }
 }
 
@@ -316,27 +321,3 @@ function __reporteResultadosDetalle() {
             });
     }
 
-    function __pos_print(receipt) {
-
-        //Si es tipo de impresora, conéctese con websocket
-        if (receipt.print_type == 'printer') {
-            var content = receipt;
-            content.type = 'print-receipt';
-
-            //Compruebe si está listo o no, luego imprima.
-            if (socket != null && socket.readyState == 1) {
-                socket.send(JSON.stringify(content));
-            } else {
-                initializeSocket();
-                setTimeout(function () {
-                    socket.send(JSON.stringify(content));
-                }, 700);
-            }
-
-        } else if (receipt.html_content != '') {
-            //Si la impresora escribe un navegador, imprima el contenido
-            $('#receipt_section').html(receipt.html_content);
-            __currency_convert_recursively($('#receipt_section'));
-            __print_receipt('receipt_section');
-        }
-    }

@@ -113,7 +113,7 @@ $(document).ready(function() {
 
 
 //Used for Purchase & Sell invoice.
-    $(document).on('click', 'a.print-invoice', function(e) {
+$(document).on('click', 'a.print-invoice', function(e) {
         e.preventDefault();
         var href = $(this).data('href');
 
@@ -148,7 +148,15 @@ $(document).ready(function() {
                     __currency_convert_recursively($('#receipt_section'));
                     __print_receipt('receipt_section');
                 } else {
-                    // toastr.error(result.msg);
+                    Lobibox.notify("error", {
+                        pauseDelayOnHover: true,
+                        size: "mini",
+                        rounded: true,
+                        delayIndicator: false,
+                        continueDelayOnInactiveTab: false,
+                        position: "top right",
+                        msg: result.msg,
+                    });
                 }
             },
         });

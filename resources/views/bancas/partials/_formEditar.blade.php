@@ -1,7 +1,7 @@
  <form action="{{ route('bancas.update',$banca->id) }}" method="post">
             @csrf {{method_field('PUT')}}
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -74,32 +74,9 @@
 
                         </div>
                     </div>
-                     <div class="card">
-                        <div class="card-body">
-                              <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <div class="form-group">
-                                            <strong>Tiempo Limite de Cobro (Días):</strong>
-                                            <input class="form-control{{ $errors->has('ban_tiempo_cobro') ? ' is-invalid' : '' }}" name="ban_tiempo_cobro" id="ban_tiempo_cobro" type="text" value="{{ old('ban_tiempo_cobro', $banca->ban_tiempo_cobro) }}" >
-
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <div class="form-group">
-                                            <strong>Limite de Venta ({{ request()->session()->get('currency.symbol') }})</strong>
-                                            <input class="form-control{{ $errors->has('ban_limite_venta') ? ' is-invalid' : '' }}" name="ban_limite_venta" id="ban_limite_venta" type="text" value="{{ old('ban_limite_venta', $banca->ban_limite_venta) }}" >
-                                        </div>
-                                    </div>
-                                </div>
-
-                        </div>
-                    </div>
                      <div class="form-footer">
-                        <button type="submit" class="btn btn-danger"><i class="fa fa-times"></i> CANCELAR</button>
                         <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Modificar</button>
                     </div>
             </div>
-            <div class="col-lg-4">
-                @include("bancas.partials._ajustes")
-            </div>
+
 </form>

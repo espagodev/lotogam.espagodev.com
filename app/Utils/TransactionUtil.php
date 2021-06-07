@@ -3,6 +3,8 @@
 namespace App\Utils;
 
 use App\Services\MarketService;
+use Carbon\Carbon;
+
 class TransactionUtil extends Util
 {
 
@@ -20,21 +22,16 @@ class TransactionUtil extends Util
      *
      * @return array
      */
-    public function getReceiptDetails($tickets_id, $invoice_layout, $empresas_detalle, $moneda, $location_details, $receipt_printer_type)
+    public function getReceiptDetails($tickets_id, $tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular)
     {
-        // dd($tickets_id, $location_id, $invoice_layout, $empresas_detalle, $moneda, $location_details, $receipt_printer_type);
-        $marketService = resolve(MarketService::class);
+
         $il = $invoice_layout;
 
-
-        $transaction = $marketService->getTicket($tickets_id);
-
-
         $output = [
-            'slogan' => isset($il->slogan) ? $il->slogan : '',
-            'business_name' => ($il->show_business_name == 1) ? $empresas_detalle[0]->emp_nombre : '',
-            'location_name' => ($il->show_location_name == 1) ? $location_details->ban_nombre : '',
-            'loteria' => $transaction[0]->lot_nombre,
+            'slogan' => isset($il->tcon_slogan) ? $il->tcon_slogan : '',
+            'business_name' => ($il->tcon_show_business_name == 1) ? $empresas_detalle->emp_nombre : '',
+            'location_name' => ($il->tcon_show_location_name == 1) ? $banca->ban_nombre : '',
+            'loteria' => $tickets[0]->lot_nombre,
         ];
 
         //Nombre para mostrar
@@ -47,92 +44,113 @@ class TransactionUtil extends Util
         }
 
         //Logo
-        // $output['logo'] = $il->show_logo != 0 && !empty($il->logo) && file_exists(public_path('uploads/invoice_logos/' . $il->logo)) ? asset('uploads/invoice_logos/' . $il->logo) : false;
-        if ($il->show_logo == 1) {
-            $output['logo']  = $il->logo;
+        // $output['logo'] = $il->tcon_show_logo != 0 && !empty($il->logo) && file_exists(public_path('uploads/invoice_logos/' . $il->logo)) ? asset('uploads/invoice_logos/' . $il->logo) : false;
+        if ($il->tcon_show_logo == 1) {
+            $output['logo']  = $il->tcon_logo;
         }
         //$output['logo'] = $il->logo == 1 && !empty($il->logo) && file_exists(public_path('uploads/invoice_logos/' . $il->logo)) ? asset('uploads/invoice_logos/' . $il->logo) : false;
 
         //Address
         $output['address'] = '';
         $temp = [];
-        if ($il->show_city == 1 &&  !empty($location_details->city)) {
-            $temp[] = $location_details->city;
+        if ($il->tcon_show_city == 1 &&  !empty($banca->city)) {
+            $temp[] = $banca->city;
         }
-        if ($il->show_state == 1 &&  !empty($location_details->state)) {
-            $temp[] = $location_details->state;
+        if ($il->tcon_show_state == 1 &&  !empty($banca->state)) {
+            $temp[] = $banca->state;
         }
-        if ($il->show_zip_code == 1 &&  !empty($location_details->zip_code)) {
-            $temp[] = $location_details->zip_code;
+        if ($il->tcon_show_zip_code == 1 &&  !empty($banca->zip_code)) {
+            $temp[] = $banca->zip_code;
         }
-        if ($il->show_country == 1 &&  !empty($location_details->country)) {
-            $temp[] = $location_details->country;
+        if ($il->tcon_show_country == 1 &&  !empty($banca->country)) {
+            $temp[] = $banca->country;
         }
         if (!empty($temp)) {
             $output['address'] .= implode(',', $temp);
         }
 
-        $output['website'] = $location_details->ban_website;
+        $output['website'] = $banca->ban_website;
 
 
         //Información de contacto de la tienda
         $output['contact'] = '';
-        if ($il->show_mobile_number == 1 && !empty($location_details->mobile)) {
-            $output['contact'] .= 'Mobile: ' . $location_details->mobile;
+        if ($il->tcon_show_mobile_number == 1 && !empty($banca->mobile)) {
+            $output['contact'] .= 'Mobil: ' . $banca->mobile;
         }
-        if ($il->show_alternate_number == 1 && !empty($location_details->alternate_number)) {
+        if ($il->tcon_show_alternate_number == 1 && !empty($banca->alternate_number)) {
             if (empty($output['contact'])) {
-                $output['contact'] .= 'Mobile: ' . $location_details->alternate_number;
+                $output['contact'] .= 'Mobil: ' . $banca->alternate_number;
             } else {
-                $output['contact'] .= ', ' . $location_details->alternate_number;
+                $output['contact'] .= ', ' . $banca->alternate_number;
             }
         }
-        if ($il->show_email == 1 && !empty($location_details->email)) {
+        if ($il->tcon_show_email == 1 && !empty($banca->email)) {
             if (!empty($output['contact'])) {
                 $output['contact'] .= "\n";
             }
-            $output['contact'] .= 'Email: ' . $location_details->email;
+            $output['contact'] .= 'Email: ' . $banca->email;
         }
 
         //Información del ticket
-        $output['invoice_no'] = $transaction[0]->tic_ticket;
-        $output['pin_no'] = $transaction[0]->tic_pin;
+        $output['invoice_no'] = $tickets[0]->tic_ticket;
+
+        if ($isAnular == '0') {
+            $output['pin_no'] = $tickets[0]->tic_pin;
+            $output['pin_no_prefix'] = $il->tcon_etiqueta_pin;
+        }
 
 
-        $output['invoice_no_prefix'] = $il->etiqueta_ticket;
-        $output['invoice_eslogan'] = $il->slogan;
-        $output['pin_no_prefix'] = $il->etiqueta_pin;
+        $output['invoice_no_prefix'] = $il->tcon_etiqueta_ticket;
+        $output['invoice_eslogan'] = $il->tcon_slogan;
 
 
-        $output['date_label'] = $il->date_label;
-        $output['invoice_date'] = \Carbon::createFromFormat('Y-m-d H:i:s', $transaction[0]->updated_at)->format($il->date_time_format);
 
+        $output['date_label'] = $il->tcon_date_label;
+        $output['invoice_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $tickets[0]->updated_at)->format($il->tcon_date_time_format);
+        // $output['invoice_date'] = '';
+        $output['time_label'] = 'Hora:';
+        $output['time_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $tickets[0]->updated_at)->format('H:i');
+        // $output['time_date'] = '';
 
-        $show_currency = true;
+        if ($il->tcon_show_sorteo == 1 &&  !empty($il->tcon_sorteo_label)) {
+            $output['sorteo_label'] = $il->tcon_sorteo_label;
+            $output['sorteo_date'] = Carbon::createFromFormat('Y-m-d', $tickets[0]->tic_fecha_sorteo)->format($il->tcon_date_time_format);
+            // $output['sorteo_date'] = '';
+        }
+
+        $tcon_show_currency = true;
         if ($receipt_printer_type == 'printer' && trim($moneda->simbolo) != '$') {
-            $show_currency = false;
+            $tcon_show_currency = false;
         }
 
         $output['lines'] = [];
-        $lines = $marketService->getTicketDetalle($tickets_id);
 
-        $details = $this->_receiptDetailsSellLines($lines, $moneda);
-
-        $output['lines'] = $details['lines'];
+        $details = self::_receiptDetailsSellLines($ticketDetalle, $tcon_show_currency, $moneda);
+        $output['lines'] = $details;
 
 
-        $output['total_label'] =  'Total :';
-        $output['total'] = $this->num_f($transaction[0]->tic_apostado, $moneda);
+        $output['total_label'] =  'Total:';
+        $total = Util::num_f($tickets[0]->tic_apostado, $tcon_show_currency, $moneda, false);
+        $output['total'] = $total;
 
+        $output['promocion_label'] = '';
+        if ($tickets[0]->tic_promocion == '1') {
+            $promocion = self::promocionTicket($tickets[0]->tic_promocion);
+            $output['promocion_label'] = $promocion;
+        }
+
+        $output['estado_label'] = '';
+        $estado = self::estadoTicket($tickets[0]->tic_estado);
+        $output['estado_label'] = $estado;
 
         //Check for barcode
-        $output['barcode'] = ($il->show_barcode == 1) ? $transaction[0]->tic_ticket : false;
+        $output['barcode'] = ($il->tcon_show_barcode == 1) ? $tickets[0]->tic_ticket : false;
 
         //Additional notes
-        $output['footer_text'] = $invoice_layout->ticket_mensaje;
+        $output['footer_text'] = $il->tcon_ticket_mensaje;
 
         //Barcode related information.
-        $output['show_barcode'] = !empty($il->show_barcode) ? true : false;
+        $output['tcon_show_barcode'] = !empty($il->tcon_show_barcode) ? true : false;
 
         return (object) $output;
     }
@@ -142,20 +160,20 @@ class TransactionUtil extends Util
      *
      * @return array
      */
-    protected function _receiptDetailsSellLines($lines, $empresas_detalle)
+    protected static function _receiptDetailsSellLines($lines, $tcon_show_currency, $moneda)
     {
-
+        // dd($lines, $tcon_show_currency, $moneda);
         foreach ($lines as $line) {
 
             $apuesta = $line->tid_apuesta;
             $valor = $line->tid_valor;
-            $modalidad = $line->modalidades_id;
+            $modalidad = $line->mod_codigo;
 
             $line_array = [
 
                 'modalidad' => $modalidad,
                 'apuesta' => $apuesta,
-                'valor' => $this->num_f($valor, false, $empresas_detalle, true),
+                'valor' => Util::num_f($valor, $tcon_show_currency, $moneda, false),
 
             ];
 
@@ -164,7 +182,32 @@ class TransactionUtil extends Util
             $output_lines[] = $line_array;
         }
 
-        return ['lines' => $output_lines];
+        return  $output_lines;
+    }
+
+    public static function promocionTicket($promocion)
+    {
+        $output = '';
+        if ($promocion == 1) {
+            $output .= " ** PROMOCION ** ";
+        }
+        return $output;
+    }
+
+    public static function estadoTicket($estado)
+    {
+
+        $output = '';
+        if ($estado == 0) {
+            $output .= " ** ANULADO ** ";
+        } elseif ($estado == 2) {
+            $output .= " ** PREMIADO ** ";
+        } elseif ($estado == 3) {
+            $output .= " ** PAGADO ** ";
+        }
+
+
+        return $output;
     }
 
 }

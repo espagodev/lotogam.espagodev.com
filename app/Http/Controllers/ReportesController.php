@@ -144,8 +144,8 @@ class ReportesController extends Controller
                         $estado .= '   <button type="button" data-href="' . action('Ticket\TicketController@show', [$row->id]) . '"  class="btn btn-sm btn-outline-info btn-modal"
                                     data-container=".view_register"><i class="fa fa-eye"></i> </button>
 
-                                     <button type="button" href="' . route('pos.printTicket', [$row->id]) . '" class="btn btn-sm btn-outline-warning print-invoice-link"
-                                    data-container=".view_register"><i class="fa fa-print"></i></button>
+                                     <a href="#" data-href="' . route('pos.printTicket', [$row->id]) . '" class="btn btn-sm btn-outline-warning print-invoice"
+                                    ><i class="fa fa-print"></i></a>
 
                                 ';
                     } else if ($row->tic_estado == 2) {

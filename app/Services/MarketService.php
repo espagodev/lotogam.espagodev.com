@@ -495,7 +495,6 @@ class MarketService
             "appConfigTickets/{$config_tickets}",
             [],
             $data,
-            [],
             $hasFile = isset($data['tcon_logo'])
         );
     }
@@ -652,7 +651,7 @@ class MarketService
      //BORRAR resultados
     public function deleteNumerosCalientes($empresas_id, $numero_id)
     {
-        
+
         return $this->makeRequest('DELETE', "getNumerosCalientes/{$empresas_id}/{$numero_id}");
     }
 

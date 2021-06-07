@@ -60,13 +60,13 @@ html{
 	width: device-width
 }
 
-body {
+/* body {
    	background-color: #f8f7ff;
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     color: #757575;
     letter-spacing: .5px;
-}
+} */
 [tabindex="-1"]:focus {
 	outline: 0!important
 }

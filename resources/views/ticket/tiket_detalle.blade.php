@@ -11,7 +11,7 @@
     </div>
 
     <div class="modal-footer">
-     <a href="{{route('pos.printTicket', [$tickets_id])}}" class="print-invoice-link btn btn-primary" ><i class="fa fa-print" aria-hidden="true"></i>Imprimir</a>
+     <a href="#" data-href="{{route('pos.printTicket', [$tickets_id])}}" class="print-invoice btn btn-primary" ><i class="fa fa-print" aria-hidden="true"></i>Imprimir</a>
 
       <button type="button" class="btn btn-info no-print"
         data-dismiss="modal"> Cerrar

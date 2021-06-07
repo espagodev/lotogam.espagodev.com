@@ -31,12 +31,26 @@
                                                     <div class="row">
                                                          <div class="col-xs-12 col-sm-6 col-md-6">
                                                             <div class="row">
-                                                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                                                <div class="col-xs-6 col-sm-6 col-md-6">
                                                                     <div class="form-group">
                                                                         <strong>Nombre del diseño:</strong>
                                                                         <input class="form-control{{ $errors->has('tcon_nombre') ? ' is-invalid' : '' }}" name="tcon_nombre" id="tcon_nombre" type="text" value="{{ old('tcon_nombre', $formato->tcon_nombre) }}" >
                                                                     </div>
                                                                 </div>
+                                                                 <div class="col-xs-6 col-sm-6 col-md-6">
+                                                                <div class="form-group">
+                                                                    <strong>Diseño:</strong>
+                                                                        <select class="form-control" name="tcon_formato_browser" id="tcon_formato_browser">
+                                                                            <option value="">Seleccione</option>
+                                                                                @foreach($formatos as $key => $format)
+                                                                                <option value="{{ $key }}">{{ $format }}</option>
+                                                                                @endforeach
+                                                                        </select>
+                                                                     <span class="help-block">
+                                                                        Utilizado para la impresión basada en navegador
+                                                                    </span>
+                                                                </div>
+                                                            </div>
                                                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                                                     <div class="form-group">
                                                                         <strong>Logotipo de la Ticket:</strong>

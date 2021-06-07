@@ -100,10 +100,10 @@ class FormatoTickets
         $output['time_date'] = \Carbon::createFromFormat('Y-m-d H:i:s', $transaction->updated_at)->format('H:i:s');
 
         $output['sorteo_label'] = '';
-         $output['sorte_date'] = '';
+        $output['sorteo_date'] = '';
         if ($il->tcon_show_sorteo == 1 &&  !empty($il->tcon_sorteo_label)) {
             $output['sorteo_label'] = $il->tcon_sorteo_label;
-            $output['sorte_date'] = \Carbon::createFromFormat('Y-m-d', $transaction->tic_fecha_sorteo)->format($il->tcon_date_time_format);
+            $output['sorteo_date'] = \Carbon::createFromFormat('Y-m-d', $transaction->tic_fecha_sorteo)->format($il->tcon_date_time_format);
         }
 
         $tcon_show_currency = true;
@@ -302,7 +302,7 @@ class FormatoTickets
 
     public static function drawLine()
     {
-        $char_per_line = 57 ;
+        $char_per_line = 50 ;
         $new = '';
         for ($i = 1; $i < $char_per_line; $i++) {
             $new .= '-';

@@ -1,10 +1,10 @@
- <div class="containerTicket lista-scroll">
+ <div class="containerTicket lista-scroll no-print">
         <div class="invoice">
             <div  class="receipt">
             <div class="text-box">
 
             @if(!empty($receipt_details->logo))
-                <img class="logo centered" src="{{$receipt_details->logo}}" alt="Logo">
+                <img class="logos centered" src="{{$receipt_details->logo}}" alt="Logo">
             @endif
             <!-- Logo -->
             <p class="centered">
@@ -41,7 +41,7 @@
             <div class="flex-box">
                     <div class="textbox-info">
                     <p class="f-left"><strong>{!! $receipt_details->sorteo_label !!} </strong></p>
-                    <p class="f-right"> {{$receipt_details->sorte_date}}</p>
+                    <p class="f-right"> {{$receipt_details->sorteo_date}}</p>
                 </div>
             </div>
             <div class="flex-box">
@@ -58,7 +58,6 @@
 
             </div>
 
-
             <div class="textbox-info centered">
                 @if(!empty($receipt_details->loteria))
                         <strong> {!! $receipt_details->loteria !!}</strong>
@@ -66,11 +65,9 @@
             </div>
                 {!! $receipt_details->lines !!}
 
-            <div class="flex-box centered">
+            <div class="centered">
                 <p>
                     <strong>{!! $receipt_details->total_label !!}</strong>
-                </p>
-                <p>
                     <strong>{{$receipt_details->total}}</strong>
                 </p>
             </div>

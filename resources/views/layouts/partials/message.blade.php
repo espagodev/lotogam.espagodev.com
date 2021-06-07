@@ -1,6 +1,6 @@
  {{-- @if(!$pos_layout) --}}
             @if(isset($errors) && $errors->any())
-                <div class="alert alert-danger">
+                <div class="alert alert-danger no-print">
                     <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <ul>
                         @foreach($errors->all() as $error)
@@ -11,7 +11,7 @@
             @endif
 
             @if(session()->has('success'))
-                <div class="alert alert-success">
+                <div class="alert alert-success no-print">
                     <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <ul>
                         @foreach(session()->get('success') as $message)

@@ -145,7 +145,7 @@ class BancaUtil
     public static function htmlContent($receipt) {
 
         // $layout = !empty($receipt_details->design) ? 'sale_pos.receipts.' . $receipt_details->design : 'sale_pos.receipts.classic';
-        $receipt = $receipt[0]->data;
+        $receipt = $receipt[0]->data; 
         // dd($receipt);
         $output['html_content'] = view('sale_pos.receipts.classic', compact('receipt'))->render();
 

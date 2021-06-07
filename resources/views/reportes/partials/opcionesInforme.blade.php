@@ -13,7 +13,7 @@
                 @include('reportes.partials.__fechas')
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
-                <a href="#" type="button" class="btn btn-info print-invoice" data-href="{{action('ReportesController@getVentasPrint')}}">
+                <a href="#" type="button" class="btn btn-info print-venta" data-href="{{action('ReportesController@getVentasPrint')}}">
 					<i class="fa fa-print"></i> Imprimir Reporte
                 </a>
             </div>

@@ -1,4 +1,4 @@
-<div id="wrapper">
+<div id="wrapper" class="no-print">
     <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true" class="no-print">
         <div class="brand-logo">
         <a href="{{ route('home') }}">
@@ -13,23 +13,23 @@
     <div class="user-details no-print">
         <div class="media align-items-center user-pointer collapsed" data-toggle="collapse" data-target="#user-dropdown">
         <div class="avatar"><img class="mr-3 side-user-img" src="{{ asset('images/avatars/avatar-13.png') }}" alt="user avatar"></div>
-        <div class="media-body">
-        <h6 class="side-user-name">{{ Auth::user()->name }}</h6>
-        </div>
+            <div class="media-body">
+                <h6 class="side-user-name">{{ Auth::user()->name }}</h6>
+            </div>
         </div>
         <div id="user-dropdown" class="collapse">
-        <ul class="user-setting-menu">
-                <li><a href="javaScript:void();"><i class="icon-user"></i>  My Profile</a></li>
-                <li><a href="javaScript:void();"><i class="icon-settings"></i> Setting</a></li>
-        <li><a href="{{ route('logout') }}"  onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();"><i class="icon-power"></i> Salir</a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </li>
-        </ul>
+            <ul class="user-setting-menu">
+                    <li><a href="javaScript:void();"><i class="icon-user"></i>  My Profile</a></li>
+                    <li><a href="javaScript:void();"><i class="icon-settings"></i> Setting</a></li>
+            <li><a href="{{ route('logout') }}"  onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"><i class="icon-power"></i> Salir</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>
+            </ul>
         </div>
-        </div>
+    </div>
     <ul class="sidebar-menu no-print">
       <li>
         <a href="{{ route('home') }}" class="waves-effect">

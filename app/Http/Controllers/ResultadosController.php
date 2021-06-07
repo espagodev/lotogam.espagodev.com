@@ -142,7 +142,7 @@ class ResultadosController extends Controller
             // }
             // //If print type browser - return the content, printer - return printer config data, and invoice format config
             // if ($receipt_printer_type == 'printer') {
-            //     $output['print_type'] = 'printer';
+            //     $output[''] = 'printer';
             //     $output['printer_config'] = $this->businessUtil->printerConfig($business_id, $location_details->printer_id);
             //     $output['data'] = $receipt_details;
             // } else {

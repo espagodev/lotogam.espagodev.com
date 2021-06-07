@@ -1,5 +1,7 @@
 @extends('layouts.app')
+
 @section('title', 'Sistema POS')
+
     @section('content')
     <section class="content no-print">
     <div class="row">
@@ -39,7 +41,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">{{ $symbol }}</span>
                                         </div>
-                                        <input type="text" id="tid_valor" name="tid_valor" class="form-control" placeholder="Monto de Apuesta">
+                                        <input type="number" id="tid_valor" name="tid_valor" class="form-control" placeholder="Monto de Apuesta">
                                     </div>
 
                                 </div>
@@ -48,7 +50,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-hashtag"></i></span>
                                         </div>
-                                        <input type="text" name="tid_apuesta" id="tid_apuesta" class="form-control" placeholder="Numero">
+                                        <input type="number" name="tid_apuesta" id="tid_apuesta" class="form-control" placeholder="Numero">
                                     </div>
                                 </div>
                             </div>
@@ -75,12 +77,12 @@
                                         </table>
                                     </div>
                             </div>
-                            @include('sale_pos.partials.pos_details')
+
                          </form>
                     </div>
               </div>
         </div>
-          <div class="col-md-5 col-sm-12">
+          <div class="col-md-5 col-sm-12 no-print">
               <div class="card">
                     <div class="card-body">
                         @include('sale_pos.partials.lista_loterias')
@@ -94,15 +96,25 @@
 
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-7 col-sm-12 o-print">
+            <div class="card">
+                <div class="card-body">
+                    @include('sale_pos.partials.pos_details')
+                </div>
+            </div>
+        </div>
+
+    </div>
     </section>
     <!-- Esto se imprimirá-->
 <section class="invoice print_section" id="receipt_section">
 </section>
 
-<div class="modal fade view_register" tabindex="-1" role="dialog"
+<div class="modal fade view_register no-print" tabindex="-1" role="dialog"
     aria-labelledby="gridSystemModalLabel">
 </div>
-<div class="modal fade anular_modal" tabindex="-1" role="dialog"
+<div class="modal fade anular_modal no-print" tabindex="-1" role="dialog"
         aria-labelledby="gridSystemModalLabel">
     </div>
 @endsection

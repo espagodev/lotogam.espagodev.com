@@ -186,8 +186,8 @@ class Util
     public static function num_f($input_number, $add_symbol = false, $business_details = null, $is_quantity = false)
     {
 
-        $thousand_separator =  session('currency')['thousand_separator'];
-        $decimal_separator =  session('currency')['decimal_separator'];
+        $thousand_separator = !empty($business_details) ? $business_details->separador_miles : session('currency')['thousand_separator'];
+        $decimal_separator = !empty($business_details) ? $business_details->separador_decimal : session('currency')['decimal_separator'];
 
         $currency_precision = config('constants.currency_precision', 2);
 
@@ -197,16 +197,16 @@ class Util
 
         $formatted = number_format($input_number, $currency_precision, $decimal_separator, $thousand_separator);
 
-        // if ($add_symbol) {
-        //     $currency_symbol_placement = !empty($business_details) ? $business_details->currency_symbol_placement : session('business.currency_symbol_placement');
-        //     $symbol = !empty($business_details) ? $business_details->simbolo : session('currency')['symbol'];
+        if ($add_symbol) {
+            $currency_symbol_placement = !empty($business_details) ? $business_details->simbolo : session('business.currency_symbol_placement');
+            $symbol = !empty($business_details) ? $business_details->simbolo : session('currency')['symbol'];
 
-        //     if ($currency_symbol_placement == 'after') {
-        //         $formatted = $formatted . ' ' . $symbol;
-        //     } else {
-        //         $formatted = $symbol . ' ' . $formatted;
-        //     }
-        // }
+            if ($currency_symbol_placement == 'after') {
+                $formatted = $formatted . ' ' . $symbol;
+            } else {
+                $formatted = $symbol . ' ' . $formatted;
+            }
+        }
 
         return $formatted;
     }
@@ -395,5 +395,32 @@ class Util
             'green-light' => 'Green Light',
             'red-light' => 'Red Light'
         ];
+    }
+
+
+    /**
+     * Formato impresion por navegador
+     */
+    public static function formatoBrowser()
+    {
+        return [
+            'formato80' => 'Pos 80 (Recomendado para impresora de recibos de linea térmica, tamaño de papel de 80 mm)',
+            'formato58' => 'Pos 58-80 (Recomendado para impresora de recibos de linea térmica, tamaño de papel de 80 mm y 58 mm)',
+        ];
+    }
+
+    /**
+     * @param string $fecha_creacion
+     */
+    static function calcularMinutos($fecha_creacion, $tiempo_anular)
+    {
+        $created = new Carbon($fecha_creacion);
+        $now =  Carbon::now()->toDateTimeString();
+
+        if ($created->diffInMinutes($now) > $tiempo_anular) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

@@ -25,7 +25,7 @@ $(document).ready(function() {
         serverSide: true,
          aaSorting: false,
         ajax: {
-                url: '/reportes/reporte-tickets',
+                url: '/reportes/reporte-tickets', 
                 dataType: "json",
               data: function(d) {
 

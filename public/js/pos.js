@@ -8,14 +8,14 @@ function inputCharacters(event) {
 
 $(document).ready(function () {
 
-     if ($('#spr_date_filter').length == 1) {
-        $('#spr_date_filter').daterangepicker(dateRangeSettings, function(start, end) {
+    if ($('#spr_date_filter').length == 1) {
+        $('#spr_date_filter').daterangepicker(dateRangeSettings, function (start, end) {
             $('#spr_date_filter span').val(
                 start.format(moment_date_format) + ' ~ ' + end.format(moment_date_format)
             );
             reporte_tickets.ajax.reload();
         });
-        $('#spr_date_filter').on('cancel.daterangepicker', function(_ev, _picker) {
+        $('#spr_date_filter').on('cancel.daterangepicker', function (_ev, _picker) {
             $('#spr_date_filter').val('');
             reporte_tickets.ajax.reload();
         });
@@ -37,7 +37,7 @@ $(document).ready(function () {
     // } else {
     pos_form_obj = $("form#add_pos_sell_form");
     // }
-    if ($("input#product_row_count").length > 0 ) {
+    if ($("input#product_row_count").length > 0) {
         initialize_printer();
 
     }
@@ -93,18 +93,18 @@ $(document).ready(function () {
                         msg: resp.mensaje,
                     });
                 }
-                 if (resp.status == "Comision") {
-                     $("input[name=tid_valor]").focus();
-                     Lobibox.notify("warning", {
-                         pauseDelayOnHover: true,
-                         size: "mini",
-                         rounded: true,
-                         delayIndicator: false,
-                         continueDelayOnInactiveTab: false,
-                         position: "top right",
-                         msg: resp.mensaje,
-                     });
-                 }
+                if (resp.status == "Comision") {
+                    $("input[name=tid_valor]").focus();
+                    Lobibox.notify("warning", {
+                        pauseDelayOnHover: true,
+                        size: "mini",
+                        rounded: true,
+                        delayIndicator: false,
+                        continueDelayOnInactiveTab: false,
+                        position: "top right",
+                        msg: resp.mensaje,
+                    });
+                }
                 if (resp.status == "MontoIndividual") {
                     $("input[name=tid_valor]").focus();
                     Lobibox.notify("warning", {
@@ -238,7 +238,7 @@ $(document).ready(function () {
                     dataType: "json",
                     success: function (result) {
 
-                         var receipt = result.receipt;
+                        var receipt = result.receipt;
 
                         if (result.success == 1) {
                             $("#modal_payment").modal("hide");
@@ -256,15 +256,16 @@ $(document).ready(function () {
                             horarioLoteriasDia();
                             horarioSuperPale();
 
-                            receipt.forEach(function(elemento, index, arr) {
-                                   console.log(arr[index] = elemento);
-                                    if (arr[index].is_enabled){
+                            // if (result.receipt.is_enabled) {
+                                // __pos_print(result.receipt);
+
+                                receipt.forEach(function (elemento, index, arr) {
+                                    if (arr[index].is_enabled) {
                                         // console.log(arr[index].data)
                                         __pos_print(arr[index] = elemento);
                                     }
-
-                            });
-
+                                });
+                            // }
                         } else {
                             Lobibox.notify("error", {
                                 pauseDelayOnHover: true,
@@ -273,7 +274,7 @@ $(document).ready(function () {
                                 delayIndicator: false,
                                 continueDelayOnInactiveTab: false,
                                 position: "top right",
-                                msg: result.mensaje,
+                                msg: msg,
                             });
                         }
 
@@ -288,9 +289,9 @@ $(document).ready(function () {
                     },
                 });
             }
-                $("div.pos-processing").hide();
-                $("#pos-save").removeAttr("disabled");
-                 $("input[name=tid_valor]").focus();
+            $("div.pos-processing").hide();
+            $("#pos-save").removeAttr("disabled");
+            $("input[name=tid_valor]").focus();
             return false;
 
         },
@@ -308,11 +309,11 @@ $(document).ready(function () {
     reporte_tickets = $('#reporte_tickets').DataTable({
         processing: true,
         serverSide: true,
-         aaSorting: false,
+        aaSorting: false,
         ajax: {
-                url: '/reportes/reporte-tickets',
-                dataType: "json",
-              data: function(d) {
+            url: '/reportes/reporte-tickets',
+            dataType: "json",
+            data: function (d) {
 
                 d.loterias_id = $('select#loterias_id').val();
                 d.bancas_id = $('select#bancas_id').val();
@@ -334,109 +335,57 @@ $(document).ready(function () {
             },
         },
         columns: [
-                { data: 'tic_fecha_sorteo', name: 'tic_fecha_sorteo', orderable: false, searchable: false  },
-                { data: 'tic_ticket', name: 'tic_ticket', orderable: false, searchable: true  },
-                { data: 'lot_nombre', name: 'loteria', orderable: false, searchable: false  },
-                { data: 'tic_numeros', name: 'tic_numeros', orderable: false, searchable: false  },
-                { data: 'tic_apostado', name: 'tic_apostado', orderable: false, searchable: false  },
-                { data: 'tic_estado', name: 'estado', orderable: false, searchable: false  },
-                { data: 'action', name: 'action' },
-         ],
-          fnDrawCallback: function(_oSettings) {
+            { data: 'tic_fecha_sorteo', name: 'tic_fecha_sorteo', orderable: false, searchable: false },
+            { data: 'tic_ticket', name: 'tic_ticket', orderable: false, searchable: true },
+            { data: 'lot_nombre', name: 'loteria', orderable: false, searchable: false },
+            { data: 'tic_numeros', name: 'tic_numeros', orderable: false, searchable: false },
+            { data: 'tic_apostado', name: 'tic_apostado', orderable: false, searchable: false },
+            { data: 'tic_estado', name: 'estado', orderable: false, searchable: false },
+            { data: 'action', name: 'action' },
+        ],
+        fnDrawCallback: function (_oSettings) {
             __currency_convert_recursively($('#reporte_tickets'));
         },
     });
 
-    });
+});
 
-        $(document).on('show.bs.modal', '#recent_transactions_modal', function () {
-        reporte_tickets.ajax.reload();
-        });
-
-
- //BORRAR
-    $(document).ready(function() {
-        $(document).on('click', '.borrar', function(){
-
-            var id = $(this).attr("data-record-id");
-
-           $.when(
-               $.ajax({
-                   async: false,
-                   url: "/eliminarApuesta/" + id,
-                   method: "DELETE",
-
-                   data: {
-                       _token: token,
-                       id: id,
-                   },
-               })
-           ).then(function (resp) {
-               if (resp.status == "success") {
-                   $("input[name=tid_apuesta]").val("");
-                   $("input[name=tid_valor]").focus().val("");
-                   MostrarJugadas();
-                   Lobibox.notify("success", {
-                       pauseDelayOnHover: true,
-                       size: "mini",
-                       rounded: true,
-                       delayIndicator: false,
-                       continueDelayOnInactiveTab: false,
-                       position: "top right",
-                       msg: resp.msg,
-                   });
-               }
-               if (resp.status == "error") {
-                   Lobibox.notify("error", {
-                       pauseDelayOnHover: true,
-                       size: "mini",
-                       rounded: true,
-                       delayIndicator: false,
-                       continueDelayOnInactiveTab: false,
-                       position: "top right",
-                       msg: resp.msg,
-                   });
-               }
-           });
-        });
-    });
+$(document).on('show.bs.modal', '#recent_transactions_modal', function () {
+    reporte_tickets.ajax.reload();
+});
 
 
+//BORRAR
+$(document).ready(function () {
+    $(document).on('click', '.borrar', function () {
 
-
-
-
-
-    function reset_pos_form() {
-
-       var banca = $("input#bancas_id").val();
-        var usuario = $("input#users_id").val();
+        var id = $(this).attr("data-record-id");
 
         $.when(
             $.ajax({
                 async: false,
-                url: "/eliminar/"+ banca +"/jugadas/"+ usuario,
+                url: "/eliminarApuesta/" + id,
                 method: "DELETE",
 
                 data: {
-                banca: banca,
-                usuario: usuario,
+                    _token: token,
+                    id: id,
                 },
             })
         ).then(function (resp) {
             if (resp.status == "success") {
                 $("input[name=tid_apuesta]").val("");
                 $("input[name=tid_valor]").focus().val("");
-
-                // Lobibox.notify("success", {
-                //     pauseDelayOnHover: true,
-                //     size: "mini",
-                //     rounded: true,
-                //     delayIndicator: false,
-                //     continueDelayOnInactiveTab: false,
-                //     position: "top right",
-                //     msg: resp.msg,
-                // });
+                MostrarJugadas();
+                Lobibox.notify("success", {
+                    pauseDelayOnHover: true,
+                    size: "mini",
+                    rounded: true,
+                    delayIndicator: false,
+                    continueDelayOnInactiveTab: false,
+                    position: "top right",
+                    msg: resp.msg,
+                });
             }
             if (resp.status == "error") {
                 Lobibox.notify("error", {
@@ -449,167 +398,217 @@ $(document).ready(function () {
                     msg: resp.msg,
                 });
             }
-            MostrarJugadas();
-
         });
-
-    }
-
-    function pos_total_row() {
-        var total_quantity = 0;
-        var price_total = 0;
-        var contador = 0;
-        var total_payable = 0;
-
-        $('table#pos_table tbody tr').each(function () {
-
-        price_total =  price_total + __read_number($(this).find("input.pos_line_total"));
-
-        });
-
-            $("span.price_total").text(__currency_trans_from_en(price_total, true));
-
-        $("input[name='lot_id[]']").on("click", function () {
-
-            if ($(this).is(":checked")) {
-                contador++;
-            } else {
-                contador--;
-            }
-
-            if (contador == 0) {
-                total_payable = 0;
-            } else {
-                total_payable = price_total * contador;
-            }
-
-            $("span#total_payable").text(__currency_trans_from_en(total_payable, true));
-            $("span#total_loterias").text(contador);
-        });
+    });
+});
 
 
 
-    }
+function reset_pos_form() {
 
-    function MostrarJugadas() {
-        var banca = $("input#bancas_id").val();
-        var usuario = $("input#users_id").val();
+    var banca = $("input#bancas_id").val();
+    var usuario = $("input#users_id").val();
 
+    $.when(
         $.ajax({
-            url: "/apuestaDetalleTemp",
-            method: "get",
-            dataType: "json",
+            async: false,
+            url: "/eliminar/" + banca + "/jugadas/" + usuario,
+            method: "DELETE",
+
             data: {
                 banca: banca,
                 usuario: usuario,
             },
-            success: function (result) {
+        })
+    ).then(function (resp) {
+        if (resp.status == "success") {
+            $("input[name=tid_apuesta]").val("");
+            $("input[name=tid_valor]").focus().val("");
 
-                    $("table#pos_table tbody").html(result.ticketDetalles);
-
-                    $("input#product_row_count").val(result.row_count);
-
-                    $("span.total_quantity").each(function () {
-                        $(this).html(__number_f(result.row_count));
-                    });
-
-                    var this_row = $("table#pos_table tbody").find("tr");
-
-                    __currency_convert_recursively(this_row);
-                    pos_total_row();
-                // }
-            },
-        });
-    }
-
-    function generarTicket(){
-        $.when(
-            $.ajax({
-                async: false,
-                url: "/apuestaTemp",
-                method: "get",
-                dataType: "json",
-                success: function (result) {
-                    $("input#ticket").val(result);
-                },
-            })
-            ).then(function (_resp) {
-                MostrarJugadas();
-
+            // Lobibox.notify("success", {
+            //     pauseDelayOnHover: true,
+            //     size: "mini",
+            //     rounded: true,
+            //     delayIndicator: false,
+            //     continueDelayOnInactiveTab: false,
+            //     position: "top right",
+            //     msg: resp.msg,
+            // });
+        }
+        if (resp.status == "error") {
+            Lobibox.notify("error", {
+                pauseDelayOnHover: true,
+                size: "mini",
+                rounded: true,
+                delayIndicator: false,
+                continueDelayOnInactiveTab: false,
+                position: "top right",
+                msg: resp.msg,
             });
         }
+        MostrarJugadas();
 
-    //LOTERIAS
-  function horarioLoteriasDia() {
+    });
+
+}
+
+function pos_total_row() {
+    var total_quantity = 0;
+    var price_total = 0;
+    var contador = 0;
+    var total_payable = 0;
+
+    $('table#pos_table tbody tr').each(function () {
+
+        price_total = price_total + __read_number($(this).find("input.pos_line_total"));
+
+    });
+
+    $("span.price_total").text(__currency_trans_from_en(price_total, true));
+
+    $("input[name='lot_id[]']").on("click", function () {
+
+        if ($(this).is(":checked")) {
+            contador++;
+        } else {
+            contador--;
+        }
+
+        if (contador == 0) {
+            total_payable = 0;
+        } else {
+            total_payable = price_total * contador;
+        }
+
+        $("span#total_payable").text(__currency_trans_from_en(total_payable, true));
+        $("span#total_loterias").text(contador);
+    });
+
+
+
+}
+
+function MostrarJugadas() {
+    var banca = $("input#bancas_id").val();
+    var usuario = $("input#users_id").val();
+
+    $.ajax({
+        url: "/apuestaDetalleTemp",
+        method: "get",
+        dataType: "json",
+        data: {
+            banca: banca,
+            usuario: usuario,
+        },
+        success: function (result) {
+
+            $("table#pos_table tbody").html(result.ticketDetalles);
+
+            $("input#product_row_count").val(result.row_count);
+
+            $("span.total_quantity").each(function () {
+                $(this).html(__number_f(result.row_count));
+            });
+
+            var this_row = $("table#pos_table tbody").find("tr");
+
+            __currency_convert_recursively(this_row);
+            pos_total_row();
+            // }
+        },
+    });
+}
+
+function generarTicket() {
+    $.when(
+        $.ajax({
+            async: false,
+            url: "/apuestaTemp",
+            method: "get",
+            dataType: "json",
+            success: function (result) {
+                $("input#ticket").val(result);
+            },
+        })
+    ).then(function (_resp) {
+        MostrarJugadas();
+
+    });
+}
+
+//LOTERIAS
+function horarioLoteriasDia() {
 
     var bancas_id = $('#bancas_id').val();
 
-    var data = {  bancas_id: bancas_id };
+    var data = { bancas_id: bancas_id };
 
     var loader = __fa_awesome();
 
-        $('.loterias').html(loader);
+    $('.loterias').html(loader);
 
-            $.ajax({
-                method: 'GET',
-                url: '/pos/getHorarioLoteriasDia',
-                dataType: 'html',
-                data: data,
-                success: function(data) {
-                    $('.loterias').html(data);
+    $.ajax({
+        method: 'GET',
+        url: '/pos/getHorarioLoteriasDia',
+        dataType: 'html',
+        data: data,
+        success: function (data) {
+            $('.loterias').html(data);
 
-                },
+        },
 
-            });
-    }
+    });
+}
 
-    function horarioSuperPale() {
+function horarioSuperPale() {
 
-        var bancas_id = $('#bancas_id').val();
+    var bancas_id = $('#bancas_id').val();
 
-        var data = {  bancas_id: bancas_id };
+    var data = { bancas_id: bancas_id };
 
-        var loader = __fa_awesome();
+    var loader = __fa_awesome();
 
-            $('.superPale').html(loader);
+    $('.superPale').html(loader);
 
-                $.ajax({
-                    method: 'GET',
-                    url: '/pos/getLoteriasSuperPale',
-                    dataType: 'html',
-                    data: data,
-                    success: function(data) {
-                        $('.superPale').html(data);
+    $.ajax({
+        method: 'GET',
+        url: '/pos/getLoteriasSuperPale',
+        dataType: 'html',
+        data: data,
+        success: function (data) {
+            $('.superPale').html(data);
 
-                    },
+        },
 
-                });
-    }
+    });
+}
 
-    function __pos_print(receipt) {
+function __pos_print(receipt) {
 
-        // console.log(receipt);
-        //Si es tipo de impresora, conéctese con websocket
-        if (receipt.print_type == 'printer') {
-            var content = receipt;
-            content.type = 'print-receipt';
 
-            //Compruebe si está listo o no, luego imprima.
-            if (socket != null && socket.readyState == 1) {
+    //Si es tipo de impresora, conéctese con websocket
+    if (receipt.print_type == 'printer') {
+        var content = receipt;
+        content.type = 'print-receipt';
+
+        //Compruebe si está listo o no, luego imprima.
+        if (socket != null && socket.readyState == 1) {
+            socket.send(JSON.stringify(content));
+        } else {
+            initializeSocket();
+            setTimeout(function () {
                 socket.send(JSON.stringify(content));
-            } else {
-                initializeSocket();
-                setTimeout(function () {
-                    socket.send(JSON.stringify(content));
-                }, 700);
-            }
-
-        } else if (receipt.html_content != '') {
-            //Si la impresora escribe un navegador, imprima el contenido
-            $('#receipt_section').html(receipt.html_content);
-            __currency_convert_recursively($('#receipt_section'));
-            __print_receipt('receipt_section');
+            }, 700);
         }
+
+    } else if (receipt.html_content != '') {
+        //Si la impresora escribe un navegador, imprima el contenido
+
+        $('#receipt_section').html(receipt.html_content);
+
+        __currency_convert_recursively($('#receipt_section'));
+        __print_receipt('receipt_section');
     }
+}
 
 
