@@ -18,6 +18,6 @@
 @endsection
 @section('scripts')
 	<script src="{{ asset('js/dashboard/dashboard.js?v=' . $asset_v) }}"></script>
-
+    <script src="{{ asset('js/ticket/ticket.js?v=' . $asset_v) }}"></script>
 
 @endsection
