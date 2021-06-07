@@ -10,12 +10,13 @@
     </head>
     <body>
         <div class="ticket">
-        	<div class="text-box">
+
         	@if(!empty($detalle_ticket->logo))
-        		<img class="logo" style="max-height: 100px; width: auto;" src="{{$detalle_ticket->logo}}" alt="Logo">
+        		<img  style="max-height: 100px; width: auto;" src="{{$detalle_ticket->logo}}" alt="Logo">
         	@endif
+            <div class="text-box">
         	<!-- Logo -->
-            <p class="@if(!empty($detalle_ticket->logo)) text-with-image @else centered @endif">
+            <p class="centered">
             	<!-- Header text -->
             	@if(!empty($detalle_ticket->header_text))
             		<span class="headings">{!! $detalle_ticket->header_text !!}</span>
@@ -236,13 +237,13 @@ img {
 }
 
 .logo {
-
+float: left;
 	padding: 10px;
 }
 
 .text-with-image {
 	float: left;
-	width:100%;
+	width:65%;
 }
 .text-box {
 	width: 100%;
