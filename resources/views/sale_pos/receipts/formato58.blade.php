@@ -236,8 +236,7 @@ img {
 }
 
 .logo {
-	float: left;
-	width:100%;
+
 	padding: 10px;
 }
 
