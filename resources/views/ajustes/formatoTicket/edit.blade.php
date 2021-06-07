@@ -43,7 +43,7 @@
                                                                         <select class="form-control" name="tcon_formato_browser" id="tcon_formato_browser">
                                                                             <option value="">Seleccione</option>
                                                                                 @foreach($formatos as $key => $format)
-                                                                                <option value="{{ $key }}">{{ $format }}</option>
+                                                                                <option value="{{ $key }}" @if($key == old('tcon_formato_browser', $formato->tcon_formato_browser)) selected @endif>{{ $format }}</option>
                                                                                 @endforeach
                                                                         </select>
                                                                      <span class="help-block">
