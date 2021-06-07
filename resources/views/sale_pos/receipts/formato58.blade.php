@@ -12,7 +12,7 @@
         <div class="ticket">
         	<div class="text-box">
         	@if(!empty($detalle_ticket->logo))
-        		<img style="max-height: 100px; width: auto;" src="{{$detalle_ticket->logo}}" alt="Logo">
+        		<img class="logo" style="max-height: 100px; width: auto;" src="{{$detalle_ticket->logo}}" alt="Logo">
         	@endif
         	<!-- Logo -->
             <p class="@if(!empty($detalle_ticket->logo)) text-with-image @else centered @endif">
@@ -237,7 +237,7 @@ img {
 
 .logo {
 	float: left;
-	width:35%;
+	width:100%;
 	padding: 10px;
 }
 
