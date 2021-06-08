@@ -200,5 +200,31 @@ $(document).ready(function() {
     }
 
 
+function __pos_print(receipt) {
 
+
+    //Si es tipo de impresora, conéctese con websocket
+    if (receipt.print_type == 'printer') {
+        var content = receipt;
+        content.type = 'print-receipt';
+
+        //Compruebe si está listo o no, luego imprima.
+        if (socket != null && socket.readyState == 1) {
+            socket.send(JSON.stringify(content));
+        } else {
+            initializeSocket();
+            setTimeout(function () {
+                socket.send(JSON.stringify(content));
+            }, 700);
+        }
+
+    } else if (receipt.html_content != '') {
+        //Si la impresora escribe un navegador, imprima el contenido
+
+        $('#receipt_section').html(receipt.html_content);
+
+        __currency_convert_recursively($('#receipt_section'));
+        __print_receipt('receipt_section');
+    }
+}
 
