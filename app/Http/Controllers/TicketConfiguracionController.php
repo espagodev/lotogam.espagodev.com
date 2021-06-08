@@ -126,7 +126,7 @@ class TicketConfiguracionController extends Controller
         if ($request->hasFile('tcon_logo')) {
             $data['tcon_logo'] = fopen($request->tcon_logo->path(), 'r');
         }
-        dd($data);
+
         $this->marketService->ModificarAppConfigTickets($id, $data);
 
         return redirect()
