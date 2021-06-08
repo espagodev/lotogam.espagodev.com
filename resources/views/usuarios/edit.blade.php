@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Modificar Usuario')
     @section('content')
          <div class="row pt-2 pb-2">
         <div class="col-sm-9">
@@ -7,7 +8,7 @@
 	   </div>
         <div class="col-sm-3">
             <div class="btn-group float-sm-right">
-                 <a href="{{ route('usuarios.index') }}"  class="btn btn-danger waves-effect waves-danger"><i class="fa fa-times mr-1"></i> Cancelar</a>
+                 <a href="{{ route('usuarios.index') }}"  class="btn btn-danger waves-effect waves-danger"><i class="fa fa-undo mr-1"></i> Regresar</a>
             </div>
         </div>
      </div>
@@ -121,7 +122,7 @@
                     </div>
                 </div>
                  <div class="form-footer">
-                            <button type="submit" class="btn btn-danger"><i class="fa fa-times"></i> CANCELAR</button>
+
                             <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Modificar</button>
                         </div>
             </div>

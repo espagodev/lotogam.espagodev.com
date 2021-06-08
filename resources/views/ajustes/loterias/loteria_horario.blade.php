@@ -2,7 +2,7 @@
   <div class="modal-content border-info">
 
     <div class="modal-header bg-info">
-         <h3 class="modal-title text-white">Loteria {{ ($loteria->loteria )}} </h3>
+         <h3 class="modal-title text-white">Loteria {{ ($loteria->lot_nombre )}} </h3>
          <button type="button" class="close text-white no-print" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     </div>
 
@@ -17,19 +17,19 @@
                         <div class="row">
                                 <div class="col-lg-6">
                                     <h6>Loteria</h6>
-                                    <p>{{ ($loteria->loteria )}}</p>
+                                    <p>{{ ($loteria->lot_nombre )}}</p>
                             </div>
                                 <div class="col-lg-6">
                                     <h6>Abreviado</h6>
-                                <p>{{ ($loteria->abreviado )}}</p></div>
+                                <p>{{ ($loteria->lot_abreviado )}}</p></div>
                         </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <h6>Codigo</h6>
-                                    <p>{{ ($loteria->codigo )}}</p></div>
+                                    <p>{{ ($loteria->lot_codigo )}}</p></div>
                                 <div class="col-lg-6">
                                     <h6>Estado</h6>
-                                <p>{{ ($loteria->estado )}}</p></div>
+                                <p>{{ ($loteria->lot_estado )}}</p></div>
                         </div>
                             <div class="row">
                                     <div class="col-lg-12"> <h6>Horario del Sorteo </h6></div>
@@ -39,7 +39,7 @@
                                 <input type="hidden" class="Horariols"  id="Horariols_L" value="{{($sorteos['l-s'] )}}"/>
                                 <h6>Lunes - Sabado</h6><p>{{ ($sorteos['l-s'] )}}</p></div>
                                 <div class="col-lg-6">
-                                    <input type="hidden" class="Horariod" id="Horariod_{{$loteria->identificador}}_D" value="{{($sorteos['d'] )}}"/>
+                                    <input type="hidden" class="Horariod" id="Horariod_{{$loteria->id}}_D" value="{{($sorteos['d'] )}}"/>
                                 <h6>Domingo</h6><p>{{ ($sorteos['d'] )}}</p></div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
 
                             <div class="card-header d-flex align-items-left">
                                 <div class="d-flex justify-content-left col">
-                                <div class="h4 m-0 text-left">Horario Loteria {{ ($loteria->loteria )}}</div>
+                                <div class="h4 m-0 text-left">Horario Loteria {{ ($loteria->lot_nombre )}}</div>
                                 </div>
                             </div>
                                 <div class="card-body">
@@ -80,7 +80,7 @@
     </div>
 
     <div class="modal-footer">
-        <input type="hidden" id="loterias_id" name="loterias_id" value="{{ $loteria->identificador }}">
+        <input type="hidden" id="loterias_id" name="loterias_id" value="{{ $loteria->id }}">
      <a href="#" data-href="{{action('EmpresaLoteriasController@getHorarioLoteriaModificar') }}" class="modificarHorario btn btn-success" > Modificar Horario</a>
 
         <button type="button" class="btn btn-danger no-print" data-dismiss="modal"> Cerrar </button>

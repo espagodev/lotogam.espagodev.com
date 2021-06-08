@@ -17,7 +17,6 @@
                  @include('ajustes._sidebar')
             </div>
             <div class="col-lg-9">
-
                 <div class="card">
                     <div class="card-body">
                             <div class="table-responsive">
@@ -87,7 +86,7 @@
                             loterias.ajax.reload();
                         }
                         if(result.success == "activo") {
-                            Lobibox.notify("info", {                                      
+                            Lobibox.notify("info", {
                                 position: "top right",
                                 title:false,
                                 icon:false,

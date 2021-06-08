@@ -25,12 +25,12 @@ class EmpresaLoteriasController extends Controller
         if (request()->ajax()) {
 
             $loteriasEmpresa  = $this->marketService->getLoteriasEmpresaFaltantes($empresa);
-            
+
             return Datatables::of($loteriasEmpresa)
             ->addColumn('horario', function ($row) {
                     if ($row->loe_estado != null) {
                         return ' <a href="' . route('ajustesLoterias.show', [$row->id]) .'" class="btn btn-outline-info btn-sm" rel="tooltip" title="Horario de la Loteria" > <i class="fa fa-clock-o"></i> </a>';
-                    } 
+                    }
                 })
                  ->addColumn(
                      'action',
@@ -50,9 +50,9 @@ class EmpresaLoteriasController extends Controller
         $empresas_id = session()->get('user.emp_id');
         $loteria = $this->marketService->getLoteria($loteria);
 
-        $sorteos = json_decode($loteria->sorteo, true);
+        $sorteos = json_decode($loteria->lot_sorteo, true);
 
-        $horarios = HorarioLoterias::horario($bancas_id = null, $empresas_id, $loteria->identificador);
+        $horarios = HorarioLoterias::horario($bancas_id = null, $empresas_id, $loteria->id);
         // dd($horarios);
         $dias = Util::dias();
 

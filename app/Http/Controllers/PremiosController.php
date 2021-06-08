@@ -16,8 +16,10 @@ class PremiosController extends Controller
 
     public function index()
     {
+        $empresas_id = session()->get('user.emp_id');
         $modalidades = $this->marketService->getModalidades();
-        $premios = $this->marketService->getPremios();
+        // $premios = $this->marketService->getPremios();
+        $premios = $this->marketService->getPremiosEmpresa($empresas_id);
 
         return view('ajustes/premios.index')->with(['premios' => $premios,'modalidades' => $modalidades]);
     }

@@ -27,20 +27,21 @@ class BancaUtil
      *
      * @return array
      */
-    public function printerConfig($business_id, $printer_id)
+    public function printerConfig($empresas_id, $printer_id)
     {
         $marketService = resolve(MarketService::class);
-        $printer =  $marketService->getImpresoraDetalle($business_id, $printer_id);
+
+        $printer =  $marketService->getImpresoraDetalle($empresas_id, $printer_id);
 
         $output = [];
 
         if (!empty($printer)) {
-            $output['connection_type'] = $printer->imp_conexion;
-            $output['capability_profile'] = $printer->imp_perfil;
-            $output['char_per_line'] = $printer->imp_caracteres;
-            $output['ip_address'] = $printer->imp_ip;
-            $output['port'] = $printer->imp_port;
-            $output['path'] = $printer->imp_ruta;
+            $output['connection_type'] = $printer->connection_type;
+            $output['capability_profile'] = $printer->capability_profile;
+            $output['char_per_line'] = $printer->char_per_line;
+            $output['ip_address'] = $printer->ip_address;
+            $output['port'] = $printer->port;
+            $output['path'] = $printer->path;
             // $output['server_url'] = $printer->server_url;
         }
 
@@ -145,7 +146,7 @@ class BancaUtil
     public static function htmlContent($receipt) {
 
         // $layout = !empty($receipt_details->design) ? 'sale_pos.receipts.' . $receipt_details->design : 'sale_pos.receipts.classic';
-        $receipt = $receipt[0]->data; 
+        $receipt = $receipt[0]->data;
         // dd($receipt);
         $output['html_content'] = view('sale_pos.receipts.classic', compact('receipt'))->render();
 

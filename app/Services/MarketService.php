@@ -345,7 +345,7 @@ class MarketService
 
     public function nuevaEmpresa($data)
     {
-        
+
         return $this->makeRequest(
             'POST',
             "empresas",
@@ -721,10 +721,10 @@ class MarketService
         return $this->makeRequest('GET', "getImpresorasEmpresa/{$empresa}");
     }
 
-    public function getImpresoraDetalle($impresora)
+    public function getImpresoraDetalle($empresas_id, $impresora)
     {
-
-        return $this->makeRequest('GET', "ImpresorasPos/{$impresora}");
+        
+        return $this->makeRequest('GET', "getImpresoraDetalle/{$empresas_id}/{$impresora}");
     }
 
     public function nuevaImpresora($data)
@@ -755,7 +755,7 @@ class MarketService
     }
 
 
-    //IMPRESORA BANCADO
+    //IMPRESORA BANCA
 
     public function getImpresorasBanca($banca)
     {

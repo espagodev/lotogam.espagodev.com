@@ -6,7 +6,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('bancas.update',$banca->id) }}" method="post" id="opciones_impresora_pos">
+                    <form action="{{ route('updateAjustesAdicionales',$banca->id) }}" method="post" id="opciones_impresora_pos">
                         @csrf {{method_field('PUT')}}
                                                             <div class="row">
                                             <div class="col-xs-12 col-sm-6 col-md-6">
@@ -44,13 +44,13 @@
                                          <div class="row">
                                             <div class="col-xs-12 col-sm-6 col-md-6">
 
-                                                <div class="form-group">
+                                                <div class="form-group ">
                                                     <strong>Zona Horaria:</strong>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fa fa-clock-o"></i></span>
                                                         </div>
-                                                        <select class="form-control " name="ban_zonaHoraria" id="ban_zonaHoraria" required>
+                                                        <select class="form-control" name="ban_zonaHoraria" id="ban_zonaHoraria" required>
                                                             <option value="">Seleccione</option>
                                                                 @foreach($zonasHoraria as $zonaHoraria)
                                                                 <option value="{{ $zonaHoraria }}" @if($zonaHoraria == old('ban_zonaHoraria', $banca->ban_zonaHoraria)) selected @endif>{{ $zonaHoraria }}</option>

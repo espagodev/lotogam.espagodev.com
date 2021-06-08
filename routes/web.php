@@ -41,9 +41,9 @@ Route::get('authorization', 'Auth\LoginController@authorization')->name('authori
 //numeros calientes
 Route::get('ajustes/calientes', 'NumerosCalientesController@index')->name('NumerosCalientes');
 Route::post('NumerosCalientes', 'NumerosCalientesController@store')->name('NumerosCalientes.store');
- Route::get('getNumerosCalientesEstado', 'NumerosCalientesController@getNumerosCalientesEstado'); 
+ Route::get('getNumerosCalientesEstado', 'NumerosCalientesController@getNumerosCalientesEstado');
  Route::get('getNumerosCalientesDelete/{resultado_id}', 'NumerosCalientesController@getNumerosCalientesDelete');
- 
+
 
 //loterias empresa
 Route::get('ajustes/loterias', 'EmpresaLoteriasController@index')->name('loteriasEmpresa');
@@ -62,8 +62,8 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
 //     Route::resource('impresoraPos', 'ImpresoraPosController');
     //ajustes ticket
 
-   
-    Route::get('activarDesactivarLoteria/{loterias_id}', 'EmpresaLoteriasController@activarDesactivarLoteria'); 
+
+    Route::get('activarDesactivarLoteria/{loterias_id}', 'EmpresaLoteriasController@activarDesactivarLoteria');
 
 
     Route::prefix('ajustes')->group(function () {
@@ -123,6 +123,9 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
     //ajustes bancas
 
     Route::get('ajustesBanca/{banca}', 'AjustesBancaController@index')->name('ajustesBanca');
+    Route::put('updateAjustesImpresion/{banca}', 'AjustesBancaController@updateAjustesImpresion')->name('updateAjustesImpresion');
+    Route::put('updateAjustesAdicionales/{banca}', 'AjustesBancaController@updateAjustesAdicionales')->name('updateAjustesAdicionales');
+    Route::get('ajustesBanca/{banca}', 'AjustesBancaController@index')->name('ajustesBanca');
     Route::get('ajustesBanca/ajsutes/{banca}', 'AjustesBancaController@bancaAjustes')->name('bancaAjustes');
 
     Route::get('ajustesBanca/comisiones/{banca}', 'BancaComisionController@index')->name('bancaComision');
@@ -130,13 +133,9 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
 
 
     Route::get('ajustesBanca/montos/{banca}', 'BancaMontosController@index')->name('bancaMonto');
-    // Route::post('ajustesBanca/montos', 'BancaMontoGlobalController@store')->name('bancaMontoG.store');
-
-    // Route::get('ajustesBanca/montosI/{banca}', 'BancaMontoIndividualController@index')->name('bancaMontoI');
-    // Route::post('ajustesBanca/montosI', 'BancaMontoIndividualController@store')->name('bancaMontoI.store');
 
     Route::get('ajustesBanca/impresoraPos/{banca}', 'BancaImpresoraPosController@index')->name('bancaImpresoraPos');
-    Route::post('ajustesBanca/impresoraPos', 'BancaImpresoraPosController@store')->name('bancaImpresoraPos.store');
+
 
     Route::get('ajustesBanca/loterias/{banca}', 'BancaLoteriasController@index')->name('bancaLoterias');
     Route::post('ajustesBanca/loterias', 'BancaLoteriasController@store')->name('bancaLoterias.store');

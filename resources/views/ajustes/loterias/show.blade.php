@@ -3,7 +3,7 @@
 @section('content')
          <div class="row pt-2 pb-2">
         <div class="col-sm-9">
-		    <h4 class="page-title">Ajustes Empresa / Ajustar Horario Loteria / {{ ($loteria->loteria )}}</h4>
+		    <h4 class="page-title">Ajustes Empresa / Ajustar Horario Loteria / {{ ($loteria->lot_nombre )}}</h4>
 	   </div>
         <div class="col-sm-3">
             <div class="btn-group float-sm-right">
@@ -14,26 +14,26 @@
     <div class="row">
         <div class="col-lg-3">
             <div class="card">
-            <img src="{{$loteria->imagen}}" class="card-img-top" >
+            <img src="{{$loteria->lot_imagen}}" class="card-img-top" >
         </div>
             <div class="card">
             <div class="card-body">
                 <div class="row">
                         <div class="col-lg-6">
                             <h6>Loteria</h6>
-                            <p>{{ ($loteria->loteria )}}</p>
+                            <p>{{ ($loteria->lot_nombre )}}</p>
                     </div>
                         <div class="col-lg-6">
                             <h6>Abreviado</h6>
-                        <p>{{ ($loteria->abreviado )}}</p></div>
+                        <p>{{ ($loteria->lot_abreviado )}}</p></div>
                 </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <h6>Codigo</h6>
-                            <p>{{ ($loteria->codigo )}}</p></div>
+                            <p>{{ ($loteria->lot_codigo )}}</p></div>
                         <div class="col-lg-6">
                             <h6>Estado</h6>
-                        <p>{{ ($loteria->estado )}}</p></div>
+                        <p>{{ ($loteria->lot_estado )}}</p></div>
                 </div>
                     <div class="row">
                             <div class="col-lg-12"> <h6>Horario del Sorteo </h6></div>
@@ -43,7 +43,7 @@
                         <input type="hidden" class="Horariols"  id="Horariols_L" value="{{($sorteos['l-s'] )}}"/>
                         <h6>Lunes - Sabado</h6><p>{{ ($sorteos['l-s'] )}}</p></div>
                         <div class="col-lg-6">
-                            <input type="hidden" class="Horariod" id="Horariod_{{$loteria->identificador}}_D" value="{{($sorteos['d'] )}}"/>
+                            <input type="hidden" class="Horariod" id="Horariod_{{$loteria->id}}_D" value="{{($sorteos['d'] )}}"/>
                         <h6>Domingo</h6><p>{{ ($sorteos['d'] )}}</p></div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
 
         <div class="card">
             <div class="card-body">
-                    <form action="{{ route('ajustesLoterias.update',$loteria->identificador) }}" method="post">
+                    <form action="{{ route('ajustesLoterias.update',$loteria->id) }}" method="post">
                 @csrf
                 @method('PUT')
                     <div class="card card-default">

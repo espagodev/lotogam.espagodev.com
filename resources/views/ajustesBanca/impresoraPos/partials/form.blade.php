@@ -7,7 +7,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('bancas.update',$banca->id) }}" method="post" id="opciones_impresora_pos">
+                    <form action="{{ route('updateAjustesImpresion',$banca->id) }}" method="post" id="opciones_impresora_pos">
                         @csrf {{method_field('PUT')}}
                             <div class="row">
                                 <div class="col-xs-12 col-sm-4 col-md-4">
