@@ -481,6 +481,7 @@ class MarketService
     //appConfigTickets EMPRESA
     public function getAppConfigTickets($empresas_id, $layout_id)
     {
+
         return $this->makeRequest('GET', "getAppConfigTickets/{$empresas_id}/{$layout_id}");
     }
 
@@ -723,7 +724,7 @@ class MarketService
 
     public function getImpresoraDetalle($empresas_id, $impresora)
     {
-        
+
         return $this->makeRequest('GET', "getImpresoraDetalle/{$empresas_id}/{$impresora}");
     }
 

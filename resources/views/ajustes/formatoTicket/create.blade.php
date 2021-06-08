@@ -55,6 +55,9 @@
                                                                         <input type="file" class="custom-file-input" id="tcon_logo" name="tcon_logo">
                                                                         <label class="custom-file-label" for="tcon_logo">Seleccionar</label>
                                                                     </div>
+                                                                    <span class="help-block">
+                                                                        Max 1 MB, Solo formatos jpeg, gif o png
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                             <div class="col-xs-12 col-sm-6 col-md-6">

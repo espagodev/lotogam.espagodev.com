@@ -93,11 +93,12 @@ class TicketConfiguracionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($layout_id)
     {
+        $empresas_id = request()->session()->get('user.emp_id');
         $formatoFechas = ConfigEmpresa::formatoFecha();
         $formatos = $this->util->formatoBrowser();
-        $formato = $this->marketService->getAppConfigTickets($id, $layout_id = null );
+        $formato = $this->marketService->getAppConfigTickets($empresas_id, $layout_id);
 
         return view('ajustes.formatoTicket.edit')->with(compact('formato', 'formatoFechas', 'formatos'));
     }
@@ -112,7 +113,7 @@ class TicketConfiguracionController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        $data = $request->except('_token');
+        // $data = $request->except('_token');
 
         $ticket_config_show = $this->util->ticketConfigShow();
 
@@ -125,7 +126,7 @@ class TicketConfiguracionController extends Controller
         if ($request->hasFile('tcon_logo')) {
             $data['tcon_logo'] = fopen($request->tcon_logo->path(), 'r');
         }
-
+        dd($data);
         $this->marketService->ModificarAppConfigTickets($id, $data);
 
         return redirect()

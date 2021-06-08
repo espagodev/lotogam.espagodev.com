@@ -29,7 +29,7 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="row">
-                                                         <div class="col-xs-12 col-sm-6 col-md-6">
+                                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                                             <div class="row">
                                                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                                                     <div class="form-group">
@@ -51,30 +51,37 @@
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                                            <div class="row">
+                                                                 <div class="col-xs-12 col-sm-4 col-md-4">
                                                                     <div class="form-group">
-                                                                        <strong>Logotipo de la Ticket:</strong>
+                                                                        <strong>Logotipo del Ticket:</strong>
                                                                         <div class="custom-file">
                                                                             <input type="file" class="custom-file-input" id="tcon_logo" name="tcon_logo">
-
-                                                                        </div>
+                                                                            <label class="custom-file-label" for="tcon_logo">Seleccionar</label>                                                                        </div>
+                                                                             <span class="help-block">
+                                                                        Max 1 MB, Solo formatos jpeg, gif o png
+                                                                        Subir solo si desea reemplazar el logotipo anterior
+                                                                    </span>
                                                                     </div>
                                                                 </div>
-                                                                 <div class="col-xs-12 col-sm-12 col-md-12">
-                                                                <div class="form-group">
-                                                                    <div class="icheck-material-info">
-                                                                        <input type="checkbox" id="tcon_show_logo" value="1" id="tcon_show_logo" name="tcon_show_logo" @if($formato->tcon_show_logo) checked @endif/>
-                                                                        <label for="tcon_show_logo">Mostrar el Logotipo en el Ticket</label>
+
+                                                                <div class="col-xs-12 col-sm-4 col-md-4">
+                                                                    <div class="media align-items-center">
+                                                                        <img src="{{ $formato->tcon_logo}}" class="img-fluid">
+                                                                    </div>
+                                                                </div>
+                                                                 <div class="col-xs-12 col-sm-4 col-md-4">
+                                                                    <div class="form-group">
+                                                                        <div class="icheck-material-info">
+                                                                            <input type="checkbox" id="tcon_show_logo" value="1" id="tcon_show_logo" name="tcon_show_logo" @if($formato->tcon_show_logo) checked @endif/>
+                                                                            <label for="tcon_show_logo">Mostrar el Logotipo en el Ticket</label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             </div>
                                                          </div>
-                                                        <div class="col-xs-12 col-sm-6 col-md-6">
-                                                             <div class="media align-items-center">
-                                                                <img src="{{ $formato->tcon_logo}}" class="card-img-top">
-                                                            </div>
-                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
