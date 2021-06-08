@@ -114,7 +114,7 @@ class BancasController extends Controller
         $data = $request->all();
         $data = $request->except('_token');
 
-        $banca_config_show = $this->util->bancaConfigShow();
+        $banca_config_show = $this->util->bancaConfigShow(); 
 
         foreach ($banca_config_show as  $key => $value) {
             if (!isset($data[$key])) {

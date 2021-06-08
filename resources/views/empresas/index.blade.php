@@ -31,14 +31,14 @@
                                     <tbody>
                                         @foreach($empresas as $key => $empresa)
                                         <tr>
-                                            <td>{{ $empresa->empresa }}</td>
-                                            <td>{{ $empresa->telefono }}</td>
-                                            <td>{{ $empresa->direccion }}{{ @format_date($empresa->fechaCreacion) }}</td>
+                                            <td>{{ $empresa->emp_nombre }}</td>
+                                            <td>{{ $empresa->emp_telefono }}</td>
+                                            <td>{{ $empresa->emp_direccion }}</td>
                                              <td  class="bt-switch">
-                                                <input type="checkbox" data-id="{{$empresa->identificador}}" {{ $empresa->estado ? 'checked' : '' }} data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" >
+                                                <input type="checkbox" data-id="{{$empresa->id}}" {{ $empresa->emp_estado ? 'checked' : '' }} data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" >
                                             </td>
                                             <td>
-                                                <a href="{{route('empresas.edit',$empresa->identificador)}}" class="btn btn-outline-warning" rel="tooltip" title="Editar empresa" >
+                                                <a href="{{route('empresas.edit',$empresa->id)}}" class="btn btn-outline-warning" rel="tooltip" title="Editar empresa" >
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
 

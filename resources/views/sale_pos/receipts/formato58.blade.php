@@ -145,35 +145,33 @@
                     @endforeach
             @endif
             <br>
-            <br>
              <div class="textbox-info centered border-top">
                 <p>
                     <strong>**{!! $detalle_ticket->total_label !!}</strong>
                     <strong>{{$detalle_ticket->total}}**</strong>
                 </p>
             </div>
-             <br>
+            <br/>
              @if(!empty($detalle_ticket->promocion_label))
 				 <div class='centered'>
-                <p>*****************************</p>
+                <p>***************************</p>
                 <p>**       PROMOCION         **</p>
-                <p>*****************************</p>
+                <p>***************************</p>
                 </div>
+                 <br>
 			    @endif
-                <br>
-                <br>
+
             	@if(!empty($detalle_ticket->footer_text))
 				<p class="centered">
 					 <strong> {!! $detalle_ticket->footer_text !!}  </strong>
 				</p>
+                <br>
 			    @endif
-            <br>
+
             {{-- Barcode --}}
 			@if($detalle_ticket->tcon_show_barcode)
-				<br/>
 				 <strong><img class="center-block" src="data:image/png;base64,{{DNS1D::getBarcodePNG($detalle_ticket->barcode, 'C128C', 4,50,array(0, 0, 0), true)}}"> </strong>
 			@endif
-            <br/>
             <br/>
         </div>
 
