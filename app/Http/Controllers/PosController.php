@@ -121,7 +121,7 @@ class PosController extends Controller
             $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $ticket, null, false, true);
             $mensaje = 'Venta añadida con éxito';
             $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
-            // dump($output);
+
 
         }
             return $output;

@@ -21,8 +21,9 @@ class NumerosCalientesController extends Controller
 
      public function index()
     {
-        $numerosCalientes = $this->marketService->getNumerosCalientes();
-        // return view('ajustes/empresas.index')->with(compact('empresa', 'documentos'));
+        $empresas_id = session()->get('user.emp_id');
+        $numerosCalientes = $this->marketService->getNumerosCalientesEmpresa($empresas_id);
+
          return view('ajustes/numerosC.index')->with(compact('numerosCalientes'));
     }
 
@@ -63,12 +64,12 @@ class NumerosCalientesController extends Controller
 
         public function getNumerosCalientesDelete($id)
     {
-        
+
             $empresas_id = session()->get('user.emp_id');
 
             $data = $this->marketService->deleteNumerosCalientes($empresas_id, $id);
 
             return json_encode($data);
-        
+
     }
 }

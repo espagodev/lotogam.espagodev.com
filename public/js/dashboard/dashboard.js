@@ -88,13 +88,12 @@ $(document).ready(function() {
             data: data,
             dataType: 'json',
             success: function(result) {
-
                 if (result.success == 1 && result.receipt.html_content != '') {
                     $('#receipt_section').html(result.receipt.html_content);
                     __currency_convert_recursively($('#receipt_section'));
                     __print_receipt('receipt_section');
                 } else {
-                    Lobibox.notify("error", {
+                   Lobibox.notify("error", {
                         pauseDelayOnHover: true,
                         size: "mini",
                         rounded: true,
