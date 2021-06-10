@@ -118,7 +118,7 @@ class PosController extends Controller
 
         foreach ($tickets as $ticket) {
 
-            $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $ticket, null, false, true);
+            $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $ticket, null, false, null);
             $mensaje = 'Venta añadida con éxito';
             $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
 
@@ -172,7 +172,9 @@ class PosController extends Controller
         $output['is_enabled'] = true;
 
         $invoice_layout_id = !empty($invoice_layout_id) ? $invoice_layout_id : $banca->app_config_tickets_id;
-        $invoice_layout = $this->bancaUtil->invoiceLayout($empresas_id, $bancas_id, $banca->app_config_tickets_id);
+
+
+        $invoice_layout = $this->bancaUtil->invoiceLayout($empresas_id, $bancas_id, $invoice_layout_id);
 
         //Compruebe si se proporciona la configuración de la impresora.
         $receipt_printer_type = is_null($printer_type) ? $banca->ban_tipo_impresora : $printer_type;
@@ -253,7 +255,6 @@ class PosController extends Controller
             $horarioLoteria = HorarioLoterias::getLoteriasSuperPaleDia($empresas_id, $dia);
 
             $output = '';
-
             foreach ($horarioLoteria as $key => $detalle) {
                 // dd($detalle->hlo_hora_fin, $horaRD);
                 $horariocierre = HorarioLoterias::compararHoras($detalle->hlo_hora_fin, $horaRD);
