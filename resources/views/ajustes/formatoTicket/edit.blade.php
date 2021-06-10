@@ -298,9 +298,26 @@
                                                         <div class="row">
                                                             <div class="col-xs-12 col-sm-12 col-md-12">
                                                                 <div class="form-group">
+                                                                    <strong>Nota Informativa.</strong>
+                                                                    <textarea  class="form-control{{ $errors->has('tcon_nota_informativa') ? ' is-invalid' : '' }}" name="tcon_nota_informativa" id="tcon_nota_informativa" rows="10" cols="50">{{ old('tcon_nota_informativa', $formato->tcon_nota_informativa) }}</textarea>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                                                <div class="form-group">
                                                                     <div class="icheck-material-info">
-                                                                        <input type="checkbox" id="tcon_is_default" value="{{ old('tcon_is_default', $formato->tcon_is_default) }}" name="tcon_is_default" @if($formato->tcon_is_default) checked @endif/>
+                                                                        <input type="checkbox" id="tcon_is_default" value="1" name="tcon_is_default" @if($formato->tcon_is_default) checked @endif/>
                                                                         <label for="tcon_is_default">Establecer por Defecto</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                             <div class="col-xs-12 col-sm-6 col-md-6">
+                                                                <div class="form-group">
+                                                                    <div class="icheck-material-info">
+                                                                        <input type="checkbox" id="tcon_show_nota" name="tcon_show_nota" value="1" @if($formato->tcon_show_nota) checked @endif/>
+                                                                        <label for="tcon_show_nota">Monstrar Nota Informativa.</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -308,7 +325,7 @@
                                                     </div>
                                             </div>
                                             <div class="form-footer">
-                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-times"></i> CANCELAR</button>
+                                                    <a href="{{ route('formatoTicket.index') }}" class="btn  btn-danger">Cancelar y Volver</a>
                                                     <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Modificar</button>
                                                 </div>
                                     </div>

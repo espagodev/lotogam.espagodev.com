@@ -62,12 +62,12 @@
                     <p class="f-right"><strong>{{$detalle_ticket->time_date}}</strong></p>
 
             </div>
+            @if(!empty($detalle_ticket->sorteo_label))
             <div class="flex-box">
-
                     <p class="f-left"><strong>{!! $detalle_ticket->sorteo_label !!}</strong></p>
                     <p class="f-right"><strong>{{$detalle_ticket->sorteo_date}}</strong></p>
-
             </div>
+            @endif
             <div class="flex-box">
 
                 <p class="f-left"><strong>{!! $detalle_ticket->invoice_no_prefix !!}</strong></p>
@@ -145,7 +145,7 @@
                     @endforeach
             @endif
             <br>
-             <div class="textbox-info centered border-top">
+             <div class="centered border-top">
                 <p>
                     <strong>**{!! $detalle_ticket->total_label !!}</strong>
                     <strong>{{$detalle_ticket->total}}**</strong>
@@ -154,9 +154,7 @@
             <br/>
              @if(!empty($detalle_ticket->promocion_label))
 				 <div class='centered'>
-                <p>***************************</p>
-                <p>**       PROMOCION         **</p>
-                <p>***************************</p>
+                <p><strong>******* PROMOCION *******</strong></p>
                 </div>
                  <br>
 			    @endif
@@ -173,18 +171,23 @@
 				 <strong><img class="center-block" src="data:image/png;base64,{{DNS1D::getBarcodePNG($detalle_ticket->barcode, 'C128C', 4,50,array(0, 0, 0), true)}}"> </strong>
 			@endif
             <br/>
-        </div>
+                <!-- business information here -->
+            @if(!empty($detalle_ticket->tcon_nota_informativa))
+                <span class="nota">
+                    {{$detalle_ticket->tcon_nota_informativa}}
+                </span>
 
+            @endif
+        </div>
+        <br>
     </body>
 </html>
 <style type="text/css">
-.f-8 {
-	font-size: 8px !important;
-}
+
 @media print {
 	* {
     	font-size: 12px;
-    	font-family: 'Times New Roman';
+    	font-family: 'Arial';
     	word-break: break-all;
 	}
 
@@ -193,11 +196,19 @@
 	font-size: 14px;
 	font-weight: 700;
 	text-transform: uppercase;
+
 }
 
 .sub-headings{
 	font-size: 13px;
 	font-weight: 700;
+}
+
+.nota{
+	font-size: 12px;
+	font-weight:700;
+
+    /* text-transform: uppercase; */
 }
 
 .border-top{
@@ -210,8 +221,6 @@
 .border-bottom-dotted{
 	border-bottom: 1px dotted darkgray;
 }
-
-
 
 .centered {
     text-align: center;
@@ -250,11 +259,13 @@ float: left;
 
     .f-right {
     float: right;
-    width: 20%;
+    width: 30%;
+
     }
 
     .f-left {
     float: left;
+
     }
 
 .m-0 {
@@ -262,11 +273,11 @@ float: left;
 }
 
 .textbox-info {
-
 	clear: both;
 }
+
 .textbox-info p {
-	margin-bottom: 10px
+	margin-bottom: 0px
 }
 .flex-box {
 	display: flex;
@@ -277,4 +288,5 @@ float: left;
 	margin-bottom: 1px;
 	white-space: nowrap;
 }
+
 </style>

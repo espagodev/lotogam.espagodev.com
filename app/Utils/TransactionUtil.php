@@ -152,6 +152,9 @@ class TransactionUtil extends Util
         //Barcode related information.
         $output['tcon_show_barcode'] = !empty($il->tcon_show_barcode) ? true : false;
 
+        if ($il->tcon_show_nota == 1) {
+            $output['tcon_nota_informativa'] = $il->tcon_nota_informativa;
+        }
         return (object) $output;
     }
 

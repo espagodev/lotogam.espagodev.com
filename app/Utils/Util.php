@@ -232,7 +232,11 @@ class Util
                 'tcon_show_alternate_number' => 0,
                 'tcon_show_email' => 0,
                 'tcon_show_barcode' => 0,
-                'tcon_show_barcode_qr' => 0, ];
+                'tcon_show_barcode_qr' => 0,
+                'tcon_show_nota' => 0,
+                'tcon_is_default' => 0,
+                'tcon_show_sorteo' => 0
+               ];
     }
 
     /**

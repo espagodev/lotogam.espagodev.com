@@ -451,8 +451,8 @@ class MarketService
         return $this->makeRequest(
             'POST',
             "appEsquemaTickets/{$id}",
-            $data,
             [],
+            $data,
             [],
             false
         );
@@ -496,6 +496,7 @@ class MarketService
             "appConfigTickets/{$config_tickets}",
             [],
             $data,
+            [],
             $hasFile = isset($data['tcon_logo'])
         );
     }

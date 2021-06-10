@@ -181,7 +181,7 @@ class PosController extends Controller
         $isAnular = Util::calcularMinutos($tickets[0]->created_at, $banca->ban_tiempo_anular);
 
         $detalle_ticket = $this->transactionUtil->getReceiptDetails($tickets_id, $tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular);
-
+        // dd($detalle_ticket);
         $currency_details = [
             'symbol' => $moneda->simbolo,
             'thousand_separator' => $moneda->separador_miles,
@@ -198,6 +198,7 @@ class PosController extends Controller
         } else {
             $layout = !empty($invoice_layout->tcon_formato_browser) ? 'sale_pos.receipts.' . $invoice_layout->tcon_formato_browser : 'sale_pos.receipts.classic';
             // $layout =  'sale_pos.receipts.slim';
+            // dd($detalle_ticket);
             $output['html_content'] = view($layout, compact('detalle_ticket', 'isAnular'))->render();
         }
 
