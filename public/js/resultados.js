@@ -101,7 +101,7 @@
                     success: function(result) {
 
 
-                        if (result.success === 1) {
+                        if (result.success == 1) {
                             var receipt = result.receipt;
                                 Lobibox.notify("success", {
                                     pauseDelayOnHover: true,
@@ -113,9 +113,9 @@
                                     msg: "Se Genero el Listado",
                                 });
                                 receipt.forEach(function(elemento, index, arr) {
-                                    //    console.log(arr[index] = elemento);
+
                                         if (arr[index].is_enabled){
-                                            // console.log(arr[index].data)
+
                                             __pos_print(arr[index] = elemento);
                                         }
                                 });
@@ -128,7 +128,7 @@
                                     delayIndicator: false,
                                     continueDelayOnInactiveTab: false,
                                     position: "top right",
-                                    msg: "No hay Resultados paramostrar",
+                                    msg: result.mensaje,
                                 });
                             }
                     }
@@ -342,3 +342,31 @@
             else if(orden == 2 && pre_premio.value.length == 2)
                 $("#res_premio3").focus();
 	    }
+
+function __pos_print(receipt) {
+
+
+    //Si es tipo de impresora, conéctese con websocket
+    if (receipt.print_type == 'printer') {
+        var content = receipt;
+        content.type = 'print-receipt';
+
+        //Compruebe si está listo o no, luego imprima.
+        if (socket != null && socket.readyState == 1) {
+            socket.send(JSON.stringify(content));
+        } else {
+            initializeSocket();
+            setTimeout(function () {
+                socket.send(JSON.stringify(content));
+            }, 700);
+        }
+
+    } else if (receipt.html_content != '') {
+        //Si la impresora escribe un navegador, imprima el contenido
+
+        $('#receipt_section').html(receipt.html_content);
+
+        __currency_convert_recursively($('#receipt_section'));
+        __print_receipt('receipt_section');
+    }
+}

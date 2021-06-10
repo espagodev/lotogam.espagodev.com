@@ -25,7 +25,7 @@
                                 </div>
                                 @endif
                                 @if($parametros->ban_promocion == 1)
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                                         <div class="form-group">
                                             <div class="icheck-material-info">
                                                 <input type="checkbox" id="tic_promocion"  value="1" name="tic_promocion" />
