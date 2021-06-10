@@ -57,7 +57,7 @@ class BancaUtil
      *
      * @return location object
      */
-    public static function invoiceLayout($empresas_id, $layout_id)
+    public static function invoiceLayout($empresas_id,  $layout_id)
     {
         $marketService = resolve(MarketService::class);
 
