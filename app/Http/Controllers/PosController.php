@@ -174,7 +174,7 @@ class PosController extends Controller
         $invoice_layout_id = !empty($invoice_layout_id) ? $invoice_layout_id : $banca->app_config_tickets_id;
 
 
-        $invoice_layout = $this->bancaUtil->invoiceLayout($empresas_id, $bancas_id, $invoice_layout_id);
+        $invoice_layout = $this->bancaUtil->invoiceLayout($empresas_id, $invoice_layout_id);
 
         //Compruebe si se proporciona la configuración de la impresora.
         $receipt_printer_type = is_null($printer_type) ? $banca->ban_tipo_impresora : $printer_type;
