@@ -214,15 +214,13 @@ class HomeController extends Controller
             foreach ($reportePremiados as  $detalle) {
 
                 $tic_fecha_sorteo =  Carbon::createFromFormat('Y-m-d', $detalle->tic_fecha_sorteo)->format('d/m/Y');
-
-                $output .= '<tr>' .
-                    // '<td> <a href="#" class="print-ticket" data-href="' . route('pos.printTicket', [$detalle->id]) . '">' . $detalle->tic_ticket . '</a></td>' .
+                if($detalle->tic_estado == '2'){
+                    $output .= '<tr>' .
                     '<td> <a href="' .  action("Ticket\TicketController@getTicketPremiado", [$detalle->id])  . '" class="view_ticket_modal  no-print" >' . $detalle->tic_ticket . '</a></td>' .
-                '<td class="text-center">' . $tic_fecha_sorteo . '</td>' .
-                '<td>' . $detalle->lot_nombre . '</td>' .
-                // '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->tic_apostado . ' data-currency_symbol=true> ' . $detalle->tic_apostado . '</td>' .
-                // '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->tic_ganado . ' data-currency_symbol=true> ' . $detalle->tic_ganado . '</td>' .
-                '</tr>';
+                    '<td class="text-center">' . $tic_fecha_sorteo . '</td>' .
+                    '<td>' . $detalle->lot_nombre . '</td>' .
+                    '</tr>';
+                }
             }
 
             return $output;

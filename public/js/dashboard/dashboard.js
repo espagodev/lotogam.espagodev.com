@@ -191,6 +191,7 @@ $(document).ready(function() {
                 dataType: 'html',
                 data: data,
                 success: function(data) {
+
                     $('.tickets-premiados').html(data);
                      __currency_convert_recursively($('.tickets-premiados'));
 
