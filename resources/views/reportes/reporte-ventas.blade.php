@@ -17,13 +17,16 @@
             <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
-                            <table class="table table-bordered table-striped"  id="reporte_ventas">
+                             <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-sm text-center"  id="reporte_ventas">
                                 <thead>
                                     <tr>
                                         <th>Loteria</th>
-                                        <th>Venta Total</th>
+                                        <th>Venta</th>
+                                        <th>Venta Promo</th>
                                         <th>Comisiòn Total</th>
-                                        <th>Total Premios</th>
+                                        <th>Premios</th>
+                                        <th>Premios Promo</th>
                                         <th>Ganancia</th>
                                     </tr>
                                 </thead>
@@ -31,12 +34,15 @@
                                     <tr class="bg-gray font-17 footer-total text-center">
                                         <td><strong>Total:</strong></td>
                                         <td><span class="display_currency" id="footer_total_venta" data-currency_symbol ="true"></span></td>
+                                        <td><span class="display_currency" id="footer_total_venta_promo" data-currency_symbol ="true"></span></td>
                                         <td><span class="display_currency" id="footer_total_comision" data-currency_symbol ="true"></span></td>
                                         <td><span class="display_currency" id="footer_total_premios" data-currency_symbol ="true"></span></td>
+                                        <td><span class="display_currency" id="footer_total_premios_promo" data-currency_symbol ="true"></span></td>
                                         <td><span class="display_currency" id="footer_total_ganancia" data-currency_symbol ="true"></span></td>
                                     </tr>
                                 </tfoot>
                             </table>
+                             </div>
                         </div>
                     </div>
             </div>

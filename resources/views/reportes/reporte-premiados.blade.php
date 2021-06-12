@@ -28,24 +28,7 @@
                         </div>
                     </div>
             </div>
-             {{-- <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <table class="table table-sm table-striped  fixed_header">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">Numeros</th>
-                                        <th class="text-center">Apuesta</th>
-                                        <th class="text-center">Gano</th>
-                                    </tr>
-                                </thead>
-                                 <tbody class="detalle">
-                                </tbody>
-                            </table>
-                        </div>
 
-                    </div>
-            </div> --}}
     </div>
 
     <div class="modal fade ticket_modal" tabindex="-1" role="dialog"

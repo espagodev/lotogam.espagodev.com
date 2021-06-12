@@ -97,7 +97,7 @@ class FormatoTickets
         $output['date_label'] = $il->tcon_date_label;
         $output['invoice_date'] = \Carbon::createFromFormat('Y-m-d H:i:s', $transaction->updated_at)->format($il->tcon_date_time_format);
         $output['time_label'] = 'Hora:';
-        $output['time_date'] = \Carbon::createFromFormat('Y-m-d H:i:s', $transaction->updated_at)->format('H:i:s');
+        $output['time_date'] = \Carbon::createFromFormat('Y-m-d H:i:s', $transaction->updated_at)->format('H:i');
 
         $output['sorteo_label'] = '';
         $output['sorteo_date'] = '';
@@ -139,6 +139,9 @@ class FormatoTickets
         //Barcode related information.
         $output['tcon_show_barcode'] = !empty($il->tcon_show_barcode) ? true : false;
 
+        if ($il->tcon_show_nota == 1) {
+            $output['tcon_nota_informativa'] = $il->tcon_nota_informativa;
+        }
 
         return (object) $output;
     }
@@ -168,8 +171,8 @@ class FormatoTickets
 
         $output = '';
         if (count($arrayQ)  != 0) {
-            $output .=  self::drawLine();
-            $output .=  "<div class='flex-box'><strong>Quiniela</strong></div>";
+            // $output .=  self::drawLine();
+            $output .=  "<div class='flex-box border-top'><strong>Quiniela</strong></div>";
             foreach ($arrayQ as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
 
@@ -180,15 +183,15 @@ class FormatoTickets
                 }
 
                 $output .=
-                    "<div class='flex-box  badge-$clase'>" .
-                    "<p>$numeros->tid_apuesta</p>" .
-                    "<p>$valor</p>" .
+                    "<div class='textbox-info badge-$clase'>" .
+                    "<p class='f-left' >$numeros->tid_apuesta</p>" .
+                    "<p class='f-right'>$valor</p>" .
                     "</div>";
             }
-            $output .=  self::drawLine();
+            // $output .=  self::drawLine();
         }
         if (count($arrayPL)  != 0) {
-            $output .=  "<div class='flex-box'><strong>Pales</strong></div>";
+            $output .=  "<div class='flex-box border-top'><strong>Pales</strong></div>";
             foreach ($arrayPL as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
 
@@ -199,16 +202,16 @@ class FormatoTickets
                 }
 
                 $output .=
-                    "<div class='flex-box  badge-$clase'>" .
-                    "<p>$numeros->tid_apuesta</p>" .
-                    "<p>$valor</p>" .
+                    "<div class='textbox-info  badge-$clase'>" .
+                    "<p class='f-left' >$numeros->tid_apuesta</p>" .
+                    "<p class='f-right'>$valor</p>" .
                     "</div>";
             }
-            $output .=  self::drawLine();
+            // $output .=  self::drawLine();
         }
         if (count($arrayTP)  != 0) {
 
-            $output .=  "<div class='flex-box'><strong>Tripletas</strong></div>";
+            $output .=  "<div class='flex-box border-top'><strong>Tripletas</strong></div>";
             foreach ($arrayTP as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
 
@@ -219,17 +222,17 @@ class FormatoTickets
                 }
 
                 $output .=
-                    "<div class='flex-box  badge-$clase'>" .
-                    "<p>$numeros->tid_apuesta</p>" .
-                    "<p>$valor</p>" .
+                    "<div class='textbox-info   badge-$clase'>" .
+                    "<p class='f-left' >$numeros->tid_apuesta</p>" .
+                    "<p class='f-right'>$valor</p>" .
                     "</div>";
             }
 
-            $output .=  self::drawLine();
+            // $output .=  self::drawLine();
         }
         if (count($arraySP)  != 0) {
             $output .=  self::drawLine();
-            $output .=  "<div class='flex-box'><strong>SuperPale</strong></div>";
+            $output .=  "<div class='flex-box border-top'><strong>SuperPale</strong></div>";
             foreach ($arraySP as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
 
@@ -240,13 +243,13 @@ class FormatoTickets
                 }
 
                 $output .=
-                    "<div class='flex-box  badge-$clase'>" .
-                    "<p>$numeros->tid_apuesta</p>" .
-                    "<p>$valor</p>" .
+                    "<div class='textbox-info  badge-$clase'>" .
+                    "<p class='f-left'>$numeros->tid_apuesta</p>" .
+                    "<p class='f-right'>$valor</p>" .
                     "</div>";
             }
 
-            $output .=  self::drawLine();
+            // $output .=  self::drawLine();
         }
 
 

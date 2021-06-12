@@ -104,11 +104,8 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
     Route::get('validaHoraCierre', 'ResultadosController@validaHoraCierre');
     Route::post('guardarResultados', 'ResultadosController@guardarResultados');
 
-
     Route::resource('appConfigEmpresas', 'AppConfigEmpresasController');
     Route::resource('appConfigFacturas', 'AppConfigFacturasController');
-
-
 
     Route::resource('empresas', 'EmpresasController');
     Route::resource('planes', 'PlanesController');

@@ -208,7 +208,6 @@
 	font-size: 12px;
 	font-weight:700;
 
-    /* text-transform: uppercase; */
 }
 
 .border-top{

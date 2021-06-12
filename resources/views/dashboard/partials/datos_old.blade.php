@@ -115,16 +115,14 @@
                      </a>
                     </div>
 				</div>
-            <div class="table-responsive">
+                      <div class="table-responsive">
                <table class="table table-sm">
                 <thead>
                   <tr>
                    <th scope="col">Loteria</th>
                     <th class="text-center" scope="col">Venta</th>
-                    <th class="text-center" scope="col">Promocion</th>
                     <th class="text-center" scope="col">Comision</th>
                     <th class="text-center" scope="col">Premios</th>
-                    <th class="text-center" scope="col">Promocion</th>
                     <th class="text-center" scope="col">Ganancia</th>
                   </tr>
                 </thead>

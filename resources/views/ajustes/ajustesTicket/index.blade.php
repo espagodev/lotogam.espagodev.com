@@ -72,7 +72,7 @@
     </div>
    @endsection
     @section('scripts')
-        <script src="{{ asset('js/ajustes/ajustesTicket/ajustesTicket.js?v=' . $asset_v) }}"></script>
+        <script src="{{ asset('js/ajustes/ajustesticket/ajustesticket.js?v=' . $asset_v) }}"></script>
     @endsection
 
      <div class="modal fade" id="nuevo">

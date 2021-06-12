@@ -52,17 +52,28 @@ $(document).ready(function() {
 
                 { data: 'lot_nombre', name: 'lot_nombre', orderable: false, searchable: false  },
                 { data: 'venta', name: 'venta', orderable: false, searchable: false  },
+                { data: 'venta_promo', name: 'venta_promo', orderable: false, searchable: false },
                 { data: 'comision', name: 'comision', orderable: false, searchable: false  },
                 { data: 'ganado', name: 'ganado', orderable: false, searchable: false  },
+                { data: 'premios_promo', name: 'premios_promo', orderable: false, searchable: false },
                 { data: 'ganancia', name: 'ganancia', orderable: false, searchable: false  },
          ],
           fnDrawCallback: function(oSettings) {
             var total_venta = sum_table_col($('#reporte_ventas'), 'venta');
             $('#footer_total_venta').text(total_venta);
+
+              var total_venta_promo = sum_table_col($('#reporte_ventas'), 'venta_promo');
+              $('#footer_total_venta_promo').text(total_venta_promo);
+
              var total_comision = sum_table_col($('#reporte_ventas'), 'comision');
             $('#footer_total_comision').text(total_comision);
+
              var total_premios = sum_table_col($('#reporte_ventas'), 'premios');
             $('#footer_total_premios').text(total_premios);
+
+              var total_premios_promo = sum_table_col($('#reporte_ventas'), 'premios_promo');
+              $('#footer_total_premios_promo').text(total_premios_promo);
+
              var total_ganancia = sum_table_col($('#reporte_ventas'), 'ganancia');
             $('#footer_total_ganancia').text(total_ganancia);
 

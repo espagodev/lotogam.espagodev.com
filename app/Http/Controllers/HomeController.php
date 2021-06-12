@@ -101,8 +101,10 @@ class HomeController extends Controller
         if ($request->ajax()) {
 
             $TotalVenta = 0;
+            $TotalVentaPromo = 0;
             $TotalComision = 0;
             $TotalPremios = 0;
+            $TotalPremiosPromo = 0;
             $TotalGanancia = 0;
 
             if (session()->get('user.TipoUsuario') == 2) {
@@ -124,26 +126,32 @@ class HomeController extends Controller
             $output = '';
             foreach ($reporteVentas as  $detalle) {
 
-                $ganancia = $detalle->total_venta - $detalle->total_comision - $detalle->total_premios;
+                $ganancia = $detalle->total_venta - $detalle->total_comision - $detalle->total_premios_promo - $detalle->total_premios;
                 $TotalVenta = $TotalVenta + $detalle->total_venta;
+                $TotalVentaPromo = $TotalVentaPromo + $detalle->total_venta_promo;
                 $TotalComision = $TotalComision + $detalle->total_comision;
                 $TotalPremios = $TotalPremios + $detalle->total_premios;
+                $TotalPremiosPromo = $TotalPremiosPromo + $detalle->total_premios_promo;
 
                 $TotalGanancia = $TotalGanancia + $ganancia;
 
                 $output .= '<tr>' .
                 '<td>' . $detalle->lot_nombre . '</td>' .
                 '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->total_venta . ' data-currency_symbol=true> ' . $detalle->total_venta . '</td>' .
+                '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->total_venta_promo . ' data-currency_symbol=true> ' . $detalle->total_venta_promo . '</td>' .
                 '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->total_comision . ' data-currency_symbol=true> ' . $detalle->total_comision . '</td>' .
                 '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->total_premios . ' data-currency_symbol=true> ' . $detalle->total_premios . '</td>' .
+                '<td class="text-center"><span class="display_currency" data-orig-value=' . $detalle->total_premios_promo . ' data-currency_symbol=true> ' . $detalle->total_premios_promo . '</td>' .
                 '<td class="text-center"><span class="display_currency" data-orig-value=' . $ganancia . ' data-currency_symbol=true> ' . $ganancia . '</td>' .
                 '</tr>';
             }
                 $output .= '<tr>' .
                 '<td><h5> Total Venta </h5> </td>' .
-            '<td class="text-center"><h5><span class="display_currency" data-orig-value=' . $TotalVenta . ' data-currency_symbol=true> ' . $TotalVenta . '</h5> </td>' .
+                '<td class="text-center"><h5><span class="display_currency" data-orig-value=' . $TotalVenta . ' data-currency_symbol=true> ' . $TotalVenta . '</h5> </td>' .
+                '<td class="text-center"><h5><span class="display_currency" data-orig-value=' . $TotalVentaPromo . ' data-currency_symbol=true> ' . $TotalVentaPromo . '</h5> </td>' .
                 '<td class="text-center"><h5><span class="display_currency" data-orig-value=' . $TotalComision . ' data-currency_symbol=true> ' . $TotalComision . '</h5> </td>' .
                 '<td class="text-center"><h5><span class="display_currency" data-orig-value=' . $TotalPremios . ' data-currency_symbol=true> ' . $TotalPremios . '</h5> </td>' .
+                '<td class="text-center"><h5><span class="display_currency" data-orig-value=' . $TotalPremiosPromo . ' data-currency_symbol=true> ' . $TotalPremiosPromo . '</h5> </td>' .
                 '<td class="text-center"><h5><span class="display_currency" data-orig-value=' . $TotalGanancia . ' data-currency_symbol=true> ' . $TotalGanancia . '</h5> </td>' .
                 '</tr>';
             return $output;

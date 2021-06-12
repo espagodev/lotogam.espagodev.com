@@ -58,6 +58,10 @@ class ReportesController extends Controller
                     $venta = $row->total_venta ? $row->total_venta : 0;
                     return '<span class="display_currency venta"  data-orig-value="' . $venta . '" data-currency_symbol = true>' . $venta . '</span>';
                 })
+                ->editColumn('venta_promo', function ($row) {
+                $ventaPromo = $row->total_venta_promo ? $row->total_venta_promo : 0;
+                    return '<span class="display_currency venta_promo"  data-orig-value="' . $ventaPromo . '" data-currency_symbol = true>' . $ventaPromo . '</span>';
+                })
                 ->editColumn('comision', function ($row) {
                     $comision = $row->total_comision ? $row->total_comision : 0;
                     return '<span class="display_currency comision" data-orig-value="' . $comision . '" data-currency_symbol = true>' . $comision . '</span>';
@@ -66,12 +70,16 @@ class ReportesController extends Controller
                     $ganado = $row->total_premios ? $row->total_premios : 0;
                     return '<span class="display_currency premios" data-orig-value="' . $ganado . '" data-currency_symbol = true>' . $ganado . '</span>';
                 })
+                ->editColumn('premios_promo', function ($row) {
+                $premioPromo = $row->total_premios_promo ? $row->total_premios_promo : 0;
+                    return '<span class="display_currency premios_promo" data-orig-value="' . $premioPromo . '" data-currency_symbol = true>' . $premioPromo . '</span>';
+                })
                 ->editColumn('ganancia', function ($row) {
-                    $totalGanancia =  $row->total_venta - $row->total_comision - $row->total_premios;
+                    $totalGanancia =  $row->total_venta - $row->total_comision - $row->total_comision - $row->total_premios;
                     $ganancia = $totalGanancia ? $totalGanancia : 0;
                     return '<span class="display_currency ganancia" data-orig-value="' . $ganancia . '" data-currency_symbol = true>' . $ganancia . '</span>';
                 })
-                ->rawColumns(['lot_nombre', 'venta', 'comision', 'ganado', 'ganancia'])
+                ->rawColumns(['lot_nombre', 'venta', 'venta_promo', 'comision', 'ganado', 'premios_promo', 'ganancia'])
                 ->make(true);
         }
 
@@ -233,6 +241,9 @@ class ReportesController extends Controller
                     if ($row->tic_estado == 2) {
                         return '<button type="button" href="' . action('Ticket\TicketController@getTicketPremiado', [$row->id]) . '"  class="btn btn-sm  btn-outline-success view_ticket_modal  no-print">
                         <i class="fa fa-money"></i> </button>';
+                    }else{
+                    return '<button type="button" data-href="' . action('Ticket\TicketController@show', [$row->id]) . '"  class="btn btn-sm btn-outline-info btn-modal"
+                                    data-container=".view_register"><i class="fa fa-eye"></i> </button>';
                     }
                 })
                 ->rawColumns(['action', 'tic_apostado', 'tic_ganado', 'tic_estado'])

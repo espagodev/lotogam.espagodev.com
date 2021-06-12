@@ -1,56 +1,140 @@
+@media print {
+    .no-print {
+        display: none !important;
+    }
 
+    .modal-backdrop.show {
+        opacity: 0;
+    }
 
-    .lista-scroll {
+    .pace-progress {
+        display: none;
+    }
+}
+
+.lista-scroll {
     display: block;
     width: 100%;
     overflow: auto;
     height: 450px;
-    }
-    .receipt {
-
-        width: 65%;
-        min-height: 80vh;
-        height:80%;
-        background: #fff;
-        margin: 0 auto;
-        box-shadow: 5px 5px 15px #ccc;
-        padding: 15px;
-        font-size: 11pt;
-    }
-
-    .logos {
-    text-align: center;
+}
+.receipt {
+    width: 65%;
+    min-height: 80vh;
+    height: 80%;
+    background: #fff;
+    margin: 0 auto;
+    box-shadow: 5px 5px 15px #ccc;
     padding: 15px;
-    }
+    font-size: 11pt;
+}
 
-    .flex-box-encabezado {
+.invoice {
+    position: relative;
+    background: #fff;
+    border: 1px solid #f4f4f4;
+    padding: 20px;
+    margin: 10px 25px;
+}
+
+.invoice {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    }
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.headings{
+	font-size: 14px;
+	font-weight: 700;
+	text-transform: uppercase;
+
+}
+
+.sub-headings{
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.nota{
+	font-size: 12px;
+	font-weight:700;
+
+}
+
+.centered {
+    text-align: center;
+    align-content: center;
+}
+
+.flex-box {
+	display: flex;
+	width: 100%;
+}
+.flex-box p {
+	width: 50%;
+	margin-bottom: 1px;
+	white-space: nowrap;
+}
+
+.text-box {
+	width: 100%;
+	height: auto;
+}
 
     .f-right {
     float: right;
+    width: 30%;
+
     }
 
     .f-left {
     float: left;
+
     }
 
-    .centered {
+    .textbox-info {
+	clear: both;
+}
+
+.border-top{
+    border-top: 1px solid #242424;
+}
+
+
+
+/* .logos {
+    text-align: center;
+    padding: 15px;
+}
+
+.flex-box-encabezado {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.f-right {
+    float: right;
+}
+
+.f-left {
+    float: left;
+}
+
+.centered {
     text-align: center;
     align-content: center;
-    }
+}
 
-    .center-block {
+.center-block {
     display: block;
     margin-right: auto;
     margin-left: auto;
-    }
+}
 
-    .flex-box {
+.flex-box {
     width: 80%;
     display: flex;
     justify-content: space-between;
-    }
-
+} */
