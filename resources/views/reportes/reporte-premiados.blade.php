@@ -31,6 +31,10 @@
 
     </div>
 
+    <div class="modal fade view_register" tabindex="-1" role="dialog"
+        aria-labelledby="gridSystemModalLabel">
+    </div>
+
     <div class="modal fade ticket_modal" tabindex="-1" role="dialog"
         aria-labelledby="gridSystemModalLabel">
     </div>
