@@ -38,27 +38,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                     @php
-                        $TotalVenta = 0;
-                        $TotalVentapromo = 0;
-                        $TotalComision = 0;
-                        $TotalPremios = 0;
-                        $TotalPremiosPromo = 0;
-                        $TotalGanancia = 0;
-                    @endphp
                     @foreach($receipt->lines as $line)
-                        @php
-
-                            $ganancia =  $line->venta - $line->comision - $line->premioPromo - $line->ganado;
-
-                            $TotalVenta = $TotalVenta + $line->venta;
-                            $TotalVentaPromo = $TotalVentapromo + $line->ventaPromo;
-                            $TotalComision = $TotalComision + $line->comision;
-                            $TotalPremios = $TotalPremios + $line->ganado;
-                            $TotalPremiosPromo = $TotalPremiosPromo + $line->premioPromo;
-                            $TotalGanancia = $TotalGanancia + $ganancia;
-
-                        @endphp
                         <tr>
                             <td>{{ $line->nombre }}</td>
                             <td>{{ $line->venta }}</td>
@@ -71,12 +51,12 @@
                     @endforeach
                     <tr>
                         <td><h5>Total</h5></td>
-                        <td><h5>{{ $TotalVenta }}</h5></td>
-                        <td><h5>{{ $TotalVentaPromo }}</h5></td>
-                        <td><h5>{{ $TotalComision }}</h5></td>
-                        <td><h5>{{ $TotalPremios }}</h5></td>
-                        <td><h5>{{ $TotalPremiosPromo }}</h5></td>
-                        <td><h5>{{ $TotalGanancia }}</h5></td>
+                        <td><h5>{{ $receipt->totales->TotalVenta }}</h5></td>
+                        <td><h5>{{ $receipt->totales->TotalVentaPromo }}</h5></td>
+                        <td><h5>{{ $receipt->totales->TotalComision }}</h5></td>
+                        <td><h5>{{ $receipt->totales->TotalPremios }}</h5></td>
+                        <td><h5>{{ $receipt->totales->TotalPremiosPromo }}</h5></td>
+                        <td><h5>{{ $receipt->totales->TotalGanancia }}</h5></td>
                     </tr>
                 </tbody>
             </table>
