@@ -182,7 +182,7 @@ class HomeController extends Controller
 
 
                 $receipt = Reportes::getReporteVentasPrint($data);
-
+                
                 $formatoPdf = BancaUtil::HtmlContent($receipt);
 
                 $output = ['success' => 1, 'receipt' => $formatoPdf];
