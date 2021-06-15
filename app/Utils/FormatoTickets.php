@@ -183,8 +183,8 @@ class FormatoTickets
                 }
 
                 $output .=
-                    "<div class='textbox-info $clase'>" .
-                    "<p class='f-left' >$numeros->tid_apuesta</p>" .
+                    "<div class='textbox-info'>" .
+                    "<p class='f-left $clase' >$numeros->tid_apuesta</p>" .
                     "<p class='f-right'>$valor</p>" .
                     "</div>";
             }
@@ -202,8 +202,8 @@ class FormatoTickets
                 }
 
                 $output .=
-                    "<div class='textbox-info  $clase'>" .
-                    "<p class='f-left' >$numeros->tid_apuesta</p>" .
+                    "<div class='textbox-info'>" .
+                    "<p class='f-left $clase' >$numeros->tid_apuesta</p>" .
                     "<p class='f-right'>$valor</p>" .
                     "</div>";
             }
@@ -222,8 +222,8 @@ class FormatoTickets
                 }
 
                 $output .=
-                    "<div class='textbox-info $clase'>" .
-                    "<p class='f-left' >$numeros->tid_apuesta</p>" .
+                    "<div class='textbox-info'>" .
+                    "<p class='f-left $clase' >$numeros->tid_apuesta</p>" .
                     "<p class='f-right'>$valor</p>" .
                     "</div>";
             }
@@ -243,8 +243,8 @@ class FormatoTickets
                 }
 
                 $output .=
-                    "<div class='textbox-info $clase'>" .
-                    "<p class='f-left'>$numeros->tid_apuesta</p>" .
+                    "<div class='textbox-info'>" .
+                    "<p class='f-left $clase'>$numeros->tid_apuesta</p>" .
                     "<p class='f-right'>$valor</p>" .
                     "</div>";
             }
