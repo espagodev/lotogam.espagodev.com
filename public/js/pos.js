@@ -258,10 +258,10 @@ $(document).ready(function () {
 
                             // if (result.receipt.is_enabled) {
                                 // __pos_print(result.receipt);
-
+                            console.log(receipt)
                                 receipt.forEach(function (elemento, index, arr) {
                                     if (arr[index].is_enabled) {
-                                        // console.log(arr[index].data)
+                                        // console.log(arr[index] = elemento)
                                         __pos_print(arr[index] = elemento);
                                     }
                                 });
@@ -585,7 +585,6 @@ function horarioSuperPale() {
 
 function __pos_print(receipt) {
 
-
     //Si es tipo de impresora, conéctese con websocket
     if (receipt.print_type == 'printer') {
         var content = receipt;
@@ -607,6 +606,7 @@ function __pos_print(receipt) {
         $('#receipt_section').html(receipt.html_content);
 
         __currency_convert_recursively($('#receipt_section'));
+
         __print_receipt('receipt_section');
     }
 }

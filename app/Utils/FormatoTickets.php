@@ -177,13 +177,13 @@ class FormatoTickets
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
 
                 if ($numeros->tid_ganado != 0) {
-                    $clase =  'success';
+                    $clase =  'badge-success';
                 } else {
                     $clase =  '';
                 }
 
                 $output .=
-                    "<div class='textbox-info badge-$clase'>" .
+                    "<div class='textbox-info $clase'>" .
                     "<p class='f-left' >$numeros->tid_apuesta</p>" .
                     "<p class='f-right'>$valor</p>" .
                     "</div>";
@@ -196,13 +196,13 @@ class FormatoTickets
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
 
                 if ($numeros->tid_ganado != 0) {
-                    $clase =  'success';
+                    $clase =  'badge-success';
                 } else {
                     $clase =  '';
                 }
 
                 $output .=
-                    "<div class='textbox-info  badge-$clase'>" .
+                    "<div class='textbox-info  $clase'>" .
                     "<p class='f-left' >$numeros->tid_apuesta</p>" .
                     "<p class='f-right'>$valor</p>" .
                     "</div>";
@@ -216,13 +216,13 @@ class FormatoTickets
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
 
                 if ($numeros->tid_ganado != 0) {
-                    $clase =  'success';
+                    $clase =  'badge-success';
                 } else {
                     $clase =  '';
                 }
 
                 $output .=
-                    "<div class='textbox-info   badge-$clase'>" .
+                    "<div class='textbox-info $clase'>" .
                     "<p class='f-left' >$numeros->tid_apuesta</p>" .
                     "<p class='f-right'>$valor</p>" .
                     "</div>";
@@ -237,13 +237,13 @@ class FormatoTickets
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
 
                 if ($numeros->tid_ganado != 0) {
-                    $clase =  'success';
+                    $clase =  'badge-success';
                 } else {
                     $clase =  '';
                 }
 
                 $output .=
-                    "<div class='textbox-info  badge-$clase'>" .
+                    "<div class='textbox-info $clase'>" .
                     "<p class='f-left'>$numeros->tid_apuesta</p>" .
                     "<p class='f-right'>$valor</p>" .
                     "</div>";

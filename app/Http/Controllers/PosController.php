@@ -37,7 +37,6 @@ class PosController extends Controller
         $this->transactionUtil = $transactionUtil;
         $this->middleware('auth');
         parent::__construct($marketService);
-
     }
 
 
@@ -58,7 +57,7 @@ class PosController extends Controller
         $estadosPromocionTicket = Util::estadosPromocionTicket();
         $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
 
-        return view('sale_pos.index')->with(['tickets' => $tickets, 'loterias' => $loterias, 'bancas' => $bancas, 'estadosTicket' => $estadosTicket, 'estadosPromocionTicket'=> $estadosPromocionTicket, 'usuarios' => $usuarios]);
+        return view('sale_pos.index')->with(['tickets' => $tickets, 'loterias' => $loterias, 'bancas' => $bancas, 'estadosTicket' => $estadosTicket, 'estadosPromocionTicket' => $estadosPromocionTicket, 'usuarios' => $usuarios]);
     }
 
     /**
@@ -94,14 +93,12 @@ class PosController extends Controller
         $bancas_id =  request()->session()->get('user.banca');
         $users_id =  request()->session()->get('user.id');
 
-        $parametros =  $this->marketService->getParametrosBanca($bancas_id);
-
         $data['empresas_id'] =  $empresas_id;
         $data['users_id'] =  $users_id;
         $data['bancas_id'] =  $bancas_id;
         $data['tic_numeros'] = $request->product_row;
         $data['loterias_id']  = $request->loterias_id;
-        $data['tic_fecha_sorteo']  = $request->tic_fecha_sorteo ? carbon::createFromFormat('d/m/Y', $request->tic_fecha_sorteo)->format('Y-m-d') :Carbon::now()->format('Y-m-d');
+        $data['tic_fecha_sorteo']  = $request->tic_fecha_sorteo ? carbon::createFromFormat('d/m/Y', $request->tic_fecha_sorteo)->format('Y-m-d') : Carbon::now()->format('Y-m-d');
         $data['tic_promocion']  = $request->tic_promocion;
 
         $ticket_promocion_show = $this->util->ticketPromocionShow();
@@ -112,19 +109,15 @@ class PosController extends Controller
             }
         }
 
-
         $ticket = $this->marketService->postNuevoTicket($data);
         $tickets = $ticket->ticket;
 
         foreach ($tickets as $ticket) {
-
-            $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $ticket, null, false, true);
+            $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $ticket, null, false, true );
             $mensaje = 'Venta añadida con éxito';
             $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
-
-
         }
-            return $output;
+        return $output;
     }
 
 
@@ -163,12 +156,12 @@ class PosController extends Controller
         $tickets = $this->marketService->getTicket($tickets_id);
         $ticketDetalle = $this->marketService->getTicketDetalle($tickets_id);
 
-        if ($from_pos_screen && $banca->ban_imprimir_recibo != 1) {
-            return $output;
-        }
+        // if ($from_pos_screen && $banca->ban_imprimir_recibo != 1) {
+        //     return $output;
+        // }
 
         //Compruebe si la impresión de factura está habilitada o no.
-         // Si está habilitado, obtenga el tipo de impresión.
+        // Si está habilitado, obtenga el tipo de impresión.
         $output['is_enabled'] = true;
 
         $invoice_layout_id = !empty($invoice_layout_id) ? $invoice_layout_id : $banca->app_config_tickets_id;
@@ -181,13 +174,12 @@ class PosController extends Controller
         $isAnular = Util::calcularMinutos($tickets[0]->created_at, $banca->ban_tiempo_anular);
 
         $detalle_ticket = $this->transactionUtil->getReceiptDetails($tickets_id, $tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular);
-        // dd($detalle_ticket);
+
         $currency_details = [
             'symbol' => $moneda->simbolo,
             'thousand_separator' => $moneda->separador_miles,
             'decimal_separator' => $moneda->separador_decimal
         ];
-
 
         //Si el tipo de impresión es navegador: devuelve el contenido, impresora: devuelve los datos de configuración de la impresora y la configuración del formato de factura
         if ($receipt_printer_type == 'printer') {
@@ -196,9 +188,8 @@ class PosController extends Controller
             $output['data'] = $detalle_ticket;
             $output['print'] = "ticket";
         } else {
+
             $layout = !empty($invoice_layout->tcon_formato_browser) ? 'sale_pos.receipts.' . $invoice_layout->tcon_formato_browser : 'sale_pos.receipts.classic';
-            // $layout =  'sale_pos.receipts.slim';
-            // dd($detalle_ticket);
             $output['html_content'] = view($layout, compact('detalle_ticket', 'isAnular'))->render();
         }
 
@@ -221,22 +212,21 @@ class PosController extends Controller
                 // dd($detalle->hlo_hora_fin, $horaRD);
                 $horariocierre = HorarioLoterias::compararHoras($detalle->hlo_hora_fin, $horaRD);
 
-                if($horariocierre == 0){
-                              $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                if ($horariocierre == 0) {
+                    $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                 <div class="icheck-material-success">
-                                    <input type="checkbox" id="' . $detalle->lot_nombre . '" name="lot_id[]" value="'. $detalle->loterias_id . '|'. 0 . '"/>
-                                    <label class="validar_monto"  for="'. $detalle->lot_nombre . '"  data-loteria="' . $detalle->lot_nombre . '" data-loterias_id="' . $detalle->loterias_id . '"  data-superpale="0"><span class="badge badge-success m-1 validar-monto"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
+                                    <input type="checkbox" id="' . $detalle->lot_nombre . '" name="lot_id[]" value="' . $detalle->loterias_id . '|' . 0 . '"/>
+                                    <label class="validar_monto"  for="' . $detalle->lot_nombre . '"  data-loteria="' . $detalle->lot_nombre . '" data-loterias_id="' . $detalle->loterias_id . '"  data-superpale="0"><span class="badge badge-success m-1 validar-monto"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
                                 </div>
                             </div>';
-                 } else{
+                } else {
                     $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                 <div class="icheck-material-danger">
                                     <input type="checkbox" id="' . $detalle->lot_nombre . '" disabled/>
                                     <label  for="' . $detalle->lot_nombre . '"><span class="badge badge-danger m-1"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
                                 </div>
                             </div>';
-                 }
-
+                }
             }
             return $output;
         }

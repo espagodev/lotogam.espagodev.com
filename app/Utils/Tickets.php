@@ -7,5 +7,6 @@ use App\Services\MarketService;
 class Tickets
 {
 
+    
 
 }

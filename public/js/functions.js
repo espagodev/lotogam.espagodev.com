@@ -267,6 +267,7 @@ function __sum_status_html(table, class_name) {
 
 function __print_receipt(section_id = null) {
 
+
     if (section_id) {
         var imgs = document.getElementById(section_id).getElementsByTagName("img");
     } else {
@@ -292,7 +293,6 @@ function __print_receipt(section_id = null) {
 function incrementImageCounter() {
     img_counter++;
     if (img_counter === img_len) {
-
         window.print();
 
     }
