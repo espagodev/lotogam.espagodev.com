@@ -177,7 +177,7 @@ class FormatoTickets
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
 
                 if ($numeros->tid_ganado != 0) {
-                    $clase =  'badge-success';
+                    $clase =  'badge badge-pill badge-success';
                 } else {
                     $clase =  '';
                 }
