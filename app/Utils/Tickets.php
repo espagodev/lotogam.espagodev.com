@@ -43,7 +43,7 @@ class Tickets
         $marketService = resolve(MarketService::class);
 
         $datos = $marketService->getTicket($ticket);
-        $data = ['tic_promocion' => $datos[0]->tic_promocion, 'tic_sorteo_futuro' => $datos[0]->tic_sorteo_futuro, 'created_at' => $datos[0]->created_at];
+        $data = ['tic_promocion' => $datos[0]->tic_promocion, 'tic_sorteo_futuro' => $datos[0]->tic_sorteo_futuro, 'created_at' => $datos[0]->created_at, 'tic_fecha_sorteo' => $datos[0]->tic_fecha_sorteo];
         return $data;
     }
 
@@ -57,6 +57,6 @@ class Tickets
 
         }
 
-        return ['tic_apostado' => $TotalPremios];
+        return $data = ['tic_apostado' => $TotalPremios];
     }
 }

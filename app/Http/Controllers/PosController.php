@@ -116,7 +116,6 @@ class PosController extends Controller
         if ($request->tic_agrupado == 1) {
 
             $agrupado = Tickets::ticketAgrupado($tickets);
-
             $receipt[] = $this->receiptContentAgrupado($empresas_id, $bancas_id, $ticket, $agrupado, null, false, true);
             $mensaje = 'Venta añadida con éxito';
             $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
