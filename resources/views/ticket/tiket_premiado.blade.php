@@ -78,9 +78,7 @@
     </div>
 
     <div class="modal-footer">
-     {{-- <a href="{{route('pos.printTicket', [$tickets_id])}}" class="print-invoice-link btn btn-primary" ><i class="fa fa-print" aria-hidden="true"></i>Impresión</a> --}}
- <button type="button" class="btn btn-success btn-xs  pagar_premio"
-                                data-href="{{action('Ticket\TicketController@getPagarTicketPremiado', [$ticket[0]->id]) }}"><i class="fa fa-money"></i> Realizar Pago</button>
+     <button type="button" class="btn btn-success btn-xs  pagar_premio" data-href="{{action('Ticket\TicketController@getPagarTicketPremiado', [$ticket[0]->id]) }}"><i class="fa fa-money"></i> Realizar Pago</button>
       <button type="button" class="btn btn-info no-print"
         data-dismiss="modal"> Cerrar
       </button>

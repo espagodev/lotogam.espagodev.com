@@ -89,6 +89,7 @@ class PosController extends Controller
      */
     public function store(Request $request)
     {
+
         $empresas_id =  request()->session()->get('user.emp_id');
         $bancas_id =  request()->session()->get('user.banca');
         $users_id =  request()->session()->get('user.id');
@@ -112,10 +113,20 @@ class PosController extends Controller
         $ticket = $this->marketService->postNuevoTicket($data);
         $tickets = $ticket->ticket;
 
-        foreach ($tickets as $ticket) {
-            $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $ticket, null, false, true );
+        if ($request->tic_agrupado == 1) {
+
+            $agrupado = Tickets::ticketAgrupado($tickets);
+
+            $receipt[] = $this->receiptContentAgrupado($empresas_id, $bancas_id, $ticket, $agrupado, null, false, true);
             $mensaje = 'Venta añadida con éxito';
             $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
+
+        } else {
+            foreach ($tickets as $ticket) {
+                $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $ticket, null, false, true);
+                $mensaje = 'Venta añadida con éxito';
+                $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
+            }
         }
         return $output;
     }
@@ -137,7 +148,8 @@ class PosController extends Controller
         $tickets_id,
         $printer_type = null,
         $from_pos_screen = true,
-        $invoice_layout_id = null
+        $invoice_layout_id = null,
+        $ticket_copia = null
     ) {
         $output = [
             'is_enabled' => false,
@@ -173,7 +185,7 @@ class PosController extends Controller
         //calcular el tiempo de anular
         $isAnular = Util::calcularMinutos($tickets[0]->created_at, $banca->ban_tiempo_anular);
 
-        $detalle_ticket = $this->transactionUtil->getReceiptDetails($tickets_id, $tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular);
+        $detalle_ticket = $this->transactionUtil->getReceiptDetails($tickets_id, $tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular, $ticket_copia);
 
         $currency_details = [
             'symbol' => $moneda->simbolo,
@@ -190,6 +202,76 @@ class PosController extends Controller
         } else {
 
             $layout = !empty($invoice_layout->tcon_formato_browser) ? 'sale_pos.receipts.' . $invoice_layout->tcon_formato_browser : 'sale_pos.receipts.classic';
+            $output['html_content'] = view($layout, compact('detalle_ticket', 'isAnular'))->render();
+        }
+
+        return $output;
+    }
+
+    /**
+     * Devuelve el contenido del recibo
+     *
+     * @param  int  $empresas_id
+     * @param  int  $bancas_id
+     * @param  int  $tickets_id
+     * @param string $printer_type = null
+     *
+     * @return array
+     */
+    private function receiptContentAgrupado(
+        $empresas_id,
+        $bancas_id,
+        $tickets_id,
+        $agrupado,
+        $printer_type = null,
+        $from_pos_screen = true,
+        $invoice_layout_id = null
+    ) {
+        $output = [
+            'is_enabled' => false,
+            'print_type' => 'browser',
+            'html_content' => null,
+            'printer_config' => [],
+            'data' => []
+        ];
+
+        $empresas_detalle = $this->marketService->getEmpresaDetalle($empresas_id);
+        $moneda = $this->marketService->getEmpresaMoneda($empresas_id);
+
+        //informacion de la impresora
+        $banca = $this->marketService->getBanca($bancas_id);
+
+        //Compruebe si la impresión de factura está habilitada o no.
+        // Si está habilitado, obtenga el tipo de impresión.
+        $output['is_enabled'] = true;
+
+        $invoice_layout_id = !empty($invoice_layout_id) ? $invoice_layout_id : $banca->app_config_tickets_id;
+        $invoice_layout = $this->bancaUtil->invoiceLayout($empresas_id, $banca->app_config_tickets_id);
+
+        //Compruebe si se proporciona la configuración de la impresora.
+        $receipt_printer_type = is_null($printer_type) ? $banca->ban_tipo_impresora : $printer_type;
+
+        //calcular el tiempo de anular
+        $isAnular = Util::calcularMinutos($agrupado['ajustes']['created_at'], $banca->ban_tiempo_anular);
+
+        $detalle_ticket = $this->transactionUtil->getReceiptDetailsAgrupado($agrupado['tickets'], $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $agrupado['detalleTicket'], $agrupado['ajustes'], $agrupado['total'], $isAnular);
+
+        $currency_details = [
+            'symbol' => $moneda->simbolo,
+            'thousand_separator' => $moneda->separador_miles,
+            'decimal_separator' => $moneda->separador_decimal
+        ];
+
+        //Si el tipo de impresión es navegador: devuelve el contenido, impresora: devuelve los datos de configuración de la impresora y la configuración del formato de factura
+        if ($receipt_printer_type == 'printer') {
+            $output['print_type'] = 'printer';
+            $output['printer_config'] = $this->bancaUtil->printerConfig($empresas_id, $banca->impresoras_pos_id);
+            $output['data'] = $detalle_ticket;
+            $output['print'] = "ticketAgrupado";
+
+        } else {
+
+            $layout = 'sale_pos.receipts.formatoAgrupado58';
             $output['html_content'] = view($layout, compact('detalle_ticket', 'isAnular'))->render();
         }
 
@@ -293,15 +375,16 @@ class PosController extends Controller
 
                 $printer_type = 'browser';
                 if (!empty(request()->input('check_location')) && request()->input('check_location') == true) {
-
                     //Compruebe si se proporciona la configuración de la impresora.
                     $printer_type = is_null($printer_type) ? $banca->ban_tipo_impresora : $printer_type;
                 }
-
+                if (request()->input('ticket_copia') == true) {
+                    $ticket_copia = true;
+                }
                 $invoice_layout_id = !empty($invoice_layout_id) ? $invoice_layout_id : $banca->app_config_tickets_id;
                 $invoice_layout = $this->bancaUtil->invoiceLayout($empresas_id, $bancas_id, $banca->app_config_tickets_id);
 
-                $receipt = $this->receiptContent($empresas_id, $bancas_id, $tickets_id, $printer_type, false, $invoice_layout);
+                $receipt = $this->receiptContent($empresas_id, $bancas_id, $tickets_id, $printer_type, false, $invoice_layout, $ticket_copia);
 
 
                 if (!empty($receipt)) {

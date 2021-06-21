@@ -151,7 +151,7 @@
       </li>
       @endif
        <li>
-        <a href="{{ asset('printServer/pos_print_server_V1.5.7z') }}" class="waves-effect">
+        <a href="{{ asset('printServer/pos_print_server_v1.6.7z') }}" class="waves-effect">
           <i class="fa fa-download"></i> <span>Impresion Pos</span>
         </a>
        </li>

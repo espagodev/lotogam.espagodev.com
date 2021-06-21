@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <!-- <link rel="stylesheet" href="style.css"> -->
-        <title>Ticket # {{$detalle_ticket->invoice_no}}</title>
+        <title>Ticket Agrupado</title>
     </head>
     <body>
         <div class="ticket">
@@ -53,16 +53,6 @@
 
 			</p>
 			</div>
-             @if(!empty($detalle_ticket->copia_label))
-				 <div class='centered'>
-                    <p><strong>******* COPIA *******</strong></p>
-                    <div class="flex-box">
-                        <p class="f-left"><strong>Fecha: {{$detalle_ticket->copia_date}} </strong></p>
-                    </div>
-                     <p><strong>******* ***** *******</strong></p>
-                </div>
-                 <br>
-			    @endif
             <div class="flex-box">
 
                     <p class="f-left"><strong>{!! $detalle_ticket->date_label !!}</strong></p>
@@ -78,7 +68,7 @@
                     <p class="f-right"><strong>{{$detalle_ticket->sorteo_date}}</strong></p>
             </div>
             @endif
-            <div class="flex-box">
+            {{-- <div class="flex-box">
 
                 <p class="f-left"><strong>{!! $detalle_ticket->invoice_no_prefix !!}</strong></p>
                 <p class="f-right"><strong>{{$detalle_ticket->invoice_no}}</strong></p>
@@ -87,13 +77,27 @@
                 <p class="f-left"><strong>{!! $detalle_ticket->pin_no_prefix !!}</strong></p>
                 <p class="f-right"><strong>{{$detalle_ticket->pin_no}}</strong></p>
                 @endif
+            </div> --}}
             </div>
-            </div>
-            <div class="textbox-info centered">
-                @if(!empty($detalle_ticket->loteria))
-                        <strong> {!! $detalle_ticket->loteria !!}</strong>
-                @endif
-            </div>
+             <table style="padding-top: 5px !important" class="width-100 table-f-12">
+                <thead>
+                    <tr>
+                        <td class="description"><strong>Loteria</strong></td>
+                        <td class="description"><strong>Ticket</strong></td>
+                        <td class="description"><strong>Pin</strong></td>
+                    </tr>
+                </thead>
+                <tbody>
+                     @foreach ($detalle_ticket->tickets as $ticket)
+                            <tr>
+                                 <td class="descriptionLote"><strong>{{ $ticket['loteria'] }}</strong></td>
+                                 <td class="description"><strong>{{ $ticket['ticket'] }}</strong></td>
+                                <td class="description"><strong>{{ $ticket['pin'] }}</strong></td>
+                            </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
             @php
                 $arrayQ = array();
                 $arrayPL = array();
@@ -178,7 +182,7 @@
 
             {{-- Barcode --}}
 			@if($detalle_ticket->tcon_show_barcode)
-				 <strong><img class="center-block" src="data:image/png;base64,{{DNS1D::getBarcodePNG($detalle_ticket->barcode, 'C128C', 4,50,array(0, 0, 0), true)}}"> </strong>
+				 <strong><img class="centered" src="data:image/png;base64,{{DNS1D::getBarcodePNG($detalle_ticket->barcode, 'C128C', 4,50,array(0, 0, 0), true)}}"> </strong>
 			@endif
             <br/>
                 <!-- business information here -->
@@ -193,7 +197,6 @@
     </body>
 </html>
 <style type="text/css">
-
 
 @media print {
 	* {
@@ -298,5 +301,22 @@ float: left;
 	margin-bottom: 1px;
 	white-space: nowrap;
 }
+
+td.description,
+th.description {
+    width: 25%;
+    max-width: 25%;
+}
+
+td.descriptionLote
+ {
+    width: 50%;
+    max-width: 50%;
+}
+
+/* .table-f-12 th, .table-f-12 td {
+	font-size: 11px;
+	word-break: break-word;
+} */
 
 </style>

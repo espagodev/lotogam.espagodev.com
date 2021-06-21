@@ -93,6 +93,11 @@
                         @include('sale_pos.partials.lista_superpale')
                     </div>
               </div>
+              <div class="card">
+                    <div class="card-body">
+                        @include('sale_pos.partials.agrupado')
+                    </div>
+              </div>
 
         </div>
     </div>

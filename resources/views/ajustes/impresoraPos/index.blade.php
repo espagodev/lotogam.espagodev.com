@@ -32,6 +32,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($impresoras as $key => $impresora)
+                                     
                                         <tr>
                                             <td>{{ $impresora->imp_nombre}}</td>
                                             <td>{{ $impresora->imp_ruta}}</td>

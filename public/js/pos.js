@@ -42,6 +42,9 @@ $(document).ready(function () {
 
     }
 
+
+
+
     horarioLoteriasDia();
     horarioSuperPale();
 
@@ -52,6 +55,7 @@ $(document).ready(function () {
         var valor = $("input[name=tid_valor]").val();
 
         var token = $('meta[name="csrf-token"]').attr("content");
+
 
         if (event.keyCode == 13 && numero != "" && valor != "") {
             $.when(
@@ -217,9 +221,11 @@ $(document).ready(function () {
             if (cnf) {
                 $("div.pos-processing").show();
                 $("#pos-save").attr("disabled", "true");
+
                 var loterias = $("input[name='lot_id[]']:checked").map(function () { return this.value; }).get();
                 var product_row = $("input#product_row_count").val();
                 var promocion = $("input[name='tic_promocion']:checked").val();
+                var agrupado = $("input[name='tic_agrupado']:checked").val();
                 var tic_fecha_sorteo = $("input#tic_fecha_sorteo").val();
                 var token = $('meta[name="csrf-token"]').attr("content");
 
@@ -234,6 +240,7 @@ $(document).ready(function () {
                         loterias_id: loterias,
                         tic_promocion: promocion,
                         tic_fecha_sorteo: tic_fecha_sorteo,
+                        tic_agrupado: agrupado,
                     },
                     dataType: "json",
                     success: function (result) {
@@ -257,14 +264,14 @@ $(document).ready(function () {
                             horarioSuperPale();
 
                             // if (result.receipt.is_enabled) {
-                                // __pos_print(result.receipt);
+                            // __pos_print(result.receipt);
                             console.log(receipt)
-                                receipt.forEach(function (elemento, index, arr) {
-                                    if (arr[index].is_enabled) {
-                                        // console.log(arr[index] = elemento)
-                                        __pos_print(arr[index] = elemento);
-                                    }
-                                });
+                            receipt.forEach(function (elemento, index, arr) {
+                                if (arr[index].is_enabled) {
+                                    // console.log(arr[index] = elemento)
+                                    __pos_print(arr[index] = elemento);
+                                }
+                            });
                             // }
                         } else {
                             Lobibox.notify("error", {
@@ -283,6 +290,10 @@ $(document).ready(function () {
                         $("span#total_payable").text(__currency_trans_from_en(0, true));
                         $("span#total_loterias").text(0);
                         $("input[name='tic_promocion']").each(function () {
+                            this.checked = false;
+                        });
+                        $("input[name='tic_agrupado']").prop("disabled", true);
+                        $("input[name='tic_agrupado']").each(function () {
                             this.checked = false;
                         });
 
@@ -402,7 +413,21 @@ $(document).ready(function () {
     });
 });
 
+$(document).click(function () {
+    // console.log('aqui')
 
+    var checked = $("input[name='lot_id[]']:checked").length;
+    if (checked > 1 ){
+
+        $("input[name='tic_agrupado']").prop("disabled", false);
+
+    }else{
+        $("input[name='tic_agrupado']").prop("disabled", true);
+        $("input[name='tic_agrupado']").each(function () {
+            this.checked = false;
+        });
+    }
+});
 
 function reset_pos_form() {
 
@@ -467,21 +492,16 @@ function pos_total_row() {
     $("span.price_total").text(__currency_trans_from_en(price_total, true));
 
     $("input[name='lot_id[]']").on("click", function () {
+        var checked = $("input[name='lot_id[]']:checked").length;
 
-        if ($(this).is(":checked")) {
-            contador++;
-        } else {
-            contador--;
-        }
-
-        if (contador == 0) {
+        if (checked == 0) {
             total_payable = 0;
         } else {
-            total_payable = price_total * contador;
+            total_payable = price_total * checked;
         }
 
         $("span#total_payable").text(__currency_trans_from_en(total_payable, true));
-        $("span#total_loterias").text(contador);
+        $("span#total_loterias").text(checked);
     });
 
 

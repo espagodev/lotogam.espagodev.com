@@ -36,12 +36,12 @@ class BancaUtil
         $output = [];
 
         if (!empty($printer)) {
-            $output['connection_type'] = $printer->connection_type;
-            $output['capability_profile'] = $printer->capability_profile;
-            $output['char_per_line'] = $printer->char_per_line;
-            $output['ip_address'] = $printer->ip_address;
-            $output['port'] = $printer->port;
-            $output['path'] = $printer->path;
+            $output['connection_type'] = $printer->imp_conexion;
+            $output['capability_profile'] = $printer->imp_perfil;
+            $output['char_per_line'] = $printer->imp_caracteres;
+            $output['ip_address'] = $printer->imp_ip;
+            $output['port'] = $printer->imp_port;
+            $output['path'] = $printer->imp_ruta;
             // $output['server_url'] = $printer->server_url;
         }
 

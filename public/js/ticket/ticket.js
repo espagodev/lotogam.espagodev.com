@@ -241,7 +241,7 @@ $(document).ready(function() {
     //Se utiliza para el ticket
     $(document).on('click', 'a.print-invoice', function (e) {
         e.preventDefault();
-        var href = $(this).data('href');
+        var href = $(this).data('href') + "?ticket_copia=true";
 
         $.ajax({
             method: 'GET',

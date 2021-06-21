@@ -725,7 +725,6 @@ class MarketService
 
     public function getImpresoraDetalle($empresas_id, $impresora)
     {
-
         return $this->makeRequest('GET', "getImpresoraDetalle/{$empresas_id}/{$impresora}");
     }
 
