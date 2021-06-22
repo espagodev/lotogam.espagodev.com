@@ -391,7 +391,7 @@ class TransactionUtil extends Util
     {
         $output = '';
         if ($promocion == 1) {
-            $output .= " ** PROMOCION ** ";
+            $output .= " ******* PROMOCION ******* ";
         }
         return $output;
     }
@@ -401,11 +401,11 @@ class TransactionUtil extends Util
 
         $output = '';
         if ($estado == 0) {
-            $output .= " ** ANULADO ** ";
+            $output .= " ******* ANULADO ******* ";
         } elseif ($estado == 2) {
-            $output .= " ** PREMIADO ** ";
+            $output .= " ******* PREMIADO ******* ";
         } elseif ($estado == 3) {
-            $output .= " ** PAGADO ** ";
+            $output .= " ******* PAGADO ******* ";
         }
 
 

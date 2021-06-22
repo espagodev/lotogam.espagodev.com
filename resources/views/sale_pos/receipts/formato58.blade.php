@@ -166,17 +166,23 @@
                 </p>
             </div>
             <br/>
-             @if(!empty($detalle_ticket->promocion_label))
+            @if(!empty($detalle_ticket->promocion_label))
 				 <div class='centered'>
-                <p><strong>******* PROMOCION *******</strong></p>
+                    <p><strong>{!! $detalle_ticket->promocion_label !!}</strong></p>
                 </div>
                  <br>
-			    @endif
+			@endif
+            @if(!empty($detalle_ticket->estado_label))
+				 <div class='centered'>
+                    <p><strong> {!! $detalle_ticket->estado_label !!} </strong></p>
+                </div>
+                 <br>
+			@endif
                 <br>
             	@if(!empty($detalle_ticket->footer_text))
-				<p class="centered">
-					 <strong> {!! $detalle_ticket->footer_text !!}  </strong>
-				</p>
+                    <p class="centered">
+                        <strong> {!! $detalle_ticket->footer_text !!}  </strong>
+                    </p>
                 <br>
 			    @endif
 
