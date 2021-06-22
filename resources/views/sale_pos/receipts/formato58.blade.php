@@ -38,7 +38,7 @@
                         <br/>
                     @endif
                     @if(!empty($detalle_ticket->slogan))
-                        <span class="headings">
+                        <span class="slogan margin-bottom">
                             {{$detalle_ticket->slogan}}
                         </span>
                         <br/>
@@ -60,8 +60,8 @@
 			</p>
 			</div>
              @if(!empty($detalle_ticket->copia_label))
-				 <div class='centered copia'>
-                    <p><strong>******* COPIA *******</strong></p>
+				 <div class='centered margin-bottom'>
+                    <p><strong>{!! $detalle_ticket->copia_label !!}</strong></p>
                     <p><strong>Fecha: {{$detalle_ticket->copia_date}} </strong></p>
                     <p><strong>******* ***** *******</strong></p>
                 </div>
@@ -173,14 +173,14 @@
                  <br>
 			@endif
             @if(!empty($detalle_ticket->estado_label))
-				 <div class='centered'>
+				 <div class='centered margin-bottom'>
                     <p><strong> {!! $detalle_ticket->estado_label !!} </strong></p>
                 </div>
                  <br>
 			@endif
                 <br>
             	@if(!empty($detalle_ticket->footer_text))
-                    <p class="centered">
+                    <p class="centered margin-bottom">
                         <strong> {!! $detalle_ticket->footer_text !!}  </strong>
                     </p>
                 <br>
@@ -188,14 +188,14 @@
 
             {{-- Barcode --}}
 			@if($detalle_ticket->tcon_show_barcode)
-                <div class="centered">
+                <div class="centered margin-bottom">
 				    <img  src="data:image/png;base64,{{DNS1D::getBarcodePNG($detalle_ticket->barcode, 'C39', 1,40,array(0, 0, 0), true)}}">
                  </div>
 			@endif
             <br/>
                 <!-- business information here -->
             @if(!empty($detalle_ticket->tcon_nota_informativa))
-                <span class="nota">
+                <span class="nota margin-bottom">
                     {{$detalle_ticket->tcon_nota_informativa}}
                 </span>
 
@@ -239,6 +239,11 @@
 	font-weight: 700;
 }
 
+.slogan{
+	font-size: 12px;
+	font-weight: 700;
+}
+
 .nota{
 	font-size: 9px;
 	font-weight:700;
@@ -255,6 +260,10 @@
 
 .border-bottom-dotted{
 	border-bottom: 1px dotted darkgray;
+}
+
+.margin-bottom{
+    margin-bottom: 1em;
 }
 
 .centered {

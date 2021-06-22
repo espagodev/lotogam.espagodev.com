@@ -382,7 +382,7 @@ class TransactionUtil extends Util
     {
         $output = '';
         if ($ticket_copia == true) {
-            $output .= " ** COPIA ** ";
+            $output .= " ******* COPIA ******* ";
         }
         return $output;
     }
