@@ -7,12 +7,19 @@ use App\Utils\Reportes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use App\Utils\BancaUtil;
+
 class ResultadosController extends Controller
 {
-    public function __construct(MarketService $marketService)
+    protected $bancaUtil;
+
+    public function __construct(
+        MarketService $marketService,
+        BancaUtil $bancaUtil
+        )
     {
         $this->middleware('auth');
-
+        $this->bancaUtil = $bancaUtil;
         parent::__construct($marketService);
     }
 
@@ -118,7 +125,8 @@ class ResultadosController extends Controller
     private function receiptContent($empresa_id)
     {
 
-        $output['printer_config']  = $this->marketService->getImpresorasEmpresa($empresa_id);
+        // $output['printer_config']  = $this->marketService->getImpresorasEmpresa($empresa_id);
+         $output['printer_config']  = $this->bancaUtil->printerConfig($empresa_id, $printer_id = null );
 
 
             // $invoice_layout = $this->businessUtil->invoiceLayout($business_id, $location_id, $location_details->invoice_layout_id);

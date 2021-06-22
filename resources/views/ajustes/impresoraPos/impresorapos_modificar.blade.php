@@ -25,7 +25,7 @@
                             <strong>Tipo de conexión:</strong>
                                     <select class="form-control " name="imp_conexion" id="imp_conexion" required>
                                         @foreach($conexiones as $key => $conexion)
-                                        <option value="{{ $key }}" @if($key == old('imp_conexion', $impresora->imp_conexion)) selected @endif>{{ $conexion }}</option>
+                                        <option value="{{ $key }}" @if($key == old('imp_conexion', $impresora->connection_type)) selected @endif>{{ $conexion }}</option>
                                         @endforeach
                                 </select>
                             </div>
@@ -35,7 +35,7 @@
                             <strong>Perfil:</strong>
                                     <select class="form-control" name="imp_perfil" id="imp_perfil" required>
                                         @foreach($capacidades as $key => $capacidad)
-                                        <option value="{{ $key }}" @if($key == old('imp_perfil', $impresora->imp_perfil)) selected @endif>{{ $capacidad }}</option>
+                                        <option value="{{ $key }}" @if($key == old('imp_perfil', $impresora->capability_profile)) selected @endif>{{ $capacidad }}</option>
                                         @endforeach
                                     </select>
                             </div>
@@ -43,7 +43,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <label >Caracteres por Línea:</label>
-                                <input id="imp_caracteres" type="text" class="form-control{{ $errors->has('imp_caracteres') ? ' is-invalid' : '' }}"  name="imp_caracteres" value="{{ old('imp_caracteres', $impresora->imp_caracteres) }}" >
+                                <input id="imp_caracteres" type="text" class="form-control{{ $errors->has('imp_caracteres') ? ' is-invalid' : '' }}"  name="imp_caracteres" value="{{ old('imp_caracteres', $impresora->char_per_line) }}" >
                                 @if ($errors->has('imp_caracteres'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('imp_caracteres') }}</strong>
@@ -54,7 +54,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-12" id="ip_address_div">
                             <div class="form-group">
                                 <label >Dirección IP:</label>
-                                <input id="imp_ip" type="text" class="form-control{{ $errors->has('imp_ip') ? ' is-invalid' : '' }}" placeholder="Dirección IP para conectarse a la impresora" name="imp_ip" value="{{ old('imp_ip', $impresora->imp_ip) }}" >
+                                <input id="imp_ip" type="text" class="form-control{{ $errors->has('imp_ip') ? ' is-invalid' : '' }}" placeholder="Dirección IP para conectarse a la impresora" name="imp_ip" value="{{ old('imp_ip', $impresora->ip_address) }}" >
                                 @if ($errors->has('imp_ip'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('imp_ip') }}</strong>
@@ -65,7 +65,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-12" id="port_div">
                             <div class="form-group">
                                 <label >Puerto:</label>
-                                <input name="id" type="text" class="form-control{{ $errors->has('imp_port') ? ' is-invalid' : '' }}"  name="imp_port" value="{{ old('imp_port', $impresora->imp_port) }}" >
+                                <input name="id" type="text" class="form-control{{ $errors->has('imp_port') ? ' is-invalid' : '' }}"  name="imp_port" value="{{ old('imp_port', $impresora->port) }}" >
                                 @if ($errors->has('imp_port'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('imp_port') }}</strong>
@@ -78,7 +78,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 hide" id="path_div">
                             <div class="form-group">
                                 <label >Ruta:</label>
-                                <input id="imp_ruta"  type="text" class="form-control{{ $errors->has('imp_ruta') ? ' is-invalid' : '' }}"  name="imp_ruta" value="{{ old('imp_ruta', $impresora->imp_ruta) }}" >
+                                <input id="imp_ruta"  type="text" class="form-control{{ $errors->has('imp_ruta') ? ' is-invalid' : '' }}"  name="imp_ruta" value="{{ old('imp_ruta', $impresora->path) }}" >
                                 @if ($errors->has('imp_ruta'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('imp_ruta') }}</strong>

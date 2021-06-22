@@ -12,7 +12,7 @@
         <div class="ticket">
 
         	@if(!empty($detalle_ticket->logo))
-        		<img  style="max-height: 100px; width: auto;" src="{{$detalle_ticket->logo}}" alt="Logo">
+        		<img  style="max-height: 100px; width:100px" src="{{$detalle_ticket->logo}}" alt="Logo">
         	@endif
             <div class="text-box">
         	<!-- Logo -->
@@ -37,7 +37,12 @@
                         </span>
                         <br/>
                     @endif
-
+                         @if(!empty($detalle_ticket->slogan))
+                        <span class="headings">
+                            {{$detalle_ticket->slogan}}
+                        </span>
+                        <br/>
+                    @endif
                     @if(!empty($detalle_ticket->address))
                         {!! $detalle_ticket->address !!}
                     @endif
@@ -68,16 +73,7 @@
                     <p class="f-right"><strong>{{$detalle_ticket->sorteo_date}}</strong></p>
             </div>
             @endif
-            {{-- <div class="flex-box">
 
-                <p class="f-left"><strong>{!! $detalle_ticket->invoice_no_prefix !!}</strong></p>
-                <p class="f-right"><strong>{{$detalle_ticket->invoice_no}}</strong></p>
-
-                    @if($isAnular == 0)
-                <p class="f-left"><strong>{!! $detalle_ticket->pin_no_prefix !!}</strong></p>
-                <p class="f-right"><strong>{{$detalle_ticket->pin_no}}</strong></p>
-                @endif
-            </div> --}}
             </div>
              <table style="padding-top: 5px !important" class="width-100 table-f-12">
                 <thead>
@@ -159,7 +155,7 @@
                     @endforeach
             @endif
             <br>
-             <div class="centered border-top">
+             <div class="centered border-top border-bottom">
                 <p>
                     <strong>**{!! $detalle_ticket->total_label !!}</strong>
                     <strong>{{$detalle_ticket->total}}**</strong>
@@ -182,7 +178,7 @@
 
             {{-- Barcode --}}
 			@if($detalle_ticket->tcon_show_barcode)
-				 <strong><img class="centered" src="data:image/png;base64,{{DNS1D::getBarcodePNG($detalle_ticket->barcode, 'C128C', 4,50,array(0, 0, 0), true)}}"> </strong>
+				 <strong><img class="centered" src="data:image/png;base64,{{DNS1D::getBarcodePNG($detalle_ticket->barcode, 'C39', 1,40,array(0, 0, 0), true)}}"> </strong>
 			@endif
             <br/>
                 <!-- business information here -->
@@ -205,6 +201,18 @@
     	word-break: break-all;
 	}
 
+     .pace  {
+        display: none;
+    }
+
+   .pace-active
+    {
+        display: none;
+    }
+   .pace-activity
+    {
+        display: none;
+    }
 
 .headings{
 	font-size: 14px;
@@ -246,8 +254,8 @@
 }
 
 img {
-    max-width: inherit;
-    width: auto;
+    display:block;
+    margin:auto;
 }
 
     .hidden-print,

@@ -12,7 +12,7 @@
         <div class="ticket">
 
         	@if(!empty($detalle_ticket->logo))
-        		<img  style="max-height: 100px; width: auto;" src="{{$detalle_ticket->logo}}" alt="Logo">
+        		<img  style="max-height: 100px; width:100px" src="{{$detalle_ticket->logo}}" alt="Logo">
         	@endif
             <div class="text-box">
         	<!-- Logo -->
@@ -37,6 +37,12 @@
                         </span>
                         <br/>
                     @endif
+                    @if(!empty($detalle_ticket->slogan))
+                        <span class="headings">
+                            {{$detalle_ticket->slogan}}
+                        </span>
+                        <br/>
+                    @endif
 
                     @if(!empty($detalle_ticket->address))
                         {!! $detalle_ticket->address !!}
@@ -54,12 +60,10 @@
 			</p>
 			</div>
              @if(!empty($detalle_ticket->copia_label))
-				 <div class='centered'>
+				 <div class='centered copia'>
                     <p><strong>******* COPIA *******</strong></p>
-                    <div class="flex-box">
-                        <p class="f-left"><strong>Fecha: {{$detalle_ticket->copia_date}} </strong></p>
-                    </div>
-                     <p><strong>******* ***** *******</strong></p>
+                    <p><strong>Fecha: {{$detalle_ticket->copia_date}} </strong></p>
+                    <p><strong>******* ***** *******</strong></p>
                 </div>
                  <br>
 			    @endif
@@ -155,7 +159,7 @@
                     @endforeach
             @endif
             <br>
-             <div class="centered border-top">
+             <div class="centered border-top border-bottom">
                 <p>
                     <strong>**{!! $detalle_ticket->total_label !!}</strong>
                     <strong>{{$detalle_ticket->total}}**</strong>
@@ -168,7 +172,7 @@
                 </div>
                  <br>
 			    @endif
-
+                <br>
             	@if(!empty($detalle_ticket->footer_text))
 				<p class="centered">
 					 <strong> {!! $detalle_ticket->footer_text !!}  </strong>
@@ -178,7 +182,9 @@
 
             {{-- Barcode --}}
 			@if($detalle_ticket->tcon_show_barcode)
-				 <strong><img class="center-block" src="data:image/png;base64,{{DNS1D::getBarcodePNG($detalle_ticket->barcode, 'C128C', 4,50,array(0, 0, 0), true)}}"> </strong>
+                <div class="centered">
+				    <img  src="data:image/png;base64,{{DNS1D::getBarcodePNG($detalle_ticket->barcode, 'C39', 1,40,array(0, 0, 0), true)}}">
+                 </div>
 			@endif
             <br/>
                 <!-- business information here -->
@@ -197,11 +203,23 @@
 
 @media print {
 	* {
-    	font-size: 11px;
+        font-size: 11px;
     	font-family: 'Arial';
     	word-break: break-all;
 	}
 
+    .pace  {
+        display: none;
+    }
+
+   .pace-active
+    {
+        display: none;
+    }
+   .pace-activity
+    {
+        display: none;
+    }
 
 .headings{
 	font-size: 14px;
@@ -218,8 +236,9 @@
 .nota{
 	font-size: 9px;
 	font-weight:700;
-
 }
+
+
 
 .border-top{
     border-top: 1px solid #242424;
@@ -243,8 +262,8 @@
 }
 
 img {
-    max-width: inherit;
-    width: auto;
+   display:block;
+    margin:auto;
 }
 
     .hidden-print,
