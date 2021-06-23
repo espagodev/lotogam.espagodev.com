@@ -219,8 +219,7 @@ $(document).ready(function () {
             var cnf = true;
 
             if (cnf) {
-                $("div.pos-processing").show();
-                $("#pos-save").attr("disabled", "true");
+                disable_pos_form_actions();
 
                 var loterias = $("input[name='lot_id[]']:checked").map(function () { return this.value; }).get();
                 var product_row = $("input#product_row_count").val();
@@ -296,12 +295,11 @@ $(document).ready(function () {
                         $("input[name='tic_agrupado']").each(function () {
                             this.checked = false;
                         });
-
+                        enable_pos_form_actions();
                     },
                 });
             }
-            $("div.pos-processing").hide();
-            $("#pos-save").removeAttr("disabled");
+
             $("input[name=tid_valor]").focus();
             return false;
 
@@ -632,3 +630,16 @@ function __pos_print(receipt) {
 }
 
 
+function disable_pos_form_actions() {
+    
+
+    $('div.pos-processing').show();
+    $('#pos-save').attr('disabled', 'true');
+    $('div.pos-form-actions').find('button').attr('disabled', 'true');
+}
+
+function enable_pos_form_actions() {
+    $('div.pos-processing').hide();
+    $('#pos-save').removeAttr('disabled');
+    $('div.pos-form-actions').find('button').removeAttr('disabled');
+}

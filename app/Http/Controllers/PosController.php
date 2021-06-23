@@ -119,13 +119,16 @@ class PosController extends Controller
             $receipt[] = $this->receiptContentAgrupado($empresas_id, $bancas_id, $ticket, $agrupado, null, false, true);
             $mensaje = 'Venta añadida con éxito';
             $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
-
         } else {
-            foreach ($tickets as $ticket) {
-                $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $ticket, null, false, true);
-                $mensaje = 'Venta añadida con éxito';
-                $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
-            }
+            // foreach ($tickets as $ticket) {
+            //     $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $ticket, null, false, true);
+            //     $mensaje = 'Venta añadida con éxito';
+            //     $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
+            // }
+
+            $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $tickets, null, false, true);
+            $mensaje = 'Venta añadida con éxito';
+            $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
         }
         return $output;
     }
@@ -144,7 +147,8 @@ class PosController extends Controller
     private function receiptContent(
         $empresas_id,
         $bancas_id,
-        $tickets_id,
+        // $tickets_id,
+        $tickets,
         $printer_type = null,
         $from_pos_screen = true,
         $invoice_layout_id = null,
@@ -164,8 +168,8 @@ class PosController extends Controller
         //informacion de la impresora
         $banca = $this->marketService->getBanca($bancas_id);
 
-        $tickets = $this->marketService->getTicket($tickets_id);
-        $ticketDetalle = $this->marketService->getTicketDetalle($tickets_id);
+        // $tickets = $this->marketService->getTicket($tickets_id);
+        // $ticketDetalle = $this->marketService->getTicketDetalle($tickets_id);
 
         // if ($from_pos_screen && $banca->ban_imprimir_recibo != 1) {
         //     return $output;
@@ -182,9 +186,13 @@ class PosController extends Controller
         $receipt_printer_type = is_null($printer_type) ? $banca->ban_tipo_impresora : $printer_type;
 
         //calcular el tiempo de anular
-        $isAnular = Util::calcularMinutos($tickets[0]->created_at, $banca->ban_tiempo_anular);
 
-        $detalle_ticket = $this->transactionUtil->getReceiptDetails($tickets_id, $tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular, $ticket_copia);
+        foreach ($tickets as $ticketIndi) {
+            $ticket = $this->marketService->getTicket($ticketIndi);
+            $ticketDetalle = $this->marketService->getTicketDetalle($ticketIndi);
+            $isAnular = Util::calcularMinutos($ticket[0]->created_at, $banca->ban_tiempo_anular);
+            $detalle_ticket[] = $this->transactionUtil->getReceiptDetails($ticketIndi, $ticket, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular, $ticket_copia);
+        }
 
         $currency_details = [
             'symbol' => $moneda->simbolo,
@@ -267,7 +275,6 @@ class PosController extends Controller
             $output['printer_config'] = $this->bancaUtil->printerConfig($empresas_id, $banca->impresoras_pos_id);
             $output['data'] = $detalle_ticket;
             $output['print'] = "ticketAgrupado";
-
         } else {
 
             $layout = 'sale_pos.receipts.formatoAgrupado58';
@@ -356,7 +363,7 @@ class PosController extends Controller
      */
     public function printTicket($tickets_id)
     {
-
+        $ticket[] = $tickets_id;
         if (request()->ajax()) {
             try {
                 $output = [
@@ -383,7 +390,7 @@ class PosController extends Controller
                 $invoice_layout_id = !empty($invoice_layout_id) ? $invoice_layout_id : $banca->app_config_tickets_id;
                 $invoice_layout = $this->bancaUtil->invoiceLayout($empresas_id, $bancas_id, $banca->app_config_tickets_id);
 
-                $receipt = $this->receiptContent($empresas_id, $bancas_id, $tickets_id, $printer_type, false, $invoice_layout, $ticket_copia);
+                $receipt = $this->receiptContent($empresas_id, $bancas_id, $ticket, $printer_type, false, $invoice_layout, $ticket_copia);
 
 
                 if (!empty($receipt)) {

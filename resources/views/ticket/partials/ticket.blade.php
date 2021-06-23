@@ -79,7 +79,7 @@
 
             {{-- Barcode --}}
             @if($receipt_details->tcon_show_barcode)
-                <strong><img class="center-block" src="data:image/png;base64,{{DNS1D::getBarcodePNG($receipt_details->barcode, 'C128C', 4,50,array(0, 0, 0), true)}}"> </strong>
+                <strong><img  src="data:image/png;base64,{{DNS1D::getBarcodePNG($receipt_details->barcode, 'C39', 1,40,array(0, 0, 0), true)}}"> </strong>
             @endif
             <br/>
              @if(!empty($receipt_details->tcon_nota_informativa))

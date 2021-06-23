@@ -99,11 +99,8 @@ class TransactionUtil extends Util
             $output['pin_no_prefix'] = $il->tcon_etiqueta_pin;
         }
 
-
         $output['invoice_no_prefix'] = $il->tcon_etiqueta_ticket;
         $output['invoice_eslogan'] = $il->tcon_slogan;
-
-
 
         $output['date_label'] = $il->tcon_date_label;
         $output['invoice_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $tickets[0]->updated_at)->format($il->tcon_date_time_format);
