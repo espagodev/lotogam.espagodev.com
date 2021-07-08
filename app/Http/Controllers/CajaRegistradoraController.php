@@ -59,8 +59,8 @@ class CajaRegistradoraController extends Controller
 
         $fechaActual = now()->format('d/m/Y');
         $venta = BancaUtil::progressBar($users_id, $bancas_id);
-        $venta = 0;
-        $venta_porcentaje = Util::get_progress($venta, $limite_venta);
+        $ventaTotal = !empty($venta) ? $venta : 0;
+        $venta_porcentaje = Util::get_progress($ventaTotal, $limite_venta);
 
         return redirect()->action('PosController@create')->with([
             'loterias' => $loterias,
@@ -68,7 +68,7 @@ class CajaRegistradoraController extends Controller
             'horaRD' => $horaRD,
             'parametros' => $parametros,
             'fechaActual' => $fechaActual,
-            'venta' => $venta,
+            'venta' => $ventaTotal,
             'venta_porcentaje' => $venta_porcentaje
         ]);
     }
@@ -139,7 +139,7 @@ class CajaRegistradoraController extends Controller
     {
 
 
-
+        $users_id = session()->get('user.id');
         // $register_details =  $this->cashRegisterUtil->getRegisterDetails();
 
         // $user_id = auth()->user()->id;
@@ -148,7 +148,7 @@ class CajaRegistradoraController extends Controller
 
         $detalles = $this->marketService->getCajaRegistradoraDetalle($users_id);
 
-        $detalles = CajaRegistradoraUtil::getCajaRegistradoraDetalles($user_id, $close_time);
+        $detalles = CajaRegistradoraUtil::getCajaRegistradoraDetalles($users_id, $close_time);
 
 
 
