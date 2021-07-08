@@ -59,6 +59,7 @@ class CajaRegistradoraController extends Controller
 
         $fechaActual = now()->format('d/m/Y');
         $venta = BancaUtil::progressBar($users_id, $bancas_id);
+        $venta = 0;
         $venta_porcentaje = Util::get_progress($venta, $limite_venta);
 
         return redirect()->action('PosController@create')->with([
