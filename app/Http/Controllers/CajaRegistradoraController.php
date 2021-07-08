@@ -59,7 +59,7 @@ class CajaRegistradoraController extends Controller
 
         $fechaActual = now()->format('d/m/Y');
         $venta = BancaUtil::progressBar($users_id, $bancas_id);
-        $venta_porcentaje = Util::get_progress($venta->total_venta, $limite_venta);
+        $venta_porcentaje = Util::get_progress($venta, $limite_venta);
 
         return redirect()->action('PosController@create')->with([
             'loterias' => $loterias,
@@ -146,7 +146,7 @@ class CajaRegistradoraController extends Controller
         $close_time = \Carbon::now()->toDateTimeString();
 
         $detalles = $this->marketService->getCajaRegistradoraDetalle($users_id);
-        
+
         $detalles = CajaRegistradoraUtil::getCajaRegistradoraDetalles($user_id, $close_time);
 
 
