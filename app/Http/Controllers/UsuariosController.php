@@ -3,9 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\MarketService;
+use App\Utils\Util;
 
 class UsuariosController extends Controller
 {
+    protected $util;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct(Util $util, MarketService $marketService)
+    {
+        $this->util = $util;
+        $this->middleware('auth');
+
+        parent::__construct($marketService);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -33,8 +50,6 @@ class UsuariosController extends Controller
 
         $documentos = $this->marketService->getTipoDocumento();
         $bancas = $this->marketService->getBancasEmpresa($empresa);
-
-
 
         return view('usuarios.create')->with([ 'documentos' => $documentos, 'bancas' => $bancas]);
     }
@@ -100,6 +115,13 @@ class UsuariosController extends Controller
         $data = $request->all();
         $data = $request->except('_token');
 
+        $user_config = $this->util->userConfigShow();
+
+        foreach ($user_config as  $key => $value) {
+            if (!isset($data[$key])) {
+                $data[$key] = $value;
+            }
+        }
 
         $this->marketService->ModificarUsuario($id, $data);
 

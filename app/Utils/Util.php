@@ -137,8 +137,8 @@ class Util
     /**
      * Calculates percentage
      *
-     * @param int $base
-     * @param int $number
+     * @param int $base //valor
+     * @param int $number //comision
      *
      * @return float
      */
@@ -147,6 +147,14 @@ class Util
 
         $porcentaje = ((float)$valor * $comision) / 100; // Regla de tres
         // $porcentaje = round($porcentaje, 0);  // Quitar los decimales
+        return $porcentaje;
+    }
+
+    public static function get_progress($valor, $comision)
+    {
+
+        $porcentaje = ((float)$valor * 100) / $comision; // Regla de tres
+        $porcentaje = round($porcentaje, 0);  // Quitar los decimales
         return $porcentaje;
     }
 
@@ -427,4 +435,48 @@ class Util
             return 0;
         }
     }
+
+    /**
+     * Devuelve la configuración de usuarios para ingresar resultados
+     *
+     * @return array
+     */
+    public function userConfigShow()
+    {
+        return [
+            'use_resultados' => 0,
+            'use_bloquea_banca' => 0
+        ];
+    }
+
+    public static function registroInformes()
+    {
+        return [
+            'open' => 'Abierto',
+            'close' => 'Cerrado'
+        ];
+    }
+
+    /**
+     * Convierte la fecha en formato mysql a formato comercial
+     *
+     * @param string $date
+     * @param bool $time (default = false)
+     * @return strin
+     */
+    public function format_date($date, $show_time = false, $business_details = null)
+    {
+        $format = !empty($business_details) ? $business_details->date_format : session('business.date_format');
+        if (!empty($show_time)) {
+            $time_format = !empty($business_details) ? $business_details->time_format : session('business.time_format');
+            if ($time_format == 12) {
+                $format .= ' h:i A';
+            } else {
+                $format .= ' H:i';
+            }
+        }
+
+        return !empty($date) ? Carbon::createFromTimestamp(strtotime($date))->format($format) : null;
+    }
+
 }

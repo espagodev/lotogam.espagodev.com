@@ -177,18 +177,17 @@ class MarketService
         return $this->makeRequest('GET', 'resultados');
     }
 
-     public function getResultadosEmpresa($empresa)
+    public function getResultadosEmpresa($empresa)
     {
         return $this->makeRequest('GET', "resultados/{$empresa}/empresa");
     }
 
 
 
-     public function getResultadosFecha1($fecha, $loteria, $empresa)
+    public function getResultadosFecha1($fecha, $loteria, $empresa)
     {
 
         return $this->makeRequest('GET', "resultados/{$fecha}/fecha/{$loteria}/empresa/{$empresa}/dia");
-
     }
 
     public function nuevoResultado($data)
@@ -318,7 +317,7 @@ class MarketService
             [],
             $data,
             [],
-           false
+            false
         );
     }
 
@@ -410,7 +409,7 @@ class MarketService
         );
     }
 
- //appConfigTickets
+    //appConfigTickets
     public function nuevaAppConfigTickets($data)
     {
 
@@ -437,14 +436,14 @@ class MarketService
         );
     }
 
-     //appConfigTickets editar
+    //appConfigTickets editar
     public function getAppEsquemaTickets($id)
     {
         return $this->makeRequest('GET', "appEsquemaTickets/{$id}");
     }
 
 
-     //appConfigTickets editar
+    //appConfigTickets editar
     public function ModificarAppEsquemaTickets($id, $data)
     {
         $data['_method'] = 'PUT';
@@ -503,7 +502,7 @@ class MarketService
 
 
 
-     //COMISIONES
+    //COMISIONES
     public function getComisiones()
     {
         return $this->makeRequest('GET', 'comisiones');
@@ -540,7 +539,7 @@ class MarketService
         );
     }
 
-     public function nuevaComisionBanca($data)
+    public function nuevaComisionBanca($data)
     {
 
         return $this->makeRequest(
@@ -553,7 +552,7 @@ class MarketService
         );
     }
 
-      //montos Globales
+    //montos Globales
     public function getMontosGlobales()
     {
         return $this->makeRequest('GET', 'montosGlobales');
@@ -586,7 +585,7 @@ class MarketService
         );
     }
 
-      //montos individuales
+    //montos individuales
     public function getMontosIndividuales()
     {
         return $this->makeRequest('GET', 'montosindividuales');
@@ -605,7 +604,7 @@ class MarketService
         );
     }
 
-     public function nuevoMontoIndividualBanca($data)
+    public function nuevoMontoIndividualBanca($data)
     {
 
         return $this->makeRequest(
@@ -618,7 +617,7 @@ class MarketService
         );
     }
 
-      //numeros calientes
+    //numeros calientes
     public function getNumerosCalientes()
     {
         return $this->makeRequest('GET', 'numerosCalientes');
@@ -637,7 +636,7 @@ class MarketService
         );
     }
 
-      //ESTADO NUMERO CALIENTE
+    //ESTADO NUMERO CALIENTE
     public function  getNumerosCalientesEstado($data)
     {
         return $this->makeRequest('GET', "getNumerosCalientesEstado", $data);
@@ -645,12 +644,12 @@ class MarketService
 
 
     //numeros calientes  EMPRESA
-    public function getNumeroCalienteEmpresa($apuesta,$empresa)
+    public function getNumeroCalienteEmpresa($apuesta, $empresa)
     {
         return $this->makeRequest('GET', "numero/{$apuesta}/caliente/{$empresa}/empresa");
     }
 
-     //BORRAR resultados
+    //BORRAR resultados
     public function deleteNumerosCalientes($empresas_id, $numero_id)
     {
 
@@ -684,7 +683,7 @@ class MarketService
     {
         $data['_method'] = 'PUT';
 
-         return $this->makeRequest(
+        return $this->makeRequest(
             'POST',
             "HorarioLoterias/{$loteria}",
             [],
@@ -718,7 +717,7 @@ class MarketService
         return $this->makeRequest('GET', 'ImpresorasPos');
     }
 
-     public function getImpresorasEmpresa($empresa)
+    public function getImpresorasEmpresa($empresa)
     {
         return $this->makeRequest('GET', "getImpresorasEmpresa/{$empresa}");
     }
@@ -763,14 +762,14 @@ class MarketService
         return $this->makeRequest('GET', "impresora/{$banca}/banca");
     }
 
-     //Monedas
+    //Monedas
     public function getMonedas()
     {
         return $this->makeRequest('GET', 'monedas');
     }
 
     //Bancas Empresa
-     public function getListaBancaEmpresa($empresas_id)
+    public function getListaBancaEmpresa($empresas_id)
     {
         return $this->makeRequest('GET', "getListaBancaEmpresa/{$empresas_id}");
     }
@@ -781,7 +780,7 @@ class MarketService
     }
 
 
-      //bancas
+    //bancas
 
     public function nuevaBanca($data)
     {
@@ -859,7 +858,7 @@ class MarketService
 
 
     //Bancas Detalle
-     public function getBancaDetalle($banca)
+    public function getBancaDetalle($banca)
     {
 
         return $this->makeRequest('GET', "banca/{$banca}");
@@ -875,7 +874,7 @@ class MarketService
         return $this->makeRequest('GET', "getParametrosBanca/{$banca}");
     }
 
-        //comisiones EMPRESA
+    //comisiones EMPRESA
     public function getComisionesEmpresa($empresa)
     {
         return $this->makeRequest('GET', "comisiones/{$empresa}/empresa");
@@ -887,7 +886,7 @@ class MarketService
         return $this->makeRequest('GET', "comisionesBanca/{$banca}");
     }
 
-        //MONTOSGLOBALES EMPRESA
+    //MONTOSGLOBALES EMPRESA
     public function getMontosGlobalesEmpresa($empresa)
     {
         return $this->makeRequest('GET', "montosGlobales/{$empresa}/empresa");
@@ -913,7 +912,7 @@ class MarketService
         );
     }
 
-         //MONTOSINDIVIDUALES EMPRESA
+    //MONTOSINDIVIDUALES EMPRESA
     public function getMontosIndividualesEmpresa($empresa)
     {
         return $this->makeRequest('GET', "montosIndividuales/{$empresa}/empresa");
@@ -969,7 +968,7 @@ class MarketService
     public function ModificarTicket($ticket, $data)
     {
 
-       $data['_method'] = 'PUT';
+        $data['_method'] = 'PUT';
 
         return $this->makeRequest(
             'POST',
@@ -981,16 +980,10 @@ class MarketService
     }
 
 
-
     /**
      * consultas para los tickets
      */
 
-    //TICKET BANCA
-    // public function getTicketBanca($banca)
-    // {
-    //     return $this->makeRequest('GET', "ticket/{$banca}/banca");
-    // }
 
     //TICKET
     public function getTicket($ticket)
@@ -1002,13 +995,11 @@ class MarketService
     //TICKET DETALLE
     public function getTicketDetalle($ticket)
     {
-
         return $this->makeRequest('GET', "getTicketDetalle/{$ticket}");
     }
 
     public function getTicketDetallePremiado($ticket)
     {
-
         return $this->makeRequest('GET', "getTicketDetallePremiado/{$ticket}");
     }
 
@@ -1017,7 +1008,6 @@ class MarketService
     //BORRAR JUGADA DE TICKET DETALLE
     public function deleteApuestaDetalleBanca($jugada)
     {
-
         return $this->makeRequest('DELETE', "eliminarApuesta/{$jugada}");
     }
 
@@ -1027,7 +1017,7 @@ class MarketService
         return $this->makeRequest('DELETE', "eliminar/{$banca}/apuesta/{$usuario}");
     }
 
-    public function getTicketDetalleJugada($usuario,$numero)
+    public function getTicketDetalleJugada($usuario, $numero)
     {
 
         return $this->makeRequest('GET', "ticket/{$usuario}/detalle/{$numero}/jugada");
@@ -1042,22 +1032,20 @@ class MarketService
     //actualizar ticket detalle
     public function actualizarTicketDetalleBanca($ticket, $numero, $data, $nueva_comision)
     {
-
         return $this->makeRequest(
             'PUT',
             "ticket/{$ticket}/detalle/{$numero}/modificar/{$data}/comision/{$nueva_comision}"
         );
     }
     //monto individual permitido
-    public function getMontoApuestaModalidad($banca, $modalidad)    {
-
+    public function getMontoApuestaModalidad($banca, $modalidad)
+    {
         return $this->makeRequest('GET', "monto/{$banca}/individual/{$modalidad}/modalidad");
     }
 
     //monto global permitido
     public function getMontoGlobalApuesta($banca, $modalidad)
     {
-
         return $this->makeRequest('GET', "monto/{$banca}/global/{$modalidad}/modalidad");
     }
 
@@ -1082,7 +1070,6 @@ class MarketService
     //actualizar apuesta detalle temp
     public function actualizarApuestaDetalleTemp($apuesta, $data)
     {
-
         $data['_method'] = 'PUT';
         // dd($apuesta, $data);
         return $this->makeRequest(
@@ -1092,7 +1079,6 @@ class MarketService
             $data,
             []
         );
-
     }
 
     public function getApuestaDetalleTempJugada($banca, $usuario, $numero)
@@ -1103,7 +1089,6 @@ class MarketService
     //TICKET detalle temp
     public function getApuestaDetalleTemp($banca, $usuario)
     {
-
         return $this->makeRequest('GET', "apuesta/{$banca}/detalle/{$usuario}/temp");
     }
 
@@ -1164,7 +1149,6 @@ class MarketService
     //nuevo ticket
     public function actualizarControlJugadas($numero, $data)
     {
-
         $data['_method'] = 'PUT';
 
         return $this->makeRequest(
@@ -1189,12 +1173,6 @@ class MarketService
 
 
     //Home reportes
-    // public function getHomereportes($empresas_id, $start_date, $end_date, $bancas_id, $users_id)
-    // {
-    //     // return $this->makeRequest('GET', "getPurchaseTotals", $data);
-
-    //     return $this->makeRequest('GET', "getPurchaseTotals/{$empresas_id}/{$start_date}/{$end_date}/{$bancas_id}/{$users_id}");
-    // }
 
     public function getHomereportes($data)
     {
@@ -1204,12 +1182,12 @@ class MarketService
     //Reportes
     public function getReporteVentas($data)
     {
-        return $this->makeRequest('GET', "getReporteVentas",$data);
+        return $this->makeRequest('GET', "getReporteVentas", $data);
     }
 
     public function getReporteTickets($data)
     {
-        return $this->makeRequest('GET',"getReporteTickets", $data);
+        return $this->makeRequest('GET', "getReporteTickets", $data);
     }
 
     public function getReportePremiados($data)
@@ -1225,17 +1203,15 @@ class MarketService
     //BORRAR resultados
     public function deleteResultadosLoteria($empresas_id, $resultado_id)
     {
-
         return $this->makeRequest('DELETE', "getResultados/{$empresas_id}/{$resultado_id}");
     }
 
     public function getReporteModalidades($data)
     {
-
         return $this->makeRequest('GET', "getReporteModalidades", $data);
     }
 
-        public function getReporteJugadas($data)
+    public function getReporteJugadas($data)
     {
         return $this->makeRequest('GET', "getReporteJugadas", $data);
     }
@@ -1329,17 +1305,70 @@ class MarketService
         return $this->makeRequest('GET', "getGenerarTicket/{$empresas_id}/{$tickets_id}/{$bancas_id}");
     }
 
-    public function getTicketPin($empresas_id, $tickets_id, $pin, $premio)
+    public function getTicketPin($empresas_id, $users_id, $tickets_id, $pin, $premio)
     {
 
-        return $this->makeRequest('GET', "getTicketPin/{$empresas_id}/{$tickets_id}/{$pin}/{$premio}");
+        return $this->makeRequest('GET', "getTicketPin/{$empresas_id}/{$users_id}/{$tickets_id}/{$pin}/{$premio}");
     }
 
-    public function getTicketAnular($empresas_id, $tickets_id, $pin, $users_id, $bancas_id,$tia_detalle, $loterias_id)
+    public function getTicketAnular($empresas_id, $tickets_id, $pin, $users_id, $bancas_id, $tia_detalle, $loterias_id)
     {
 
         return $this->makeRequest('GET', "getTicketAnular/{$empresas_id}/{$tickets_id}/{$pin}/{$users_id}/{$bancas_id}/{$tia_detalle}/{$loterias_id}");
     }
 
+    //PROGRESSBAR
+    public function getprogressbar($users_id)
+    {
+        return $this->makeRequest('GET', "getprogressbar/{$users_id}");
+    }
 
+    /**
+     * CAJA REGISTRADORA
+     */
+    public function getCajaRegistradora($data)
+    {
+        return $this->makeRequest('GET', "getReporteRegistro", $data);
+    }
+
+    public function postCajaRegistradora($data)
+    {
+
+        return $this->makeRequest(
+            'POST',
+            "caja-registradora",
+            [],
+            $data,
+            [],
+            $hasFile = false
+        );
+    }
+
+    //CAJA REGISTRADORA DETALLE
+    public function getCajaRegistradoraDetalle($users_id)
+    {
+        return $this->makeRequest('GET', "getCajaRegistradoraDetalle/{$users_id}");
+    }
+
+
+    //Modificar Loteria
+    public function updateCajaRegistradora($loteria, $data)
+    {
+
+        $data['_method'] = 'PUT';
+
+        return $this->makeRequest(
+            'POST',
+            "updateCajaRegistradora/{$loteria}",
+            [],
+            $data,
+            [],
+            $hasFile = false
+        );
+    }
+
+    public function getTotalCajasAbiertas($users_id)
+    {
+        return $this->makeRequest('GET', "getTotalCajasAbiertas/{$users_id}");
+    }
 }

@@ -8,7 +8,7 @@
 	   </div>
         <div class="col-sm-3">
             <div class="btn-group float-sm-right">
-                 <a href="{{ route('usuarios.index') }}"  class="btn btn-danger waves-effect waves-danger"><i class="fa fa-times mr-1"></i> Cancelar</a>
+                 <a href="{{ route('usuarios.index') }}"  class="btn btn-danger waves-effect waves-danger"><i class="fa fa-undo mr-1"></i> Cancelar</a>
             </div>
         </div>
      </div>
@@ -122,7 +122,7 @@
                 <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <strong>Bancas:</strong>
                                             <select class="form-control" name="bancas_id" id="bancas_id" required>
@@ -133,12 +133,28 @@
                                             </select>
                                         </div>
                                 </div>
+                                 <div class="col-xs-3 col-sm-3 col-md-3">
+                                    <div class="form-group">
+                                        <div class="icheck-material-info">
+                                            <input type="checkbox" id="use_resultados" name="use_resultados" value="1"/>
+                                            <label for="use_resultados">Ingresa Resultados.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3">
+                                    <div class="form-group">
+                                        <div class="icheck-material-info">
+                                            <input type="checkbox" id="use_bloquea_banca" name="use_bloquea_banca" value="1"/>
+                                            <label for="use_bloquea_banca">Bloquear Banca.</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                     </div>
                 </div>
                  <div class="form-footer">
-                            <button type="submit" class="btn btn-danger"><i class="fa fa-times"></i> CANCELAR</button>
+                              <a href="{{ route('usuarios.index') }}"  class="btn btn-danger waves-effect waves-danger"><i class="fa fa-times mr-1"></i> Cancelar</a>
                             <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> CREAR</button>
                         </div>
             </div>

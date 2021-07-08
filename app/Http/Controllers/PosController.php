@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Utils\BancaUtil;
 use App\Utils\Reportes;
 use App\Utils\TransactionUtil;
+use App\Utils\CajaRegistradoraUtil;
 use Carbon\Carbon;
 
 class PosController extends Controller
@@ -18,6 +19,7 @@ class PosController extends Controller
     protected $util;
     protected $bancaUtil;
     protected $transactionUtil;
+    protected $cajaRegistradoraUtil;
     protected $marketService;
 
     /**
@@ -30,10 +32,12 @@ class PosController extends Controller
         Util $util,
         BancaUtil $bancaUtil,
         TransactionUtil $transactionUtil,
+        CajaRegistradoraUtil $cajaRegistradoraUtil,
         MarketService $marketService
     ) {
         $this->util = $util;
         $this->bancaUtil = $bancaUtil;
+        $this->cajaRegistradoraUtil = $cajaRegistradoraUtil;
         $this->transactionUtil = $transactionUtil;
         $this->middleware('auth');
         parent::__construct($marketService);
@@ -67,18 +71,51 @@ class PosController extends Controller
      */
     public function create()
     {
+        // try {
+
+            // Compruebe si está suscrito o no, luego verifique la cuota de usuarios
+            // if (!$this->moduleUtil->isSubscribed($business_id)) {
+            //     return $this->moduleUtil->expiredResponse(action('HomeController@index'));
+            // } elseif (!$this->moduleUtil->isQuotaAvailable('invoices', $business_id)) {
+            //     return $this->moduleUtil->quotaExpiredResponse('invoices', $business_id, action('SellPosController@index'));
+            // }
+
+            // Verifique si hay un registro abierto, si no es así, redirija a la pantalla Crear registro.
+            $totalCajasAbiertas = CajaRegistradoraUtil::totalCajasAbiertas();
+
+        if ($totalCajasAbiertas[0] == 0) {
+            return redirect()->action('CajaRegistradoraController@create');
+        }
+
         $fecha = HorarioLoterias::fechaActual();
         $dia = HorarioLoterias::dia($fecha);
         $horaRD = HorarioLoterias::horaRD();
 
         $bancas_id = request()->session()->get('user.banca');
+        $users_id = session()->get('user.id');
         $symbol = request()->session()->get('currency.symbol');
+        $limite_venta = session()->get('banca.limite_venta');
 
         $loterias = $this->marketService->getHorarioLoteriasBanca($bancas_id, $dia);
         $parametros =  $this->marketService->getParametrosBanca($bancas_id);
-        $fechaActual = now()->format('d/m/Y');
 
-        return view('sale_pos.create')->with(['loterias' => $loterias, 'symbol' => $symbol, 'horaRD' => $horaRD, 'parametros' => $parametros, 'fechaActual' => $fechaActual]);
+        $fechaActual = now()->format('d/m/Y');
+        $venta = BancaUtil::progressBar($users_id);
+
+        $venta_porcentaje = Util::get_progress($venta->venta, $limite_venta);
+
+            return view('sale_pos.create')->with([
+                'loterias' => $loterias,
+                'symbol' => $symbol,
+                'horaRD' => $horaRD,
+                'parametros' => $parametros,
+                'fechaActual' => $fechaActual,
+                'venta' => $venta->venta,
+                'venta_porcentaje' => $venta_porcentaje
+            ]);
+        //   } catch (\Exception $e) {
+        //     \Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
+        // }
     }
 
     /**

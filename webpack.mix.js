@@ -11,8 +11,9 @@ let mix = require('laravel-mix');
  |
  */
 
-
-mix.combine([
+mix.js('resources/js/app.js', 'public/js/init.js')
+        .combine([
+        'public/js/init.js',
         'resources/assets/js/jquery.min.js',
         'resources/assets/js/popper.min.js',
         'resources/plugins/bootstrap/js/bootstrap.min.js',
@@ -44,6 +45,7 @@ mix.combine([
         'resources/plugins/alerts-boxes/js/sweetalert.min.js',
         'resources/plugins/jquery-multi-select/jquery.multi-select.js',
         'resources/plugins/jquery-multi-select/jquery.quicksearch.js',
+        'resources/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js',
         'resources/assets/validate/validate.js'
     ], 'public/js/vendor.js')
     .combine([

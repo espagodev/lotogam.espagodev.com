@@ -261,6 +261,13 @@ $(document).ready(function() {
             .eq(index)
             .addClass('active');
     });
+
+    $('button#full_screen').click(function (e) {
+        element = document.documentElement;
+        if (screenfull.isEnabled) {
+            screenfull.toggle(element);
+        }
+    });
 });
 
 
@@ -438,5 +445,6 @@ $(document).on('click', '#accordion .box-header', function(e) {
         .find('.box-title a')
         .click();
 });
+
 
 

@@ -134,7 +134,6 @@ class BancaUtil
         $created = new Carbon($fecha_creacion);
         $now =  Carbon::now()->toDateTimeString();
 
-
         if ($created->diffInMinutes($now) > self::tiempoAnular()) {
             return 1;
         } else {
@@ -151,5 +150,15 @@ class BancaUtil
         $output['html_content'] = view('sale_pos.receipts.classic', compact('receipt'))->render();
 
         return $output;
+    }
+
+
+    public static function progressBar($users_id){
+
+        $marketService = resolve(MarketService::class);
+
+        $reporteVenta = $marketService->getprogressbar($users_id);
+
+        return $reporteVenta;
     }
 }

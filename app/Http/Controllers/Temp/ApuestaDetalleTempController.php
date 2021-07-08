@@ -65,6 +65,17 @@ class ApuestaDetalleTempController extends Controller
 
         $parametrosBanca = $this->marketService->getParametrosBanca($bancas_id);
 
+        /**
+         * valida la cantidad de digitos de la jugada
+         */
+        if ((strlen($request->tid_apuesta) == 3) || (strlen($request->tid_apuesta) == 5)) {
+            return response()->json(
+                array(
+                    'mensaje' => 'Este Numero No Tiene El Formato Adecuado ##, ####, ######',
+                    'status' => 'NumeroCaliente',
+                )
+            );
+        }
 
         /**
          * VALIDA SI EL NUMERO TIENE 1 DIGITO LE AÑADE EL 0

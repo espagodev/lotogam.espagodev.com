@@ -36,7 +36,8 @@
           <i class="fa fa-tachometer"></i> <span>Inicio</span>
         </a>
        </li>
-        @if((request()->session()->get('user.TipoUsuario') == 3))
+
+        @if((request()->session()->get('user.TipoUsuario') == 3) && (request()->session()->get('user.bancaBloqueo') == 1))
         <li>
          <a href="{{ route('pos.create') }}"  class="waves-effect"><i class="fa fa-ticket mr-1"></i> Crear Ticket</a>
       </li>
@@ -109,21 +110,23 @@
           <i class="fa fa-angle-left float-right"></i>
         </a>
         <ul class="sidebar-submenu">
-            <li><a href="{{ asset('reportes/informe-ventas-pagos') }}"><i class="zmdi zmdi-dot-circle-alt"></i>Informe de Ventas y Pagos</a></li>
+            {{-- <li><a href="{{ asset('reportes/informe-ventas-pagos') }}"><i class="zmdi zmdi-dot-circle-alt"></i>Informe de Ventas y Pagos</a></li> --}}
           <li><a href="{{ asset('reportes/reporte-ventas') }}"><i class="zmdi zmdi-dot-circle-alt"></i>Reporte de Ventas</a></li>
           <li><a href="{{ asset('reportes/reporte-premiados') }}"><i class="zmdi zmdi-dot-circle-alt"></i>Reporte de Ganadores</a></li>
           <li><a href="{{ asset('reportes/reporte-resultados') }}"><i class="zmdi zmdi-dot-circle-alt"></i>Resultados Loterias</a></li>
           <li><a href="{{ asset('reportes/reporte-modalidades') }}"><i class="zmdi zmdi-dot-circle-alt"></i>Listado de Numeros</a></li>
           <li><a href="{{ asset('reportes/reporte-tickets') }}"><i class="zmdi zmdi-dot-circle-alt"></i>Reporte de Tickets</a></li>
+          <li><a href="{{ asset('reportes/reporte-registros') }}"><i class="zmdi zmdi-dot-circle-alt"></i>Reporte Registros</a></li>
 
         </ul>
        </li>
-
-        <li>
-        <a href="{{ route('resultados.index') }}" class="waves-effect">
-          <i class="zmdi zmdi-widgets"></i> <span>Resultados</span>
-        </a>
-      </li>
+         @if((request()->session()->get('user.TipoUsuario') == 2) || (request()->session()->get('user.resultados') == 1))
+            <li>
+            <a href="{{ route('resultados.index') }}" class="waves-effect">
+            <i class="zmdi zmdi-widgets"></i> <span>Resultados</span>
+            </a>
+        </li>
+       @endif
        <li>
         <a href="{{ route('pos.index') }}" class="waves-effect">
           <i class="zmdi zmdi-widgets"></i> <span>Tickets</span>

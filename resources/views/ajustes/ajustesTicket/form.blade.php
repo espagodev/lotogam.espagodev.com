@@ -83,7 +83,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="form-group">
                         <div class="icheck-material-info">
-                            <input type="checkbox" id="eqt_default" value="" name="eqt_default"checked/>
+                            <input type="checkbox" id="eqt_default" value="" name="eqt_default" checked/>
                             <label for="eqt_default">Establecer por Defecto</label>
                         </div>
                     </div>

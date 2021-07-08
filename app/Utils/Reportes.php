@@ -68,7 +68,14 @@ class Reportes
     }
 
 
+    public static function getCajaRegistradora($data)
+    {
 
+        $marketService = resolve(MarketService::class);
+        $data =  $marketService->getCajaRegistradora($data);
+
+        return $data;
+    }
 
 
 

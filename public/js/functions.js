@@ -1,5 +1,6 @@
 //This file contains all functions used in the app.
 
+
 function __calculate_amount(calculation_type, calculation_amount, amount) {
     var calculation_amount = parseFloat(calculation_amount);
     calculation_amount = isNaN(calculation_amount) ? 0 : calculation_amount;

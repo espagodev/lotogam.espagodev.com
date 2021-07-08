@@ -28,7 +28,7 @@
                 <h4 class="modal-title" id="myModalLabel">Modificar Loteria</h4><button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="{{ route('loterias.update', $loteria->identificador)}}" enctype="multipart/form-data" id="store">
+                    <form method="post" action="{{ route('loterias.update', $loteria->id)}}" enctype="multipart/form-data" id="store">
                     {{method_field('PUT')}}
                     <input type="hidden" name="loterias_id" id="loterias_id"  value="">
                     @include('loterias.partials.form')

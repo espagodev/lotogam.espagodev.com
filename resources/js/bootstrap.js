@@ -7,11 +7,13 @@ window._ = require('lodash');
  */
 
 try {
-    window.Popper = require('popper.js').default;
+    // window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap');
+    // require('bootstrap');
 } catch (e) {}
+
+window.screenfull = require('screenfull');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

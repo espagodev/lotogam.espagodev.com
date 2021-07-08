@@ -87,91 +87,91 @@ class TicketDetalleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $empresas_id = session()->get('user.emp_id');
+    // public function store(Request $request)
+    // {
+    //     $empresas_id = session()->get('user.emp_id');
 
-        //VALIDA SI EL NUMERO ESTA EN EL LISTADO DE NUMEROS CALIENTES DE LA EMPRESA
-        // $numeroCaliente = NumerosCalientes::cnumeroCaliente($request->apd_numero);
-        $numeroCaliente =  $this->marketService->getNumeroCalienteEmpresa($request->tid_apuesta, $empresas_id);
+    //     //VALIDA SI EL NUMERO ESTA EN EL LISTADO DE NUMEROS CALIENTES DE LA EMPRESA
+    //     // $numeroCaliente = NumerosCalientes::cnumeroCaliente($request->apd_numero);
+    //     $numeroCaliente =  $this->marketService->getNumeroCalienteEmpresa($request->tid_apuesta, $empresas_id);
 
 
-        //VALIDA SI EL NUMERO TIENE 1 DIGITO LE AÑADE EL 0
-        $NumeroValidado = Util::numeroValido($request->tid_apuesta);
+    //     //VALIDA SI EL NUMERO TIENE 1 DIGITO LE AÑADE EL 0
+    //     $NumeroValidado = Util::numeroValido($request->tid_apuesta);
 
-        /**
-         * confirmo la modalidad de la jugada
-         */
-        $modalidad = Util::modalidad($NumeroValidado);
+    //     /**
+    //      * confirmo la modalidad de la jugada
+    //      */
+    //     $modalidad = Util::modalidad($NumeroValidado);
 
-        /**
-         * consulto la comision por modalidad
-         */
-        $comision = TicketDetalle::MontoComisionModalidad($modalidad);
+    //     /**
+    //      * consulto la comision por modalidad
+    //      */
+    //     $comision = TicketDetalle::MontoComisionModalidad($modalidad);
 
-        if ($comision == 0) {
-            return response()->json(
-                array(
-                    'mensaje' => 'No tiene una comisiòn asignada para esta modalidad',
-                    'status' => 'Comision',
-                )
-            );
-        }
-        //SI EL NUMERO ES TRIPLETA O PALE ORDENA DE MAYO A MENOR LOS NUMEROS
-        $numeroOrdenado = Util::ordenarNumeros($NumeroValidado, $modalidad);
+    //     if ($comision == 0) {
+    //         return response()->json(
+    //             array(
+    //                 'mensaje' => 'No tiene una comisiòn asignada para esta modalidad',
+    //                 'status' => 'Comision',
+    //             )
+    //         );
+    //     }
+    //     //SI EL NUMERO ES TRIPLETA O PALE ORDENA DE MAYO A MENOR LOS NUMEROS
+    //     $numeroOrdenado = Util::ordenarNumeros($NumeroValidado, $modalidad);
 
-        //TRAE EL MONTO MAXIMO PERMITIDO DE APUESTA POR MODALIDAD
-        $montoModalidad = TicketDetalle::MontoApuestaModalidad($modalidad);
+    //     //TRAE EL MONTO MAXIMO PERMITIDO DE APUESTA POR MODALIDAD
+    //     $montoModalidad = TicketDetalle::MontoApuestaModalidad($modalidad);
 
-        if ($montoModalidad == 0) {
-            return response()->json(
-                array(
-                    'mensaje' => 'No tiene un Monto de apuesta minimo asignada para esta modalidad',
-                    'status' => 'MontoIndividual',
-                )
-            );
-        }
-        // COMPARA EL MONTO PERMITIDO Y EL MONTO DE LA APUESTA
-        $compararValores = Util::compararValores($montoModalidad, $request->tid_valor);
+    //     if ($montoModalidad == 0) {
+    //         return response()->json(
+    //             array(
+    //                 'mensaje' => 'No tiene un Monto de apuesta minimo asignada para esta modalidad',
+    //                 'status' => 'MontoIndividual',
+    //             )
+    //         );
+    //     }
+    //     // COMPARA EL MONTO PERMITIDO Y EL MONTO DE LA APUESTA
+    //     $compararValores = Util::compararValores($montoModalidad, $request->tid_valor);
 
-        // dd($compararValores, $montoModalidad, $request->tid_valor);
+    //     // dd($compararValores, $montoModalidad, $request->tid_valor);
+    //     dd($request->tickets_id, $numeroOrdenado);
+    //      $apuesta = Util::numeroJugado($request->tickets_id, $numeroOrdenado);
+    //     // dd($apuesta);
+    //      if ($numeroCaliente == 1) {
+    //             return response()->json(
+    //                 array(
+    //                     'mensaje' => 'Este Numero No Puede ser Jugado en Este Momento',
+    //                     'status' => 'NumeroCaliente',
+    //                 )
+    //             );
+    //         }
+    //     if (($compararValores == 1)) {
+    //             return response()->json(
+    //                 array(
+    //                     'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
+    //                     'status' => 'LimiteSuperado',
+    //                 )
+    //             );
+    //         }
+    //     // else {
 
-         $apuesta = Util::numeroJugado($request->tickets_id, $numeroOrdenado);
-        // dd($apuesta);
-         if ($numeroCaliente == 1) {
-                return response()->json(
-                    array(
-                        'mensaje' => 'Este Numero No Puede ser Jugado en Este Momento',
-                        'status' => 'NumeroCaliente',
-                    )
-                );
-            }
-        if (($compararValores == 1)) {
-                return response()->json(
-                    array(
-                        'mensaje' => 'El Monto Apostado Supera El Limite Permitido',
-                        'status' => 'LimiteSuperado',
-                    )
-                );
-            }
-        // else {
+    //         if (empty($apuesta)) {
+    //             TicketDetalle::GenerarApuesta($request, $numeroOrdenado, $modalidad, $comision);
+    //         } else {
+    //            TicketDetalle::ModificarApuesta($request->tickets_id, $request->tid_valor, $apuesta->tid_valor,  $numeroOrdenado, $comision);
 
-            if (empty($apuesta)) {
-                TicketDetalle::GenerarApuesta($request, $numeroOrdenado, $modalidad, $comision);
-            } else {
-               TicketDetalle::ModificarApuesta($request->tickets_id, $request->tid_valor, $apuesta->tid_valor,  $numeroOrdenado, $comision);
+    //         }
+    //         return
+    //     response()->json(
+    //         array(
+    //             'mensaje' => '',
+    //             'status' => 'success',
+    //         )
+    //     );
+    //     // }
 
-            }
-            return
-        response()->json(
-            array(
-                'mensaje' => '',
-                'status' => 'success',
-            )
-        );
-        // }
-
-    }
+    // }
 
 
     /**

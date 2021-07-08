@@ -17,7 +17,7 @@
   </ul>
 
   <ul class="navbar-nav align-items-center right-nav-link">
-    @if(!$pos_layout && (request()->session()->get('user.TipoUsuario') == 3))
+    @if(!$pos_layout && (request()->session()->get('user.TipoUsuario') == 3) && (request()->session()->get('user.bancaBloqueo') == 1))
         <li class="nav-item dropdown-lg">
         <a class="nav-link  waves-effect"  href="{{ route('pos.create') }}" >
         <i class="fa fa-ticket"></i></a>

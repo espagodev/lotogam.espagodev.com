@@ -136,7 +136,7 @@ class TicketDetalle
         // $users_id = request()->session()->get('user.id');
         $banca_id = request()->session()->get('user.banca');
 
-        $data = $marketService->getMontoApuestaModalidad($banca_id,  $modalidad); 
+        $data = $marketService->getMontoApuestaModalidad($banca_id,  $modalidad);
 
         if (is_null($data)) {
 

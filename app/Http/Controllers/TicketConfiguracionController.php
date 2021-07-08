@@ -62,9 +62,9 @@ class TicketConfiguracionController extends Controller
         $data = $request->all();
 
         $data['empresas_id'] =  request()->session()->get('user.emp_id');
-
+        if ($request->hasFile('tcon_logo')) {
         $data['tcon_logo'] = fopen($request->tcon_logo->path(), 'r');
-
+        }
         $data = $this->marketService->nuevaAppConfigTickets($data);
 
 

@@ -13,6 +13,7 @@ use DataTables;
 class ReportesController extends Controller
 {
     protected $reportes;
+    protected $util;
 
     /**
      * Create a new controller instance.
@@ -20,10 +21,13 @@ class ReportesController extends Controller
      * @return void
      */
     public function __construct(
+
         MarketService $marketService,
-        Reportes $reportes
+        Reportes $reportes,
+        Util $util
     ) {
         $this->reportes = $reportes;
+        $this->util = $util;
         $this->middleware('auth');
         parent::__construct($marketService);
     }
@@ -59,7 +63,7 @@ class ReportesController extends Controller
                     return '<span class="display_currency venta"  data-orig-value="' . $venta . '" data-currency_symbol = true>' . $venta . '</span>';
                 })
                 ->editColumn('venta_promo', function ($row) {
-                $ventaPromo = $row->total_venta_promo ? $row->total_venta_promo : 0;
+                    $ventaPromo = $row->total_venta_promo ? $row->total_venta_promo : 0;
                     return '<span class="display_currency venta_promo"  data-orig-value="' . $ventaPromo . '" data-currency_symbol = true>' . $ventaPromo . '</span>';
                 })
                 ->editColumn('comision', function ($row) {
@@ -71,7 +75,7 @@ class ReportesController extends Controller
                     return '<span class="display_currency premios" data-orig-value="' . $ganado . '" data-currency_symbol = true>' . $ganado . '</span>';
                 })
                 ->editColumn('premios_promo', function ($row) {
-                $premioPromo = $row->total_premios_promo ? $row->total_premios_promo : 0;
+                    $premioPromo = $row->total_premios_promo ? $row->total_premios_promo : 0;
                     return '<span class="display_currency premios_promo" data-orig-value="' . $premioPromo . '" data-currency_symbol = true>' . $premioPromo . '</span>';
                 })
                 ->editColumn('ganancia', function ($row) {
@@ -241,8 +245,8 @@ class ReportesController extends Controller
                     if ($row->tic_estado == 2) {
                         return '<button type="button" href="' . action('Ticket\TicketController@getTicketPremiado', [$row->id]) . '"  class="btn btn-sm  btn-outline-success view_ticket_modal  no-print">
                         <i class="fa fa-money"></i> </button>';
-                    }else{
-                    return '<button type="button" data-href="' . action('Ticket\TicketController@show', [$row->id]) . '"  class="btn btn-sm btn-outline-info btn-modal"
+                    } else {
+                        return '<button type="button" data-href="' . action('Ticket\TicketController@show', [$row->id]) . '"  class="btn btn-sm btn-outline-info btn-modal"
                                     data-container=".view_register"><i class="fa fa-eye"></i> </button>';
                     }
                 })
@@ -279,8 +283,8 @@ class ReportesController extends Controller
 
             return $datatable = dataTables::of($reporteResultados)
 
-                   ->editColumn('loteria', function ($row) {
-                return '<a data-loteria=' . $row->loterias_id . ' data-fecha=' . $row->res_fecha . ' href="#" class="detalle-resultados">' . $row->lot_nombre  . ' (' . $row->lot_abreviado . ')  </a>';
+                ->editColumn('loteria', function ($row) {
+                    return '<a data-loteria=' . $row->loterias_id . ' data-fecha=' . $row->res_fecha . ' href="#" class="detalle-resultados">' . $row->lot_nombre  . ' (' . $row->lot_abreviado . ')  </a>';
                 })
                 ->editColumn('lot_nombre', function ($row) {
                     return $row->lot_nombre . ' (' . $row->lot_abreviado . ')';
@@ -377,7 +381,6 @@ class ReportesController extends Controller
         return view('reportes/reporte-modalidades', compact('bancas', 'estadosPromocionTicket', 'estadosTicket', 'usuarios'));
     }
 
-
     public function informeVentasPagos(Request $request)
     {
 
@@ -403,6 +406,62 @@ class ReportesController extends Controller
         $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
 
         return view('reportes/informe-ventas-pagos', compact('bancas',  'usuarios'));
+    }
+
+
+    public function getReporteRegistro(Request $request)
+    {
+
+        if ($request->ajax()) {
+
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado',  'bancas_id']);
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data = $request->only(['start_date', 'end_date', 'loterias_id', 'estado']);
+                $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
+            }
+            $data['empresas_id'] = session()->get('user.emp_id');
+
+            $cajaRegistradora = $this->reportes->getCajaRegistradora($data);
+
+            return $datatable = dataTables::of($cajaRegistradora)
+
+                ->editColumn('created_at', function ($row) {
+                    return $this->util->format_date($row->created_at, true);
+                })
+
+                ->editColumn('caj_hora_cierre', function ($row) {
+                    if ($row->caj_estado == 'close') {
+                        return $this->util->format_date($row->caj_hora_cierre, true);
+                    } else {
+                        return '';
+                    }
+                })
+                ->editColumn('bancas_id', function ($row) {
+                    return  $row->ban_cod . ' - ' . $row->ban_nombre;
+                })
+                ->editColumn('users_id', function ($row) {
+                    return  $row->name ;
+                })
+                ->editColumn('caj_monto_cierre', function ($row) {
+                    if ($row->caj_estado == 'close') {
+                        return '<span class="display_currency" data-currency_symbol="true">' .
+                            $row->caj_monto_cierre . '</span>';
+                    } else {
+                        return '';
+                    }
+                })
+                ->addColumn('action', '<button type="button" data-href="{{action(\'CajaRegistradoraController@show\', [$id])}}" class="btn btn-sm btn-info btn-modal"
+                    data-container=".view_register"><i class="fa fa-eye" aria-hidden="true"></i> Ver</button> @if($caj_estado != "close")
+                    <button type="button" data-href="{{action(\'CajaRegistradoraController@getCerrarRegistro\', [$id])}}" class="btn btn-sm btn-danger btn-modal"
+                        data-container=".view_register"><i class="fa fa-window-close"></i> Cerrar</button> @endif')
+                ->rawColumns(['action', 'caj_monto_cierre'])
+                ->make(true);
+        }
+        $registroInformes = Util::registroInformes();
+
+        return view('reportes/reporte-registros', compact('registroInformes'));
     }
 
     //Reporte Detalle
@@ -447,7 +506,7 @@ class ReportesController extends Controller
     {
         if ($request->ajax()) {
 
-             if (session()->get('user.TipoUsuario') == 2) {
+            if (session()->get('user.TipoUsuario') == 2) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
                 $data = $request->only(['start_date', 'end_date', 'loterias_id']);

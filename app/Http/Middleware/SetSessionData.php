@@ -23,53 +23,56 @@ class SetSessionData
         $marketService = resolve(MarketService::class);
 
         $user = $marketService->getUserInformation();
-        // dd($user);
-        // if (!$request->session()->has('$user')) {
 
-            $util = new Util;
+        $util = new Util;
 
 
-            $session_data = ['id' => $user->identificador,
-                            'surname' => $user->nombre,
-                            'email' => $user->email,
-                            'emp_id' => $user->idEmpresa,
-                            'TipoUsuario' => $user->tipoUsuario,
-                            'banca' => $user->idBanca,
-                            ];
+        $session_data = [
+            'id' => $user->identificador,
+            'surname' => $user->nombre,
+            'email' => $user->email,
+            'emp_id' => $user->idEmpresa,
+            'TipoUsuario' => $user->tipoUsuario,
+            'banca' => $user->idBanca,
+            'resultados' => $user->resultado,
+            'bancaBloqueo' => $user->bancaBloqueo,
+        ];
 
-           if($user->tipoUsuario != 1)
-             {
-                $empresa = $marketService->getEmpresaDetalle($user->idEmpresa);
+        if ($user->tipoUsuario != 1) {
+            $empresa = $marketService->getEmpresaDetalle($user->idEmpresa);
+            $moneda = $marketService->getEmpresaMoneda($user->idEmpresa);
+            $banca = $marketService->getBanca($user->idBanca);
 
-                $moneda = $marketService->getEmpresaMoneda($user->idEmpresa);
+            $empresa_data = [
+                'date_format' => $empresa->emp_formato_fecha,
+                'time_zone ' => $empresa->emp_zona_horaria,
+                'logo ' => $empresa->emp_imagen,
 
-                $empresa_data = [
-                    'date_format' => $empresa->emp_formato_fecha,
-                    'time_zone ' =>$empresa->emp_zona_horaria,
-                    'logo ' => $empresa->emp_imagen,
+            ];
 
-                ];
-                // $currency = $business->currency;
-                $currency_data = [
-                    'id' => $moneda->id,
-                    'code' => $moneda->codigo,
-                    'symbol' => $moneda->simbolo,
-                    'thousand_separator' => $moneda->separador_miles,
-                    'decimal_separator' => $moneda->separador_decimal
-                ];
+            $currency_data = [
+                'id' => $moneda->id,
+                'code' => $moneda->codigo,
+                'symbol' => $moneda->simbolo,
+                'thousand_separator' => $moneda->separador_miles,
+                'decimal_separator' => $moneda->separador_decimal
+            ];
 
+            $banca_data = [
+                'limite_venta' => isset($banca->ban_limite_venta) ? $banca->ban_limite_venta : '0'
+            ];
 
-                $request->session()->put('business', $empresa_data);
-                $request->session()->put('currency', $currency_data);
-             }
-            $request->session()->put('user', $session_data);
+            $request->session()->put('business', $empresa_data);
+            $request->session()->put('currency', $currency_data);
+            $request->session()->put('banca', $banca_data);
+        }
+        $request->session()->put('user', $session_data);
 
-            //set current financial year to session
-            $financial_year = $util->getCurrentFinancialYear();
-            $request->session()->put('financial_year', $financial_year);
+        //set current financial year to session
+        $financial_year = $util->getCurrentFinancialYear();
+        $request->session()->put('financial_year', $financial_year);
         // }
 
         return $next($request);
     }
-
 }

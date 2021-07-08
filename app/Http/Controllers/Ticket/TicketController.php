@@ -130,9 +130,9 @@ class TicketController extends Controller
             $pin = $request->get('pin');
             $premio = $request->get('premio');
             $empresas_id = session()->get('user.emp_id');
+            $users_id = session()->get('user.id');
 
-
-            $data = $this->marketService->getTicketPin($empresas_id, $tickets_id, $pin, $premio);
+            $data = $this->marketService->getTicketPin($empresas_id, $users_id, $tickets_id, $pin, $premio);
 
             return response()->json($data);
 

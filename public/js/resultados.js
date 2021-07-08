@@ -343,7 +343,7 @@
                 $("#res_premio3").focus();
 	    }
 
-function __pos_print(receipt) {
+    function __pos_print(receipt) {
 
 
     //Si es tipo de impresora, conéctese con websocket

@@ -41,11 +41,6 @@ function pad_zero(str, max) {
 }
 
 
-    $('button#full_screen').click(function(e) {
-        element = document.documentElement;
-        if (screenfull.isEnabled) {
-            screenfull.toggle(element);
-        }
-    });
+
 
 

@@ -185,6 +185,7 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
     Route::get('reportes/reporte-modalidades', 'ReportesController@reporteModalidades');
     Route::get('reportes/reporte-resultados', 'ReportesController@reporteResultados');
     Route::get('reportes/reporte-jugadas', 'ReportesController@reporteJugadas');
+    Route::get('reportes/reporte-registros', 'ReportesController@getReporteRegistro');
 
     Route::get('reportes/informe-ventas-pagos', 'ReportesController@informeVentasPagos');
 
@@ -222,4 +223,14 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
 
     Route::resource('Ticket', 'Ticket\TicketController');
 
+    /**
+     * CAJA REGISTRADORA
+     */
+
+    Route::get('/caja-registradora/detalle-registro', 'CajaRegistradoraController@getDetalleRegistro');
+    Route::get('/caja-registradora/cerrar-registro/{id?}', 'CajaRegistradoraController@getCerrarRegistro');
+    Route::post('/caja-registradora/cerra-registro', 'CajaRegistradoraController@postCerrarRegistro');
+    Route::resource('caja-registradora', 'CajaRegistradoraController');
+
+    Route::resource('caja-registradora-detalle', 'CajaRegistradoraDetalleController');
 });

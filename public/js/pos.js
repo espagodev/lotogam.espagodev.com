@@ -53,11 +53,11 @@ $(document).ready(function () {
         var product_row = $("input#product_row_count").val();
         var numero = $("input[name=tid_apuesta]").val();
         var valor = $("input[name=tid_valor]").val();
-
         var token = $('meta[name="csrf-token"]').attr("content");
 
 
         if (event.keyCode == 13 && numero != "" && valor != "") {
+
             $.when(
                 $.ajax({
                     async: false,
@@ -67,7 +67,6 @@ $(document).ready(function () {
                     data: {
                         product_row: product_row,
                         _token: token,
-
                         tid_apuesta: numero,
                         tid_valor: valor,
                     },
@@ -144,6 +143,8 @@ $(document).ready(function () {
         } else if (event.keyCode == 13 && numero == "" && valor == "") {
             $("input[name=tid_valor]").focus();
         }
+
+
     });
 
     function initialize_printer() {
@@ -415,11 +416,11 @@ $(document).click(function () {
     // console.log('aqui')
 
     var checked = $("input[name='lot_id[]']:checked").length;
-    if (checked > 1 ){
+    if (checked > 1) {
 
         $("input[name='tic_agrupado']").prop("disabled", false);
 
-    }else{
+    } else {
         $("input[name='tic_agrupado']").prop("disabled", true);
         $("input[name='tic_agrupado']").each(function () {
             this.checked = false;
@@ -631,7 +632,7 @@ function __pos_print(receipt) {
 
 
 function disable_pos_form_actions() {
-    
+
 
     $('div.pos-processing').show();
     $('#pos-save').attr('disabled', 'true');
@@ -643,3 +644,22 @@ function enable_pos_form_actions() {
     $('#pos-save').removeAttr('disabled');
     $('div.pos-form-actions').find('button').removeAttr('disabled');
 }
+
+
+$(function () {
+    "use strict";
+
+    $('.dash-chart').easyPieChart({
+        easing: 'easeOutBounce',
+        barColor: '#ffffff',
+        lineWidth: 10,
+        trackColor: 'rgba(255, 255, 255, 0.12)',
+        scaleColor: false,
+        onStep: function (from, to, percent) {
+            $(this.el).find('.w_percent').text(Math.round(percent));
+        }
+    });
+
+
+
+});

@@ -55,6 +55,9 @@
 
 
     <div class="@if(!$pos_layout) content-wrapper @endif">
+        <div id="app">
+            @yield('vue')
+        </div>
      <!-- Agregar campo relacionado con la moneda-->
                 <input type="hidden" id="__code" value="{{session('currency')['code']}}">
                 <input type="hidden" id="__symbol" value="{{session('currency')['symbol']}}">
