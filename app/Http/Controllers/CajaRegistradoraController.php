@@ -59,7 +59,8 @@ class CajaRegistradoraController extends Controller
 
         $fechaActual = now()->format('d/m/Y');
         $venta = BancaUtil::progressBar($users_id, $bancas_id);
-        $ventaTotal = !empty($venta) ? $venta : 0;
+        $ventaTotal = !empty($venta->venta) ? $venta->venta : 0;
+
         $venta_porcentaje = Util::get_progress($ventaTotal, $limite_venta);
 
         return redirect()->action('PosController@create')->with([
@@ -84,38 +85,42 @@ class CajaRegistradoraController extends Controller
         return view('caja_registradora.detalle_registro');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
-     * Update the specified resource in storage.
+     * Closes currently opened register.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function postCerrarRegistro(Request $request)
     {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        try {
+            $user_id = session()->get('user.id');
+
+            $data = $request->only(['closing_amount', 'caj_nota_cierre']);
+            $data['caj_monto_cierre'] = $this->cashRegisterUtil->num_uf($data['caj_monto_cierre']);
+            $data['caj_hora_cierre'] = \Carbon::now()->format('Y-m-d H:i:s');
+            $data['caj_estado'] = 'Cerrado';
+
+
+            Cajas::where('user_id', $user_id)
+                ->where('caj_estado', 'Abierto')
+                ->update($data);
+            $output = [
+                'success' => 1,
+                'msg' => __('cash_register.close_success')
+            ];
+        } catch (\Exception $e) {
+            \Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
+            $output = [
+                'success' => 0,
+                'msg' => __("messages.something_went_wrong")
+            ];
+        }
+        $data = $this->marketService->postCerrarRegistro($data);
+        
+        return redirect()->back()->with('status', $output);
     }
 
     /**
@@ -126,7 +131,11 @@ class CajaRegistradoraController extends Controller
      */
     public function getCerrarRegistro($id = null)
     {
-        return view('caja_registradora.cerrar_registro');
+        $users_id = session()->get('user.id');
+        $close_time = \Carbon::now()->toDateTimeString();
+
+        $detalles = $this->marketService->getCajaRegistradoraDetalle($users_id, $caja_registradoras_id = null);
+        return view('caja_registradora.cerrar_registro')->with(compact('close_time', 'detalles'));
     }
 
     /**
@@ -138,7 +147,6 @@ class CajaRegistradoraController extends Controller
     public function getDetalleRegistro()
     {
 
-
         $users_id = session()->get('user.id');
         // $register_details =  $this->cashRegisterUtil->getRegisterDetails();
 
@@ -146,14 +154,14 @@ class CajaRegistradoraController extends Controller
         // $open_time = $register_details['open_time'];
         $close_time = \Carbon::now()->toDateTimeString();
 
-        $detalles = $this->marketService->getCajaRegistradoraDetalle($users_id);
+        $detalles = $this->marketService->getCajaRegistradoraDetalle($users_id, $caja_registradoras_id = null);
 
-        $detalles = CajaRegistradoraUtil::getCajaRegistradoraDetalles($users_id, $close_time);
+        // $detalles = CajaRegistradoraUtil::getCajaRegistradoraDetalles($users_id, $close_time);
 
-
+        dump($detalles);
 
         return view('caja_registradora.detalle_registro')
-        ->with(compact('close_time'))
+        ->with(compact('close_time', 'detalles'))
         ;
     }
 

@@ -27,7 +27,7 @@
                                         <th>Comisiòn Total</th>
                                         <th>Premios</th>
                                         <th>Premios Promo</th>
-                                        <th>Ganancia</th>
+                                        <th>Neto</th>
                                     </tr>
                                 </thead>
                                 <tfoot>

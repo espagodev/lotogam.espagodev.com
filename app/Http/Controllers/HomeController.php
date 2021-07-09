@@ -184,7 +184,7 @@ class HomeController extends Controller
                 $receipt = Reportes::getReporteVentasPrint($data);
 
                 $formatoPdf = BancaUtil::HtmlContent($receipt);
-                
+
                 $output = ['success' => 1, 'receipt' => $formatoPdf];
 
 
@@ -205,8 +205,18 @@ class HomeController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = $request->only(['start_date', 'end_date', 'bancas_id', 'loterias_id', 'users_id', 'estado', 'promocion']);
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data =  $request->only(['start_date', 'end_date', 'users_id',  'bancas_id']);
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data =  $request->only(['start_date', 'end_date', 'loterias_id', 'estado', 'promocion',]);
+                $data['bancas_id'] = !empty($request->bancas_id) ?  $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty($request->users_id) ?  $request->users_id : session()->get('user.id');
+            }
+
             $data['empresas_id'] = session()->get('user.emp_id');
+
+            // $data = $request->only(['start_date', 'end_date', 'bancas_id', 'loterias_id', 'users_id', 'estado', 'promocion']);
+            // $data['empresas_id'] = session()->get('user.emp_id');
 
             $reportePremiados =  Reportes::getReportePremiados($data);
 

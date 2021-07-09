@@ -13,7 +13,7 @@
                                         <th>Venta Total</th>
                                         <th>Comisiòn Total</th>
                                         <th>Total Premios</th>
-                                        <th>Ganancia</th>
+                                        <th>Neto</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -40,7 +40,7 @@
                                         <th class="text-center">Premio</th>
                                     </tr>
                                 </thead>
-                                 <tbody class="detalle"> 
+                                 <tbody class="detalle">
                                 </tbody>
                             </table>
                         </div>

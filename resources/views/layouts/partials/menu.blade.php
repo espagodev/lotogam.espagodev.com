@@ -110,7 +110,7 @@
           <i class="fa fa-angle-left float-right"></i>
         </a>
         <ul class="sidebar-submenu">
-            {{-- <li><a href="{{ asset('reportes/informe-ventas-pagos') }}"><i class="zmdi zmdi-dot-circle-alt"></i>Informe de Ventas y Pagos</a></li> --}}
+        <li><a href="{{ asset('reportes/informe-ventas-pagos') }}"><i class="zmdi zmdi-dot-circle-alt"></i>Informe de Ventas y Pagos</a></li>
           <li><a href="{{ asset('reportes/reporte-ventas') }}"><i class="zmdi zmdi-dot-circle-alt"></i>Reporte de Ventas</a></li>
           <li><a href="{{ asset('reportes/reporte-premiados') }}"><i class="zmdi zmdi-dot-circle-alt"></i>Reporte de Ganadores</a></li>
           <li><a href="{{ asset('reportes/reporte-resultados') }}"><i class="zmdi zmdi-dot-circle-alt"></i>Resultados Loterias</a></li>

@@ -39,6 +39,7 @@ function updatePurchaseSell() {
     $('.venta_futuro').html(loader);
     $('.pago_total').html(loader);
     $('.pago_pendiente').html(loader);
+    $('.pago_pendiente_promo').html(loader);
 
 
     $.ajax({
@@ -47,11 +48,13 @@ function updatePurchaseSell() {
         dataType: 'json',
         data: data,
         success: function(data) {
-            $('.venta_total').html(__currency_trans_from_en(data.ventas.venta_total, true));
-            $('.venta_promocion').html(__currency_trans_from_en(data.ventas.venta_promocion, true));
+            console.log(data);
+            $('.venta_total').html(__currency_trans_from_en(data.ventas.total_venta, true));
+            $('.venta_promocion').html(__currency_trans_from_en(data.ventas.total_venta_promo, true));
             $('.venta_futuro').html(__currency_trans_from_en(data.ventas.venta_futuro, true));
             $('.pago_total').html(__currency_trans_from_en(data.ventas.pago_total, true));
-            $('.pago_pendiente').html(__currency_trans_from_en(data.ventas.pago_pendiente, true));
+            $('.pago_pendiente').html(__currency_trans_from_en(data.ventas.total_premios, true));
+            $('.pago_pendiente_promo').html(__currency_trans_from_en(data.ventas.total_premios_promo, true));
 
 
             // $('.pago_total').html(__currency_trans_from_en(data.sell.pago_total, true));

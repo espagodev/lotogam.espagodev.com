@@ -56,18 +56,27 @@
                             </div>
                         <div class="card-body">
                             <table class="table table-bordered table-striped"  id="informe_pagos">
-                                <tr>
-                                    <th>Premios Pagados Total:</th>
+
+                                 <tr>
+                                    <th>Pendiente de Pago:</th>
                                     <td>
-                                        <span class="pago_total">
+                                        <span class="pago_pendiente">
                                             <i class="fas fa-sync fa-spin fa-fw"></i>
                                         </span>
                                     </td>
                                 </tr>
                                  <tr>
-                                    <th>Premios Pendiente de Pago:</th>
+                                    <th>Pendiente de Pago Promocion:</th>
                                     <td>
-                                        <span class="pago_pendiente">
+                                        <span class="pago_pendiente_promo">
+                                            <i class="fas fa-sync fa-spin fa-fw"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <th>Premios Pagados Total:</th>
+                                    <td>
+                                        <span class="pago_total">
                                             <i class="fas fa-sync fa-spin fa-fw"></i>
                                         </span>
                                     </td>

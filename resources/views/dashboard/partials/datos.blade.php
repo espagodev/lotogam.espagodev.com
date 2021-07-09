@@ -171,8 +171,6 @@
                                 <th>Ticket</th>
                                 <th>Fecha</th>
                                 <th>Loteria</th>
-                                {{-- <th>Ganado</th> --}}
-
                             </tr>
                             </thead>
                             <tbody class="tickets-premiados">

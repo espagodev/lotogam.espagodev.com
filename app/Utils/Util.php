@@ -452,8 +452,8 @@ class Util
     public static function registroInformes()
     {
         return [
-            'open' => 'Abierto',
-            'close' => 'Cerrado'
+            'Abierto' => 'Abierto',
+            'Cerrado' => 'Cerrado'
         ];
     }
 

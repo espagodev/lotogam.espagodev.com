@@ -11,27 +11,27 @@
                     <table class="table table-condensed">
                         <tr>
                             <td>Dinero En Efectivo</td>
-                            <td> <span class="display_currency" data-currency_symbol="true"></span></td>
+                            <td> <span class="display_currency" data-currency_symbol="true">{{ $detalles->cash_in_hand }}</span></td>
                         </tr>
                          <tr>
                             <td>Pago En Efectivo</td>
-                            <td> <span class="display_currency" data-currency_symbol="true"></span></td>
+                            <td> <span class="display_currency" data-currency_symbol="true">{{ $detalles->total_cash }}</span></td>
                         </tr>
                          <tr>
                             <td>Pago Anticipado</td>
-                            <td> <span class="display_currency" data-currency_symbol="true"></span></td>
+                            <td> <span class="display_currency" data-currency_symbol="true">{{ $detalles->total_cash }}</span></td>
                         </tr>
                          <tr class="success">
                             <td>Pago Total</td>
-                            <td> <span class="display_currency" data-currency_symbol="true"></span></td>
+                            <td> <span class="display_currency" data-currency_symbol="true">{{ $detalles->cash_in_hand +$detalles->total_cash }}</span></td>
                         </tr>
                          <tr class="success">
                             <td>Ventas a Credito</td>
-                            <td> <span class="display_currency" data-currency_symbol="true"></span></td>
+                            <td> <span class="display_currency" data-currency_symbol="true">{{ $detalles->total_cash }}</span></td>
                         </tr>
                          <tr class="success">
                             <td>Ventas Totales</td>
-                            <td> <span class="display_currency" data-currency_symbol="true"></span></td>
+                            <td> <span class="display_currency" data-currency_symbol="true">{{ $detalles->total_cash }}</span></td>
                         </tr>
                     </table>
                 </div>

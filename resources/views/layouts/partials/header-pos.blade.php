@@ -13,7 +13,7 @@
                 </a>
 
                 <button type="button" id="close_register" title="Cerrar Caja Registradora" class="btn btn-danger btn-flat m-6 btn-sm m-5 btn-modal pull-right" data-container=".close_register_modal"
-                    data-href="">
+                    data-href="{{ action('CajaRegistradoraController@getCerrarRegistro')}}">
                         <strong><i class="fa fa-window-close fa-lg"></i></strong>
                 </button>
 

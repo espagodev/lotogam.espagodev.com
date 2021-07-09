@@ -79,7 +79,7 @@ class ReportesController extends Controller
                     return '<span class="display_currency premios_promo" data-orig-value="' . $premioPromo . '" data-currency_symbol = true>' . $premioPromo . '</span>';
                 })
                 ->editColumn('ganancia', function ($row) {
-                    $totalGanancia =  $row->total_venta - $row->total_comision - $row->total_comision - $row->total_premios;
+                    $totalGanancia =  $row->total_venta - $row->total_comision - $row->total_premios;
                     $ganancia = $totalGanancia ? $totalGanancia : 0;
                     return '<span class="display_currency ganancia" data-orig-value="' . $ganancia . '" data-currency_symbol = true>' . $ganancia . '</span>';
                 })
@@ -459,9 +459,12 @@ class ReportesController extends Controller
                 ->rawColumns(['action', 'caj_monto_cierre'])
                 ->make(true);
         }
+        $empresas_id = session()->get('user.emp_id');
+        $bancas = BancaUtil::forDropdown($empresas_id);
+        $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
         $registroInformes = Util::registroInformes();
 
-        return view('reportes/reporte-registros', compact('registroInformes'));
+        return view('reportes/reporte-registros', compact('bancas', 'usuarios','registroInformes'));
     }
 
     //Reporte Detalle

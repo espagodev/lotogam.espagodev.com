@@ -1344,10 +1344,16 @@ class MarketService
         );
     }
 
-    //CAJA REGISTRADORA DETALLE
-    public function getCajaRegistradoraDetalle($users_id)
+    public function postCerrarRegistro($data)
     {
-        return $this->makeRequest('GET', "getCajaRegistradoraDetalle/{$users_id}");
+
+        return $this->makeRequest('GET', "postCerrarRegistro", $data);
+    }
+
+    //CAJA REGISTRADORA DETALLE
+    public function getCajaRegistradoraDetalle($users_id, $caja_registradoras_id)
+    {
+        return $this->makeRequest('GET', "getCajaRegistradoraDetalle/{$users_id}/{$caja_registradoras_id}");
     }
 
 
