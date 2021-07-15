@@ -34,6 +34,12 @@ Route::get('/dashboard/getTickesPremiados', 'HomeController@getTickesPremiados')
 
 Route::get('authorization', 'Auth\LoginController@authorization')->name('authorization');
 
+    //SELECT
+    Route::get('select/getbancas', 'BancasController@getbancas');
+    Route::get('select/getusuarios', 'UsuariosController@getusuarios');
+    //Route::get('publisher/getequipos', 'PublisherController@getequipos')->name('getequipos');
+
+
 //ajustes Empresa
  Route::get('ajustesEmpresa', 'AjustesEmpresaController@index')->name('ajustesEmpresa');
 
@@ -232,5 +238,14 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
     Route::post('/caja-registradora/cerra-registro', 'CajaRegistradoraController@postCerrarRegistro');
     Route::resource('caja-registradora', 'CajaRegistradoraController');
 
+    Route::post('/caja-registradora/getprogressbar', 'CajaRegistradoraController@getProgressBar');
+
     Route::resource('caja-registradora-detalle', 'CajaRegistradoraDetalleController');
+
+    //CUADRE DE CAJA
+    Route::get('/caja_general/getCajaGeneral', 'CajaGeneralController@getCajaGeneral');
+    Route::resource('cuadre-caja', 'CajaGeneralController', ['except' => ['show']]);
+
+
+
 });

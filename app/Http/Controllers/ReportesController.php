@@ -432,7 +432,7 @@ class ReportesController extends Controller
                 })
 
                 ->editColumn('caj_hora_cierre', function ($row) {
-                    if ($row->caj_estado == 'close') {
+                    if ($row->caj_estado == 'Cerrado') {
                         return $this->util->format_date($row->caj_hora_cierre, true);
                     } else {
                         return '';
@@ -445,7 +445,7 @@ class ReportesController extends Controller
                     return  $row->name ;
                 })
                 ->editColumn('caj_monto_cierre', function ($row) {
-                    if ($row->caj_estado == 'close') {
+                    if ($row->caj_estado == 'Cerrado') {
                         return '<span class="display_currency" data-currency_symbol="true">' .
                             $row->caj_monto_cierre . '</span>';
                     } else {

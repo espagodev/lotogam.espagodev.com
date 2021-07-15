@@ -79,7 +79,7 @@ $(document).ready(function() {
                  { data: 'action', name: 'action' },
          ],
           fnDrawCallback: function(oSettings) {
-            __currency_convert_recursively($('#reporte_tickets'));
+              __currency_convert_recursively($('#reporte_registro'));
         },
     });
 

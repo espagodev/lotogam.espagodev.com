@@ -479,4 +479,14 @@ class Util
         return !empty($date) ? Carbon::createFromTimestamp(strtotime($date))->format($format) : null;
     }
 
+    public static function movimientosCaja()
+    {
+        return [
+            'entrada' => 'Entrada',
+            'salida' => 'Salida',
+            'traslado' => 'Traslado',
+            'cupo' => 'Apertura de Cupo'
+        ];
+    }
+
 }

@@ -48,7 +48,7 @@ function updatePurchaseSell() {
         dataType: 'json',
         data: data,
         success: function(data) {
-            console.log(data);
+
             $('.venta_total').html(__currency_trans_from_en(data.ventas.total_venta, true));
             $('.venta_promocion').html(__currency_trans_from_en(data.ventas.total_venta_promo, true));
             $('.venta_futuro').html(__currency_trans_from_en(data.ventas.venta_futuro, true));

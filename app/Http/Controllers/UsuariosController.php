@@ -142,4 +142,16 @@ class UsuariosController extends Controller
     {
         //
     }
+
+    public function getusuarios(Request $request)
+{
+    try {
+        $bancas_id = $request->input('bancas_id');
+            $usuarios  = $this->marketService->getUsuariosBanca($bancas_id);
+        // $response = ['data' => $areas];
+    } catch (\Exception $exception) {
+        return response()->json([ 'message' => 'Hubo un error al recuperar los registros.' ], 500);
+    }
+    return response()->json($usuarios);
+}
 }

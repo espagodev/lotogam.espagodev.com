@@ -30,10 +30,16 @@ class MarketService
         return $this->makeRequest('GET', "me");
     }
 
-    //LOTERIAS
+    //Usuarios empresa
     public function getUsuariosEmpresa($empresas_id)
     {
         return $this->makeRequest('GET', "getUsuariosEmpresa/{$empresas_id}");
+    }
+
+    //Usuarios Banca
+    public function getUsuariosBanca($bancas_id)
+    {
+        return $this->makeRequest('GET', "getUsuariosBanca/{$bancas_id}");
     }
 
     /**
@@ -1346,7 +1352,6 @@ class MarketService
 
     public function postCerrarRegistro($data)
     {
-
         return $this->makeRequest('GET', "postCerrarRegistro", $data);
     }
 
@@ -1376,5 +1381,26 @@ class MarketService
     public function getTotalCajasAbiertas($users_id)
     {
         return $this->makeRequest('GET', "getTotalCajasAbiertas/{$users_id}");
+    }
+
+    /**
+     * CAJA GENERAL
+     */
+    public function getCajaGeneral($data)
+    {
+        return $this->makeRequest('GET', "getCajaGeneral", $data);
+    }
+
+    public function postCajaGeneal($data)
+    {
+
+        return $this->makeRequest(
+            'POST',
+            "caja-general",
+            [],
+            $data,
+            [],
+            $hasFile = false
+        );
     }
 }

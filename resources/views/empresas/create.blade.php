@@ -129,8 +129,7 @@
 
 @section('scripts')
 <script src="{{ asset('js/empresa/empresa.js') }}"></script>
-<script src="{{ asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/moment/min/moment.js') }}"></script>
+
 
  <script>
         $('.datepicker-startdate').datepicker();

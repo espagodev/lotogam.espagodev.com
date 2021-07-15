@@ -133,4 +133,16 @@ class BancasController extends Controller
     {
         //
     }
+
+    public function getbancas(){
+
+        try {
+            $empresas_id = session()->get('user.emp_id');
+            $bancas  = $this->marketService->getListaBancaEmpresa($empresas_id);
+
+        } catch (\Exception $exception) {
+            return response()->json(['message' => 'Hubo un error al recuperar los registros.'], 500);
+        }
+        return response()->json($bancas);
+    }
 }

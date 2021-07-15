@@ -1,0 +1,85 @@
+$(document).ready(function() {
+
+    if ($('#spr_date_filter').length == 1) {
+        $('#spr_date_filter').daterangepicker(dateRangeSettings, function(start, end) {
+            $('#spr_date_filter span').val(
+                start.format(moment_date_format) + ' ~ ' + end.format(moment_date_format)
+            );
+            caja_general.ajax.reload();
+        });
+        $('#spr_date_filter').on('cancel.daterangepicker', function(ev, picker) {
+            $('#spr_date_filter').val('');
+            caja_general.ajax.reload();
+        });
+
+
+    }
+
+    $('#caja_general, #bancas_id, #users_id, #movimiento').change(
+        function() {
+            caja_general.ajax.reload();
+        }
+    );
+
+    // Reporte de caja general
+     caja_general =  $('#caja_general').DataTable({
+        processing: true,
+        serverSide: true,
+        aaSorting: false,
+        ajax: {
+                url: '/caja_general/getCajaGeneral',
+                dataType: "json",
+              data: function(d) {
+
+                d.bancas_id = $('select#bancas_id').val();
+                d.users_id = $('select#users_id').val();
+                  d.movimiento = $('select#movimiento').val();
+
+                var start = '';
+                var end = '';
+                if ($('input#spr_date_filter').val()) {
+                    start = $('input#spr_date_filter')
+                        .data('daterangepicker')
+                        .startDate.format('YYYY-MM-DD');
+                    end = $('input#spr_date_filter')
+                        .data('daterangepicker')
+                        .endDate.format('YYYY-MM-DD');
+                }
+                d.start_date = start;
+                d.end_date = end;
+            },
+        },
+         columns: [
+             { data: 'cag_movimiento', name: 'cag_movimiento', orderable: false, searchable: false },
+             { data: 'cag_fecha_movimiento', name: 'cag_fecha_movimiento', orderable: false, searchable: false },
+             { data: 'bancas_id', name: 'bancas_id', orderable: false, searchable: false },
+             { data: 'users_id', name: 'users_id', orderable: false, searchable: false },
+             { data: 'cag_monto', name: 'cag_monto', orderable: false, searchable: false },
+             { data: 'cag_nota_movimiento', name: 'cag_nota_movimiento', orderable: false, searchable: false },
+            //  { data: 'users_movimiento_id', name: 'users_movimiento_id', orderable: false, searchable: false },
+
+         ],
+         fnDrawCallback: function (oSettings) {
+             __currency_convert_recursively($('#caja_general'));
+         },
+    });
+
+    $(document).on('click', '.nuevo-resultado', function (e) {
+        e.preventDefault();
+        var container = $('.nuevo_modal');
+
+        $.ajax({
+            url: $(this).data('href'),
+            dataType: 'html',
+            success: function (result) {
+                container.html(result).modal('show');
+
+
+               
+            },
+        });
+    });
+
+});
+
+

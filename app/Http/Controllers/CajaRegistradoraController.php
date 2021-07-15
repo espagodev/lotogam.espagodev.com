@@ -6,6 +6,7 @@ use App\Utils\BancaUtil;
 use App\Utils\CajaRegistradoraUtil;
 use App\Utils\HorarioLoterias;
 use App\Utils\Util;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CajaRegistradoraController extends Controller
@@ -96,30 +97,24 @@ class CajaRegistradoraController extends Controller
     {
 
         try {
-            $user_id = session()->get('user.id');
-
-            $data = $request->only(['closing_amount', 'caj_nota_cierre']);
-            $data['caj_monto_cierre'] = $this->cashRegisterUtil->num_uf($data['caj_monto_cierre']);
-            $data['caj_hora_cierre'] = \Carbon::now()->format('Y-m-d H:i:s');
-            $data['caj_estado'] = 'Cerrado';
 
 
-            Cajas::where('user_id', $user_id)
-                ->where('caj_estado', 'Abierto')
-                ->update($data);
+            $data = $request->only(['caj_monto_cierre', 'caj_nota_cierre']);
+            $data['users_id'] = session()->get('user.id');
+
+            $data = $this->marketService->postCerrarRegistro($data);
+
             $output = [
                 'success' => 1,
-                'msg' => __('cash_register.close_success')
+                'msg' => "Caja Cerrada Satisfactoriamente"
             ];
         } catch (\Exception $e) {
             \Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
             $output = [
                 'success' => 0,
-                'msg' => __("messages.something_went_wrong")
+                'msg' => "Algo salió mal, por favor intente de nuevo más tarde"
             ];
         }
-        $data = $this->marketService->postCerrarRegistro($data);
-        
         return redirect()->back()->with('status', $output);
     }
 
@@ -148,21 +143,20 @@ class CajaRegistradoraController extends Controller
     {
 
         $users_id = session()->get('user.id');
-        // $register_details =  $this->cashRegisterUtil->getRegisterDetails();
-
-        // $user_id = auth()->user()->id;
-        // $open_time = $register_details['open_time'];
         $close_time = \Carbon::now()->toDateTimeString();
 
         $detalles = $this->marketService->getCajaRegistradoraDetalle($users_id, $caja_registradoras_id = null);
 
-        // $detalles = CajaRegistradoraUtil::getCajaRegistradoraDetalles($users_id, $close_time);
+        return view('caja_registradora.detalle_registro')->with(compact('close_time', 'detalles'));
+    }
 
-        dump($detalles);
+    public function getProgressBar()
+    {
+        $users_id = session()->get('user.id');
 
-        return view('caja_registradora.detalle_registro')
-        ->with(compact('close_time', 'detalles'))
-        ;
+        $detalles = $this->marketService->getProgressBar($users_id);
+
+        return json_encode($detalles);
     }
 
 }

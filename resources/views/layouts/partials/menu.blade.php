@@ -153,6 +153,11 @@
         </a>
       </li>
       @endif
+      <li>
+        <a href="{{ route('cuadre-caja.index') }}" class="waves-effect">
+          <i class="zmdi zmdi-widgets"></i> <span>Cuadre de Caja</span>
+        </a>
+      </li>
        <li>
         <a href="{{ asset('printServer/pos_print_server_v1.7.7z') }}" class="waves-effect">
           <i class="fa fa-download"></i> <span>Impresion Pos</span>

@@ -21,6 +21,10 @@ $(document).ready(function () {
         });
     }
 
+    $('.close_register_modal, .register_details_modal').on('shown.bs.modal', function () {
+        __currency_convert_recursively($(this));
+    });
+
     //Evitar la función de tecla enter excepto textarea
     // $('form').on('keyup keypress', function (e) {
     //     var keyCode = e.keyCode || e.which;
@@ -42,11 +46,9 @@ $(document).ready(function () {
 
     }
 
-
-
-
     horarioLoteriasDia();
     horarioSuperPale();
+    progressBar();
 
 
     $("#tid_valor,#tid_apuesta").keydown(function (event) {
@@ -187,8 +189,6 @@ $(document).ready(function () {
         });
     });
 
-
-
     //Finalize without showing payment options
     $("button.pos-express-finalize").click(function () {
         //Check if product is present or not.
@@ -262,7 +262,7 @@ $(document).ready(function () {
                             reset_pos_form();
                             horarioLoteriasDia();
                             horarioSuperPale();
-
+                            progressBar();
                             // if (result.receipt.is_enabled) {
                             // __pos_print(result.receipt);
                             console.log(receipt)
@@ -412,14 +412,12 @@ $(document).ready(function () {
     });
 });
 
+//agrupado
 $(document).click(function () {
-    // console.log('aqui')
 
     var checked = $("input[name='lot_id[]']:checked").length;
     if (checked > 1) {
-
         $("input[name='tic_agrupado']").prop("disabled", false);
-
     } else {
         $("input[name='tic_agrupado']").prop("disabled", true);
         $("input[name='tic_agrupado']").each(function () {
@@ -483,9 +481,7 @@ function pos_total_row() {
     var total_payable = 0;
 
     $('table#pos_table tbody tr').each(function () {
-
         price_total = price_total + __read_number($(this).find("input.pos_line_total"));
-
     });
 
     $("span.price_total").text(__currency_trans_from_en(price_total, true));
@@ -630,36 +626,70 @@ function __pos_print(receipt) {
     }
 }
 
-
 function disable_pos_form_actions() {
 
-
-    $('div.pos-processing').show();
-    $('#pos-save').attr('disabled', 'true');
+    // $('div.pos-processing').show();
+    // $('#pos-save').attr('disabled', 'true');
     $('div.pos-form-actions').find('button').attr('disabled', 'true');
 }
 
 function enable_pos_form_actions() {
-    $('div.pos-processing').hide();
-    $('#pos-save').removeAttr('disabled');
+    // $('div.pos-processing').hide();
+    // $('#pos-save').removeAttr('disabled');
     $('div.pos-form-actions').find('button').removeAttr('disabled');
 }
 
 
-$(function () {
-    "use strict";
+function progressBar() {
 
-    $('.dash-chart').easyPieChart({
-        easing: 'easeOutBounce',
-        barColor: '#ffffff',
-        lineWidth: 10,
-        trackColor: 'rgba(255, 255, 255, 0.12)',
-        scaleColor: false,
-        onStep: function (from, to, percent) {
-            $(this.el).find('.w_percent').text(Math.round(percent));
+    //reset progress bar
+    $('.progress-bar').css('width', '0%');
+    $('.progress-bar').text('0%');
+    $('.progress-bar').attr('data-progress', '0');
+
+    $.ajax({
+        type: 'POST',
+        dataType: "json",
+        url: "/caja-registradora/getprogressbar",
+        success: function (response) {
+
+            var percentage = response.percentage;
+            var totalVenta = __currency_trans_from_en(response.total, true);
+            var limite = __currency_trans_from_en(response.limite, true);
+
+            var estado = totalVenta + ' / ' + limite
+
+            $('.progress-bar').css('width', percentage + '%');
+            $('.progress-bar').text(percentage + '%');
+            $('.progress-bar').attr('data-progress', percentage);
+
+            $('.progres-estado').text(estado);
+
+
+
+
+            if (percentage >= 0 && percentage <= 50) {
+                $('.progress-bar').addClass('bg-info');
+            }
+            else if (percentage >= 51 && percentage <= 80) {
+                 $('.progress-bar').addClass('bg-success');
+                }
+            else if (percentage >= 81 && percentage <= 99) {
+                $('.progress-bar').addClass('bg-warning');
+
+            } else if(percentage >= 100) {
+                $('.progress-bar').addClass('bg-danger');
+
+                Lobibox.alert("error", {
+                    title: 'Limite de Venta Superado',
+                    msg: "Por Favor Comuniquese con el Administrador",
+                });
+                $("input[name='lot_id[]']").prop("disabled", true);
+            }
+
+
         }
+
     });
 
-
-
-});
+}

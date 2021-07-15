@@ -98,7 +98,6 @@
                         @include('sale_pos.partials.agrupado')
                     </div>
               </div>
-
         </div>
     </div>
     <div class="row">

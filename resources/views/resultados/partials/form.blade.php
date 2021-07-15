@@ -15,7 +15,7 @@
                     @endif
                 </div>
             </div>
-
+ 
             <div class="col-xs-6 col-sm-6 col-md-6 loterias_id">
                 <div class="form-group loterias-id">
                         <label>Loterias </label>

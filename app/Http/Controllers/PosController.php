@@ -100,9 +100,9 @@ class PosController extends Controller
         $parametros =  $this->marketService->getParametrosBanca($bancas_id);
 
         $fechaActual = now()->format('d/m/Y');
-        $venta = BancaUtil::progressBar($users_id);
+        // $venta = BancaUtil::progressBar($users_id);
 
-        $venta_porcentaje = Util::get_progress($venta->venta, $limite_venta);
+        // $venta_porcentaje = Util::get_progress($venta->venta, $limite_venta);
 
             return view('sale_pos.create')->with([
                 'loterias' => $loterias,
@@ -110,8 +110,8 @@ class PosController extends Controller
                 'horaRD' => $horaRD,
                 'parametros' => $parametros,
                 'fechaActual' => $fechaActual,
-                'venta' => $venta->venta,
-                'venta_porcentaje' => $venta_porcentaje
+                // 'venta' => $venta->venta,
+                // 'venta_porcentaje' => $venta_porcentaje
             ]);
         //   } catch (\Exception $e) {
         //     \Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
