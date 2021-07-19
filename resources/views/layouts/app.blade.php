@@ -39,12 +39,12 @@
 
 <!-- Start wrapper-->
 <div id="wrapper">
-     <script type="text/javascript">
+     {{-- <script type="text/javascript">
                 if(localStorage.getItem("upos_sidebar_collapse") == 'true'){
                     var body = document.getElementsByTagName("body")[0];
                     body.className += " sidebar-collapse";
                 }
-            </script>
+            </script> --}}
     <!--Start sidebar-wrapper-->
         @if(!$pos_layout)
             @include('layouts.partials.menu')
@@ -67,7 +67,7 @@
                 <input type="hidden" id="__precision" value="{{config('constants.currency_precision', 2)}}">
                 <input type="hidden" id="__quantity_precision" value="{{config('constants.quantity_precision', 2)}}">
                 <!-- Fin del campo relacionado con la moneda-->
-        <div class="@if(!$pos_layout) container-fluid no-print @endif ">
+        <div class="@if(!$pos_layout) container-fluid @endif ">
              @include('layouts.partials.message')
             @yield('content')
 
@@ -92,7 +92,7 @@
 </div><!--End wrapper-->
 
 <section class="invoice print_section" id="receipt_section">
-        </section>
+</section>
 
 
     @include('layouts.partials.javascripts')

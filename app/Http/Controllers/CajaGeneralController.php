@@ -163,4 +163,35 @@ class CajaGeneralController extends Controller
         }
 
     }
+
+    /**
+     * Shows register details modal.
+     *
+     * @param  void
+     * @return \Illuminate\Http\Response
+     */
+    public function getCajaGeneralDetalle(Request $request)
+    {
+        if ($request->ajax()) {
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data = $request->only(['start_date', 'end_date',  'loterias_id']);
+                $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
+            }
+            $data['empresas_id'] = session()->get('user.emp_id');
+
+            $getCajaGeneralDetalle = $this->marketService->getCajaGeneralDetalle($data);
+
+            // dd($getCajaGeneralDetalle->totalNeto);
+            return [
+                'total_entradas' => $getCajaGeneralDetalle->detalle->total_entrada,
+                'total_salidas' => $getCajaGeneralDetalle->detalle->total_salida,
+                'total_cupo' => $getCajaGeneralDetalle->detalle->total_cupo,
+                'total_neto' => $getCajaGeneralDetalle->totalNeto,
+                'balance_inicial' => $getCajaGeneralDetalle->balance_inicial,
+            ];
+        }
+    }
 }

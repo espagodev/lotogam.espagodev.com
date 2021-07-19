@@ -6,11 +6,11 @@
         @elseif((request()->session()->get('user.TipoUsuario') == 3))
             @include('reportes.partials.opcionesBanca')
         @endif
-    <div class="row">
+    <div class="row no-print">
             <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <table class="table table-bordered table-striped"  id="reporte_tickets">
+                            <table class="table table-bordered table-striped no-print"  id="reporte_tickets">
                                 <thead>
                                     <tr>
                                         <th>Loteria</th>
@@ -30,18 +30,18 @@
 
     </div>
     <!-- /.content -->
-<div class="modal fade view_register" tabindex="-1" role="dialog"
+<div class="modal fade view_register no-print" tabindex="-1" role="dialog"
     aria-labelledby="gridSystemModalLabel">
 </div>
 
-    <div class="modal fade ticket_modal" tabindex="-1" role="dialog"
+    <div class="modal fade ticket_modal no-print" tabindex="-1" role="dialog"
         aria-labelledby="gridSystemModalLabel">
     </div>
 
-    <div class="modal fade pagar_premio_modal" tabindex="-1" role="dialog"
+    <div class="modal fade pagar_premio_modal no-print" tabindex="-1" role="dialog"
         aria-labelledby="gridSystemModalLabel">
     </div>
-    <div class="modal fade anular_modal" tabindex="-1" role="dialog"
+    <div class="modal fade anular_modal no-print" tabindex="-1" role="dialog"
         aria-labelledby="gridSystemModalLabel">
     </div>
     @endsection

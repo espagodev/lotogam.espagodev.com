@@ -139,7 +139,7 @@ class CajaRegistradoraController extends Controller
      * @param  void
      * @return \Illuminate\Http\Response
      */
-    public function getDetalleRegistro()
+    public function getDetalleRegistro($caja_registradoras_id = null)
     {
 
         $users_id = session()->get('user.id');

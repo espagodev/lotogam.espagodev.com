@@ -7,12 +7,15 @@
                 </div>
                  <div class="col-sm-3">
                     <div class="btn-group float-sm-right">
-                        {{-- <a href="{{ route('cuadre-caja.create') }}"  class="btn btn-primary waves-effect waves-primary"><i class="fa fa-plus mr-1"></i> Nuevo Registro</a> --}}
+                        @if((request()->session()->get('user.TipoUsuario') == 2))
                         <a href="#" data-href="{{action('CajaGeneralController@create') }}"  class="btn btn-primary waves-effect waves-light nuevo-resultado" rel="tooltip" title="ingresar Resultado" ><i class="fa fa-plus m-1"></i>Nuevo Registro</a>
+                        @endif
                     </div>
                 </div>
             </div>
-             @include('caja_general.partials.opciones')
+            @include('caja_general.partials.opciones')
+            @include('caja_general.partials.detalles')
+
               <div class="row">
             <div class="col-lg-12">
                 <div class="card">

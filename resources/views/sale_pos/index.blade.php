@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('title','Listado de Ticekts Vendidos')
     @section('content')
-     <div class="row pt-2 pb-2">
+     <div class="row pt-2 pb-2 no-print">
         <div class="col-sm-9">
 		    <h4 class="page-title">Tickets</h4>
 	   </div>
-        <div class="col-sm-3">
+        <div class="col-sm-3 no-print">
             <div class="btn-group float-sm-right">
                  @if((request()->session()->get('user.TipoUsuario') == 3) && (request()->session()->get('user.bancaBloqueo') == 1))
                  <a href="{{ route('pos.create') }}"  class="btn btn-primary waves-effect waves-primary"><i class="fa fa-ticket mr-1"></i> Crear Ticket</a>
@@ -19,7 +19,7 @@
         @elseif((request()->session()->get('user.TipoUsuario') == 3))
             @include('reportes.partials.opcionesBanca')
         @endif
-        <div class="row">
+        <div class="row no-print">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
@@ -43,17 +43,17 @@
             </div>
       </div><!--End Row-->
 <!-- /.content -->
-<div class="modal fade view_register" tabindex="-1" role="dialog"
+<div class="modal fade view_register no-print" tabindex="-1" role="dialog"
     aria-labelledby="gridSystemModalLabel">
 </div>
-    <div class="modal fade ticket_modal" tabindex="-1" role="dialog"
+    <div class="modal fade ticket_modal no-print" tabindex="-1" role="dialog"
         aria-labelledby="gridSystemModalLabel">
     </div>
 
-    <div class="modal fade pagar_premio_modal" tabindex="-1" role="dialog"
+    <div class="modal fade pagar_premio_modal no-print" tabindex="-1" role="dialog"
         aria-labelledby="gridSystemModalLabel">
     </div>
-<div class="modal fade anular_modal" tabindex="-1" role="dialog"
+<div class="modal fade anular_modal no-print" tabindex="-1" role="dialog"
         aria-labelledby="gridSystemModalLabel">
     </div>
    @endsection

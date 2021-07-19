@@ -16,7 +16,7 @@ $(document).ready(function() {
         updatePurchaseSell();
     }
 
-    $('#bancas_id').change(function() {
+    $('#bancas_id, #users_id').change(function() {
         updatePurchaseSell();
     });
 });
@@ -30,17 +30,26 @@ function updatePurchaseSell() {
         .data('daterangepicker')
         .endDate.format('YYYY-MM-DD');
     var bancas_id = $('#bancas_id').val();
+    var users_id = $('#users_id').val();
 
-    var data = { start_date: start, end_date: end, bancas_id: bancas_id };
+    var data = { start_date: start, end_date: end, bancas_id: bancas_id, users_id: users_id };
 
     var loader = __fa_awesome();
     $('.venta_total').html(loader);
     $('.venta_promocion').html(loader);
     $('.venta_futuro').html(loader);
-    $('.pago_total').html(loader);
-    $('.pago_pendiente').html(loader);
-    $('.pago_pendiente_promo').html(loader);
-
+    $('.venta_comison').html(loader);
+    $('.total_premios').html(loader);
+    $('.total_pagado').html(loader);
+    $('.total_premios_promo').html(loader);
+    $('.total_pendiente_pago').html(loader);
+    $('.neto_total').html(loader);
+    $('.total_entrada').html(loader);
+    $('.total_salida').html(loader);
+    $('.total_cupo').html(loader);
+    $('.neto_faltante').html(loader);
+    $('.gastos_banca').html(loader);
+    $('.balance_inicial').html(loader);
 
     $.ajax({
         method: 'GET',
@@ -49,19 +58,24 @@ function updatePurchaseSell() {
         data: data,
         success: function(data) {
 
-            $('.venta_total').html(__currency_trans_from_en(data.ventas.total_venta, true));
-            $('.venta_promocion').html(__currency_trans_from_en(data.ventas.total_venta_promo, true));
-            $('.venta_futuro').html(__currency_trans_from_en(data.ventas.venta_futuro, true));
-            $('.pago_total').html(__currency_trans_from_en(data.ventas.pago_total, true));
-            $('.pago_pendiente').html(__currency_trans_from_en(data.ventas.total_premios, true));
-            $('.pago_pendiente_promo').html(__currency_trans_from_en(data.ventas.total_premios_promo, true));
+            $('.venta_total').html(__currency_trans_from_en(data.total_venta, true));
+            $('.venta_promocion').html(__currency_trans_from_en(data.total_venta_promo, true));
+            $('.venta_futuro').html(__currency_trans_from_en(data.total_venta_futuro, true));
+            $('.venta_comison').html(__currency_trans_from_en(data.total_comision, true));
 
+            $('.total_premios').html(__currency_trans_from_en(data.total_premios, true));
+            $('.total_premios_promo').html(__currency_trans_from_en(data.total_premios_promo, true));
+            $('.total_pagado').html(__currency_trans_from_en(data.total_pagado, true));
+            $('.total_pendiente_pago').html(__currency_trans_from_en(data.total_pendiente_pago, true));
 
-            // $('.pago_total').html(__currency_trans_from_en(data.sell.pago_total, true));
-            // $('.pago_propio').html(__currency_trans_from_en(data.sell.pago_propio, true));
-            // $('.pago_otras').html(__currency_trans_from_en(data.sell.pago_otras, true));
+            $('.neto_total').html(__currency_trans_from_en(data.neto_total, true));
 
+            $('.total_entrada').html(__currency_trans_from_en(data.total_entrada, true));
+            $('.total_salida').html(__currency_trans_from_en(data.total_salida, true));
+            $('.total_cupo').html(__currency_trans_from_en(data.total_cupo, true));
 
+            $('.neto_faltante').html(__currency_trans_from_en(data.neto_faltante, true));
+            $('.balance_inicial').html(__currency_trans_from_en(data.balance_inicial, true));
         },
     });
 }

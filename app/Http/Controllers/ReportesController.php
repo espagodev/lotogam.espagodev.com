@@ -396,9 +396,31 @@ class ReportesController extends Controller
 
             $informeVentasPagos = $this->reportes->getInformeVentasPagos($data);
 
+            // dd($informeVentasPagos->diferencia->neto_total);
+
             return [
-                'ventas' => $informeVentasPagos
+                'total_venta' => $informeVentasPagos->ventas_detalle->total_venta,
+                'total_venta_promo' => $informeVentasPagos->ventas_detalle->total_venta_promo,
+                'total_venta_futuro' => $informeVentasPagos->ventas_detalle->total_venta_futuro,
+                'total_premios' => $informeVentasPagos->ventas_detalle->total_premios,
+                'total_premios_promo' => $informeVentasPagos->ventas_detalle->total_premios_promo,
+                'total_comision' => $informeVentasPagos->ventas_detalle->total_comision,
+                'total_pagado' => $informeVentasPagos->ventas_detalle->total_pagado,
+                'total_pendiente_pago' => $informeVentasPagos->ventas_detalle->total_pendiente_pago,
+
+                'neto_total' => $informeVentasPagos->diferencia->neto_total,
+
+                'total_entrada' => $informeVentasPagos->cajaGeneral->total_entrada,
+                'total_salida' => $informeVentasPagos->cajaGeneral->total_salida,
+                'total_cupo' => $informeVentasPagos->cajaGeneral->total_cupo,
+
+                'neto_faltante' => $informeVentasPagos->diferencia->neto_faltante,
+
+                'gastos_banca' => '0',
+                'balance_inicial' =>  $informeVentasPagos->diferencia->balance_inicial,
+
             ];
+
         }
 
         $empresas_id = session()->get('user.emp_id');
@@ -452,10 +474,19 @@ class ReportesController extends Controller
                         return '';
                     }
                 })
-                ->addColumn('action', '<button type="button" data-href="{{action(\'CajaRegistradoraController@show\', [$id])}}" class="btn btn-sm btn-info btn-modal"
-                    data-container=".view_register"><i class="fa fa-eye" aria-hidden="true"></i> Ver</button> @if($caj_estado != "close")
-                    <button type="button" data-href="{{action(\'CajaRegistradoraController@getCerrarRegistro\', [$id])}}" class="btn btn-sm btn-danger btn-modal"
-                        data-container=".view_register"><i class="fa fa-window-close"></i> Cerrar</button> @endif')
+                ->addColumn('action', function ($row) {
+                    if ($row->caj_estado == "Cerrado") {
+
+                        return '<button type="button" data-href="'.action('CajaRegistradoraController@getDetalleRegistro', [$row->id]) .'" class="btn btn-sm btn-info btn-modal"
+                    data-container=".view_register"><i class="fa fa-eye" aria-hidden="true"></i> Ver</button>';
+                    } else {
+                        return '<button type="button" data-href="' . action('CajaRegistradoraController@getDetalleRegistro', [$row->id]) . '" class="btn btn-sm btn-info btn-modal"
+                    data-container=".view_register"><i class="fa fa-eye" aria-hidden="true"></i> Ver</button>
+                    <button type="button" data-href="'.action('CajaRegistradoraController@getCerrarRegistro', [$row->id]).'" class="btn btn-sm btn-danger btn-modal"
+                        data-container=".view_register"><i class="fa fa-window-close"></i> Cerrar</button>';
+                    }
+                })
+
                 ->rawColumns(['action', 'caj_monto_cierre'])
                 ->make(true);
         }

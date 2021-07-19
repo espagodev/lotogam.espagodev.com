@@ -6,18 +6,20 @@ $(document).ready(function() {
                 start.format(moment_date_format) + ' ~ ' + end.format(moment_date_format)
             );
             caja_general.ajax.reload();
+            getCajaGeneral();
         });
         $('#spr_date_filter').on('cancel.daterangepicker', function(ev, picker) {
             $('#spr_date_filter').val('');
             caja_general.ajax.reload();
+            getCajaGeneral();
         });
-
-
+        getCajaGeneral();
     }
 
     $('#caja_general, #bancas_id, #users_id, #movimiento').change(
         function() {
             caja_general.ajax.reload();
+            getCajaGeneral();
         }
     );
 
@@ -73,9 +75,6 @@ $(document).ready(function() {
             dataType: 'html',
             success: function (result) {
                 container.html(result).modal('show');
-
-
-               
             },
         });
     });
@@ -83,3 +82,40 @@ $(document).ready(function() {
 });
 
 
+function getCajaGeneral() {
+
+    var start = $('#spr_date_filter')
+        .data('daterangepicker')
+        .startDate.format('YYYY-MM-DD');
+    var end = $('#spr_date_filter')
+        .data('daterangepicker')
+        .endDate.format('YYYY-MM-DD');
+    var bancas_id = $('#bancas_id').val();
+
+    var data = { start_date: start, end_date: end, bancas_id: bancas_id };
+
+    var loader = __fa_awesome();
+
+    $('.balance_inicial').html(loader);
+    $('.total_entradas').html(loader);
+    $('.total_salidas').html(loader);
+    $('.total_cupo').html(loader);
+    $('.total_neto').html(loader);
+
+
+
+    $.ajax({
+        method: 'GET',
+        url: '/caja_general/getCajaGeneralDetalle',
+        dataType: 'json',
+        data: data,
+        success: function (data) {
+            $('.balance_inicial').html(__currency_trans_from_en(data.balance_inicial, true));
+            $('.total_entradas').html(__currency_trans_from_en(data.total_entradas, true));
+            $('.total_salidas').html(__currency_trans_from_en(data.total_salidas, true));
+            $('.total_cupo').html(__currency_trans_from_en(data.total_cupo, true));
+            $('.total_neto').html(__currency_trans_from_en(data.total_neto, true));
+
+        },
+    });
+}

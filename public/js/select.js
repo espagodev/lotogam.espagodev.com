@@ -11,7 +11,7 @@ $(document).ready(function () {
             type: 'GET',
             dataType: 'json',
             success: function (response) {
-                console.log(response);
+
                 $.each(response, function (key, value) {
                     plantSelect.append("<option value='" + value.id + "'>" + value.ban_nombre + "</option>");
                 });
@@ -46,7 +46,7 @@ $(document).ready(function () {
         }
     });
 
-    
+
 
     // finalmente, indicas que cuando se seleccione un area, se obtengan los equipos correspondientes y se llene el select de equipos
     // areaSelect.change(function () {

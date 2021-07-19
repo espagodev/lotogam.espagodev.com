@@ -69,7 +69,7 @@
                 <i class="fa fa-print"> Imprimir </i>
             </button>
 
-            <button type="button" class="btn btn-default no-print"
+            <button type="button" class="btn btn-danger no-print"
                 data-dismiss="modal">Cancelar
             </button>
         </div>

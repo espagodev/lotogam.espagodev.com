@@ -1391,6 +1391,11 @@ class MarketService
         return $this->makeRequest('GET', "getCajaGeneral", $data);
     }
 
+    public function getCajaGeneralDetalle($data)
+    {
+        return $this->makeRequest('GET', "getCajaGeneralDetalle", $data);
+    }
+
     public function postCajaGeneal($data)
     {
 

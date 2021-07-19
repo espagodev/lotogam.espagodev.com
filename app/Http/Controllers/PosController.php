@@ -13,6 +13,7 @@ use App\Utils\Reportes;
 use App\Utils\TransactionUtil;
 use App\Utils\CajaRegistradoraUtil;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Redirect;
 
 class PosController extends Controller
 {
@@ -149,6 +150,7 @@ class PosController extends Controller
 
         $ticket = $this->marketService->postNuevoTicket($data);
         $tickets = $ticket->ticket;
+
 
         if ($request->tic_agrupado == 1) {
 

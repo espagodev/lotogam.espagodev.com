@@ -1,4 +1,4 @@
- <div class="card">
+ <div class="card no-print">
     <div class="card-body">
     <div class="row">
         <div class="col-md-4 col-xs-12">
@@ -102,7 +102,7 @@
     </div>
  </div>
 
- <div class="row">
+ <div class="row no-print">
 
         <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xs-12">
             <div class="card">
