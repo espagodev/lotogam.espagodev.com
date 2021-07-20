@@ -281,8 +281,10 @@ $(document).ready(function () {
                                 delayIndicator: false,
                                 continueDelayOnInactiveTab: false,
                                 position: "top right",
-                                msg: msg,
+                                msg: result.mensaje,
                             });
+                            horarioLoteriasDia();
+                            horarioSuperPale();
                         }
 
                         $("div.pos-processing").hide();

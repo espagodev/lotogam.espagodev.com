@@ -148,9 +148,14 @@ class PosController extends Controller
             }
         }
 
+        $validarHoracierreLoteria = Util::validarHoracierreLoteria($request->loterias_id);
+        // dd($validarHoracierreLoteria);
+        if ($validarHoracierreLoteria) {
+            return  $output = ['error' => 1, 'mensaje' => 'La Loteria no Esta Disponible Para Realizar Jugadas'];
+        }
+
         $ticket = $this->marketService->postNuevoTicket($data);
         $tickets = $ticket->ticket;
-
 
         if ($request->tic_agrupado == 1) {
 
@@ -159,12 +164,6 @@ class PosController extends Controller
             $mensaje = 'Venta añadida con éxito';
             $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
         } else {
-            // foreach ($tickets as $ticket) {
-            //     $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $ticket, null, false, true);
-            //     $mensaje = 'Venta añadida con éxito';
-            //     $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
-            // }
-
             $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $tickets, null, false, true);
             $mensaje = 'Venta añadida con éxito';
             $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
@@ -342,7 +341,7 @@ class PosController extends Controller
                 if ($horariocierre == 0) {
                     $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                 <div class="icheck-material-success">
-                                    <input type="checkbox" id="' . $detalle->lot_nombre . '" name="lot_id[]" value="' . $detalle->loterias_id . '|' . 0 . '"/>
+                                    <input type="checkbox" id="' . $detalle->lot_nombre . '" name="lot_id[]" value="' . $detalle->loterias_id . '|' . 0 . '|' . $detalle->hlo_hora_fin .' "/>
                                     <label class="validar_monto"  for="' . $detalle->lot_nombre . '"  data-loteria="' . $detalle->lot_nombre . '" data-loterias_id="' . $detalle->loterias_id . '"  data-superpale="0"><span class="badge badge-success m-1 validar-monto"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
                                 </div>
                             </div>';

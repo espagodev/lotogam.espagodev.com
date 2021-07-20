@@ -89,8 +89,6 @@ class Util
         }
     }
 
-
-
     public static function compararValores($monto, $apuesta)
     {
 
@@ -489,4 +487,18 @@ class Util
         ];
     }
 
+    public static function validarHoracierreLoteria($loterias)
+    {
+        $horaRd = HorarioLoterias::horaRD();
+
+        foreach ($loterias as  $loteria) {
+            $valores = explode("|", $loteria);
+            $horaCierre = $valores[2];
+            if ($horaRd >=  $horaCierre) {
+                return true;
+            }
+        }
+
+       return false;
+    }
 }

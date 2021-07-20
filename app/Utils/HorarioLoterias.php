@@ -9,7 +9,7 @@ class HorarioLoterias
 {
     public static function horaRD()
     {
-        return with(new Carbon(date('H:i:s')))->tz('America/Santo_Domingo')->format('H:i:s');
+        return with(new Carbon(date('H:i')))->tz('America/Santo_Domingo')->format('H:i');
     }
 
     //DIA ACTUAL
