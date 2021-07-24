@@ -35,7 +35,7 @@ $(document).ready(function() {
 
                 d.bancas_id = $('select#bancas_id').val();
                 d.users_id = $('select#users_id').val();
-                  d.movimiento = $('select#movimiento').val();
+                d.movimiento = $('select#movimiento').val();
 
                 var start = '';
                 var end = '';
@@ -58,7 +58,7 @@ $(document).ready(function() {
              { data: 'users_id', name: 'users_id', orderable: false, searchable: false },
              { data: 'cag_monto', name: 'cag_monto', orderable: false, searchable: false },
              { data: 'cag_nota_movimiento', name: 'cag_nota_movimiento', orderable: false, searchable: false },
-            //  { data: 'users_movimiento_id', name: 'users_movimiento_id', orderable: false, searchable: false },
+             { data: 'action', name: 'action', orderable: false, searchable: false },
 
          ],
          fnDrawCallback: function (oSettings) {
@@ -66,7 +66,7 @@ $(document).ready(function() {
          },
     });
 
-    $(document).on('click', '.nuevo-resultado', function (e) {
+    $(document).on('click', '.nuevo-registro', function (e) {
         e.preventDefault();
         var container = $('.nuevo_modal');
 

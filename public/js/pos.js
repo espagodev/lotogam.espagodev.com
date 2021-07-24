@@ -43,15 +43,30 @@ $(document).ready(function () {
     // }
     if ($("input#product_row_count").length > 0) {
         initialize_printer();
-
     }
+
 
     horarioLoteriasDia();
     horarioSuperPale();
     progressBar();
 
 
-    $("#tid_valor,#tid_apuesta").keydown(function (event) {
+    //VALIDA EL MONTO Y NUMERO PARA SER INGRESADOS
+
+    $("#tid_apuesta").keydown(function (event) {
+        if ($("input[name='lot_id[]']:checked").length >= 1) {
+
+            var bancas_id = $("input#bancas_id").val();
+            var users_id = $("input#users_id").val();
+            var loterias_id = $("input[name='lot_id[]']:checked").map(function () { return this.value; }).get();
+            var numero = $("input[name=tid_apuesta]").val();
+            var valor = $("input[name=tid_valor]").val();
+
+            __validarLoteriaSelecconada(bancas_id, users_id, loterias_id, numero , valor);
+        }
+    })  ;
+
+    $("#tid_valor, #tid_apuesta").keydown(function (event) {
         var product_row = $("input#product_row_count").val();
         var numero = $("input[name=tid_apuesta]").val();
         var valor = $("input[name=tid_valor]").val();
@@ -428,6 +443,60 @@ $(document).click(function () {
     }
 });
 
+function __validarLoteriaSelecconada(bancas_id, users_id, loterias_id, numero, valor) {
+
+    $.when(
+        $.ajax({
+
+            type: "get",
+            url: '/validarLoteriaSeleccionada',
+            dataType: 'json',
+            data: {
+                bancas_id: bancas_id,
+                users_id: users_id,
+                loterias_id: loterias_id,
+                tid_apuesta: numero,
+                tid_valor: valor
+            },
+        })
+    ).then(function (result) {
+
+
+        if (result.status == 1) {
+            swal(
+                'el siguientes Numeros:  ' + result.numero + ' ',
+                'No pueden ser Jugados en la Loteria   ' + result.loteria + ' ',
+            )
+        }
+        if (result.status == 2) {
+            swal(
+                'Los siguientes Numeros:',
+                '  ' + result.numero + '  en la Loteria   ' + result.loteria + ' ',
+            )
+        }
+        if (result.status == 3) {
+            Lobibox.notify("info", {
+                pauseDelayOnHover: true,
+                size: "mini",
+                rounded: true,
+                delayIndicator: false,
+                continueDelayOnInactiveTab: false,
+                position: "top center",
+                msg: result.numero + '  en la Loteria   ' + result.loteria + ' ',
+            });
+        }
+
+        if (result.status == 4) {
+            Lobibox.alert("error", {
+                title: 'Error de Montos',
+                msg: result.numero,
+            });
+        }
+
+    });
+
+}
+
 function reset_pos_form() {
 
     var banca = $("input#bancas_id").val();
@@ -518,7 +587,6 @@ function MostrarJugadas() {
             usuario: usuario,
         },
         success: function (result) {
-
             $("table#pos_table tbody").html(result.ticketDetalles);
 
             $("input#product_row_count").val(result.row_count);
@@ -531,6 +599,7 @@ function MostrarJugadas() {
 
             __currency_convert_recursively(this_row);
             pos_total_row();
+            activarLoterias(result.row_count);
             // }
         },
     });
@@ -632,15 +701,31 @@ function disable_pos_form_actions() {
 
     // $('div.pos-processing').show();
     // $('#pos-save').attr('disabled', 'true');
-    $('div.pos-form-actions').find('button').attr('disabled', 'true');
+    // $('div.pos-form-actions').find('button').attr('disabled', 'true');
 }
 
 function enable_pos_form_actions() {
     // $('div.pos-processing').hide();
     // $('#pos-save').removeAttr('disabled');
-    $('div.pos-form-actions').find('button').removeAttr('disabled');
+    // $('div.pos-form-actions').find('button').removeAttr('disabled');
 }
 
+//VALIDAR LOTERIAS ACTIVAS
+
+function activarLoterias(jugadas){
+    // alert(jugadas);
+    if (jugadas > 0 || jugadas != null) {
+        $("input[name='lot_id[]']").prop("disabled", false);
+        $('div.pos-form-actions').find('button').removeAttr('disabled');
+
+    } else {
+        $("input[name='lot_id[]']").prop("disabled", true);
+        $("input[name='lot_id[]']").each(function () {
+            this.checked = false;
+        });
+        $('div.pos-form-actions').find('button').attr('disabled', 'true');
+    }
+}
 
 function progressBar() {
 
@@ -666,9 +751,6 @@ function progressBar() {
             $('.progress-bar').attr('data-progress', percentage);
 
             $('.progres-estado').text(estado);
-
-
-
 
             if (percentage >= 0 && percentage <= 50) {
                 $('.progress-bar').addClass('bg-info');

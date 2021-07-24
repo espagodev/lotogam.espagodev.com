@@ -132,8 +132,13 @@ class CajaGeneralController extends Controller
     public function getCajaGeneral(Request $request)
     {
         if ($request->ajax()) {
-            $data = $request->only(['start_date', 'end_date',  'users_id', 'movimientos', 'bancas_id']);
-            $data['users_movimiento_id'] = session()->get('user.id');
+            if (session()->get('user.TipoUsuario') == 2) {
+                $data = $request->only(['start_date', 'end_date',  'users_id', 'bancas_id', 'movimiento']);
+            } else if (session()->get('user.TipoUsuario') == 3) {
+                $data = $request->only(['start_date', 'end_date', 'movimiento']);
+                $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+                $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
+            }
             $data['empresas_id'] = session()->get('user.emp_id');
 
             $cajaGeneral =  $this->marketService->getCajaGeneral($data);
@@ -157,7 +162,13 @@ class CajaGeneralController extends Controller
                     $row->cag_monto . '</span>';
 
                 })
-                ->rawColumns(['cag_fecha_movimiento', 'cag_monto'])
+                ->addColumn('action', function ($row) {
+                    $action = '';
+                    $action .= '<button data-href="' . action('CajaGeneralController@getCajaGeneralDelete', [$row->id]) . '" class="btn btn-xs btn-danger delete_cajaGeneral_button"><i class="fa fa-trash"></i></button>
+                    ';
+                    return  $action;
+                })
+                ->rawColumns(['cag_fecha_movimiento', 'cag_monto', 'action'])
             ->make(true);
 
         }
@@ -174,9 +185,9 @@ class CajaGeneralController extends Controller
     {
         if ($request->ajax()) {
             if (session()->get('user.TipoUsuario') == 2) {
-                $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
+                $data = $request->only(['start_date', 'end_date',  'users_id', 'bancas_id','movimiento']);
             } else if (session()->get('user.TipoUsuario') == 3) {
-                $data = $request->only(['start_date', 'end_date',  'loterias_id']);
+                $data = $request->only(['start_date', 'end_date', 'movimiento']);
                 $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
                 $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
             }
@@ -184,7 +195,6 @@ class CajaGeneralController extends Controller
 
             $getCajaGeneralDetalle = $this->marketService->getCajaGeneralDetalle($data);
 
-            // dd($getCajaGeneralDetalle->totalNeto);
             return [
                 'total_entradas' => $getCajaGeneralDetalle->detalle->total_entrada,
                 'total_salidas' => $getCajaGeneralDetalle->detalle->total_salida,
@@ -192,6 +202,16 @@ class CajaGeneralController extends Controller
                 'total_neto' => $getCajaGeneralDetalle->totalNeto,
                 'balance_inicial' => $getCajaGeneralDetalle->balance_inicial,
             ];
+        }
+    }
+
+    public function getCajaGeneralDelete($id)
+    {
+        if (request()->ajax()) {
+
+            $data = $this->marketService->deleteCajaGeneralDetalle($id);
+
+            return response()->json($data);
         }
     }
 }

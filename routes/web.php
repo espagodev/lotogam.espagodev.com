@@ -118,7 +118,10 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
     Route::resource('bancas', 'BancasController');
     Route::resource('usuarios', 'UsuariosController');
     Route::resource('suscripcion', 'SuscripcionController');
+
+    Route::get('loterias/{loterias_id}', 'LoteriasController@getLoteriaNombre');
     Route::resource('loterias', 'LoteriasController');
+
     Route::resource('tiposDocumento','TiposDocumentoController', ['except' => ['show']]);
     Route::resource('mediosPago', 'MediosPagoController', ['except' => ['show']]);
     Route::resource('modalidades', 'ModalidadesController', ['except' => ['show']]);
@@ -156,6 +159,7 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
      */
 
     Route::get('validar', 'Temp\ApuestaDetalleTempController@getvalidarMontos');
+    Route::get('validarLoteriaSeleccionada', 'Temp\ApuestaDetalleTempController@getvalidarLoteriaSeleccionada');
 
     Route::resource('apuestaTemp', 'Temp\ApuestaTempController', ['only' => ['index']]);
     Route::get('duplicarTicket/{ticket}', 'Temp\ApuestaDetalleTempController@duplicarTicket');

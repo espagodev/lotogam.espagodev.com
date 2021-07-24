@@ -8,7 +8,7 @@
                  <div class="col-sm-3">
                     <div class="btn-group float-sm-right">
                         @if((request()->session()->get('user.TipoUsuario') == 2))
-                        <a href="#" data-href="{{action('CajaGeneralController@create') }}"  class="btn btn-primary waves-effect waves-light nuevo-resultado" rel="tooltip" title="ingresar Resultado" ><i class="fa fa-plus m-1"></i>Nuevo Registro</a>
+                        <a href="#" data-href="{{action('CajaGeneralController@create') }}"  class="btn btn-primary waves-effect waves-light nuevo-registro" rel="tooltip" title="ingresar Registro" ><i class="fa fa-plus m-1"></i>Nuevo Registro</a>
                         @endif
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                                             <th scope="col">Usuario</th>
                                             <th scope="col">Cantidad</th>
                                             <th scope="col">Motivo</th>
-                                            {{-- <th scope="col">Añadido Por</th> --}}
+                                            <th scope="col">Opciones</th>
                                         </tr>
                                     </thead>
                                 </table>

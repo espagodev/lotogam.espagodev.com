@@ -63,6 +63,11 @@ class MarketService
     {
         return $this->makeRequest('GET', "loterias/{$loteria}");
     }
+    //LOTERIA NOMBRE
+    public function getLoteriaNombre($loteria)
+    {
+        return $this->makeRequest('GET', "loterias/{$loteria}");
+    }
 
     public function nuevaLoteria($data)
     {
@@ -1407,5 +1412,11 @@ class MarketService
             [],
             $hasFile = false
         );
+    }
+
+    //BORRAR DETALLE CAJA GENERAL
+    public function deleteCajaGeneralDetalle($id)
+    {
+        return $this->makeRequest('DELETE', "deleteCajaGeneralDetalle/{$id}");
     }
 }

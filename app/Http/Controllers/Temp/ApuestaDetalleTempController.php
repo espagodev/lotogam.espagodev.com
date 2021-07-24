@@ -185,8 +185,6 @@ class ApuestaDetalleTempController extends Controller
 
     public function duplicarTicket(Request $request, $tickets_id)
     {
-
-
         $users_id = request()->session()->get('user.id');
         $bancas_id = request()->session()->get('user.banca');
 
@@ -231,7 +229,7 @@ class ApuestaDetalleTempController extends Controller
 
 
                 $comparacion = Util::compararValores($montoIndividual, $controlNumero);
-                // dump($comparacion, $montoIndividual, $controlNumero);
+
 
                 if ($comparacion == 1) {
                     $arrayVendidos[] = $detalle->apt_apuesta;
@@ -291,5 +289,158 @@ class ApuestaDetalleTempController extends Controller
                 ]);
             }
         }
+    }
+
+    public function getvalidarLoteriaSeleccionada(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $arrayVendidos = array();
+            $arrayIndividual = array();
+            $arrayGlobal = array();
+            $compararMontos = "";
+
+            $ticketsDetalles = $this->marketService->getApuestaDetalleTemp($request->bancas_id, $request->users_id);
+            $parametrosBanca = $this->marketService->getParametrosBanca($request->bancas_id);
+
+            $lotNombre = $request->lot_nombre;
+
+            foreach ($request->loterias_id as  $loteria)
+                {
+
+                    $valores = explode("|", $loteria);
+
+                    $loterias_id = $valores[0];
+                    $superpale = $valores[1];
+                    $horaCierre = $valores[2];
+
+                    if(!empty($ticketsDetalles)) {
+                        foreach ($ticketsDetalles as $detalle) {
+
+                            if ($superpale == 1) {
+                                $modalidades_id = 4;
+                            } else {
+                                $modalidades_id = $detalle->modalidades_id;
+                            }
+
+                            $montoGlobal = Montos::MontoGlobal($parametrosBanca->montos_globales_id, $modalidades_id);
+
+                            $montoIndividual = Montos::MontoIndividual($parametrosBanca->montos_individuales_id, $modalidades_id);
+
+                            $controlNumeroGlobal = Util::ControlNumeroJugado($loterias_id, $bancas_id = null, $users_id = null, $detalle->apt_apuesta);
+
+                            $controlNumero = Util::ControlNumeroJugado($loterias_id, $request->bancas_id, $request->users_id, $detalle->apt_apuesta);
+
+                            $totalApuesta = Util::totalApuesta($detalle->apt_valor, $controlNumero);
+
+                            $comparacion = Util::compararValores($montoIndividual, $controlNumero);
+
+                            if ($comparacion == 1) {
+                                $arrayVendidos[] = $detalle->apt_apuesta;
+                            }
+
+                            if ($totalApuesta > $montoIndividual) {
+                                $arrayIndividual[] = $detalle->apt_apuesta . ' Supera Limite de Apuesta Permitido  de ' . $montoIndividual;
+                            }
+
+                            if ($controlNumeroGlobal >= $montoGlobal) {
+                                $arrayGlobal[] = $detalle->apt_apuesta . ' El Numero no esta Disponible por el Momento';
+                            }
+
+                            if ($montoIndividual > $montoGlobal) {
+                                $compararMontos =  ' El Limite Individual no Puede ser Mayor que el Global, Contacte con el Administrador ';
+                            }
+                        }
+                    }else{
+
+                            /**
+                             * NOMBRE LOTERIA
+                             */
+
+                            $lot_nombre = $this->marketService->getLoteriaNombre($loterias_id);
+                            $lotNombre = $lot_nombre->lot_nombre;
+
+                            /**
+                             * VALIDA SI EL NUMERO TIENE 1 DIGITO LE AÑADE EL 0
+                             */
+                            $NumeroValidado = Util::numeroValido($request->tid_apuesta);
+
+                            /**
+                             * confirmo la modalidad de la jugada
+                             */
+                            $modalidad = Util::modalidad($NumeroValidado);
+
+                            $montoGlobal = Montos::MontoGlobal($parametrosBanca->montos_globales_id, $modalidad);
+
+                            $montoIndividual = Montos::MontoIndividual($parametrosBanca->montos_individuales_id, $modalidad);
+
+                            $controlNumeroGlobal = Util::ControlNumeroJugado($loterias_id, $bancas_id = null, $users_id = null, $request->tid_apuesta);
+
+                            $controlNumero = Util::ControlNumeroJugado($loterias_id, $request->bancas_id, $request->users_id, $request->tid_apuesta);
+
+                            $totalApuesta = Util::totalApuesta($request->tid_valor, $controlNumero);
+
+                            $comparacion = Util::compararValores($montoIndividual, $controlNumero);
+
+                            dump($lotNombre,$modalidad, $montoGlobal, $montoIndividual, $controlNumeroGlobal, $controlNumero, $totalApuesta, $comparacion);
+
+                            if ($comparacion == 1) {
+                                $arrayVendidos[] = $request->tid_apuesta;
+                            }
+
+                            if ($totalApuesta > $montoIndividual) {
+                                $arrayIndividual[] = $request->tid_apuesta . ' Supera Limite de Apuesta Permitido  de ' . $montoIndividual;
+                            }
+
+                            if ($controlNumeroGlobal >= $montoGlobal) {
+                                $arrayGlobal[] = $request->tid_apuesta . ' El Numero no esta Disponible por el Momento';
+                            }
+
+                            if ($montoIndividual > $montoGlobal) {
+                                $compararMontos =  ' El Limite Individual no Puede ser Mayor que el Global, Contacte con el Administrador ';
+                            }
+                    }
+                }
+
+                    $vendidos = trim(implode(" , ", $arrayVendidos));
+                    $vendidos = "'" . $vendidos . "'";
+
+                    $supera = trim(implode(" , ", $arrayIndividual));
+                    $supera = "$supera ";
+
+                    $global = trim(implode(" , ", $arrayGlobal));
+                    $global = "$global ";
+
+                    if (count($arrayVendidos) != "0") {
+                        return response()->json([
+                            'numero' => $vendidos,
+                            'loteria' => $lotNombre,
+                            'status' => 1,
+                        ]);
+                    }
+
+                    if (count($arrayIndividual) != "0") {
+                        return response()->json([
+                            'numero' => $supera,
+                            'loteria' => $request->lot_nombre,
+                            'status' => 2,
+                        ]);
+                    }
+
+                    if (count($arrayGlobal) != "0") {
+                        return response()->json([
+                            'numero' => $global,
+                            'loteria' => $lotNombre,
+                            'status' => 3,
+                        ]);
+                    }
+
+                    if ($compararMontos != "") {
+                        return response()->json([
+                            'numero' => $compararMontos,
+                            'status' => 4,
+                        ]);
+                    }
+            }
     }
 }

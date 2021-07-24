@@ -295,7 +295,7 @@ class ReportesController extends Controller
                     $action .= '<button data-href="' . action('ResultadosController@getResultadosDelete', [$row->id]) . '" class="btn btn-xs btn-danger delete_resultado_button"><i class="fa fa-trash"></i></button>
                     ';
                     return  $action;
-                })
+                }) 
 
 
                 ->rawColumns(['loteria', 'res_fecha', 'action'])

@@ -106,4 +106,10 @@ class LoteriasController extends Controller
 
     }
 
+    public function getLoteriaNombre($id)
+    {
+        $data = $this->marketService->getLoteriaNombre($id);
+        return $data;
+    }
+
 }
