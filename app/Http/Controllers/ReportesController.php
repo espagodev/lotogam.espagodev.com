@@ -220,7 +220,7 @@ class ReportesController extends Controller
                 // ->editColumn('tic_ticket', function ($row) {
                 //     return '<a data-ticket=' . $row->id . ' href="#" class="detalle-ticket">' . $row->tic_ticket  . ' </a>';
                 // })
-                ->editColumn('tic_fecha_sorteo', '{{@format_date($tic_fecha_sorteo)}}')
+                ->editColumn('tic_fecha_sorteo', '{{@format_datetime($tic_fecha_sorteo)}}')
                 // ->editColumn('loteria', '$loteria')
                 ->editColumn('tic_apostado', function ($row) {
                     $tic_apostado = $row->tic_apostado ? $row->tic_apostado : 0;
@@ -241,6 +241,7 @@ class ReportesController extends Controller
                         return '<span class="time-to-now">Anulado</span>';
                     }
                 })
+                ->editColumn('tic_fecha_pago',  '@if(!empty($tic_fecha_pago)) {{@format_datetime($tic_fecha_pago)}} @else   @endif')
                 ->addColumn('action', function ($row) {
                     if ($row->tic_estado == 2) {
                         return '<button type="button" href="' . action('Ticket\TicketController@getTicketPremiado', [$row->id]) . '"  class="btn btn-sm  btn-outline-success view_ticket_modal  no-print">

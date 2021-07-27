@@ -54,6 +54,7 @@ $(document).ready(function() {
                 { data: 'tic_apostado', name: 'tic_apostado', orderable: false, searchable: false  },
                 { data: 'tic_ganado', name: 'tic_ganado', orderable: false, searchable: false  },
                 { data: 'tic_estado', name: 'tic_estado', orderable: false, searchable: false  },
+                { data: 'tic_fecha_pago', name: 'tic_fecha_pago', orderable: false, searchable: false },
                 { data: 'action', name: 'action' , orderable: false, searchable: false  },
          ],
           fnDrawCallback: function(oSettings) {

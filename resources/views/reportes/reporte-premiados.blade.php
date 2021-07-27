@@ -20,6 +20,7 @@
                                             <th>Apostado</th>
                                             <th>Premio</th>
                                             <th>Estado</th>
+                                            <th>Pagado EL</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>

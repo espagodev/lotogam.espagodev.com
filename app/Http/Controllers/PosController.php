@@ -89,6 +89,7 @@ class PosController extends Controller
         }
 
         $fecha = HorarioLoterias::fechaActual();
+        // $fecha = carbon::createFromFormat('d/m/Y', $fechaCalculada)->tz('America/Santo_Domingo')->format('Y-m-d H:i:s');
         $dia = HorarioLoterias::dia($fecha);
         $horaRD = HorarioLoterias::horaRD();
 
@@ -100,10 +101,8 @@ class PosController extends Controller
         $loterias = $this->marketService->getHorarioLoteriasBanca($bancas_id, $dia);
         $parametros =  $this->marketService->getParametrosBanca($bancas_id);
 
-        $fechaActual = now()->format('d/m/Y');
-        // $venta = BancaUtil::progressBar($users_id);
+        $fechaActual = Carbon::now()->tz('America/Santo_Domingo')->format('d/m/Y');
 
-        // $venta_porcentaje = Util::get_progress($venta->venta, $limite_venta);
 
             return view('sale_pos.create')->with([
                 'loterias' => $loterias,
@@ -111,12 +110,9 @@ class PosController extends Controller
                 'horaRD' => $horaRD,
                 'parametros' => $parametros,
                 'fechaActual' => $fechaActual,
-                // 'venta' => $venta->venta,
-                // 'venta_porcentaje' => $venta_porcentaje
+
             ]);
-        //   } catch (\Exception $e) {
-        //     \Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
-        // }
+
     }
 
     /**
