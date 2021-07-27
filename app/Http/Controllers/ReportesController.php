@@ -623,11 +623,12 @@ class ReportesController extends Controller
 
             $output = '';
             foreach ($reporteModalidadesDetalle as $key => $detalles) {
-                $tid_fecha_sorteo =  Carbon::createFromFormat('Y-m-d', $detalles->tid_fecha_sorteo)->format(session('business.date_format'));
+                // $tid_fecha_sorteo =  Carbon::createFromFormat('Y-m-d', $detalles->tid_fecha_sorteo)->format(session('business.date_format'));
+                // $tid_fecha_sorteo =  carbon::createFromFormat('Y-m-d H:i:s', $detalles->tic_fecha_sorteo)->tz('America/Santo_Domingo')->format('Y-m-d');
 
                 $output .= '<tr>' .
                     '<td>' . $detalles->lot_nombre . '</td>' .
-                    '<td>' . $tid_fecha_sorteo . '</td>' .
+                    '<td>' . $detalles->tid_fecha_sorteo . '</td>' .
                     '<td>' . $detalles->tid_apuesta . '</td>' .
                     '<td><span class="display_currency" data-orig-value=' . $detalles->valor . ' data-currency_symbol=true> ' . $detalles->valor . '</span></td>' .
                     '</tr>';
