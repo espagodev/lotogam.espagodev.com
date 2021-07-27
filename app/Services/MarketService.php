@@ -78,7 +78,7 @@ class MarketService
             [],
             $data,
             [],
-            $hasFile = true
+            true
         );
     }
 

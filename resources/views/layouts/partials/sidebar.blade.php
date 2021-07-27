@@ -142,17 +142,15 @@
                 <div class="avatar"><img class="align-self-start mr-3" src="{{ asset('images/avatars/avatar-13.png') }}" alt="user avatar"></div>
                 <div class="media-body">
                 <h6 class="mt-2 user-title">{{ Auth::user()->name }}</h6>
-                <p class="user-subtitle">mccoy@example.com</p>
+                <p class="user-subtitle">{{ Session::get('user.email') }}</p>
                 </div>
             </div>
             </a>
             </li>
             <li class="dropdown-divider"></li>
-            <li class="dropdown-item"><i class="icon-envelope mr-2"></i> Inbox</li>
+            <li class="dropdown-item"><i class="icon-wallet mr-2"></i> Perfil</li>
             <li class="dropdown-divider"></li>
-            <li class="dropdown-item"><i class="icon-wallet mr-2"></i> Account</li>
-            <li class="dropdown-divider"></li>
-            <li class="dropdown-item"><i class="icon-settings mr-2"></i> Setting</li>
+            <li class="dropdown-item"><i class="fa fa-key"></i> Cambiar Contraseña</li>
             <li class="dropdown-divider"></li>
             <li class="dropdown-item"><a href="{{ route('logout') }}"  onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();"><i class="icon-power mr-2"></i> Salir</a>

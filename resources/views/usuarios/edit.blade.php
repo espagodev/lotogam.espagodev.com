@@ -111,7 +111,25 @@
                                         </div>
                                 </div>
                             </div>
+                            <div class="row">
 
+                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                        <div class="form-group">
+                                            <strong>Password:</strong>
+                                            {{-- <input class="form-control{{ $errors->has('emp_usuarios') ? ' is-invalid' : '' }}" name="emp_usuarios" id="emp_usuarios" type="text" value="{{ old('emp_usuarios') }}" > --}}
+                                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Contraseña">
+                                        </div>
+                                         <p>Digita una contraseña solo si quieres cambiar tu contraseña actual.</p>
+                                    </div>
+
+                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <strong>Confirmar Password:</strong>
+                                                {{-- <input class="form-control{{ $errors->has('password-confirm') ? ' is-invalid' : '' }}" name="password-confirm" id="password-confirm" type="text" value="{{ old('password-confirm') }}" > --}}
+                                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Repite la Contraseña">
+                                            </div>
+                                    </div>
+                                </div>
                     </div>
                 </div>
                 <div class="card">

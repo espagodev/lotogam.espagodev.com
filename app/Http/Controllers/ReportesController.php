@@ -120,7 +120,7 @@ class ReportesController extends Controller
                 // ->editColumn('tic_ticket', function ($row) {
                 //     return '<a data-ticket=' . $row->id . ' href="#" class="detalle-ticket">' . $row->tic_ticket  . ' </a>';
                 // })
-                ->editColumn('tic_fecha_sorteo', '{{@format_date($tic_fecha_sorteo)}}')
+                ->editColumn('tic_fecha_sorteo', '{{@format_datetime($tic_fecha_sorteo)}}')
                 ->editColumn('tic_apostado', function ($row) {
                     if ($row->tic_promocion == 1) {
                         $tic_apostado = $row->tic_apostado ? $row->tic_apostado : 0;
@@ -295,7 +295,7 @@ class ReportesController extends Controller
                     $action .= '<button data-href="' . action('ResultadosController@getResultadosDelete', [$row->id]) . '" class="btn btn-xs btn-danger delete_resultado_button"><i class="fa fa-trash"></i></button>
                     ';
                     return  $action;
-                }) 
+                })
 
 
                 ->rawColumns(['loteria', 'res_fecha', 'action'])

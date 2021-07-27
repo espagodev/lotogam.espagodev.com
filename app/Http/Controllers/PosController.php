@@ -137,7 +137,9 @@ class PosController extends Controller
         $data['bancas_id'] =  $bancas_id;
         $data['tic_numeros'] = $request->product_row;
         $data['loterias_id']  = $request->loterias_id;
-        $data['tic_fecha_sorteo']  = $request->tic_fecha_sorteo ? carbon::createFromFormat('d/m/Y', $request->tic_fecha_sorteo)->format('Y-m-d') : Carbon::now()->format('Y-m-d');
+
+        // $data['tic_fecha_sorteo']  =  $request->tic_fecha_sorteo ? carbon::createFromFormat('d/m/Y', $request->tic_fecha_sorteo)->format('Y-m-d') : Carbon::now()->format('Y-m-d');
+        $data['tic_fecha_sorteo']  =  $request->tic_fecha_sorteo ? carbon::createFromFormat('d/m/Y', $request->tic_fecha_sorteo)->tz('America/Santo_Domingo')->format('Y-m-d H:i:s') : (new Carbon(date('Y-m-d H:i:s')))->tz('America/Santo_Domingo')->format('Y-m-d H:i:s');
         $data['tic_promocion']  = $request->tic_promocion;
 
         $ticket_promocion_show = $this->util->ticketPromocionShow();

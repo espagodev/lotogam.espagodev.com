@@ -96,7 +96,7 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::directive('format_datetime', function ($date) {
             if (!empty($date)) {
-                $time_format = 'h:i A';
+                $time_format = 'h:i ';
                 if (session('business.time_format') == 24) {
                     $time_format = 'H:i';
                 }
