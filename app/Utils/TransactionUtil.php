@@ -24,7 +24,7 @@ class TransactionUtil extends Util
      */
     public function getReceiptDetails($tickets_id, $tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular , $ticket_copia)
     {
-
+        dd($tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular, $ticket_copia);
         $il = $invoice_layout;
 
         $output = [

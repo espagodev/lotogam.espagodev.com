@@ -225,6 +225,7 @@ class PosController extends Controller
 
         foreach ($tickets as $ticketIndi) {
             $ticket = $this->marketService->getTicket($ticketIndi);
+            
             $ticketDetalle = $this->marketService->getTicketDetalle($ticketIndi);
             $isAnular = Util::calcularMinutos($ticket[0]->created_at, $banca->ban_tiempo_anular);
             $detalle_ticket[] = $this->transactionUtil->getReceiptDetails($ticketIndi, $ticket, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular, $ticket_copia);
@@ -425,7 +426,7 @@ class PosController extends Controller
                 }
                 $invoice_layout_id = !empty($invoice_layout_id) ? $invoice_layout_id : $banca->app_config_tickets_id;
                 $invoice_layout = $this->bancaUtil->invoiceLayout($empresas_id, $bancas_id, $banca->app_config_tickets_id);
-                dd($invoice_layout);
+
                 $receipt = $this->receiptContent($empresas_id, $bancas_id, $ticket, $printer_type, false, $invoice_layout, $ticket_copia);
 
 
