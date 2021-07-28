@@ -104,7 +104,7 @@ class FormatoTickets
         $output['sorteo_date'] = '';
         if ($il->tcon_show_sorteo == 1 &&  !empty($il->tcon_sorteo_label)) {
             $output['sorteo_label'] = $il->tcon_sorteo_label;
-            $output['sorteo_date'] = Carbon::createFromFormat('Y-m-d', $transaction->tic_fecha_sorteo)->format($il->tcon_date_time_format);
+            $output['sorteo_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $transaction->tic_fecha_sorteo)->format($il->tcon_date_time_format);
         }
 
         $tcon_show_currency = true;
