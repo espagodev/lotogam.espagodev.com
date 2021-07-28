@@ -64,7 +64,7 @@ class TicketController extends Controller
         }
 
         $receipt_details = FormatoTickets::receiptContent($empresas_id, $ticket, $bancas_id, $jugadas, $isAnular);
-        dd($receipt_details);
+        // dd($receipt_details);
         return view('ticket.tiket_detalle')->with(compact('receipt_details', 'tickets_id', 'isAnular', 'promocion','estado'));
     }
 
