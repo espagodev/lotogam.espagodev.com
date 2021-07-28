@@ -425,7 +425,7 @@ class PosController extends Controller
                 }
                 $invoice_layout_id = !empty($invoice_layout_id) ? $invoice_layout_id : $banca->app_config_tickets_id;
                 $invoice_layout = $this->bancaUtil->invoiceLayout($empresas_id, $bancas_id, $banca->app_config_tickets_id);
-
+                dd($invoice_layout);
                 $receipt = $this->receiptContent($empresas_id, $bancas_id, $ticket, $printer_type, false, $invoice_layout, $ticket_copia);
 
 
