@@ -223,7 +223,7 @@ class HomeController extends Controller
             $output = '';
             foreach ($reportePremiados as  $detalle) {
 
-                $tic_fecha_sorteo =  Carbon::createFromFormat('Y-m-d', $detalle->tic_fecha_sorteo)->format('d/m/Y');
+                $tic_fecha_sorteo =  Carbon::createFromFormat('Y-m-d H:i:s', $detalle->tic_fecha_sorteo)->format('d/m/Y');
                 if($detalle->tic_estado == '2'){
                     $output .= '<tr>' .
                     '<td> <a href="' .  action("Ticket\TicketController@getTicketPremiado", [$detalle->id])  . '" class="view_ticket_modal  no-print" >' . $detalle->tic_ticket . '</a></td>' .
