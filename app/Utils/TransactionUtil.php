@@ -24,7 +24,7 @@ class TransactionUtil extends Util
      */
     public function getReceiptDetails($tickets_id, $tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular , $ticket_copia)
     {
-        dd($tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular, $ticket_copia);
+
         $il = $invoice_layout;
 
         $output = [
@@ -104,7 +104,7 @@ class TransactionUtil extends Util
 
         $output['date_label'] = $il->tcon_date_label;
         $output['invoice_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $tickets[0]->tic_fecha_sorteo)->format($il->tcon_date_time_format);
-
+        dd($output, $tickets[0]->tic_fecha_sorteo);
         $output['time_label'] = 'Hora:';
         $output['time_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $tickets[0]->tic_fecha_sorteo)->format('H:i');
 
