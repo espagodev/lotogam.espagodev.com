@@ -75,7 +75,7 @@ class ResultadosController extends Controller
 
         $horaRD = HorarioLoterias::horaRD();
 
-        $dia = HorarioLoterias::dia($fecha);
+        $dia = HorarioLoterias::dia();
 
         // dd($fecha, $loterias_id, $empresa_id, $horaRD, $dia, $fechaActual);
 

@@ -90,7 +90,7 @@ class PosController extends Controller
 
         $fecha = HorarioLoterias::fechaActual();
         // $fecha = carbon::createFromFormat('d/m/Y', $fechaCalculada)->tz('America/Santo_Domingo')->format('Y-m-d H:i:s');
-        $dia = HorarioLoterias::dia($fecha);
+        $dia = HorarioLoterias::dia();
         $horaRD = HorarioLoterias::horaRD();
 
         $bancas_id = request()->session()->get('user.banca');
@@ -325,7 +325,7 @@ class PosController extends Controller
         if ($request->ajax()) {
 
             $empresas_id = session()->get('user.emp_id');
-            $dia = HorarioLoterias::dia(now());
+            $dia = HorarioLoterias::dia();
 
             $horaRD = HorarioLoterias::horaRD();
             $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($empresas_id, $dia);
@@ -361,7 +361,7 @@ class PosController extends Controller
         if ($request->ajax()) {
 
             $empresas_id = session()->get('user.emp_id');
-            $dia = HorarioLoterias::dia(now());
+            $dia = HorarioLoterias::dia();
 
             $horaRD = HorarioLoterias::horaRD();
             $horarioLoteria = HorarioLoterias::getLoteriasSuperPaleDia($empresas_id, $dia);

@@ -19,9 +19,10 @@ class HorarioLoterias
     }
 
     //DIA DE DE LA FECHA SELECCIONADA
-    public static function dia($fecha)
+    public static function dia()
     {
-        return date('N', strtotime($fecha));
+        // return date('N', strtotime($fecha));
+        return  with(new Carbon(strtotime('N')))->tz('America/Santo_Domingo')->format('N');
     }
 
     //FORMATO DE FECHA

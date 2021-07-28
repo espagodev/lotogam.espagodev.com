@@ -47,7 +47,7 @@ class CajaRegistradoraController extends Controller
         $data = $this->marketService->postCajaRegistradora($data);
 
         $fecha = HorarioLoterias::fechaActual();
-        $dia = HorarioLoterias::dia($fecha);
+        $dia = HorarioLoterias::dia();
         $horaRD = HorarioLoterias::horaRD();
 
         $bancas_id = request()->session()->get('user.banca');
