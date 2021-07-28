@@ -437,7 +437,7 @@ class PosController extends Controller
 
                 $output = [
                     'success' => 0,
-                    'msg' => "Algo salió mal, por favor intente de nuevo más tarde aqui"
+                    'msg' => "Algo salió mal, Error al imprimir"
                 ];
             }
 
