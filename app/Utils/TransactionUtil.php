@@ -104,10 +104,10 @@ class TransactionUtil extends Util
 
         $output['date_label'] = $il->tcon_date_label;
         $output['invoice_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $tickets[0]->tic_fecha_sorteo)->format($il->tcon_date_time_format);
-        dd($output, $tickets[0]->tic_fecha_sorteo);
+
         $output['time_label'] = 'Hora:';
         $output['time_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $tickets[0]->tic_fecha_sorteo)->format('H:i');
-
+        dd($output);
 
         if ($il->tcon_show_sorteo == 1 &&  !empty($il->tcon_sorteo_label)) {
             $output['sorteo_label'] = $il->tcon_sorteo_label;
