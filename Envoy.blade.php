@@ -5,7 +5,10 @@
 @include('vendor/autoload.php')
 
 @setup
-     $origin = 'https://espagodev:Y7323529KespG%40@github.com/espagodev/lotogam.espagodev.com.git';
+    //  $origin = 'https://espagodev:Y7323529KespG%40@github.com/espagodev/lotogam.espagodev.com.git';
+    $origin = 'git clone https://github.com/username/repo.git
+                Username: espagodev
+                Password: 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';
     $branch = isset($branch) ? $branch : 'master';
     $app_dir1 = '/var/www';
     $app_dir = '/var/www/lotogam.espagodev.com';
