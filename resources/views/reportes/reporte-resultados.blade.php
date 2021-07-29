@@ -7,17 +7,19 @@
             <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
-                            <table class="table table-bordered table-striped"  id="reporte_resultados">
-                                <thead>
-                                    <tr>
-                                        <th>Loteria</th>
-                                        <th>Fecha</th>
-                                        <th>No 1</th>
-                                        <th>No 2</th>
-                                        <th>No 3</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                             <div class="table-responsive">
+                                <table class="table table-bordered table-striped"  id="reporte_resultados">
+                                    <thead>
+                                        <tr>
+                                            <th>Loteria</th>
+                                            <th>Fecha</th>
+                                            <th>No 1</th>
+                                            <th>No 2</th>
+                                            <th>No 3</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                             </div>
                         </div>
                     </div>
             </div>

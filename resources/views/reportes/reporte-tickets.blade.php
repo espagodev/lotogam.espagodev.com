@@ -10,20 +10,22 @@
             <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <table class="table table-bordered table-striped no-print"  id="reporte_tickets">
-                                <thead>
-                                    <tr>
-                                        <th>Loteria</th>
-                                        <th>Ticket</th>
-                                        <th>Fecha</th>
-                                        <th>Apostado</th>
-                                        <th>Premio</th>
-                                        <th>Estado</th>
-                                        <th>Opciones</th>
+                             <div class="table-responsive">
+                                <table class="table table-bordered table-striped no-print"  id="reporte_tickets">
+                                    <thead>
+                                        <tr>
+                                            <th>Loteria</th>
+                                            <th>Ticket</th>
+                                            <th>Fecha</th>
+                                            <th>Apostado</th>
+                                            <th>Premio</th>
+                                            <th>Estado</th>
+                                            <th>Opciones</th>
 
-                                    </tr>
-                                </thead>
-                            </table>
+                                        </tr>
+                                    </thead>
+                                </table>
+                             </div>
                         </div>
                     </div>
             </div>
