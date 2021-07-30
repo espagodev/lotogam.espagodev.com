@@ -149,7 +149,7 @@ class ReportesController extends Controller
                     if (session()->get('user.TipoUsuario') == 2) {
                         $isAnular = 0;
                     } elseif (session()->get('user.TipoUsuario') == 3) {
-                        $isAnular = BancaUtil::calcularMinutos($row->created_at);
+                        $isAnular = BancaUtil::calcularMinutos($row->tic_fecha_sorteo);
                     }
                     $estado = '';
                     if ($row->tic_estado == 1) {
