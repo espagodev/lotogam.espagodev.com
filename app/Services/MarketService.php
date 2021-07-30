@@ -63,6 +63,8 @@ class MarketService
     {
         return $this->makeRequest('GET', "loterias/{$loteria}");
     }
+
+
     //LOTERIA NOMBRE
     public function getLoteriaNombre($loteria)
     {

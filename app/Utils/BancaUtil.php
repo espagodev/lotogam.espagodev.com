@@ -132,7 +132,7 @@ class BancaUtil
     static function calcularMinutos($fecha_creacion )
     {
         $created = new Carbon($fecha_creacion);
-        $now =  Carbon::now()->toDateTimeString();
+        $now =  (new Carbon(date('Y-m-d H:i:s')))->tz('America/Santo_Domingo')->format('Y-m-d H:i:s');
 
         if ($created->diffInMinutes($now) > self::tiempoAnular()) {
             return 1;

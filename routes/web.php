@@ -119,7 +119,8 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
     Route::resource('usuarios', 'UsuariosController');
     Route::resource('suscripcion', 'SuscripcionController');
 
-    Route::get('loterias/{loterias_id}', 'LoteriasController@getLoteriaNombre');
+    Route::get('loterias/{loteria}', 'LoteriasController@getModificarLoteria');
+    Route::get('getNuevaLoteria', 'LoteriasController@getNuevaLoteria');
     Route::resource('loterias', 'LoteriasController');
 
     Route::resource('tiposDocumento','TiposDocumentoController', ['except' => ['show']]);

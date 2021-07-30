@@ -425,7 +425,8 @@ class Util
     static function calcularMinutos($fecha_creacion, $tiempo_anular)
     {
         $created = new Carbon($fecha_creacion);
-        $now =  Carbon::now()->toDateTimeString();
+        $now =  (new Carbon(date('Y-m-d H:i:s')))->tz('America/Santo_Domingo')->format('Y-m-d H:i:s');
+// dd($created->diffInMinutes($now) > $tiempo_anular);
 
         if ($created->diffInMinutes($now) > $tiempo_anular) {
             return 1;

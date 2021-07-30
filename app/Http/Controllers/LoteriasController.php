@@ -84,32 +84,15 @@ class LoteriasController extends Controller
             ->with('success', ['Loteria Modificada Satisfactoriamente']);
     }
 
-    public function show($id){
-
-        $data = $this->marketService->getLoteria($id);
-        $sorteos = json_decode($data->sorteo, true);
-
-
-        $loteriadata = [
-            'identificador' => $data->identificador,
-            'loteria' => $data->loteria,
-            'abreviado' => $data->abreviado,
-            'sorteols' => $sorteos['l-s'],
-            'sorteod' => $sorteos['d'],
-            'codigo' => $data->codigo,
-            'superpale' => $data->superpale,
-            'imagen' => $data->imagen,
-
-        ];
-
-        return $loteriadata;
-
-    }
-
-    public function getLoteriaNombre($id)
+    public function getNuevaLoteria()
     {
-        $data = $this->marketService->getLoteriaNombre($id);
-        return $data;
+        return view('loterias.modal_create');
     }
 
+    public function getModificarLoteria($id)
+    {
+        $loteria = $this->marketService->getLoteria($id);
+
+        return view('loterias.modal_edit')->with(['loteria' => $loteria]);
+    }
 }

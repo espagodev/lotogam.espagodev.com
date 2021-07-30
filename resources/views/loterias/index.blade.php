@@ -6,7 +6,7 @@
 	   </div>
         <div class="col-sm-3">
             <div class="btn-group float-sm-right">
-                <button type="button" class="btn btn-primary waves-effect waves-primary" data-toggle="modal" data-whatever="Nueva Loteria" data-botton="Guardar" data-target="#nuevo"><i class="fa fa-plus mr-1"></i> Nueva Loteria</button>
+                <button type="button" class="btn btn-primary waves-effect waves-primary nuevo-modal" data-href="{{action('LoteriasController@getNuevaLoteria') }}"><i class="fa fa-plus mr-1"></i> Nueva Loteria</button>
             </div>
         </div>
      </div>
@@ -40,7 +40,7 @@
                                                 <input type="checkbox" data-id="{{$loteria->id}}"  data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" {{ $loteria->lot_estado ? 'checked' : '' }}>
                                             </td>
                                             <td>
-                                                <a href="#" data-toggle="modal"  data-target="#actualizar" data-whatever="Actualizar Loteria"  data-botton="modificar" data-id="{{ $loteria->id }}"  class="btn btn-outline-warning"> <i class="fa fa-pencil"></i></a>
+                                                 <a data-href="{{action('LoteriasController@getModificarComision', [$loteria->id]) }}"  class="btn btn-outline-warning modificar-modal" rel="tooltip" title="Editar Comision" ><i class="fa fa-pencil"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -51,5 +51,13 @@
                 </div>
             </div>
       </div><!--End Row-->
+          <div class="modal fade nuevo_modal" tabindex="-1" role="dialog"
+        aria-labelledby="gridSystemModalLabel">
+    </div>
+    <div class="modal fade modificar_modal" tabindex="-1" role="dialog"
+        aria-labelledby="gridSystemModalLabel">
+    </div>
    @endsection
-   @include("loterias.partials._from")
+@section('scripts')
+ <script src="{{ asset('js/loterias/loteria.js?v=' . $asset_v) }}"></script>
+@endsection

@@ -60,7 +60,7 @@ class TicketController extends Controller
              $isAnular = 0;
         } else if (session()->get('user.TipoUsuario') == 3) {
             $parametros =  $this->marketService->getParametrosBanca($bancas_id);
-            $isAnular = BancaUtil::calcularMinutos($ticket[0]->created_at, $parametros->ban_tiempo_anular);
+            $isAnular = BancaUtil::calcularMinutos($ticket[0]->tic_fecha_sorteo, $parametros->ban_tiempo_anular);
         }
 
         $receipt_details = FormatoTickets::receiptContent($empresas_id, $ticket, $bancas_id, $jugadas, $isAnular);
@@ -91,7 +91,7 @@ class TicketController extends Controller
             $isAnular = 0;
         } else if (session()->get('user.TipoUsuario') == 3) {
             $parametros =  $this->marketService->getParametrosBanca($bancas_id);
-            $isAnular = BancaUtil::calcularMinutos($ticket[0]->created_at, $parametros->ban_tiempo_anular);
+            $isAnular = BancaUtil::calcularMinutos($ticket[0]->tic_fecha_sorteo, $parametros->ban_tiempo_anular);
         }
 
         $receipt_details = FormatoTickets::receiptContent($empresas_id, $ticket, $bancas_id, $jugada, $isAnular );
@@ -154,7 +154,7 @@ class TicketController extends Controller
             $isAnular = 0;
         } else if (session()->get('user.TipoUsuario') == 3) {
             $parametros =  $this->marketService->getParametrosBanca($bancas_id);
-            $isAnular = BancaUtil::calcularMinutos($ticket[0]->created_at, $parametros->ban_tiempo_anular);
+            $isAnular = BancaUtil::calcularMinutos($ticket[0]->tic_fecha_sorteo, $parametros->ban_tiempo_anular);
         }
 
         $receipt_details = FormatoTickets::receiptContent($empresas_id, $ticket, $bancas_id,$jugadas, $isAnular);
@@ -212,7 +212,7 @@ class TicketController extends Controller
             $isAnular = 0;
         } else if (session()->get('user.TipoUsuario') == 3) {
             $parametros =  $this->marketService->getParametrosBanca($bancas_id);
-            $isAnular = BancaUtil::calcularMinutos($ticket[0]->created_at, $parametros->ban_tiempo_anular);
+            $isAnular = BancaUtil::calcularMinutos($ticket[0]->tic_fecha_sorteo, $parametros->ban_tiempo_anular);
         }
 
         $receipt_details = FormatoTickets::receiptContent($empresas_id, $ticket, $bancas_id, $jugadas, $isAnular);

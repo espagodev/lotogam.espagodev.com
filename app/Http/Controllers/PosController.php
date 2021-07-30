@@ -225,7 +225,9 @@ class PosController extends Controller
             $ticket = $this->marketService->getTicket($ticketIndi);
 
             $ticketDetalle = $this->marketService->getTicketDetalle($ticketIndi);
+
             $isAnular = Util::calcularMinutos($ticket[0]->tic_fecha_sorteo, $banca->ban_tiempo_anular);
+
             $detalle_ticket[] = $this->transactionUtil->getReceiptDetails($ticketIndi, $ticket, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular, $ticket_copia);
         }
 
@@ -294,7 +296,7 @@ class PosController extends Controller
         $receipt_printer_type = is_null($printer_type) ? $banca->ban_tipo_impresora : $printer_type;
 
         //calcular el tiempo de anular
-        $isAnular = Util::calcularMinutos($agrupado['ajustes']['created_at'], $banca->ban_tiempo_anular);
+        $isAnular = Util::calcularMinutos($agrupado['ajustes']['tic_fecha_sorteo'], $banca->ban_tiempo_anular);
 
         $detalle_ticket = $this->transactionUtil->getReceiptDetailsAgrupado($agrupado['tickets'], $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $agrupado['detalleTicket'], $agrupado['ajustes'], $agrupado['total'], $isAnular);
 
