@@ -1425,6 +1425,6 @@ class MarketService
     public function deleteCajaGeneralDetalle($id)
     {
         return $this->makeRequest('DELETE', "deleteCajaGeneralDetalle/{$id}");
-    }
+    } 
 
 }
