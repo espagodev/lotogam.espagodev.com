@@ -8,9 +8,9 @@ trait ConsumesExternalServices
 {
     /**
      * Send a request to any service
-     * @return sdtClass|string
+     * @return string
      */
-    public function makeRequest($method, $requestUrl, $queryParams = [], $formParams = [], $headers = [], $hasFile = false)
+    public function makeRequest($method, $requestUrl, $queryParams = [], $formParams = [], $headers = [],  $hasFile = false)
     {
         $client = new Client([
             'base_uri' => $this->baseUri,
@@ -39,7 +39,7 @@ trait ConsumesExternalServices
         ]);
 
         $response = $response->getBody()->getContents();
-
+     
         if (method_exists($this, 'decodeResponse')) {
             $response = $this->decodeResponse($response);
         }
