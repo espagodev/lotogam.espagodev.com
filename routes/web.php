@@ -121,7 +121,7 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
 
     Route::get('loterias/{loteria}', 'LoteriasController@getModificarLoteria');
     Route::get('getNuevaLoteria', 'LoteriasController@getNuevaLoteria');
-    Route::resource('loterias', 'LoteriasController');
+    Route::resource('loterias', 'LoteriasController', ['except' => ['show']]);
 
     Route::resource('tiposDocumento','TiposDocumentoController', ['except' => ['show']]);
     Route::resource('mediosPago', 'MediosPagoController', ['except' => ['show']]);
@@ -250,6 +250,7 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
     //CUADRE DE CAJA
     Route::get('/caja_general/getCajaGeneralDetalle', 'CajaGeneralController@getCajaGeneralDetalle');
     Route::get('/caja_general/getCajaGeneral', 'CajaGeneralController@getCajaGeneral');
+    Route::get('getCajaGeneralDelete/{id}', 'CajaGeneralController@getCajaGeneralDelete');
     Route::resource('cuadre-caja', 'CajaGeneralController', ['except' => ['show']]);
 
 

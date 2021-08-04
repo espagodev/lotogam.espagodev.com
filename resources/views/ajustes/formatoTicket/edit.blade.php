@@ -67,8 +67,9 @@
 
                                                                 <div class="col-xs-12 col-sm-4 col-md-4">
                                                                     <div class="media align-items-center">
-                                                                        <img src="{{ $formato->tcon_logo}}" class="img-fluid">
-                                                                    </div>
+                                                                        <img src="{{$formato->tcon_logo}}" class="customer-img rounded">
+                                                                   </div>
+                                                                    
                                                                 </div>
                                                                  <div class="col-xs-12 col-sm-4 col-md-4">
                                                                     <div class="form-group">

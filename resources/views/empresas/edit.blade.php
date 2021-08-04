@@ -10,7 +10,7 @@
             </div>
         </div>
      </div>
-      <form action="{{ route('empresas.update',$empresa[0]->id) }}" method="post">
+      <form action="{{ route('empresas.update',$empresa->id) }}" enctype="multipart/form-data" method="post">
                     @csrf {{method_field('PUT')}}
             @include('empresas.partials._formEditar')
       </form>

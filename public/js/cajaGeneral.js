@@ -79,6 +79,53 @@ $(document).ready(function() {
         });
     });
 
+    $(document).on('click', 'button.delete_cajaGeneral_button', function() {
+        swal({
+            title: "Estás seguro ?",
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        }).then(willDelete => {
+            if (willDelete) {
+                var href = $(this).data('href');
+                var data = $(this).serialize();
+
+                $.ajax({
+                    method: 'GET',
+                    url: href,
+                    dataType: 'json',
+                    data: data,
+                    success: function(result) {
+
+                        if (result.success === true) {
+                            Lobibox.notify("success", {
+                                pauseDelayOnHover: true,
+                                size: "mini",
+                                rounded: true,
+                                delayIndicator: false,
+                                continueDelayOnInactiveTab: false,
+                                position: "top right",
+                                msg: result.msg,
+                            });
+                            caja_general.ajax.reload();
+                        } else {
+                            Lobibox.notify("error", {
+                                pauseDelayOnHover: true,
+                                size: "mini",
+                                rounded: true,
+                                delayIndicator: false,
+                                continueDelayOnInactiveTab: false,
+                                position: "top right",
+                                msg: result.msg,
+                            });
+                        }
+                    },
+                });
+            }
+        });
+    });
+
+
 });
 
 

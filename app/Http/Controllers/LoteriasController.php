@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\MarketService;
+use App\ConfigEmpresa\ConfigEmpresa;
 use Illuminate\Http\Request;
 
 class LoteriasController extends Controller
@@ -35,21 +36,23 @@ class LoteriasController extends Controller
     public function store(Request $request)
     {
 
-        $rules = [
-            'lot_codigo' => 'required',
-            'lot_nombre' => 'required',
-            'lot_abreviado' => 'required'
-        ];
+        // $rules = [
+        //     'lot_codigo' => 'required',
+        //     'lot_nombre' => 'required',
+        //     'lot_abreviado' => 'required'
+        // ];
 
-        $horaSorteo = $request->input('sorteo');
+        // $horaSorteo = $request->input('sorteo');
+        // $data['lot_sorteo'] = json_encode($horaSorteo);
+        // $data = $this->validate($request, $rules);
+        $data = $request->only('lot_nombre','lot_abreviado','lot_zona_horaria');
+      
 
-        $data = $this->validate($request, $rules);
-
-        $data['lot_sorteo'] = json_encode($horaSorteo);
-
-        $data['lot_imagen'] = fopen($request->lot_imagen->path(), 'r');
-
-
+        if ($request->hasFile('lot_imagen')) {
+            $data['lot_imagen'] = fopen($request->lot_imagen->path(), 'r');
+          
+        }
+        
         $data = $this->marketService->nuevaLoteria($data);
 
         return redirect()
@@ -58,11 +61,11 @@ class LoteriasController extends Controller
             ->with('success', ['Loteria Creada Satisfactoriamente']);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
+       
         $sorteos = $request->input('sorteo');
 
-        $id =  $request->input('loterias_id');
         // $data = $request->all();
         // $data = $request->except('_token');
         $data['lot_nombre'] =  $request->input('lot_nombre');
@@ -72,7 +75,7 @@ class LoteriasController extends Controller
         if ($request->hasFile('lot_imagen')) {
             $data['lot_imagen'] = fopen($request->lot_imagen->path(), 'r');
         }
-        $data['lot_sorteo'] = json_encode($sorteos);
+        // $data['lot_sorteo'] = json_encode($sorteos);
 
 
         $this->marketService->ModificarLoteria($id, $data);
@@ -86,13 +89,19 @@ class LoteriasController extends Controller
 
     public function getNuevaLoteria()
     {
-        return view('loterias.modal_create');
+        $countLoterias = $this->marketService->getTotalLoterias();
+        $totalLoterias = json_decode($countLoterias);
+        $zonasHoraria = ConfigEmpresa::zonaHoraria();
+
+        return view('loterias.modal_create')->with(['zonasHoraria' => $zonasHoraria, 'totalLoterias' => $totalLoterias ]);
     }
 
-    public function getModificarLoteria($id)
+    public function getModificarLoteria($id) 
     {
+        $zonasHoraria = ConfigEmpresa::zonaHoraria();
         $loteria = $this->marketService->getLoteria($id);
+        $sorteos = json_decode($loteria->lot_sorteo, true);
 
-        return view('loterias.modal_edit')->with(['loteria' => $loteria]);
+        return view('loterias.modal_edit')->with(['loteria' => $loteria,'sorteos' => $sorteos,'zonasHoraria' => $zonasHoraria]);
     }
 }

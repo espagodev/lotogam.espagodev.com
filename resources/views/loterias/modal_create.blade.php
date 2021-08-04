@@ -1,11 +1,11 @@
-<div class="modal-dialog" role="document">
+<div class="modal-dialog modal-lg" role="document">
         <div class="modal-content border-info">
 
             <div class="modal-header bg-info">
                 <h3 class="modal-title text-white">Nueva Loteria</h3>
                 <button type="button" class="close text-white no-print" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-            <form method="post" action="{{ route('loterias.store')}}"  id="store">
+            <form method="post" action="{{ route('loterias.store')}}"  id="store" enctype="multipart/form-data">
              @csrf
              <div class="modal-body">
                    @include('loterias.partials.form_create')
@@ -19,7 +19,10 @@
                 </div>
              </form>
         </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
 
+</div><!-- /.modal-dialog -->
+@section('scripts')
+{{-- <script src="{{ asset('js/loterias/loteria_nueva.js?v=' . $asset_v) }}"></script> --}}
+@endsection
 
 

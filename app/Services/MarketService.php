@@ -58,6 +58,11 @@ class MarketService
         return $this->makeRequest('GET', 'loterias');
     }
 
+    public function getTotalLoterias()
+    {
+        return $this->makeRequest('GET', 'getTotalLoterias');
+    }
+
     //LOTERIAS
     public function getLoteria($loteria)
     {
@@ -80,7 +85,7 @@ class MarketService
             [],
             $data,
             [],
-            true
+            $hasFile = true,
         );
     }
 
@@ -89,7 +94,7 @@ class MarketService
     {
 
         $data['_method'] = 'PUT';
-
+      
         return $this->makeRequest(
             'POST',
             "loterias/{$loteria}",
@@ -357,14 +362,14 @@ class MarketService
 
     public function nuevaEmpresa($data)
     {
-
+       
         return $this->makeRequest(
             'POST',
             "empresas",
             [],
             $data,
             [],
-            true
+            $hasFile = true, 
         );
     }
 
@@ -373,7 +378,7 @@ class MarketService
     {
 
         $data['_method'] = 'PUT';
-
+        
         return $this->makeRequest(
             'POST',
             "empresas/{$empresa}",
@@ -1421,4 +1426,5 @@ class MarketService
     {
         return $this->makeRequest('DELETE', "deleteCajaGeneralDetalle/{$id}");
     }
+
 }

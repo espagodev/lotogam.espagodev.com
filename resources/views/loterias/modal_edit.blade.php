@@ -1,11 +1,10 @@
-<div class="modal-dialog" role="document">
+<div class="modal-dialog modal-lg" role="document">
         <div class="modal-content border-warning">
-
             <div class="modal-header bg-warning">
                 <h3 class="modal-title text-white">Modificar Loteria</h3>
                 <button type="button" class="close text-white no-print" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-            <form method="post" action="{{ route('loterias.update', $loteria->id)}}"  id="store">
+            <form method="post" action="{{ route('loterias.update', $loteria->id)}}" enctype="multipart/form-data" id="store">
              @csrf {{method_field('PUT')}}
                 <div class="modal-body">
                     @include('loterias.partials.form_edit')

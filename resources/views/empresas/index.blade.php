@@ -20,6 +20,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th scope="col">Logo</th>
                                             <th scope="col">Nombre Empresa</th>
                                             <th scope="col">Telefono</th>
                                             <th scope="col">Direccion</th>
@@ -31,6 +32,11 @@
                                     <tbody>
                                         @foreach($empresas as $key => $empresa)
                                         <tr>
+                                            <td>
+                                                <div class="media align-items-center">
+                                                     <img src="{{$empresa->emp_imagen}}" class="customer-img rounded">
+                                                </div>
+                                            </td>
                                             <td>{{ $empresa->emp_nombre }}</td>
                                             <td>{{ $empresa->emp_telefono }}</td>
                                             <td>{{ $empresa->emp_direccion }}</td>

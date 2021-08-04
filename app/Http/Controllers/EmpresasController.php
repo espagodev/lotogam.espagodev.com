@@ -73,19 +73,19 @@ class EmpresasController extends Controller
             ->with('success', ['Empresa Creada Satisfactoriamente']);
     }
 
-    public function edit($empresa)
+    public function edit($id)
     {
 
         //SOLICITUDES GET A LA API
         $documentos = $this->marketService->getTipoDocumento();
         $monedas = $this->marketService->getMonedas();
-        $empresa = $this->marketService->getEmpresaDetalle($empresa);
+        $empresa = $this->marketService->getEmpresaDetalle($id);
         //HELPER
         $zonasHoraria = ConfigEmpresa::zonaHoraria();
         $formatoFechas = ConfigEmpresa::formatoFecha();
         $formatoHoras = ConfigEmpresa::formatoHora();
         $ubicacionSiombolos = ConfigEmpresa::ubicacionSimboloMoneda();
-        // dd($empresa);
+        // dd($empresa,$documentos,$monedas,$zonasHoraria,$formatoFechas,$formatoHoras,$ubicacionSiombolos);
         return view('empresas.edit')->with(compact('empresa',
             'documentos',
             'zonasHoraria',
