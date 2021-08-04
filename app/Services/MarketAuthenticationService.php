@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Traits\ConsumesExternalServices;
-use App\Traits\InteractsWithMarketResponses;
+use App\Traits\InteractsWithmarketResponses;
 
 class MarketAuthenticationService
 {
