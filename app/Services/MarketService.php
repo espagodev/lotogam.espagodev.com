@@ -90,20 +90,19 @@ class MarketService
     }
 
     //Modificar Loteria
-    public function ModificarLoteria($loteria, $data)
-    {
-
-        $data['_method'] = 'PUT';
+    // public function ModificarLoteria($loteria, $data)
+    // {
+    //     $data['_method'] = 'PUT';
       
-        return $this->makeRequest(
-            'POST',
-            "loterias/{$loteria}",
-            [],
-            $data,
-            [],
-            $hasFile = isset($data['lot_imagen'])
-        );
-    }
+    //     return $this->makeRequest(
+    //         'POST',
+    //         "loterias/{$loteria}",
+    //         [],
+    //         $data,
+    //         [],
+    //         $hasFile = isset($data['lot_imagen'])
+    //     );
+    // }
 
 
     public function nuevaLoteriaSuperpale($data)
