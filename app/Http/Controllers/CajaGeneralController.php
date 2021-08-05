@@ -163,11 +163,11 @@ class CajaGeneralController extends Controller
 
                 })
                 ->addColumn('action', function ($row) {
-                    return '<button type="button" data-href="'.action('CajaGeneralController@getCajaGeneralDelete', [$row->id]) .'" class="btn btn-sm btn-danger delete_cajaGeneral_button"><i class="fa fa-trash" aria-hidden="true"></i></button>';
-                    // $action = '';
-                    // $action .= '<button data-href="' . action('CajaGeneralController@getCajaGeneralDelete', [$row->id]) . '" class="btn btn-xs btn-danger delete_cajaGeneral_button"><i class="fa fa-trash"></i></button>
-                    // ';
-                    // return  $action;
+                    
+                    if (session()->get('user.TipoUsuario') == 2) {
+                        return '<button type="button" data-href="'.action('CajaGeneralController@getCajaGeneralDelete', [$row->id]) .'" class="btn btn-sm btn-danger delete_cajaGeneral_button"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                    } 
+                   
                 })
                 ->rawColumns(['cag_fecha_movimiento', 'cag_monto', 'action'])
             ->make(true);
@@ -195,14 +195,15 @@ class CajaGeneralController extends Controller
             $data['empresas_id'] = session()->get('user.emp_id');
             // dd($data);
             $getCajaGeneralDetalle = $this->marketService->getCajaGeneralDetalle($data);
-
-              $total_neto =   ($getCajaGeneralDetalle->balance_inicial + $getCajaGeneralDetalle->detalle->total_entrada + $getCajaGeneralDetalle->totalNeto - $getCajaGeneralDetalle->detalle->total_salida);
+// dd($getCajaGeneralDetalle);
+            //   $total_neto =   ($getCajaGeneralDetalle->balance_inicial + $getCajaGeneralDetalle->detalle->total_entrada + $getCajaGeneralDetalle->totalNeto - $getCajaGeneralDetalle->detalle->total_salida);
 
             return [
                 'total_entradas' => $getCajaGeneralDetalle->detalle->total_entrada,
                 'total_salidas' => $getCajaGeneralDetalle->detalle->total_salida,
                 'total_cupo' => $getCajaGeneralDetalle->detalle->total_cupo,
-                'total_neto' => $total_neto,
+                // 'total_venta' => $getCajaGeneralDetalle->detalle->total_venta,
+                'balance_final' => $getCajaGeneralDetalle->balance_final,
                 'balance_inicial' => $getCajaGeneralDetalle->balance_inicial,
             ];
         }

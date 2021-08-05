@@ -147,7 +147,8 @@ function getCajaGeneral() {
     $('.total_entradas').html(loader);
     $('.total_salidas').html(loader);
     $('.total_cupo').html(loader);
-    $('.total_neto').html(loader);
+    $('.total_venta').html(loader);
+    $('.balance_final').html(loader);
 
 
 
@@ -161,7 +162,8 @@ function getCajaGeneral() {
             $('.total_entradas').html(__currency_trans_from_en(data.total_entradas, true));
             $('.total_salidas').html(__currency_trans_from_en(data.total_salidas, true));
             $('.total_cupo').html(__currency_trans_from_en(data.total_cupo, true));
-            $('.total_neto').html(__currency_trans_from_en(data.total_neto, true));
+            $('.total_venta').html(__currency_trans_from_en(data.total_venta, true));
+            $('.balance_final').html(__currency_trans_from_en(data.balance_final, true));
 
         },
     });

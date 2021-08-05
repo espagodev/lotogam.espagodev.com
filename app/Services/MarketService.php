@@ -1399,6 +1399,7 @@ class MarketService
      */
     public function getCajaGeneral($data)
     {
+       
         return $this->makeRequest('GET', "getCajaGeneral", $data);
     }
 
