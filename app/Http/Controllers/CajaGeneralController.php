@@ -207,7 +207,7 @@ class CajaGeneralController extends Controller
                 'total_salidas' => $getCajaGeneralDetalle->detalle->total_salida,
                 'total_cupo' => $getCajaGeneralDetalle->detalle->total_cupo,
                 'total_venta' => $total_venta,
-                'balance_final' => $balance_final,
+                'balance_final' => $balance_final + $balance_inicial_anterior,
                 'balance_inicial' => $balance_inicial + $balance_inicial_anterior,
             ];
         }
