@@ -200,14 +200,15 @@ class CajaGeneralController extends Controller
                 $balance_inicial = $getCajaGeneralDetalle->balanceInicial->balance_inicial + $getCajaGeneralDetalle->balanceInicial->caja_inicial;
                 $balance_final =  $getCajaGeneralDetalle->balanceFinal->balance_final + $getCajaGeneralDetalle->balanceFinal->caja_final + $balance_inicial;
                 $total_venta = $getCajaGeneralDetalle->balanceFinal->balance_final;
-               
+                $balance_inicial_anterior = $getCajaGeneralDetalle->balanceAnteriror->balance_inicial + $getCajaGeneralDetalle->balanceAnteriror->caja_inicial;
+
                 return [
                 'total_entradas' => $getCajaGeneralDetalle->detalle->total_entrada,
                 'total_salidas' => $getCajaGeneralDetalle->detalle->total_salida,
                 'total_cupo' => $getCajaGeneralDetalle->detalle->total_cupo,
                 'total_venta' => $total_venta,
                 'balance_final' => $balance_final,
-                'balance_inicial' => $balance_inicial,
+                'balance_inicial' => $balance_inicial + $balance_inicial_anterior,
             ];
         }
     }
