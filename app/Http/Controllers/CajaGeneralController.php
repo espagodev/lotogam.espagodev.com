@@ -197,14 +197,17 @@ class CajaGeneralController extends Controller
             $getCajaGeneralDetalle = $this->marketService->getCajaGeneralDetalle($data);
 // dd($getCajaGeneralDetalle);
             //   $total_neto =   ($getCajaGeneralDetalle->balance_inicial + $getCajaGeneralDetalle->detalle->total_entrada + $getCajaGeneralDetalle->totalNeto - $getCajaGeneralDetalle->detalle->total_salida);
-
-            return [
+                $balance_inicial = $getCajaGeneralDetalle->balanceInicial->balance_inicial + $getCajaGeneralDetalle->balanceInicial->caja_inicial;
+                $balance_final =  $getCajaGeneralDetalle->balanceFinal->balance_final + $getCajaGeneralDetalle->balanceFinal->caja_final + $balance_inicial;
+                $total_venta = $getCajaGeneralDetalle->balanceFinal->balance_final;
+               
+                return [
                 'total_entradas' => $getCajaGeneralDetalle->detalle->total_entrada,
                 'total_salidas' => $getCajaGeneralDetalle->detalle->total_salida,
                 'total_cupo' => $getCajaGeneralDetalle->detalle->total_cupo,
-                // 'total_venta' => $getCajaGeneralDetalle->detalle->total_venta,
-                'balance_final' => $getCajaGeneralDetalle->balance_final,
-                'balance_inicial' => $getCajaGeneralDetalle->balance_inicial,
+                'total_venta' => $total_venta,
+                'balance_final' => $balance_final,
+                'balance_inicial' => $balance_inicial,
             ];
         }
     }

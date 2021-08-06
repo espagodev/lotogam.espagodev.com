@@ -628,9 +628,10 @@ class ReportesController extends Controller
 
                 $output .= '<tr>' .
                     '<td>' . $detalles->lot_nombre . '</td>' .
-                    '<td>' . $detalles->tid_fecha_sorteo . '</td>' .
+                    
                     '<td>' . $detalles->tid_apuesta . '</td>' .
                     '<td><span class="display_currency" data-orig-value=' . $detalles->valor . ' data-currency_symbol=true> ' . $detalles->valor . '</span></td>' .
+                    '<td>' . $detalles->tid_fecha_sorteo . '</td>' .
                     '</tr>';
             }
 

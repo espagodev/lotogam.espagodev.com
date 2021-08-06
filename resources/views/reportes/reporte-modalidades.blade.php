@@ -85,18 +85,20 @@
 
                     <div class="card">
                         <div class="card-body">
-                             <table class="table table-sm table-striped  fixed_header">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">Loteria</th> 
-                                        <th class="text-center">Fecha</th>
-                                        <th class="text-center">Numero</th>
-                                        <th class="text-center">Apuesta</th>
-                                    </tr>
-                                </thead>
-                                 <tbody class="detalle">
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-striped  fixed_header">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">Loteria</th>                                         
+                                            <th class="text-left">Numero</th>
+                                            <th class="text-left">Apuesta</th>
+                                            <th class="text-left">Fecha</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="detalle">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
             </div>
