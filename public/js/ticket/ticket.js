@@ -139,7 +139,6 @@ $(document).ready(function() {
 
                             $('div.anular_modal').modal('hide');
 
-
                             Lobibox.notify("success", {
                                 pauseDelayOnHover: true,
                                 size: "mini",

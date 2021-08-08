@@ -150,6 +150,7 @@ class PosController extends Controller
         if ($validarHoracierreLoteria) {
             return  $output = ['error' => 1, 'mensaje' => 'La Loteria no Esta Disponible Para Realizar Jugadas'];
         }
+        // dd($data, Carbon::now()->tz('America/Santo_Domingo')->format('Y-m-d H:i:s'));
         $ticket = $this->marketService->postNuevoTicket($data);
         $tickets = $ticket->ticket;
 
