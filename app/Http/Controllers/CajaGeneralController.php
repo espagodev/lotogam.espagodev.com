@@ -193,22 +193,23 @@ class CajaGeneralController extends Controller
                 $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
             }
             $data['empresas_id'] = session()->get('user.emp_id');
-            // dd($data);
+            
             $getCajaGeneralDetalle = $this->marketService->getCajaGeneralDetalle($data);
 // dd($getCajaGeneralDetalle);
             //   $total_neto =   ($getCajaGeneralDetalle->balance_inicial + $getCajaGeneralDetalle->detalle->total_entrada + $getCajaGeneralDetalle->totalNeto - $getCajaGeneralDetalle->detalle->total_salida);
-                $balance_inicial = $getCajaGeneralDetalle->balanceInicial->balance_inicial + $getCajaGeneralDetalle->balanceInicial->caja_inicial;
-                $balance_final =  $getCajaGeneralDetalle->balanceFinal->balance_final + $getCajaGeneralDetalle->balanceFinal->caja_final + $balance_inicial;
-                $total_venta = $getCajaGeneralDetalle->balanceFinal->balance_final;
-                $balance_inicial_anterior = $getCajaGeneralDetalle->balanceAnteriror->balance_inicial + $getCajaGeneralDetalle->balanceAnteriror->caja_inicial;
+                // $balance_inicial = $getCajaGeneralDetalle->balanceInicial->balance_inicial + $getCajaGeneralDetalle->balanceInicial->caja_inicial;
+                // $balance_final =  $getCajaGeneralDetalle->balanceFinal->balance_final + $getCajaGeneralDetalle->balanceFinal->caja_final + $balance_inicial;
+                // $total_venta = $getCajaGeneralDetalle->balanceFinal->balance_final;
+                // $balance_inicial_anterior = $getCajaGeneralDetalle->balanceAnteriror->balance_inicial + $getCajaGeneralDetalle->balanceAnteriror->caja_inicial;
 
                 return [
-                'total_entradas' => $getCajaGeneralDetalle->detalle->total_entrada,
-                'total_salidas' => $getCajaGeneralDetalle->detalle->total_salida,
-                'total_cupo' => $getCajaGeneralDetalle->detalle->total_cupo,
-                'total_venta' => $total_venta,
-                'balance_final' => $balance_final + $balance_inicial_anterior,
-                'balance_inicial' => $balance_inicial + $balance_inicial_anterior,
+                'balance_inicial' => $getCajaGeneralDetalle->balance_inicial,
+                'total_entradas' => $getCajaGeneralDetalle->total_entradas,
+                'total_salidas' => $getCajaGeneralDetalle->total_salidas,
+                // 'total_cupo' => $getCajaGeneralDetalle->total_cupo,
+                'total_venta' => $getCajaGeneralDetalle->total_venta_neta,
+                'balance_final' => $getCajaGeneralDetalle->balance_final,
+                
             ];
         }
     }
