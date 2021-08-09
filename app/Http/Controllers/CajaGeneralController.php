@@ -146,9 +146,7 @@ class CajaGeneralController extends Controller
 
             return $datatable = DataTables::of($cajaGeneral)
                 ->editColumn('cag_fecha_movimiento', function ($row) {
-
                     return $this->util->format_date($row->cag_fecha_movimiento, true);
-
                 })
                 ->editColumn('bancas_id', function ($row) {
                     return  $row->ban_cod . ' - ' . $row->ban_nombre;
@@ -195,21 +193,21 @@ class CajaGeneralController extends Controller
             $data['empresas_id'] = session()->get('user.emp_id');
             
             $getCajaGeneralDetalle = $this->marketService->getCajaGeneralDetalle($data);
-// dd($getCajaGeneralDetalle);
+
             //   $total_neto =   ($getCajaGeneralDetalle->balance_inicial + $getCajaGeneralDetalle->detalle->total_entrada + $getCajaGeneralDetalle->totalNeto - $getCajaGeneralDetalle->detalle->total_salida);
                 // $balance_inicial = $getCajaGeneralDetalle->balanceInicial->balance_inicial + $getCajaGeneralDetalle->balanceInicial->caja_inicial;
                 // $balance_final =  $getCajaGeneralDetalle->balanceFinal->balance_final + $getCajaGeneralDetalle->balanceFinal->caja_final + $balance_inicial;
                 // $total_venta = $getCajaGeneralDetalle->balanceFinal->balance_final;
                 // $balance_inicial_anterior = $getCajaGeneralDetalle->balanceAnteriror->balance_inicial + $getCajaGeneralDetalle->balanceAnteriror->caja_inicial;
 
+              
                 return [
                 'balance_inicial' => $getCajaGeneralDetalle->balance_inicial,
                 'total_entradas' => $getCajaGeneralDetalle->total_entradas,
                 'total_salidas' => $getCajaGeneralDetalle->total_salidas,
                 // 'total_cupo' => $getCajaGeneralDetalle->total_cupo,
                 'total_venta' => $getCajaGeneralDetalle->total_venta_neta,
-                'balance_final' => $getCajaGeneralDetalle->balance_final,
-                
+                'balance_final' => $getCajaGeneralDetalle->balance_final
             ];
         }
     }

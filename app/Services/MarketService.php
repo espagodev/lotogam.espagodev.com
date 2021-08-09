@@ -1427,4 +1427,17 @@ class MarketService
         return $this->makeRequest('DELETE', "deleteCajaGeneralDetalle/{$id}");
     } 
 
+     /**
+     * BALANCES
+     */
+    public function getBalances($data)
+    {
+      
+        return $this->makeRequest('GET', "getBalances", $data);
+    }
+
+    public function getBalanceDetalle($data)
+    {
+        return $this->makeRequest('GET', "getBalanceDetalle", $data);
+    }
 }

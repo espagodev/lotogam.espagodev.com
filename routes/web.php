@@ -253,6 +253,7 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
     Route::get('getCajaGeneralDelete/{id}', 'CajaGeneralController@getCajaGeneralDelete');
     Route::resource('cuadre-caja', 'CajaGeneralController', ['except' => ['show']]);
 
-
+    //BALANCE
+    Route::get('/balance/getBalance', 'BalanceController@getBalances');
 
 });
