@@ -5,16 +5,16 @@ $(document).ready(function() {
             $('#spr_date_filter span').val(
                 start.format(moment_date_format) + ' ~ ' + end.format(moment_date_format)
             );
-            // caja_general.ajax.reload();
-            // balance_table.ajax.reload();
+            caja_general.ajax.reload();
+            balance_diario_datatable.ajax.reload();
             $('.nav-tabs li.active').find('a[data-toggle="tab"]').trigger('shown.bs.tab');
             getCajaGeneral();
 
         });
         $('#spr_date_filter').on('cancel.daterangepicker', function(ev, picker) {
             $('#spr_date_filter').val('');
-            // caja_general.ajax.reload();
-            // balance.ajax.reload();
+            caja_general.ajax.reload();
+            balance_diario_datatable.ajax.reload();
             $('.nav-tabs li.active').find('a[data-toggle="tab"]').trigger('shown.bs.tab');
             getCajaGeneral();
  
@@ -23,10 +23,10 @@ $(document).ready(function() {
 
     }
 
-    $('#caja_general,  #bancas_id, #users_id, #movimiento').change(
+    $('#caja_general_table, #balance_diario_table, #bancas_id, #users_id, #movimiento').change(
         function() {
-            // caja_general.ajax.reload();
-            // balance_table.ajax.reload();
+            caja_general.ajax.reload();
+            balance_diario_datatable.ajax.reload();
             $('.nav-tabs li.active').find('a[data-toggle="tab"]').trigger('shown.bs.tab');
             getCajaGeneral();
 
