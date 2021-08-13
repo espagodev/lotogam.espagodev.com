@@ -49,6 +49,7 @@
                         </div>
                         <div class="ml-auto bt-switch">
                             <a class="btn btn-outline-warning btn-sm" href="{{route('usuarios.edit',$usuario->id)}}">Modificar</a>
+                            <a class="btn btn-outline-info btn-sm" href="{{route('usuariosLoterias')}}">Loterias</a>
                              {{-- <input type="checkbox" data-id="{{$usuario->id}}" {{ $usuario->estado ? 'checked' : '' }} data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" > --}}
                         </div>
                     </div>

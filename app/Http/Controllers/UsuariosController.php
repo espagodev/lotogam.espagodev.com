@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\MarketService;
 use App\Utils\Util;
+use Yajra\DataTables\Facades\DataTables;
 
 class UsuariosController extends Controller
 {
@@ -144,14 +145,43 @@ class UsuariosController extends Controller
     }
 
     public function getusuarios(Request $request)
-{
-    try {
-        $bancas_id = $request->input('bancas_id');
-            $usuarios  = $this->marketService->getUsuariosBanca($bancas_id);
-        // $response = ['data' => $areas];
-    } catch (\Exception $exception) {
-        return response()->json([ 'message' => 'Hubo un error al recuperar los registros.' ], 500);
+    {
+        try {
+            $bancas_id = $request->input('bancas_id');
+                $usuarios  = $this->marketService->getUsuariosBanca($bancas_id);
+            // $response = ['data' => $areas];
+        } catch (\Exception $exception) {
+            return response()->json([ 'message' => 'Hubo un error al recuperar los registros.' ], 500);
+        }
+        return response()->json($usuarios);
     }
-    return response()->json($usuarios);
-}
+
+    public function usuariosLoterias(Request $request)
+    {
+        $empresa  =   session()->get('user.emp_id');
+
+        if (request()->ajax()) {
+
+            $loteriasEmpresa  = $this->marketService->getLoteriasEmpresaFaltantes($empresa);
+
+            return DataTables::of($loteriasEmpresa)
+            ->addColumn('horario', function ($row) {
+                    if ($row->loe_estado != null) { 
+                        return '<button type="button" data-href="' . action('EmpresaLoteriasController@getModificarHorario', [$row->id]) . '"  class="btn btn-sm btn-outline-info btn-modal"
+                        data-container=".view_register"><i class="fa fa-clock-o"></i> </button>
+                            ';
+                    }
+                })
+                 ->addColumn(
+                     'action',
+                    '<button type="button" data-href="{{action(\'EmpresaLoteriasController@activarDesactivarLoteria\', [$id])}}" class="btn btn-sm activar-inactivar-loteria @if($loe_estado) btn-danger @else btn-success @endif"><i class="fa fa-power-off"></i> @if($loe_estado) Inactivar Loteria @else Activar Loteria @endif </button>'
+
+                )
+                ->rawColumns(['action', 'horario'])
+                ->make(true);
+        }
+
+        
+        return view('usuarios.loterias');
+    }
 }
