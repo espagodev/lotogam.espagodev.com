@@ -69,9 +69,9 @@ class BalanceController extends Controller
                     return '<span class="display_currency" data-currency_symbol="true">' .
                         $row->cgc_total_venta_neta . '</span>';
                 })
-                ->editColumn('cgc_total_pagados', function ($row) {
+                ->editColumn('cgc_total_premios', function ($row) {
                     return '<span class="display_currency" data-currency_symbol="true">' .
-                        $row->cgc_total_pagados . '</span>';
+                        $row->cgc_total_premios . '</span>';
                 })
                 ->editColumn('cgc_balance_final', function ($row) {
                     return '<span class="display_currency" data-currency_symbol="true">' .
@@ -85,7 +85,7 @@ class BalanceController extends Controller
                     return $this->util->format_date($row->cgc_fecha_movimiento, true);
                 })
 
-                ->rawColumns([ 'cgc_balance_inicial','cgc_total_entradas','cgc_total_salidas','cgc_total_venta','cgc_total_venta_neta','cgc_total_comisiones','cgc_total_pagados','cgc_balance_final','cgc_fecha_movimiento'])
+                ->rawColumns([ 'cgc_balance_inicial','cgc_total_entradas','cgc_total_salidas','cgc_total_venta','cgc_total_venta_neta','cgc_total_comisiones','cgc_total_premios','cgc_balance_final','cgc_fecha_movimiento'])
             ->make(true);
 
         }

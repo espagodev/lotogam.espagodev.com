@@ -73,7 +73,7 @@
             });
     });
 
-    $(document).on('click', 'button.activar-inactivar-loteria', function(){
+     $(document).on('click', 'button.activar-inactivar-loteria', function(){
         swal({
             title: "Estás seguro ?",
             icon: 'warning',
@@ -107,12 +107,7 @@
                                         });
                                 loterias.ajax.reload();
                         }
-                        // if (result.success == true) {
-                        //     Lobibox.success(result.msg);
-                        //     loterias.ajax.reload();
-                        // } else {
-                        //     toastr.error(result.msg);
-                        // }
+
                     },
                 });
             }

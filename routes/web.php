@@ -96,6 +96,7 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
         Route::resource('ajustesTicket', 'AppEsquemaTicketController');
         Route::get('ajustesComunes', 'EmpresasController@ajustesComunes')->name('ajustesComunes');
         Route::resource('premios', 'PremiosController');
+        Route::get('ajustesLoterias/{loteria}', 'EmpresaLoteriasController@getModificarHorario');
         Route::resource('ajustesLoterias', 'EmpresaLoteriasController');
     });
 
@@ -140,12 +141,16 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
 
 
     Route::get('ajustesBanca/montos/{banca}', 'BancaMontosController@index')->name('bancaMonto');
-
     Route::get('ajustesBanca/impresoraPos/{banca}', 'BancaImpresoraPosController@index')->name('bancaImpresoraPos');
 
 
     Route::get('ajustesBanca/loterias/{banca}', 'BancaLoteriasController@index')->name('bancaLoterias');
+    Route::get('getModificarHorarioBanca/{loteria}/{banca}', 'BancaLoteriasController@getModificarHorarioBanca');
+    Route::get('activarDesactivarBancaLoteria/{loterias_id}/{banca}', 'BancaLoteriasController@activarDesactivarBancaLoteria');
+    Route::put('ajustesBanca/loterias/{loterias_id}', 'BancaLoteriasController@update')->name('bancaLoterias.update');
     Route::post('ajustesBanca/loterias', 'BancaLoteriasController@store')->name('bancaLoterias.store');
+   
+
 
     Route::get('ajustesBanca/superpale/{banca}', 'BancaSuperPaleController@index')->name('bancaSuperPale');
     Route::post('ajustesBanca/superpale', 'BancaSuperPaleController@store')->name('bancaSuperPale.store');

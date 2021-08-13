@@ -27,11 +27,9 @@
                                             <th scope="col">Abreviado</th>
                                             <th scope="col">Horario</th>
                                             <th scope="col">Estado</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -39,8 +37,12 @@
                 </div>
             </div>
       </div><!--End Row-->
+      <div class="modal fade view_register no-print" tabindex="-1" role="dialog"
+        aria-labelledby="gridSystemModalLabel">
+    </div>
    @endsection
     @section('scripts')
+    <script src="{{ asset('js/ajustes/loterias/loteriasEmpresa.js?v=' . $asset_v) }}"></script>
     <script type="text/javascript">
     $(document).ready( function(){
         //Status table

@@ -112,7 +112,7 @@ $(document).ready(function() {
                         { data: 'cgc_total_venta', name: 'cgc_total_venta', orderable: false, searchable: false },
                         { data: 'cgc_total_venta_neta', name: 'cgc_total_venta_neta', orderable: false, searchable: false },
                         { data: 'cgc_total_comisiones', name: 'cgc_total_comisiones', orderable: false, searchable: false },
-                        { data: 'cgc_total_pagados', name: 'cgc_total_pagados', orderable: false, searchable: false },
+                        { data: 'cgc_total_premios', name: 'cgc_total_premios', orderable: false, searchable: false },
                         { data: 'cgc_balance_final', name: 'cgc_balance_final', orderable: false, searchable: false },
                         { data: 'cgc_fecha_movimiento', name: 'cgc_fecha_movimiento', orderable: false, searchable: false },
                             ],

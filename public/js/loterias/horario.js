@@ -9,7 +9,8 @@ $(document).ready(function(){
             startTime: '07:00',
             dynamic: false,
             dropdown: true,
-            scrollbar: true
+            scrollbar: true,
+			showMeridian: false,
         });
         //   $('.hlo_hora_fin').timepicker({
         //         timeFormat: 'HH:mm ',

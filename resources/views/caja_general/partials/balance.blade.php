@@ -12,7 +12,7 @@
                                     <th scope="col">Total Venta</th>
                                     <th scope="col">Venta Neta</th>
                                     <th scope="col">Comisiones</th>
-                                    <th scope="col">Premios Pagados</th>
+                                    <th scope="col">Premios</th>
                                     <th scope="col">Balance Final</th>
                                     <th scope="col">Fecha</th>
                                 </tr>

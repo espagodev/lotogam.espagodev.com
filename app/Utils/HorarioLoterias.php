@@ -34,12 +34,6 @@ class HorarioLoterias
     static function compararFechas($fechaSeleccionada, $fecha_actual)
     {
 
-
-        // $fecha_actual = Carbon::parse($hoy);
-        // $fechaVigencia =  Carbon::createFromFormat('d/m/Y', $fechaInicial)->format('d-m-Y');
-        // $fechaVigencia =  Carbon::createFromFormat('d/m/Y', $fechaInicial)->format('d-m-Y');
-
-        // dd(($fecha_actual==$fechaVigencia), $fecha_actual, $fechaVigencia);
         if (($fecha_actual == $fechaSeleccionada) == 'true') {
             return 1;
         } if(($fecha_actual > $fechaSeleccionada) == 'true'){
@@ -57,8 +51,7 @@ class HorarioLoterias
         }
     }
 
-
-    public static function horario($banca = null, $empresas_id, $loterias_id)
+    public static function horario($empresas_id, $loterias_id)
     {
         $marketService = resolve(MarketService::class);
 
@@ -93,9 +86,7 @@ class HorarioLoterias
         return $horarios;
     }
 
-
-
-    public static function horarioDias($empresas_id, $loterias_id, $banca = null)
+    public static function horarioDias($empresas_id, $loterias_id)
     {
         $data = [];
          for ($i = 1; $i < 8; $i++){
@@ -107,13 +98,11 @@ class HorarioLoterias
 
     public static function getActualizarHorarioLoteria($loterias_id, $data)
     {
-        // dd($loterias_id, $data);
         $marketService = resolve(MarketService::class);
         $data =  $marketService->ModificarHorarioLoteria($loterias_id, $data);
 
         return $data;
     }
-
 
     public static function getHorarioLoteriasDia($empresas_id, $dia)
     {
@@ -127,6 +116,49 @@ class HorarioLoterias
     {
         $marketService = resolve(MarketService::class);
         $data =  $marketService->getLoteriasSuperPaleDia($empresas_id, $dia);
+
+        return $data;
+    }
+
+    /**
+     * HORARIO PARA BANCAS
+     */
+    public static function horarioBancaDias($bancas_id, $loterias_id)
+    {
+        $data = [];
+         for ($i = 1; $i < 8; $i++){
+            $data = ["_method" => "PUT", 'hlo_activo' => [$i], 'hlo_hora_inicio' => ['00:00'], 'hlo_hora_fin' => ['00:00'], 'hlo_minutos' => ['0'], 'empresas_id' => $empresas_id, 'loterias_id' => $loterias_id];
+            $data = self::getActualizarHorarioLoteria($loterias_id, $data);
+        }
+        return $data;
+    }
+
+    public static function BancaHorario($bancas_id, $loterias_id)
+    {
+        $marketService = resolve(MarketService::class);
+
+
+        $horarios = $marketService->getloteriaBancaHorario($bancas_id, $loterias_id);
+
+        if (count($horarios) > 0) {
+            $collection = collect($horarios);
+            $collection->map(function ($horario) {
+                $horario->hlo_hora_inicio = $horario->hlo_hora_inicio;
+                $horario->hlo_hora_fin = $horario->hlo_hora_fin;
+
+                return $horario;
+            });
+        } else {
+            $horarios =  self::horarioDias($bancas_id, $loterias_id);
+        }
+
+        return $horarios;
+    }
+
+    public static function getActualizarHorarioBancaLoteria($loterias_id, $data)
+    {
+        $marketService = resolve(MarketService::class);
+        $data =  $marketService->ModificarHorarioBancaLoteria($loterias_id, $data);
 
         return $data;
     }

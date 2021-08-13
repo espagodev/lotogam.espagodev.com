@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Services\MarketService;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+use App\Utils\Util;
+use App\Utils\HorarioLoterias;
 
 class BancaLoteriasController extends Controller
 {
@@ -18,78 +21,94 @@ class BancaLoteriasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($banca)
+    public function index($banca_url)
     {
-        $banca  = $this->marketService->getBancaDetalle($banca);
+       
+        $banca  = $this->marketService->getBancaDetalle($banca_url);     
 
-        $loterias = $this->marketService->getLoteriasBanca($banca->id);
+        if (request()->ajax()) {
 
-        return view('ajustesBanca.loterias.index')->with(['banca' => $banca, 'loterias' => $loterias]);
+            $loteriasBanca  = $this->marketService->getLoteriasBancaFaltantes($banca);
+          
+            return Datatables::of($loteriasBanca)
+           
+            ->addColumn('horario', function ($row) {
+
+                    if ($row->lob_estado != null) { 
+                        return '<button type="button"  data-href="' . action('BancaLoteriasController@getModificarHorarioBanca', [$row->id, $row->bancas_id ]) . '"  class="btn btn-sm btn-outline-info btn-modal"
+                        data-container=".view_register"><i class="fa fa-clock-o"></i> </button>
+                            ';
+                    }
+                })
+                ->addColumn('action', function ($row) use ($banca) {    
+                    if($row->lob_estado)
+                    {
+                      $estado = " btn-success";
+                      $mensaje = "Inactivar Loteria";
+                    }else{
+                        $estado = " btn-danger";
+                        $mensaje = "Activar Loteria";
+                    }
+                        return  '<button type="button"  data-href="'. action('BancaLoteriasController@activarDesactivarBancaLoteria', [$row->id, $banca->id ]).'" class="btn btn-sm activar-inactivar-loteria'. $estado .'"><i class="fa fa-power-off"></i> '.$mensaje.'</button>';
+                })
+
+                ->rawColumns(['action', 'horario'])
+                ->make(true);
+        } 
+        return view('ajustesBanca.loterias.index')->with(['banca' => $banca]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+
+        $data = $request->all();
+        $data['empresas_id'] = session()->get('user.emp_id');
+        $data = $this->marketService->nuevoHorarioLoteria($data);
+
+        return back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function update(Request $request,  $loteria)
     {
-        //
+       
+        $data = $request->all();
+        $data = $request->except('_token');
+        $data['loterias_id'] = $loteria;       
+        $data['empresas_id'] = session()->get('user.emp_id');
+
+         $data = HorarioLoterias::getActualizarHorarioBancaLoteria($loteria, $data);
+
+        return back()
+            ->with('success', ['El Horario se ha Modificado Satisfactoriamente']);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+    public function activarDesactivarBancaLoteria($loterias_id, $bancas_id)
     {
-        //
+        
+        $data['loterias_id'] = $loterias_id;
+        $data['bancas_id'] = $bancas_id;
+        $data['empresas_id'] = session()->get('user.emp_id');
+
+        $estado = $this->marketService->getBancaLoteriaEstado($data);
+
+        return json_encode($estado);
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function getModificarHorarioBanca($loteria, $banca)
     {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $empresas_id = session()->get('user.emp_id');
+
+        $loteria = $this->marketService->getLoteria($loteria);      
+       
+        $sorteos = json_decode($loteria->lot_sorteo, true);
+        
+        $horarios = HorarioLoterias::BancaHorario($banca,  $loteria->id);
+        
+        $dias = Util::dias();
+        
+        return view('ajustesBanca.loterias.modal_edit')->with(compact('loteria', 'dias','sorteos','horarios','banca'));
     }
 }

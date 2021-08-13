@@ -28,8 +28,10 @@ class EmpresaLoteriasController extends Controller
 
             return Datatables::of($loteriasEmpresa)
             ->addColumn('horario', function ($row) {
-                    if ($row->loe_estado != null) {
-                        return ' <a href="' . route('ajustesLoterias.show', [$row->id]) .'" class="btn btn-outline-info btn-sm" rel="tooltip" title="Horario de la Loteria" > <i class="fa fa-clock-o"></i> </a>';
+                    if ($row->loe_estado != null) { 
+                        return '<button type="button" data-href="' . action('EmpresaLoteriasController@getModificarHorario', [$row->id]) . '"  class="btn btn-sm btn-outline-info btn-modal"
+                        data-container=".view_register"><i class="fa fa-clock-o"></i> </button>
+                            ';
                     }
                 })
                  ->addColumn(
@@ -45,27 +47,26 @@ class EmpresaLoteriasController extends Controller
     }
 
 
-    public function show($loteria){
+    // public function show($loteria){
 
-        $empresas_id = session()->get('user.emp_id');
-        $loteria = $this->marketService->getLoteria($loteria);
+    //     $empresas_id = session()->get('user.emp_id');
+    //     $loteria = $this->marketService->getLoteria($loteria);
 
-        $sorteos = json_decode($loteria->lot_sorteo, true);
+    //     $sorteos = json_decode($loteria->lot_sorteo, true);
 
-        $horarios = HorarioLoterias::horario($bancas_id = null, $empresas_id, $loteria->id);
-        // dd($horarios);
-        $dias = Util::dias();
+    //     $horarios = HorarioLoterias::horario($bancas_id = null, $empresas_id, $loteria->id);
+    //     // dd($horarios);
+    //     $dias = Util::dias();
 
-        return view('ajustes/loterias.show')->with(compact('loteria', 'dias','sorteos', 'horarios'));
+    //     return view('ajustes/loterias.show')->with(compact('loteria', 'dias','sorteos', 'horarios'));
 
-    }
+    // }
 
     public function store(Request $request)
     {
 
         $data = $request->all();
         $data['empresas_id'] = session()->get('user.emp_id');
-        // dd($request);
         $data = $this->marketService->nuevoHorarioLoteria($data);
 
         return back();
@@ -97,5 +98,20 @@ class EmpresaLoteriasController extends Controller
 
         return json_encode($estado);
 
+    }
+
+    public function getModificarHorario($loteria)
+    {
+       
+        $empresas_id = session()->get('user.emp_id');
+        $loteria = $this->marketService->getLoteria($loteria);
+      
+        $sorteos = json_decode($loteria->lot_sorteo, true);
+
+        $horarios = HorarioLoterias::horario($bancas_id = null, $empresas_id, $loteria->id);
+        // dd($loteria, $horarios, $sorteos);
+        $dias = Util::dias();
+
+        return view('ajustes.loterias.modal_edit')->with(compact('loteria', 'dias','sorteos', 'horarios'));
     }
 }
