@@ -47,21 +47,6 @@ class EmpresaLoteriasController extends Controller
     }
 
 
-    // public function show($loteria){
-
-    //     $empresas_id = session()->get('user.emp_id');
-    //     $loteria = $this->marketService->getLoteria($loteria);
-
-    //     $sorteos = json_decode($loteria->lot_sorteo, true);
-
-    //     $horarios = HorarioLoterias::horario($bancas_id = null, $empresas_id, $loteria->id);
-    //     // dd($horarios);
-    //     $dias = Util::dias();
-
-    //     return view('ajustes/loterias.show')->with(compact('loteria', 'dias','sorteos', 'horarios'));
-
-    // }
-
     public function store(Request $request)
     {
 
@@ -108,8 +93,8 @@ class EmpresaLoteriasController extends Controller
       
         $sorteos = json_decode($loteria->lot_sorteo, true);
 
-        $horarios = HorarioLoterias::horario($bancas_id = null, $empresas_id, $loteria->id);
-        // dd($loteria, $horarios, $sorteos);
+        $horarios = HorarioLoterias::horario($empresas_id, $loteria->id);
+    
         $dias = Util::dias();
 
         return view('ajustes.loterias.modal_edit')->with(compact('loteria', 'dias','sorteos', 'horarios'));

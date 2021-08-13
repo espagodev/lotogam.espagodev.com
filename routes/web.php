@@ -95,8 +95,11 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
         Route::get('ajustesTicket/{esquema}', 'AppEsquemaTicketController@getModificarEsquema');
         Route::resource('ajustesTicket', 'AppEsquemaTicketController');
         Route::get('ajustesComunes', 'EmpresasController@ajustesComunes')->name('ajustesComunes');
+
         Route::resource('premios', 'PremiosController');
-        Route::get('ajustesLoterias/{loteria}', 'EmpresaLoteriasController@getModificarHorario');
+        
+        // Route::get('ajustesLoterias', 'EmpresaLoteriasController@index')->name('ajustesLoterias');
+        Route::get('getModificarHorario/{loteria}', 'EmpresaLoteriasController@getModificarHorario');
         Route::resource('ajustesLoterias', 'EmpresaLoteriasController');
     });
 

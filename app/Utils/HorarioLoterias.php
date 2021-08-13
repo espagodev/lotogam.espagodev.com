@@ -55,11 +55,8 @@ class HorarioLoterias
     {
         $marketService = resolve(MarketService::class);
 
-        if (is_null($banca)) {
-            $horarios = $marketService->getloteriaHorario($empresas_id, $loterias_id);
-        } else {
-            // $horarios = HorarioUsuario::loteriaHorarioUsuario($banca, $empresa, $loteria);
-        }
+        $horarios = $marketService->getloteriaHorario($empresas_id, $loterias_id);
+        
 
         if (count($horarios) > 0) {
             $collection = collect($horarios);
