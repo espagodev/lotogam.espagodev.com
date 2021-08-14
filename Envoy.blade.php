@@ -5,7 +5,8 @@
 @include('vendor/autoload.php')
 
 @setup
-     $origin = 'https://espagodev:Y7323529KespG%40@github.com/espagodev/lotogam.espagodev.com.git';
+    $origin = 'git remote add origin https://espagodev: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@lotogam.espagodev.com.git';
+    //  $origin = 'https://espagodev:Y7323529KespG%40@github.com/espagodev/lotogam.espagodev.com.git';
     // $origin = 'git clone https://github.com/espagodev/lotogam.espagodev.com.git
     //             Username: espagodev
     //             Password: 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';
@@ -51,6 +52,14 @@
     echo "hemos entrado al directorio {{ $app_dir }}";
     sudo git pull origin {{ $branch }}
     echo "código actualizado correctamente";
+@endtask
+
+@task('origen', ['on' => $on])
+    cd {{ $app_dir }}
+    echo "hemos entrado al directorio {{ $app_dir }}";
+    sudo git remote remove origin 
+    sudo git remote add origin git@github.com:espagodev/lotogam.espagodev.com.git
+    echo "origen actualizado correctamente";
 @endtask
 
 @task('git:checkout', ['on' => $on])
