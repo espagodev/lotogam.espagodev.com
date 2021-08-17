@@ -4,7 +4,7 @@
             <table class="table table-bordered table-striped table-sm " id="balance_diario_table">
                 <thead>
                     <tr>
-                        <th scope="col">Usuario</th>
+                        {{-- <th scope="col">Usuario</th> --}}
                         <th scope="col">Balance Inicial</th>
                         <th scope="col">Entradas</th>
                         <th scope="col">Salidas</th>

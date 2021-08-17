@@ -71,12 +71,12 @@ $(document).ready(function() {
                 }
             },
             columns: [
-                {
-                    data: "users_id",
-                    name: "users_id",
-                    orderable: false,
-                    searchable: false
-                },
+                // {
+                //     data: "users_id",
+                //     name: "users_id",
+                //     orderable: false,
+                //     searchable: false
+                // },
                 {
                     data: "cgc_balance_inicial",
                     name: "cgc_balance_inicial",
