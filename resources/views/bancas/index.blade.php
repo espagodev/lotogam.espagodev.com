@@ -38,11 +38,11 @@
                     </div>
                     <div class="card-footer d-flex">
                         <div>
-                            @if($banca->isOnline())
+                            {{-- @if($banca->isOnline())
                                 <p class="mb-1"><span class="circle bg-success circle-lg text-left"></span>
                             @else
                                 <p class="mb-1"><span class="circle bg-danger circle-lg text-left"></span>
-                            @endif
+                            @endif --}}
                         </div>
                         <div class="ml-auto bt-switch">
                             <a class="btn btn-outline-warning btn-sm" href="{{route('ajustesBanca',$banca->ban_url)}}">Detalle</a>
