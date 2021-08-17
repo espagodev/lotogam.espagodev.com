@@ -243,8 +243,8 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
     Route::resource('caja-registradora', 'CajaRegistradoraController');
 
     Route::post('/caja-registradora/getprogressbar', 'CajaRegistradoraController@getProgressBar');
-
     Route::resource('caja-registradora-detalle', 'CajaRegistradoraDetalleController');
+    
 
     //CUADRE DE CAJA
     Route::get('/caja_general/getCajaGeneralDetalle', 'CajaGeneralController@getCajaGeneralDetalle');

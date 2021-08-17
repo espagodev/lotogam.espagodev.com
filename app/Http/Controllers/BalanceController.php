@@ -48,9 +48,9 @@ class BalanceController extends Controller
             $balances =  $this->marketService->getBalances($data);
        
             return $datatable = DataTables::of($balances)         
-                // ->editColumn('users_id', function ($row) {
-                //     return  $row->name;
-                // })
+                ->editColumn('users_id', function ($row) {
+                    return  $row->name;
+                })
                 ->editColumn('cgc_balance_inicial', function ($row) {
                 return '<span class="display_currency" data-currency_symbol="true">' .
                     $row->cgc_balance_inicial . '</span>';
@@ -87,7 +87,7 @@ class BalanceController extends Controller
                     return $this->util->format_date($row->cgc_fecha_movimiento, true);
                 })
 
-                ->rawColumns(['cgc_balance_inicial','cgc_total_entradas','cgc_total_salidas','cgc_total_venta','cgc_total_venta_neta','cgc_total_comisiones','cgc_total_premios','cgc_balance_final','cgc_fecha_movimiento'])
+                ->rawColumns([ 'cgc_balance_inicial','cgc_total_entradas','cgc_total_salidas','cgc_total_venta','cgc_total_venta_neta','cgc_total_comisiones','cgc_total_premios','cgc_balance_final','cgc_fecha_movimiento'])
             ->make(true);
 
         }

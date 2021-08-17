@@ -16,9 +16,12 @@
                         <input type="hidden" id="users_id" name="users_id"
                             value="{{ request()->session()->get('user.id') }}">
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <div class="alert alert-outline-success" role="alert">                                  
-                                        <strong>Venta Total</strong> Lorem Ipsum is                                   
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                               
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="alert alert-outline-success" role="alert">   
+                                    <span><strong><div class="totalVenta"></div></strong>   </span>                               
                                 </div>
                             </div>
                         </div>

@@ -104,7 +104,7 @@
 @task('migrate', ['on' => $on])
     cd {{ $app_dir }}
     php artisan migrate
-    sudo php artisan migrate:refresh --seed
+    {{-- sudo php artisan migrate:refresh --seed --}}
 @endtask
 
 @task('storage', ['on' => $on])

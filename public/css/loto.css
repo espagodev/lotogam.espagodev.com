@@ -2,7 +2,7 @@
     min-height: 50vh;
     max-height: 50vh;
     overflow-y: auto;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 /* Custom scroll bar start*/
@@ -34,7 +34,7 @@
 .pos-express-btn {
     font-size: 20px !important;
     overflow: hidden !important;
-    height: 73px !important;
+    height: 53px !important;
     white-space: normal;
 }
 

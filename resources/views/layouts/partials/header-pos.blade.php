@@ -30,7 +30,7 @@
                 
                 <p class="mb-0 ">Saldo Disponible <span  class="progres-estado  float-right"></p>
                 <div class="progress my-1" style="height:11px;">
-                    <div class="progress-bar " role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" data-progress="0" style="width: 0%;">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" data-progress="0" style="width: 0%;">
                         0%
                     </div>
                 </div>
