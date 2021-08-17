@@ -211,6 +211,7 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
     *imprimir reportes
     */
     Route::get('reportes/getVentasPrint', 'ReportesController@getVentasPrint');
+
     /**
      * RESULTADOS POR FECHA
      */
@@ -256,5 +257,9 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
 
 
     //LOTERIAS USUARIOS
-    Route::get('usuariosLoterias', 'UsuariosController@usuariosLoterias')->name('usuariosLoterias');
+    Route::get('userLoterias/{users_id}', 'UserLoteriasController@loterias');
+    Route::get('getModificarHorarioUser/{loteria}/{user}', 'UserLoteriasController@getModificarHorarioUser');
+    Route::get('activarDesactivarUserLoteria/{loterias_id}/{user}', 'UserLoteriasController@activarDesactivarUserLoteria');
+    Route::put('userLoterias/{loterias_id}', 'UserLoteriasController@update')->name('userLoterias.update');
+    
 });

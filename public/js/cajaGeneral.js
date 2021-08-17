@@ -9,7 +9,7 @@ $(document).ready(function() {
                     " ~ " +
                     end.format(moment_date_format)
             );
-            caja_general.ajax.reload();
+            caja_general_datatable.ajax.reload();
             balance_diario_datatable.ajax.reload();
             $(".nav-tabs li.active")
                 .find('a[data-toggle="tab"]')
@@ -21,7 +21,7 @@ $(document).ready(function() {
             picker
         ) {
             $("#spr_date_filter").val("");
-            caja_general.ajax.reload();
+            caja_general_datatable.ajax.reload();
             balance_diario_datatable.ajax.reload();
             $(".nav-tabs li.active")
                 .find('a[data-toggle="tab"]')
@@ -32,9 +32,9 @@ $(document).ready(function() {
     }
 
     $(
-        "#caja_general_table, #balance_diario_table, #bancas_id, #users_id, #movimiento"
+        "#balance_diario_table, #bancas_id, #users_id, #movimiento"
     ).change(function() {
-        caja_general.ajax.reload();
+        // caja_general_datatable.ajax.reload();
         balance_diario_datatable.ajax.reload();
         $(".nav-tabs li.active")
             .find('a[data-toggle="tab"]')
@@ -42,180 +42,189 @@ $(document).ready(function() {
         getCajaGeneral();
     });
 
-    caja_general = $("#caja_general_table").DataTable({
-        processing: true,
-        serverSide: true,
-        aaSorting: false,
-        ajax: {
-            url: "/caja_general/getCajaGeneral",
-            dataType: "json",
-            data: function(d) {
-                d.bancas_id = $("select#bancas_id").val();
-                d.users_id = $("select#users_id").val();
-                d.movimiento = $("select#movimiento").val();
 
-                var start = "";
-                var end = "";
-                if ($("input#spr_date_filter").val()) {
-                    start = $("input#spr_date_filter")
-                        .data("daterangepicker")
-                        .startDate.format("YYYY-MM-DD");
-                    end = $("input#spr_date_filter")
-                        .data("daterangepicker")
-                        .endDate.format("YYYY-MM-DD");
+
+    balance_diario_datatable = $("#balance_diario_table").DataTable(
+        {
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "/balance/getBalance",
+                dataType: "json",
+                data: function(d) {
+                    d.bancas_id = $("select#bancas_id").val();
+                    d.users_id = $("select#users_id").val();
+                    d.movimiento = $("select#movimiento").val();
+
+                    var start = "";
+                    var end = "";
+                    if ($("input#spr_date_filter").val()) {
+                        start = $("input#spr_date_filter")
+                            .data("daterangepicker")
+                            .startDate.format("YYYY-MM-DD");
+                        end = $("input#spr_date_filter")
+                            .data("daterangepicker")
+                            .endDate.format("YYYY-MM-DD");
+                    }
+                    d.start_date = start;
+                    d.end_date = end;
                 }
-                d.start_date = start;
-                d.end_date = end;
+            },
+            columns: [
+                {
+                    data: "users_id",
+                    name: "users_id",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "cgc_balance_inicial",
+                    name: "cgc_balance_inicial",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "cgc_total_entradas",
+                    name: "cgc_total_entradas",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "cgc_total_salidas",
+                    name: "cgc_total_salidas",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "cgc_total_venta",
+                    name: "cgc_total_venta",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "cgc_total_venta_neta",
+                    name: "cgc_total_venta_neta",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "cgc_total_comisiones",
+                    name: "cgc_total_comisiones",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "cgc_total_premios",
+                    name: "cgc_total_premios",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "cgc_balance_final",
+                    name: "cgc_balance_final",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "cgc_fecha_movimiento",
+                    name: "cgc_fecha_movimiento",
+                    orderable: false,
+                    searchable: false
+                }
+            ],
+            fnDrawCallback: function(oSettings) {
+                __currency_convert_recursively(
+                    $("#balance_diario_table")
+                );
             }
-        },
-        columns: [
-            {
-                data: "cag_movimiento",
-                name: "cag_movimiento",
-                orderable: false,
-                searchable: false
-            },
-            {
-                data: "cag_fecha_movimiento",
-                name: "cag_fecha_movimiento",
-                orderable: false,
-                searchable: false
-            },
-            {
-                data: "bancas_id",
-                name: "bancas_id",
-                orderable: false,
-                searchable: false
-            },
-            {
-                data: "users_id",
-                name: "users_id",
-                orderable: false,
-                searchable: false
-            },
-            {
-                data: "cag_monto",
-                name: "cag_monto",
-                orderable: false,
-                searchable: false
-            },
-            {
-                data: "cag_nota_movimiento",
-                name: "cag_nota_movimiento",
-                orderable: false,
-                searchable: false
-            },
-            {
-                data: "action",
-                name: "action",
-                orderable: false,
-                searchable: false
-            }
-        ],
-        fnDrawCallback: function(oSettings) {
-            __currency_convert_recursively($("#caja_general"));
         }
-    });
-
+    );
    
     $('a[data-toggle="tab"]').on("shown.bs.tab", function(e) {
         var target = $(e.target).attr("href");
-        if (target == "#balance_diario") {
-            if (typeof balance_diario_datatable == "undefined") {
-                balance_diario_datatable = $("#balance_diario_table").DataTable(
-                    {
-                        processing: true,
-                        serverSide: true,
-                        ajax: {
-                            url: "/balance/getBalance",
-                            dataType: "json",
-                            data: function(d) {
-                                d.bancas_id = $("select#bancas_id").val();
-                                d.users_id = $("select#users_id").val();
-                                d.movimiento = $("select#movimiento").val();
+        if (target == "#caja_general") {
+            if (typeof caja_general_datatable == "undefined") {
 
-                                var start = "";
-                                var end = "";
-                                if ($("input#spr_date_filter").val()) {
-                                    start = $("input#spr_date_filter")
-                                        .data("daterangepicker")
-                                        .startDate.format("YYYY-MM-DD");
-                                    end = $("input#spr_date_filter")
-                                        .data("daterangepicker")
-                                        .endDate.format("YYYY-MM-DD");
-                                }
-                                d.start_date = start;
-                                d.end_date = end;
+                caja_general_datatable = $("#caja_general_table").DataTable({
+                    processing: true,
+                    serverSide: true,
+                    aaSorting: false,
+                    ajax: {
+                        url: "/caja_general/getCajaGeneral",
+                        dataType: "json",
+                        data: function(d) {
+                            d.bancas_id = $("select#bancas_id").val();
+                            d.users_id = $("select#users_id").val();
+                            d.movimiento = $("select#movimiento").val();
+            
+                            var start = "";
+                            var end = "";
+                            if ($("input#spr_date_filter").val()) {
+                                start = $("input#spr_date_filter")
+                                    .data("daterangepicker")
+                                    .startDate.format("YYYY-MM-DD");
+                                end = $("input#spr_date_filter")
+                                    .data("daterangepicker")
+                                    .endDate.format("YYYY-MM-DD");
                             }
-                        },
-                        columns: [
-                            {
-                                data: "cgc_balance_inicial",
-                                name: "cgc_balance_inicial",
-                                orderable: false,
-                                searchable: false
-                            },
-                            {
-                                data: "cgc_total_entradas",
-                                name: "cgc_total_entradas",
-                                orderable: false,
-                                searchable: false
-                            },
-                            {
-                                data: "cgc_total_salidas",
-                                name: "cgc_total_salidas",
-                                orderable: false,
-                                searchable: false
-                            },
-                            {
-                                data: "cgc_total_venta",
-                                name: "cgc_total_venta",
-                                orderable: false,
-                                searchable: false
-                            },
-                            {
-                                data: "cgc_total_venta_neta",
-                                name: "cgc_total_venta_neta",
-                                orderable: false,
-                                searchable: false
-                            },
-                            {
-                                data: "cgc_total_comisiones",
-                                name: "cgc_total_comisiones",
-                                orderable: false,
-                                searchable: false
-                            },
-                            {
-                                data: "cgc_total_premios",
-                                name: "cgc_total_premios",
-                                orderable: false,
-                                searchable: false
-                            },
-                            {
-                                data: "cgc_balance_final",
-                                name: "cgc_balance_final",
-                                orderable: false,
-                                searchable: false
-                            },
-                            {
-                                data: "cgc_fecha_movimiento",
-                                name: "cgc_fecha_movimiento",
-                                orderable: false,
-                                searchable: false
-                            }
-                        ],
-                        fnDrawCallback: function(oSettings) {
-                            __currency_convert_recursively(
-                                $("#balance_diario_table")
-                            );
+                            d.start_date = start;
+                            d.end_date = end;
                         }
+                    },
+                    columns: [
+                        {
+                            data: "cag_movimiento",
+                            name: "cag_movimiento",
+                            orderable: false,
+                            searchable: false
+                        },
+                        {
+                            data: "cag_fecha_movimiento",
+                            name: "cag_fecha_movimiento",
+                            orderable: false,
+                            searchable: false
+                        },
+                        {
+                            data: "bancas_id",
+                            name: "bancas_id",
+                            orderable: false,
+                            searchable: false
+                        },
+                        {
+                            data: "users_id",
+                            name: "users_id",
+                            orderable: false,
+                            searchable: false
+                        },
+                        {
+                            data: "cag_monto",
+                            name: "cag_monto",
+                            orderable: false,
+                            searchable: false
+                        },
+                        {
+                            data: "cag_nota_movimiento",
+                            name: "cag_nota_movimiento",
+                            orderable: false,
+                            searchable: false
+                        },
+                        {
+                            data: "action",
+                            name: "action",
+                            orderable: false,
+                            searchable: false
+                        }
+                    ],
+                    fnDrawCallback: function(oSettings) {
+                        __currency_convert_recursively($("#caja_general"));
                     }
-                );
+                });
             } else {
-                balance_diario_datatable.ajax.reload();
+                
+                caja_general_datatable.ajax.reload();
             }
-        } else if (target == "#caja_general") {
-            caja_general.ajax.reload();
+        } else if (target == "#balance_diario") {
+            balance_diario_datatable.ajax.reload();
         }
     });
 

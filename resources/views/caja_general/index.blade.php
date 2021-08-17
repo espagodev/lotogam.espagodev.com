@@ -25,8 +25,7 @@
             <div class="card-body">
                 <ul class="nav nav-tabs nav-tabs-primary">
                     <li class="nav-item active">
-                        <a class="nav-link" data-toggle="tab" href="#balance_diario"> <span>Balances
-                                Diarios</span></a>
+                        <a class="nav-link" data-toggle="tab" href="#balance_diario"><span>Balances Diarios</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " data-toggle="tab" href="#caja_general"> <span>Movimientos</span></a>

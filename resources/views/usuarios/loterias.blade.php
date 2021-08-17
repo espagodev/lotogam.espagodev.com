@@ -19,6 +19,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
+                    <input type="hidden" id="users_id" value="{{ $users_id }}">
                     <table class="table table-striped" id="loterias">
                         <thead>
                             <tr>
@@ -41,39 +42,41 @@
 </div>
 @endsection
 @section('scripts')
-<script src="{{ asset('js/ajustes/loterias/loteriasEmpresa.js?v=' . $asset_v) }}"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        //Status table
-        loterias = $('#loterias').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ action('EmpresaLoteriasController@index') }}",
-            columnDefs: [{
-                "targets": 3,
-                "orderable": false,
-                "searchable": false
-            }],
-            columns: [{
-                    data: 'lot_nombre',
-                    name: 'lot_nombre'
-                },
-                {
-                    data: 'lot_abreviado',
-                    name: 'lot_abreviado'
-                },
-                {
-                    data: 'horario',
-                    name: 'horario'
-                },
-                {
-                    data: 'action',
-                    name: 'action'
-                },
-            ]
-        });
-    });
+<script src="{{ asset('js/usuarios/loterias.js?v=' . $asset_v) }}"></script>
 
+<script type="text/javascript">
+       $(document).ready( function(){
+        //Status table
+       
+         loterias = $('#loterias').DataTable({        
+                processing: true,
+                serverSide: true,
+                'ajax': {
+                    url: "{{action('UserLoteriasController@loterias', [$users_id])}}",
+                    // data: function (d) {
+                    //     d.users_id = $('#users_id').val();
+                    // }
+                },
+                // ajax: {
+                //      url: '/userLoterias',
+                //      dataType: "json",
+                //         data: function(d) {
+                //             d.users_id = $('#users_id').val();                               
+                //         }
+                // },
+                columnDefs: [ {
+                    "targets": 3,
+                    "orderable": false,
+                    "searchable": false
+                } ],
+                columns: [
+                    { data: 'lot_nombre', name: 'lot_nombre' },
+                    { data: 'lot_abreviado', name: 'lot_abreviado' },
+                    { data: 'horario', name: 'horario' },
+                    { data: 'action', name: 'action' },
+                ]
+            });
+        });
     $(document).on('click', 'button.activar-inactivar-loteria', function() {
         swal({
             title: "Estás seguro ?",

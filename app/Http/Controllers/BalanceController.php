@@ -48,7 +48,9 @@ class BalanceController extends Controller
             $balances =  $this->marketService->getBalances($data);
        
             return $datatable = DataTables::of($balances)         
-               
+                ->editColumn('users_id', function ($row) {
+                    return  $row->name;
+                })
                 ->editColumn('cgc_balance_inicial', function ($row) {
                 return '<span class="display_currency" data-currency_symbol="true">' .
                     $row->cgc_balance_inicial . '</span>';

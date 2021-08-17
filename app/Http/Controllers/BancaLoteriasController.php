@@ -43,10 +43,10 @@ class BancaLoteriasController extends Controller
                 ->addColumn('action', function ($row) use ($banca) {    
                     if($row->lob_estado)
                     {
-                      $estado = " btn-success";
+                      $estado = " btn-danger";
                       $mensaje = "Inactivar Loteria";
                     }else{
-                        $estado = " btn-danger";
+                        $estado = " btn-success";
                         $mensaje = "Activar Loteria";
                     }
                         return  '<button type="button"  data-href="'. action('BancaLoteriasController@activarDesactivarBancaLoteria', [$row->id, $banca->id ]).'" class="btn btn-sm activar-inactivar-loteria'. $estado .'"><i class="fa fa-power-off"></i> '.$mensaje.'</button>';

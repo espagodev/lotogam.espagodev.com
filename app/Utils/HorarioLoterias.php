@@ -125,7 +125,7 @@ class HorarioLoterias
         $data = [];
          for ($i = 1; $i < 8; $i++){
             $data = ["_method" => "PUT", 'hlo_activo' => [$i], 'hlo_hora_inicio' => ['00:00'], 'hlo_hora_fin' => ['00:00'], 'hlo_minutos' => ['0'], 'empresas_id' => $empresas_id, 'loterias_id' => $loterias_id];
-            $data = self::getActualizarHorarioLoteria($loterias_id, $data);
+            $data = self::getActualizarHorarioUsuarioLoteria($loterias_id, $data);
         }
         return $data;
     }
@@ -156,6 +156,49 @@ class HorarioLoterias
     {
         $marketService = resolve(MarketService::class);
         $data =  $marketService->ModificarHorarioBancaLoteria($loterias_id, $data);
+
+        return $data;
+    }
+
+    /**
+     * HORARIO PARA usuarios
+     */
+    public static function horarioUsuarioDias($users_id, $loterias_id)
+    {
+        $data = [];
+         for ($i = 1; $i < 8; $i++){
+            $data = ["_method" => "PUT", 'hlo_activo' => [$i], 'hlo_hora_inicio' => ['00:00'], 'hlo_hora_fin' => ['00:00'], 'hlo_minutos' => ['0'], 'user_id' => $users_id, 'loterias_id' => $loterias_id];
+            $data = self::getActualizarHorarioUsuarioLoteria($loterias_id, $data);
+        }
+        return $data;
+    }
+
+    public static function UsuarioHorario($users_id, $loterias_id)
+    {
+        $marketService = resolve(MarketService::class);
+
+
+        $horarios = $marketService->getloteriaUsuarioHorario($users_id, $loterias_id);
+
+        if (count($horarios) > 0) {
+            $collection = collect($horarios);
+            $collection->map(function ($horario) {
+                $horario->hlo_hora_inicio = $horario->hlo_hora_inicio;
+                $horario->hlo_hora_fin = $horario->hlo_hora_fin;
+
+                return $horario;
+            });
+        } else {
+            $horarios =  self::horarioUsuarioDias($users_id, $loterias_id);
+        }
+
+        return $horarios;
+    }
+
+    public static function getActualizarHorarioUsuarioLoteria($loterias_id, $data)
+    {
+        $marketService = resolve(MarketService::class);
+        $data =  $marketService->ModificarHorarioUsuarioLoteria($loterias_id, $data);
 
         return $data;
     }
