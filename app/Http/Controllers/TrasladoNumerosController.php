@@ -119,7 +119,7 @@ class TrasladoNumerosController extends Controller
 
         $printer_type = null,
         $from_pos_screen = true,
-        $invoice_layout_id = null,
+        $invoice_layout_id = null
 
     ) {
         $output = [
