@@ -91,6 +91,10 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
         // Route::get('ajustesLoterias', 'EmpresaLoteriasController@index')->name('ajustesLoterias');
         Route::get('getModificarHorario/{loteria}', 'EmpresaLoteriasController@getModificarHorario');
         Route::resource('ajustesLoterias', 'EmpresaLoteriasController');
+
+        Route::get('numerosTraslado/{traslado}', 'NumerosTrasladoController@getModificarTraslado');
+        Route::get('getNuevoTraslado', 'NumerosTrasladoController@getNuevoTraslado');
+        Route::resource('numerosTraslado', 'NumerosTrasladoController');
     });
 
 
@@ -119,6 +123,7 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
 
     Route::resource('tiposDocumento','TiposDocumentoController', ['except' => ['show']]);
     Route::resource('mediosPago', 'MediosPagoController', ['except' => ['show']]);
+
     Route::resource('modalidades', 'ModalidadesController', ['except' => ['show']]);
 
     //ajustes bancas
@@ -261,5 +266,12 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
     Route::get('getModificarHorarioUser/{loteria}/{user}', 'UserLoteriasController@getModificarHorarioUser');
     Route::get('activarDesactivarUserLoteria/{loterias_id}/{user}', 'UserLoteriasController@activarDesactivarUserLoteria');
     Route::put('userLoterias/{loterias_id}', 'UserLoteriasController@update')->name('userLoterias.update');
+
+    /**
+     * Traslado de NUmeros
+     */
     
+    Route::get('trasladoNumeros', 'TrasladoNumerosController@index')->name('trasladoNumeros.index');
+    Route::get('traslado-numeros', 'TrasladoNumerosController@getReporteTrasladoNumeros');
+    Route::get('getPrintReporteTrasladoNumeros', 'TrasladoNumerosController@getPrintReporteTrasladoNumeros');
 });

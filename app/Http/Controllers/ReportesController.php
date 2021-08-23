@@ -353,7 +353,7 @@ class ReportesController extends Controller
         if ($request->ajax()) {
 
 
-            if (session()->get('user.TipoUsuario') == 2) {
+            if (session()->get('user.TipoUsuario') == 2) {  
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion',  'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id']);

@@ -131,6 +131,11 @@
 					<i class="zmdi zmdi-widgets"></i> <span>Control de Apuestas</span>
 				</a>
 			</li>
+			<li>
+				<a href="{{ route('trasladoNumeros.index') }}" class="waves-effect">
+					<i class="fa fa-exchange"></i> <span>Traslado de Numeros</span>
+				</a>
+			</li>
 			@endif @if(request()->session()->get('user.TipoUsuario') == 2)
 			<li>
 				<a href="{{ route('usuarios.index') }}" class="waves-effect">

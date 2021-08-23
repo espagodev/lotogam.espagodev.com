@@ -209,7 +209,7 @@ $(document).ready(function() {
             });
     });
 
-    $(document).on('click', '.print-invoice-link', function (e) {
+    $(document).on('click', '.print-invoice-link', function (e) { 
         e.preventDefault();
         $.ajax({
             url: $(this).attr('href') + "?check_location=true",

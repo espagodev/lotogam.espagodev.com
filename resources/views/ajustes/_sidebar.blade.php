@@ -48,6 +48,11 @@
                     'icon' => 'fa fa-fire',
                     'title' => 'Numeros Calientes'])
                 @endcomponent
+                @component('components.sidebar', [
+                    'route' => 'numerosTraslado.index',
+                    'icon' => 'fa fa-exchange',
+                    'title' => 'Traspasar Numeros'])
+                @endcomponent
 
                 @component('components.sidebar', [
                     'route' => 'premios.index',

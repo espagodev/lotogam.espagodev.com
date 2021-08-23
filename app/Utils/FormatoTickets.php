@@ -343,7 +343,7 @@ class FormatoTickets
 
         $banca = $marketService->getBanca( !empty($bancas_id) ? $bancas_id : $tickets[0]->bancas_id);
 
-        $invoice_layout = BancaUtil::invoiceLayout($empresas_id,   !empty($banca->app_config_tickets_id) ? $banca->app_config_tickets_id : null);
+        $invoice_layout = BancaUtil::invoiceLayout($empresas_id,  !empty($banca->app_config_tickets_id) ? $banca->app_config_tickets_id : null);
 
 
         $detalle_ticket = self::getReceiptDetails($tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $detalle, $isAnular);

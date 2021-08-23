@@ -1441,74 +1441,141 @@ class MarketService
         return $this->makeRequest('GET', "getBalanceDetalle", $data);
     }
 
-        //LOTERIAS BANCA
-        public function  getLoteriasBanca($banca)
-        {
-            return $this->makeRequest('GET', "loterias/{$banca}/banca/");
-        }
-    
-        public function  getLoteriasBancaFaltantes($banca)
-        {           
-            return $this->makeRequest('GET', "getloteriasBanca/{$banca->id}");
-        }
-        //ESTADO LOTERIA BANCA
-        public function  getBancaLoteriaEstado($data)
-        {
-            return $this->makeRequest('GET', "getBancaLoteriaEstado", $data);
-        }
+    //LOTERIAS BANCA
+    public function  getLoteriasBanca($banca)
+    {
+        return $this->makeRequest('GET', "loterias/{$banca}/banca/");
+    }
 
-            //horario loteria banca
-        public function ModificarHorarioBancaLoteria($loteria, $data)
-        {
-            $data['_method'] = 'PUT';
-            
-            return $this->makeRequest(
-                'POST',
-                "HorarioBancaLoterias/{$loteria}",
-                [],
-                $data,
-                []
-            );
-        }
+    public function  getLoteriasBancaFaltantes($banca)
+    {           
+        return $this->makeRequest('GET', "getloteriasBanca/{$banca->id}");
+    }
+    //ESTADO LOTERIA BANCA
+    public function  getBancaLoteriaEstado($data)
+    {
+        return $this->makeRequest('GET', "getBancaLoteriaEstado", $data);
+    }
 
-        public function getloteriaBancaHorario($bancas_id, $loterias_id)
-        {
-            return $this->makeRequest('GET', "getloteriaBancaHorario/{$bancas_id}/{$loterias_id}");
-        }
-
-            //LOTERIAS USER
-            public function  getLoteriasUser($banca)
-            {
-                return $this->makeRequest('GET', "loterias/{$banca}/banca/");
-            }
+        //horario loteria banca
+    public function ModificarHorarioBancaLoteria($loteria, $data)
+    {
+        $data['_method'] = 'PUT';
         
-            public function  getLoteriasUserFaltantes($user)
-            {           
-                return $this->makeRequest('GET', "getloteriasUser/{$user}");
-            }
-            //ESTADO LOTERIA BANCA
-            public function  getUserLoteriaEstado($data)
-            {
-                return $this->makeRequest('GET', "getUserLoteriaEstado", $data);
-            }
+        return $this->makeRequest(
+            'POST',
+            "HorarioBancaLoterias/{$loteria}",
+            [],
+            $data,
+            []
+        );
+    }
 
-            //horario loteria usuario
-            public function ModificarHorarioUsuarioLoteria($loteria, $data)
-            {
-                $data['_method'] = 'PUT';
-                
-                return $this->makeRequest(
-                    'POST',
-                    "HorarioUsuarioLoterias/{$loteria}",
-                    [],
-                    $data,
-                    []
-                );
-            }
+    public function getloteriaBancaHorario($bancas_id, $loterias_id)
+    {
+        return $this->makeRequest('GET', "getloteriaBancaHorario/{$bancas_id}/{$loterias_id}");
+    }
 
-            public function getloteriaUsuarioHorario($users_id, $loterias_id)
-            {
-                return $this->makeRequest('GET', "getloteriaUsuarioHorario/{$users_id}/{$loterias_id}");
-            }
+    //LOTERIAS USER
+    public function  getLoteriasUser($banca)
+    {
+        return $this->makeRequest('GET', "loterias/{$banca}/banca/");
+    }
 
+    public function  getLoteriasUserFaltantes($user)
+    {           
+        return $this->makeRequest('GET', "getloteriasUser/{$user}");
+    }
+    //ESTADO LOTERIA BANCA
+    public function  getUserLoteriaEstado($data)
+    {
+        return $this->makeRequest('GET', "getUserLoteriaEstado", $data);
+    }
+
+    //horario loteria usuario
+    public function ModificarHorarioUsuarioLoteria($loteria, $data)
+    {
+        $data['_method'] = 'PUT';
+        
+        return $this->makeRequest(
+            'POST',
+            "HorarioUsuarioLoterias/{$loteria}",
+            [],
+            $data,
+            []
+        );
+    }
+
+    public function getloteriaUsuarioHorario($users_id, $loterias_id)
+    {
+        return $this->makeRequest('GET', "getloteriaUsuarioHorario/{$users_id}/{$loterias_id}");
+    }
+
+
+    //montos Globales
+    public function getNumerosTraslado()
+    {
+        return $this->makeRequest('GET', 'numerosTraslado');
+    }
+
+    public function nuevoNumerosTraslado($data)
+    {
+
+        return $this->makeRequest(
+            'POST',
+            "numerosTraslado",
+            $data,
+            [],
+            [],
+            false
+        );
+    }
+
+    public function getNumerosTrasladoEmpresa($empresa)
+    {
+        return $this->makeRequest('GET', "getNumerosTraslado/{$empresa}");
+    }
+
+    public function getNumerosTrasladoActivo($empresa)
+    {
+        return $this->makeRequest('GET', "getNumerosTrasladoActivo/{$empresa}");
+    }
+
+    public function ModificarNumerosTraslado($loteria, $data)
+    {
+        $data['_method'] = 'PUT';
+        
+        return $this->makeRequest(
+            'POST',
+            "numerosTraslado/{$loteria}",
+            [],
+            $data,
+            []
+        );
+    }
+
+    //TRASLADO DE NUMEROS
+    public function getNumerosTrasladoDetalle($montoGlobal)
+    {
+        return $this->makeRequest('GET', "numerosTraslado/{$montoGlobal}");
+    }
+
+    public function getModificarMontoGlobal($montoGlobal, $data)
+    {
+
+        $data['_method'] = 'PUT';
+
+        return $this->makeRequest(
+            'POST',
+            "numerosTraslado/{$montoGlobal}",
+            [],
+            $data,
+            []
+        );
+    }
+
+    public function getReporteTrasladoNumeros($data)
+    {
+        return $this->makeRequest('GET', "getReporteTrasladoNumeros", $data);
+    }
 }

@@ -1,7 +1,7 @@
  <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-4">
+            <div class="col-xs-12 col-sm-12 col-md-3">
                 <div class="form-group">
                      <strong>Loterias:</strong>
                       <div class="input-group">
@@ -17,7 +17,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-4">
+            <div class="col-xs-12 col-sm-12 col-md-3">
                 <div class="form-group">
                      <strong>Bancas:</strong>
                       <div class="input-group">
@@ -33,7 +33,23 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-4">
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <div class="form-group">
+                     <strong>Modalidades:</strong>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+                        </div>
+                        <select class="form-control " name="modalidades_id" id="modalidades_id">
+                            <option value="">Seleccione</option>
+                                @foreach($modalidades as $modalida)
+                                    <option value="{{ $modalida->identificador }}"  >{{ $modalida->modalidad}}</option>
+                                @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3">
                 <div class="form-group">
                     <strong>Rango de Fechas:</strong>
                     <div class="input-group">
