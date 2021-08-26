@@ -34,15 +34,12 @@ class TrasladoNumerosController extends Controller
 
      public function getReporteTrasladoNumeros(Request $request)
     {
-        if (session()->get('user.TipoUsuario') == 2) {  
-            $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion', 'modalidades_id',  'bancas_id']);
-        } else if (session()->get('user.TipoUsuario') == 3) {
-            $data = $request->only(['start_date', 'end_date',  'loterias_id','modalidades_id']);
-            $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
-            $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
-        }
-        $data['empresas_id'] = session()->get('user.emp_id');
-        
+
+            $data = $request->only(['start_date', 'end_date',  'loterias_id',  'modalidades_id',  'bancas_id']);
+            // $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
+            // $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id'); 
+            $data['empresas_id'] = session()->get('user.emp_id');
+            
         $reporteJugadas = $this->marketService->getReporteTrasladoNumeros($data);
 
         if ($request->ajax()) {

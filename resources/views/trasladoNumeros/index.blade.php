@@ -22,7 +22,6 @@
                                     <thead>
                                         <tr>
                                             <th>Loteria</th>
-                                            <th>Banca</th>
                                             <th>Modalidad</th>
                                             <th>Numero</th>
                                             <th>Contador</th>

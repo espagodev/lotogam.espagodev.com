@@ -48,7 +48,6 @@ $(document).ready(function() {
         },
         columns: [
                 { data: 'lot_nombre', name: 'loteria', orderable: false, searchable: false  },
-                { data: 'ban_nombre', name: 'ban_nombre', orderable: false, searchable: false  },
                 { data: 'mod_nombre', name: 'mod_nombre', orderable: false, searchable: true  },
                 { data: 'cnj_numero', name: 'cnj_numero', orderable: false, searchable: false  },
                 { data: 'cnj_contador', name: 'cnj_contador', orderable: false, searchable: false  },

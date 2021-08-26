@@ -44,7 +44,7 @@ class ResultadosController extends Controller
         $data['res_premio2'] = $request->premio2;
         $data['res_premio3'] = $request->premio3;
 
-
+        
         $data = $this->marketService->nuevoResultado($data);
 
         if (!empty($data)) {
