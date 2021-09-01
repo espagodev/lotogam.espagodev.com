@@ -135,7 +135,18 @@
                 <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                 <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="col-xs-4 col-sm-4 col-md-4">
+                                    <div class="form-group">
+                                        <strong>Horario:</strong>
+                                            <select class="form-control" name="use_horario" id="use_horario">
+                                                <option value="">Seleccione</option>
+                                                @foreach($horarios as $key => $horario)
+                                                    <option value="{{ $key }}" @if($key == old('use_horario', $usuario->use_horario)) selected @endif>{{ $horario }}</option>
+                                                    @endforeach
+                                            </select>
+                                    </div>
+                                </div>
+                                 <div class="col-xs-4 col-sm-4 col-md-4">
                                     <div class="form-group">
                                         <div class="icheck-material-info">
                                             <input type="checkbox" id="use_resultados" name="use_resultados" value="1" @if($usuario->use_resultados) checked @endif/>
@@ -143,7 +154,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="col-xs-6 col-sm-6 col-md-6">
+                                 <div class="col-xs-4 col-sm-4 col-md-4">
                                     <div class="form-group">
                                         <div class="icheck-material-info">
                                             <input type="checkbox" id="use_bloquea_banca" name="use_bloquea_banca" value="1" @if($usuario->use_bloquea_banca) checked @endif/>

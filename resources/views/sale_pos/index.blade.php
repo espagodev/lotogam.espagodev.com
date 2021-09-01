@@ -7,7 +7,7 @@
 	   </div>
         <div class="col-sm-3 no-print">
             <div class="btn-group float-sm-right">
-                 @if((request()->session()->get('user.TipoUsuario') == 3) && (request()->session()->get('user.bancaBloqueo') == 1))
+                 @if((request()->session()->get('user.TipoUsuario') == 3) && (request()->session()->get('user.bancaBloqueo') == 0))
                  <a href="{{ route('pos.create') }}"  class="btn btn-primary waves-effect waves-primary"><i class="fa fa-ticket mr-1"></i> Crear Ticket</a>
                 @endif
             </div>

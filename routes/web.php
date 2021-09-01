@@ -181,8 +181,15 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
     Route::get('pos/getLoteriasSuperPale', 'PosController@getLoteriasSuperPale');
 
     Route::get('/pos/{ticket}/ticket', 'PosController@printTicket')->name('pos.printTicket');
-    Route::resource('pos','PosController', ['except' => ['edit', 'show', 'destroy']]);
 
+    Route::middleware(['bloquearBanca'])->group(function () {
+        Route::get('/pos/create', 'PosController@create')->name('pos.create');
+        Route::post('pos', 'PosController@store')->name('pos.store');
+    });
+    Route::get('pos', 'PosController@index')->name('pos.index');
+    // Route::resource('pos','PosController', ['except' => ['edit', 'show', 'destroy']]);
+
+   
 
     /**
      * control de Jugadas

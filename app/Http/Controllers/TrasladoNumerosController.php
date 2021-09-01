@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\MarketService;
 use App\Utils\BancaUtil;
+use App\Utils\FormatoTrasladoUtil;
 use App\Utils\Reportes;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -70,23 +71,18 @@ class TrasladoNumerosController extends Controller
                 }
                 $data['empresas_id'] = session()->get('user.emp_id');
               
+                // $invoice_layout = $this->marketService->getAppConfigTicketsEmpresa($data['empresas_id']);
+      
+                // $printer_type = 'browser';
 
-                $appConfigTickets = $this->marketService->getAppConfigTicketsEmpresa($data['empresas_id']);
+                // $receipt = $this->reportContent($data['empresas_id'],  $printer_type, false, $invoice_layout[0]);
+                $trasladoNUmeros = $this->marketService->getReporteTrasladoNumeros($data);
+             
 
-                
-                $invoice_layout = $this->bancaUtil->invoiceLayout($data['empresas_id'], $data['bancas_id'], $appConfigTickets[0]);               
-                $printer_type = 'browser';
-               
+                $formatoPdf = FormatoTrasladoUtil::HtmlContent($trasladoNUmeros);
 
+                $output = ['success' => 1, 'receipt' => $formatoPdf];
 
-                $invoice_layout_id = !empty($invoice_layout_id) ? $invoice_layout_id : $appConfigTickets[0];
-
-                $receipt = $this->reportContent($data['empresas_id'],  $printer_type, false, $invoice_layout);
-
-
-                if (!empty($receipt)) {
-                    $output = ['success' => 1, 'receipt' => $receipt];
-                }
             } catch (\Exception $e) {
                 \Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
 

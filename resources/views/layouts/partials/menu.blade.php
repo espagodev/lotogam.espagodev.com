@@ -37,7 +37,7 @@
 				</a>
 			</li>
 
-			@if((request()->session()->get('user.TipoUsuario') == 3) && (request()->session()->get('user.bancaBloqueo') == 1))
+			@if((request()->session()->get('user.TipoUsuario') == 3) && (request()->session()->get('user.bancaBloqueo') == 0))
 			<li>
 				<a href="{{ route('pos.create') }}" class="waves-effect"><i class="fa fa-ticket mr-1"></i> Crear Ticket</a>
 			</li>

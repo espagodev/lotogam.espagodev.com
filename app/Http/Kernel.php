@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         // 'IsAdministrador' => \App\Http\Middleware\IsAdministrador::class,
         'timezone' => \App\Http\Middleware\Timezone::class,
         'SetSessionData' => \App\Http\Middleware\SetSessionData::class,
+        'bloquearBanca' => \App\Http\Middleware\BloquearBancaMiddleware::class,
 
     ];
 

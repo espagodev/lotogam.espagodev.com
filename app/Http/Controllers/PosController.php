@@ -324,37 +324,66 @@ class PosController extends Controller
 
     public function getHorarioLoteriasDia(Request $request)
     {
+
         if ($request->ajax()) {
 
             $empresas_id = session()->get('user.emp_id');
+            $users_id = session()->get('user.id');
             $dia = HorarioLoterias::dia();
 
             $horaRD = HorarioLoterias::horaRD();
-            $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($empresas_id, $dia);
 
+            $data['empresas_id'] = session()->get('user.emp_id');
+            $data['bancas_id'] = session()->get('user.banca');
+            $data['users_id'] = session()->get('user.id');
+            $data['horario'] = session()->get('user.userHoraro');
+            $data['dia'] = HorarioLoterias::dia();
+
+            // $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($empresas_id, $dia);
+            $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($data);
+            $detalles = $this->marketService->getProgressBar($users_id);
+
+            
             $output = '';
-
-            foreach ($horarioLoteria as $key => $detalle) {
-                // dd($detalle->hlo_hora_fin, $horaRD);
-                $horariocierre = HorarioLoterias::compararHoras($detalle->hlo_hora_fin, $horaRD);
-
-                if ($horariocierre == 0) {
-                    $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                <div class="icheck-material-success">
-                                    <input type="checkbox" id="' . $detalle->lot_nombre . '" name="lot_id[]" value="' . $detalle->loterias_id . '|' . 0 . '|' . $detalle->hlo_hora_fin .' "/>
-                                    <label class="validar_monto"  for="' . $detalle->lot_nombre . '"  data-loteria="' . $detalle->lot_nombre . '" data-loterias_id="' . $detalle->loterias_id . '"  data-superpale="0"><span class="badge badge-success m-1 validar-monto"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
-                                </div>
-                            </div>';
-                } else {
-                    $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                <div class="icheck-material-danger">
-                                    <input type="checkbox" id="' . $detalle->lot_nombre . '" disabled/>
-                                    <label  for="' . $detalle->lot_nombre . '"><span class="badge badge-danger m-1"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
-                                </div>
-                            </div>';
+            $limiteVenta = Util::compararValores($detalles->limite, $detalles->total);
+            // dd($limiteVenta);
+            if ($limiteVenta == 0){
+                foreach ($horarioLoteria as $key => $detalle) {
+                    // dd($detalle->hlo_hora_fin, $horaRD);
+                    $horariocierre = HorarioLoterias::compararHoras($detalle->hlo_hora_fin, $horaRD);
+                   
+                    if ($horariocierre == 0){
+                        $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                    <div class="icheck-material-success">
+                                        <input type="checkbox" id="' . $detalle->lot_nombre . '" name="lot_id[]" value="' . $detalle->loterias_id . '|' . 0 . '|' . $detalle->hlo_hora_fin .' "/>
+                                        <label class="validar_monto"  for="' . $detalle->lot_nombre . '"  data-loteria="' . $detalle->lot_nombre . '" data-loterias_id="' . $detalle->loterias_id . '"  data-superpale="0"><span class="badge badge-success m-1 validar-monto"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
+                                    </div>
+                                </div>';
+                    } else {
+                        $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                    <div class="icheck-material-danger">
+                                        <input type="checkbox" id="' . $detalle->lot_nombre . '" disabled/>
+                                        <label  for="' . $detalle->lot_nombre . '"><span class="badge badge-danger m-1"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
+                                    </div>
+                                </div>';
+                    }
                 }
+                return $output;
+            }else{
+                foreach ($horarioLoteria as $key => $detalle) {
+
+                        $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                    <div class="icheck-material-danger">
+                                        <input type="checkbox" id="' . $detalle->lot_nombre . '" disabled/>
+                                        <label  for="' . $detalle->lot_nombre . '"><span class="badge badge-danger m-1"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
+                                    </div>
+                                </div>';
+                    
+                }
+                return $output;
             }
-            return $output;
+
+
         }
     }
 
@@ -364,32 +393,50 @@ class PosController extends Controller
 
             $empresas_id = session()->get('user.emp_id');
             $dia = HorarioLoterias::dia();
+            $users_id = session()->get('user.id');
 
             $horaRD = HorarioLoterias::horaRD();
             $horarioLoteria = HorarioLoterias::getLoteriasSuperPaleDia($empresas_id, $dia);
+            $detalles = $this->marketService->getProgressBar($users_id);
 
             $output = '';
-            foreach ($horarioLoteria as $key => $detalle) {
-                // dd($detalle->hlo_hora_fin, $horaRD);
-                $horariocierre = HorarioLoterias::compararHoras($detalle->hlo_hora_fin, $horaRD);
+            $limiteVenta = Util::compararValores($detalles->limite, $detalles->total);
 
-                if ($horariocierre == 0) {
-                    $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                <div class="icheck-material-info">
-                                    <input type="checkbox" id="' . $detalle->lot_nombre . '" name="lot_id[]" value="' . $detalle->loterias_id . '|' . $detalle->lot_superpale . '|' . $detalle->hlo_hora_fin .' "/>
-                                    <label class="validar_monto" for="' . $detalle->lot_nombre . '" data-loteria="' . $detalle->lot_nombre . '" data-loterias_id="' . $detalle->loterias_id . '" data-superpale="' . $detalle->lot_superpale . '" ><span class="badge badge-info m-1 "><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
-                                </div>
-                            </div>';
-                } else {
-                    $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                <div class="icheck-material-danger">
-                                    <input type="checkbox" id="' . $detalle->lot_nombre . '" disabled/>
-                                    <label class="validar" for="' . $detalle->lot_nombre . '"><span class="badge badge-danger m-1"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
-                                </div>
-                            </div>';
+            if ($limiteVenta == 0){
+                foreach ($horarioLoteria as $key => $detalle) {
+                    // dd($detalle->hlo_hora_fin, $horaRD);
+                    $horariocierre = HorarioLoterias::compararHoras($detalle->hlo_hora_fin, $horaRD);
+
+                    if ($horariocierre == 0) {
+                        $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                    <div class="icheck-material-info">
+                                        <input type="checkbox" id="' . $detalle->lot_nombre . '" name="lot_id[]" value="' . $detalle->loterias_id . '|' . $detalle->lot_superpale . '|' . $detalle->hlo_hora_fin .' "/>
+                                        <label class="validar_monto" for="' . $detalle->lot_nombre . '" data-loteria="' . $detalle->lot_nombre . '" data-loterias_id="' . $detalle->loterias_id . '" data-superpale="' . $detalle->lot_superpale . '" ><span class="badge badge-info m-1 "><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
+                                    </div>
+                                </div>';
+                    } else {
+                        $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                    <div class="icheck-material-danger">
+                                        <input type="checkbox" id="' . $detalle->lot_nombre . '" disabled/>
+                                        <label class="validar" for="' . $detalle->lot_nombre . '"><span class="badge badge-danger m-1"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
+                                    </div>
+                                </div>';
+                    }
                 }
+                return $output;
+            }else{
+                foreach ($horarioLoteria as $key => $detalle) {
+
+                        $output .=  '<div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                    <div class="icheck-material-danger">
+                                        <input type="checkbox" id="' . $detalle->lot_nombre . '" disabled/>
+                                        <label  for="' . $detalle->lot_nombre . '"><span class="badge badge-danger m-1"><h6 class="text-white">' . $detalle->lot_nombre . '</h6></span></label>
+                                    </div>
+                                </div>';
+                    
+                }
+                return $output;
             }
-            return $output;
         }
     }
 

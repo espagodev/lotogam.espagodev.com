@@ -426,7 +426,7 @@ class Util
     {
         $created = new Carbon($fecha_creacion);
         $now =  (new Carbon(date('Y-m-d H:i:s')))->tz('America/Santo_Domingo')->format('Y-m-d H:i:s');
-// dd($created->diffInMinutes($now) > $tiempo_anular);
+
 
         if ($created->diffInMinutes($now) > $tiempo_anular) {
             return 1;
@@ -444,7 +444,8 @@ class Util
     {
         return [
             'use_resultados' => 0,
-            'use_bloquea_banca' => 0
+            'use_bloquea_banca' => 0,
+            'use_horario' => 0
         ];
     }
 
@@ -485,6 +486,15 @@ class Util
             'salida' => 'Salida',
             'traslado' => 'Traslado',
             'cupo' => 'Apertura de Cupo'
+        ];
+    }
+
+    public static function horarioUsuario()
+    {
+        return [
+            '1' => 'Horario General',
+            '2' => 'Horario de Banca',
+            '3' => 'Horario del Usuario'
         ];
     }
 

@@ -51,6 +51,7 @@ class UserLoteriasController extends Controller
 
         $data = $request->all();
         $data['empresas_id'] = session()->get('user.emp_id');
+        
         $data = $this->marketService->nuevoHorarioLoteria($data);
 
         return back();
@@ -60,10 +61,10 @@ class UserLoteriasController extends Controller
 
         $data = $request->all();
         $data = $request->except('_token');
-        $data['loterias_id'] = $loteria;
+        $data['loterias_id'] = $loteria; 
         $data['empresas_id'] = session()->get('user.emp_id');
 
-        
+    
          $data = HorarioLoterias::getActualizarHorarioUsuarioLoteria($loteria, $data);
 
         return back()

@@ -51,8 +51,9 @@ class UsuariosController extends Controller
 
         $documentos = $this->marketService->getTipoDocumento();
         $bancas = $this->marketService->getBancasEmpresa($empresa);
+        $horarios = Util::horarioUsuario();
 
-        return view('usuarios.create')->with([ 'documentos' => $documentos, 'bancas' => $bancas]);
+        return view('usuarios.create')->with([ 'documentos' => $documentos, 'bancas' => $bancas, 'horarios'=>$horarios]);
     }
 
     /**
@@ -100,8 +101,9 @@ class UsuariosController extends Controller
         $documentos = $this->marketService->getTipoDocumento();
         $bancas = $this->marketService->getBancasEmpresa($empresa);
         $usuario = $this->marketService->getUsuario($id);
+        $horarios = Util::horarioUsuario();
 
-        return view('usuarios.edit')->with(compact('usuario','documentos','bancas'));
+        return view('usuarios.edit')->with(compact('usuario','documentos','bancas','horarios'));
     }
 
     /**

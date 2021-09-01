@@ -122,7 +122,7 @@
                 <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="col-xs-3 col-sm-3 col-md-3">
                                         <div class="form-group">
                                             <strong>Bancas:</strong>
                                             <select class="form-control" name="bancas_id" id="bancas_id" required>
@@ -133,6 +133,17 @@
                                             </select>
                                         </div>
                                 </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3">
+                                    <div class="form-group">
+                                        <strong>Horario:</strong>
+                                        <select class="form-control" name="use_horario" id="use_horario" required>
+                                            <option value="">Seleccione</option>
+                                                @foreach($horarios as $key => $horario)
+                                                <option value="{{ $key }}" >{{ $horario }}</option>
+                                                @endforeach
+                                        </select>
+                                    </div>
+                            </div>
                                  <div class="col-xs-3 col-sm-3 col-md-3">
                                     <div class="form-group">
                                         <div class="icheck-material-info">

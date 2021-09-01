@@ -101,10 +101,18 @@ class HorarioLoterias
         return $data;
     }
 
-    public static function getHorarioLoteriasDia($empresas_id, $dia)
+    // public static function getHorarioLoteriasDia($empresas_id, $dia)
+    // {
+    //     $marketService = resolve(MarketService::class);
+    //     $data =  $marketService->getHorarioLoteriasDia($empresas_id, $dia);
+
+    //     return $data;
+    // }
+
+    public static function getHorarioLoteriasDia($data)
     {
         $marketService = resolve(MarketService::class);
-        $data =  $marketService->getHorarioLoteriasDia($empresas_id, $dia);
+        $data =  $marketService->getHorarioLoteriasDia($data);
 
         return $data;
     }
