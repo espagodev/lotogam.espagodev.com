@@ -23,7 +23,6 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">Abreviado</th>
-                                            <th scope="col">Codigo</th>
                                             <th scope="col">Modalidad</th>
                                             <th scope="col">Estado</th>
                                             <th scope="col">Opciones</th>
@@ -34,7 +33,6 @@
                                         @foreach($modalidades as $key => $modalidad)
                                         <tr>
                                             <td>{{ $modalidad->abreviado}}</td>
-                                            <td>{{ $modalidad->codigo}}</td>
                                             <td>{{ $modalidad->modalidad }}</td>
                                              <td  class="bt-switch">
                                                 <input type="checkbox" data-id="{{$modalidad->identificador}}" {{ $modalidad->estado ? 'checked' : '' }} data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" >

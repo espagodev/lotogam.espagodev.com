@@ -74,7 +74,6 @@ class EmpresaLoteriasController extends Controller
 
     public function activarDesactivarLoteria($loterias_id){
 
-
         $data['loterias_id'] = $loterias_id;
         $data['empresas_id'] = session()->get('user.emp_id');
 
@@ -82,7 +81,6 @@ class EmpresaLoteriasController extends Controller
 
 
         return json_encode($estado);
-
     }
 
     public function getModificarHorario($loteria)

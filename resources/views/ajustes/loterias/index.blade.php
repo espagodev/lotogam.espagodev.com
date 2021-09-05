@@ -12,7 +12,7 @@
         </div>
      </div>
 
-        <div class="row">
+        <div class="row"> 
              <div class="col-lg-3">
                  @include('ajustes._sidebar')
             </div>

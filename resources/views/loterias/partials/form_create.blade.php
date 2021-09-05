@@ -11,9 +11,20 @@
                     <input id="lot_abreviado" type="text" class="mb-3 form-control{{ $errors->has('lot_abreviado') ? ' is-invalid' : '' }}"   name="lot_abreviado" value="{{ old('lot_abreviado') }}" required>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <strong><i class="fa fa-clock-o"></i> Zona Horaria:</strong>
+                             <select class="form-control  single-select" name="lot_zona_horaria" id="lot_zona_horaria" required>
+                                <option value="">Seleccione</option>
+                                    @foreach($zonasHoraria as $zonaHoraria)
+                                    <option value="{{ $zonaHoraria }}" @if($zonaHoraria == old('lot_zona_horaria')) selected @endif>{{ $zonaHoraria }}</option>
+                                    @endforeach
+                            </select>
+                    </div>
+                </div>
+                {{-- <div class="col-xs-12 col-sm-6 col-md-6">
                     <label >Codigo</label>
                     <input id="lot_codigo" type="text" class="mb-3 form-control{{ $errors->has('lot_codigo') ? ' is-invalid' : '' }}"   name="lot_codigo" value="{{ $totalLoterias }}" disabled>
-                </div>
+                </div> --}}
             </div>
               <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">
@@ -28,7 +39,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="form-group">
-                        <strong><i class="fa fa-clock-o"></i> Zona Horaria:</strong>
+                        <strong><i class="fa fa-flag" aria-hidden="true"></i> Pais:</strong>
                              <select class="form-control  single-select" name="lot_zona_horaria" id="lot_zona_horaria" required>
                                 <option value="">Seleccione</option>
                                     @foreach($zonasHoraria as $zonaHoraria)
@@ -39,11 +50,28 @@
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="form-group">
+                        <strong><i class="fa fa-users" aria-hidden="true"></i> Grupo:</strong>
+                        <select class="form-control  single-select" name="lot_grupo" id="lot_grupo" >
+                            <option value="">Seleccione</option>
+                                @foreach($grupos as $key => $grupo)
+                                <option value="{{ $key }}" @if($key == old('lot_grupo')) selected @endif>{{ $grupo }}</option>
+                                @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">                
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="form-group">
                         <div class="icheck-material-info">
                             <input type="checkbox" id="lot_especial" name="lot_especial" value="1" disabled/>
                             <label for="lot_especial">Loteria Especial</label>
                         </div>
                     </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <label >Comision Loteria</label>
+                    <input id="lot_comision" type="text" class="mb-3 form-control{{ $errors->has('lot_comision') ? ' is-invalid' : '' }}"   name="lot_comision" value="{{ old('lot_comision' ) }}" >
                 </div>
             </div>
             <div class="row">

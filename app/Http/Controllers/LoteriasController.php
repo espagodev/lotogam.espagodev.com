@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Services\MarketService;
 use App\ConfigEmpresa\ConfigEmpresa;
+use App\Utils\Util;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class LoteriasController extends Controller
 {
@@ -27,10 +29,38 @@ class LoteriasController extends Controller
      */
     public function index()
     {
-        $loterias = $this->marketService->getLoterias();
+
+        $empresa  =   session()->get('user.emp_id');
+
+        if (request()->ajax()) {
+
+            $loterias = $this->marketService->getLoterias();
+
+            return DataTables::of($loterias)
+            ->addColumn('logo', function ($row) {
+                return '<img src="'.$row->lot_imagen.'" class="customer-img rounded">';
+
+            })
+                 ->addColumn(
+                     'estado',
+                    '<button type="button" data-href="{{action(\'LoteriasController@activarDesactivarLoteria\', [$id])}}" class="btn btn-sm activar-inactivar-loteria @if($lot_estado) btn-danger @else btn-success @endif"><i class="fa fa-power-off"></i> @if($lot_estado) Inactivar Loteria @else Activar Loteria @endif </button>'
+                )
+                ->addColumn('action', function ($row) {
+                    if ($row->lot_estado == 1) { 
+                        return '<button type="button" data-href="' . action('LoteriasController@getModificarLoteria', [$row->id]) . '"  class="btn btn-sm btn-outline-warning  modificar-modal btn-modal"
+                        ><i class="fa fa fa-pencil"></i> </button>
+                            ';
+                    }
+                })
+                ->rawColumns(['action','logo','estado'])
+                ->make(true);
+        }
+
+        return view('loterias.index');
 
 
-        return view('loterias.index')->with(['loterias' => $loterias]);
+        // $loterias = $this->marketService->getLoterias();
+        // return view('loterias.index')->with(['loterias' => $loterias]); 
     }
 
     public function store(Request $request)
@@ -66,11 +96,11 @@ class LoteriasController extends Controller
        
         $sorteos = $request->input('sorteo');
 
-        // $data = $request->all();
+        $data = $request->all();
         // $data = $request->except('_token');
-        $data['lot_nombre'] =  $request->input('lot_nombre');
-        $data['lot_abreviado'] =  $request->input('lot_abreviado');
-        $data['lot_codigo'] =  $request->input('lot_codigo');
+        // $data['lot_nombre'] =  $request->input('lot_nombre');
+        // $data['lot_abreviado'] =  $request->input('lot_abreviado');
+        // $data['lot_codigo'] =  $request->input('lot_codigo');
 
         if ($request->hasFile('lot_imagen')) {
             $data['lot_imagen'] = fopen($request->lot_imagen->path(), 'r');
@@ -87,13 +117,23 @@ class LoteriasController extends Controller
             ->with('success', ['Loteria Modificada Satisfactoriamente']);
     }
 
+    public function activarDesactivarLoteria($loterias_id){
+
+        $data['loterias_id'] = $loterias_id;
+
+        $estado = $this->marketService->getLoteriaEstado($data);
+
+        return json_encode($estado);
+    }
+
     public function getNuevaLoteria()
     {
         $countLoterias = $this->marketService->getTotalLoterias();
         $totalLoterias = json_decode($countLoterias);
         $zonasHoraria = ConfigEmpresa::zonaHoraria();
+        $grupos = Util::loteriaGrupo();
 
-        return view('loterias.modal_create')->with(['zonasHoraria' => $zonasHoraria, 'totalLoterias' => $totalLoterias ]);
+        return view('loterias.modal_create')->with(['zonasHoraria' => $zonasHoraria, 'totalLoterias' => $totalLoterias, 'grupos' => $grupos ]);
     }
 
     public function getModificarLoteria($id) 
@@ -101,7 +141,8 @@ class LoteriasController extends Controller
         $zonasHoraria = ConfigEmpresa::zonaHoraria();
         $loteria = $this->marketService->getLoteria($id);
         $sorteos = json_decode($loteria->lot_sorteo, true);
+        $grupos = Util::loteriaGrupo();
 
-        return view('loterias.modal_edit')->with(['loteria' => $loteria,'sorteos' => $sorteos,'zonasHoraria' => $zonasHoraria]);
+        return view('loterias.modal_edit')->with(['loteria' => $loteria,'sorteos' => $sorteos,'zonasHoraria' => $zonasHoraria, 'grupos' => $grupos]);
     }
 }

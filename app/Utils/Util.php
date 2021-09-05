@@ -498,6 +498,15 @@ class Util
         ];
     }
 
+    public static function loteriaGrupo()
+    {
+        return [
+            '1' => 'Dominicana',
+            '2' => 'Americana',
+            '3' => 'Colombia'
+        ];
+    }
+
     public static function validarHoracierreLoteria($loterias)
     {
         $horaRd = HorarioLoterias::horaRD();

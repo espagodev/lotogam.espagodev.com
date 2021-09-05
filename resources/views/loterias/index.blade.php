@@ -15,8 +15,8 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table">
+                            <div class="table-responsive"> 
+                                <table class="table table-striped" id="loterias">
                                     <thead>
                                         <tr>
                                             <th scope="col">Logo</th>
@@ -26,7 +26,7 @@
                                             <th scope="col">Opciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    {{-- <tbody>
                                         @foreach($loterias as $key => $loteria)
                                         <tr>
                                            
@@ -46,7 +46,7 @@
                                             </td>
                                         </tr>
                                         @endforeach
-                                    </tbody>
+                                    </tbody> --}}
                                 </table>
                             </div>
                     </div>
@@ -63,4 +63,68 @@
 @section('scripts')
  <script src="{{ asset('js/loterias/loteria.js?v=' . $asset_v) }}"></script>
  <script src="{{ asset('js/loterias/loteria_nueva.js?v=' . $asset_v) }}"></script>
+
+ <script type="text/javascript">
+    $(document).ready( function(){
+        //Status table
+         loterias = $('#loterias').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{action('LoteriasController@index')}}",
+                columnDefs: [ {
+                    "targets": 3,
+                    "orderable": false,
+                    "searchable": false
+                } ],
+                columns: [
+                    { data: 'logo', name: 'logo' },
+                    { data: 'lot_nombre', name: 'lot_nombre' },
+                    { data: 'lot_abreviado', name: 'lot_abreviado' },
+                    { data: 'estado', name: 'estado' },
+                    { data: 'action', name: 'action' },
+                ]
+            });
+    });
+
+     $(document).on('click', 'button.activar-inactivar-loteria', function(){
+        swal({
+            title: "Estás seguro ?",
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        }).then(willDelete => {
+            if (willDelete) {
+                $.ajax({
+                    url: $(this).data('href'),
+                    dataType: 'json',
+                    success: function(result) {
+                        if (result.success == "estado") {
+                            Lobibox.notify("success", {
+                                position: "top right",
+                                title:false,
+                                icon:false,
+                                size: "mini",
+                                rounded: true,
+                                msg: result.msg,
+                                });
+                            loterias.ajax.reload();
+                        }
+                        if(result.success == "activo") {
+                            Lobibox.notify("info", {
+                                position: "top right",
+                                title:false,
+                                icon:false,
+                                size: "mini",
+                                rounded: true,
+                                msg: result.msg,
+                                        });
+                                loterias.ajax.reload();
+                        }
+                    },
+                });
+            }
+        });
+    });
+
+   </script>
 @endsection

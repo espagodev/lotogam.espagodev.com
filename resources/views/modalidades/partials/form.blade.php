@@ -15,8 +15,5 @@
             <label >Abreviado</label>
             <input id="mod_abreviado" type="text" class="form-control{{ $errors->has('mod_abreviado') ? ' is-invalid' : '' }}"  name="mod_abreviado" value="{{ old('mod_abreviado') }}" required>
         </div>
-        <div class="col-xs-12 col-sm-4 col-md-4">
-            <label >Codigo</label>
-            <input id="mod_codigo" type="text" class="form-control{{ $errors->has('mod_codigo') ? ' is-invalid' : '' }}"  name="mod_codigo" value="{{ old('mod_codigo') }}" required>
-        </div>
+        
     </div>

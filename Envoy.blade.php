@@ -1,4 +1,4 @@
-@servers(['aws' => '-i D:\\espagodev\dev.pem ubuntu@ec2-3-131-101-33.us-east-2.compute.amazonaws.com','localhost' => '127.0.0.1'])
+@servers(['aws' => '-i D:\\espagodev\dev.pem ubuntu@ec2-3-131-101-33.us-east-2.compute.amazonaws.com','localhost' => '127.0.0.1','lot' => '-i D:\\espagodev\LightsailDefaultKey-eu-west-3.pem ubuntu@15.237.141.99'])
 {{-- @servers([ 'aws' => ['ubuntu@3.18.107.107']]) --}}
 {{-- envoy run git:clone --on=aws --}}
 {{-- envoy run git:pull --on=aws --}}
@@ -13,6 +13,8 @@
     $branch = isset($branch) ? $branch : 'master';
     $app_dir1 = '/var/www';
     $app_dir = '/var/www/lotogam.espagodev.com';
+
+    $app_dir_lotogam = '/var/www/lotogam.com';
 
     if ( !isset($on)) {
         throw new Exception('La variable --on no está definida');
@@ -79,7 +81,6 @@
     ls -la
 @endtask
 
-
 @task('composer', ['on' => $on])
     cd {{ $app_dir }}
   sudo  composer install
@@ -103,7 +104,7 @@
 
 @task('migrate', ['on' => $on])
     cd {{ $app_dir }}
-    php artisan migrate
+   sudo php artisan migrate
     {{-- sudo php artisan migrate:refresh --seed --}}
 @endtask
 
@@ -142,7 +143,62 @@
 @endtask
 
 @task('rm', ['on' => $on])
+    cd {{ $app_dir_rm }}
+    {{-- sudo rm -r {{ $app_dir_rm }} --}}
 
-    sudo rm -r {{ $app_dir }}
+@endtask
 
+
+
+{{-- LOTOGMA --}}
+
+@task('lot_ls', ['on' => $on])
+    cd {{ $app_dir_lotogam }}
+    ls -ln
+@endtask
+
+@task('lot_composer', ['on' => $on])
+    cd {{ $app_dir_lotogam }}
+  sudo  composer install --no-dev
+@endtask
+
+@task('lot_auto', ['on' => $on])
+    cd {{ $app_dir_lotogam }}
+  sudo  composer dump-autoload
+@endtask
+
+@task('lot_env', ['on' => $on])
+    cd {{ $app_dir_lotogam }}
+    sudo  cp .env.example .env
+    echo "Se crea archivo env";
+@endtask
+
+@task('lot_key', ['on' => $on])
+    cd {{ $app_dir_lotogam }}
+    sudo php artisan key:generate
+@endtask
+
+@task('lot_migrate', ['on' => $on])
+    cd {{ $app_dir_lotogam }}
+    sudo php artisan migrate
+    {{-- sudo php artisan migrate:refresh --seed --}}
+@endtask
+
+@task('lot_stor', ['on' => $on])
+    cd {{ $app_dir_lotogam }}
+    sudo chown -R www-data storage/
+     echo "Se dieron permisos a storage";
+@endtask
+
+@task('lot_boot', ['on' => $on])
+    cd {{ $app_dir_lotogam }}
+    sudo chown -R www-data bootstrap/cache/
+     echo "Se dieron permisos a bootstrap";
+@endtask
+
+@task('lot_cache', ['on' => $on])
+    cd {{ $app_dir_lotogam }}
+ sudo   php artisan config:cache
+    {{-- php artisan cache:clear --}}
+    echo "caché limpiada correctamente";
 @endtask

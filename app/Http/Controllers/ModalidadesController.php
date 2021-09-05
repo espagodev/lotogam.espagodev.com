@@ -24,8 +24,7 @@ class ModalidadesController extends Controller
     {
         $rules = [
             'mod_nombre' => 'required',
-            'mod_abreviado' => 'required',
-            'mod_codigo' => 'required'
+            'mod_abreviado' => 'required'
         ];
 
         $data = $this->validate($request, $rules);
