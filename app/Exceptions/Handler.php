@@ -65,7 +65,7 @@ class Handler extends ExceptionHandler
         $code = $exception->getCode();
 
         $response = json_decode($exception->getResponse()->getBody()->getContents());
-        $errorMessage = $response->error;
+        // $errorMessage = $response->error;
 
 
         switch ($code) {

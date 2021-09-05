@@ -152,6 +152,24 @@
 
 {{-- LOTOGMA --}}
 
+@task('lot_pull', ['on' => $on])
+    cd {{ $app_dir_lotogam }}
+    echo "hemos entrado al directorio {{ $app_dir_lotogam }}";
+    {{-- sudo git pull origin {{ $branch }} --allow-unrelated-histories --}}
+    sudo git pull origin {{ $branch }}
+    echo "código actualizado correctamente";
+@endtask
+
+@task('lot_origen', ['on' => $on])
+    cd {{ $app_dir_lotogam }}
+    echo "hemos entrado al directorio {{ $app_dir_lotogam }}";
+     {{-- sudo git fetch origin
+    sudo git reset --hard origin/master  --}}
+    sudo git remote remove origin 
+    sudo git remote add origin git@github.com:espagodev/lotogam.espagodev.com.git
+    echo "origen actualizado correctamente";
+@endtask
+
 @task('lot_ls', ['on' => $on])
     cd {{ $app_dir_lotogam }}
     ls -ln
