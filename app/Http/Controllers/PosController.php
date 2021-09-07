@@ -100,7 +100,7 @@ class PosController extends Controller
 
         $loterias = $this->marketService->getHorarioLoteriasBanca($bancas_id, $dia);
         $parametros =  $this->marketService->getParametrosBanca($bancas_id);
-
+        dump($loterias,$parametros);
         $fechaActual = Carbon::now()->tz('America/Santo_Domingo')->format('d/m/Y');
 
 
