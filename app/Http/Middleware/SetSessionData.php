@@ -26,7 +26,6 @@ class SetSessionData
         
         $util = new Util;
 
-
         $session_data = [
             'id' => $user->identificador,
             'surname' => $user->nombre,
@@ -48,7 +47,6 @@ class SetSessionData
                 'date_format' => $empresa->emp_formato_fecha,
                 'time_zone ' => $empresa->emp_zona_horaria,
                 'logo ' => $empresa->emp_imagen,
-
             ];
 
             $currency_data = [

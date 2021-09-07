@@ -100,13 +100,11 @@ class PosController extends Controller
 
       
         $parametros =  $this->marketService->getParametrosBanca($bancas_id);
-        dump($parametros);
+        
         $fechaActual = Carbon::now()->tz('America/Santo_Domingo')->format('d/m/Y');
-
 
             return view('sale_pos.create')->with([               
                 'symbol' => $symbol,
-                'horaRD' => $horaRD,
                 'parametros' => $parametros,
                 'fechaActual' => $fechaActual,
 
@@ -325,24 +323,21 @@ class PosController extends Controller
     {
 
         if ($request->ajax()) {
-
             
-            $users_id = session()->get('user.id');
-            
+            $users_id = request()->session()->get('user.id');
 
             $horaRD = HorarioLoterias::horaRD();
 
-            $data['empresas_id'] = session()->get('user.emp_id');
-            $data['bancas_id'] = session()->get('user.banca');
-            $data['users_id'] = session()->get('user.id');
-            $data['horario'] = session()->get('user.userHoraro');
+            $data['empresas_id'] = request()->session()->get('user.emp_id');
+            $data['bancas_id'] = request()->session()->get('user.banca');
+            $data['users_id'] = request()->session()->get('user.id');
+            $data['horario'] = request()->session()->get('user.userHoraro');
             $data['dia'] = HorarioLoterias::dia();
 
             $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($data);
               
             $detalles = $this->marketService->getProgressBar($users_id);
           
-            
             $output = '';
             $limiteVenta = Util::compararValores($detalles->limite, $detalles->total);
             // dd($limiteVenta);
