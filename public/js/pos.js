@@ -675,7 +675,7 @@ function generarTicket() {
 function horarioLoteriasDia() {
     var bancas_id = $("#bancas_id").val();
 
-    var data = { bancas_id: bancas_id };
+    // var data = { bancas_id: bancas_id };
 
     var loader = __fa_awesome();
 
@@ -685,7 +685,7 @@ function horarioLoteriasDia() {
         method: "GET",
         url: "/pos/getHorarioLoteriasDia",
         dataType: "html",
-        data: data,
+        // data: data,
         success: function(data) {
             $(".loterias").html(data);
         }

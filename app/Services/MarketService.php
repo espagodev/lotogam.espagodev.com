@@ -1298,16 +1298,8 @@ class MarketService
         return $this->makeRequest('GET', "getloteriasEmpresaHorario/{$empresas_id}");
     }
 
-    //horario loterias empresa por dia
-    // public function  getHorarioLoteriasDia($empresas_id, $dia)
-    // {
-    //     return $this->makeRequest('GET', "getHorarioLoteriasDia/{$empresas_id}/{$dia}");
-    // }
-
-
     public function  getHorarioLoteriasDia($data)
     {
-        dd($data);
         return $this->makeRequest('GET', "getHorarioLoteriasDia", $data);
     }
 
