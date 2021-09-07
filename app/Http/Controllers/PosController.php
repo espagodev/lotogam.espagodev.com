@@ -327,9 +327,9 @@ class PosController extends Controller
 
         if ($request->ajax()) {
 
-            // $empresas_id = session()->get('user.emp_id');
+            
             $users_id = session()->get('user.id');
-            // $dia = HorarioLoterias::dia();
+            
 
             $horaRD = HorarioLoterias::horaRD();
 
@@ -340,9 +340,9 @@ class PosController extends Controller
             $data['dia'] = HorarioLoterias::dia();
 
             $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($data);
-               
+               dump($horarioLoteria);
             $detalles = $this->marketService->getProgressBar($users_id);
-
+            dump($detalles);
             
             $output = '';
             $limiteVenta = Util::compararValores($detalles->limite, $detalles->total);

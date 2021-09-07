@@ -175,16 +175,17 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
     // Route::resource('TicketDetalle', 'Ticket\TicketDetalleController', ['only' => ['index', 'store', 'update', 'destroy']]);
 
 
+
+    Route::get('pos/getHorarioLoteriasDia', 'PosController@getHorarioLoteriasDia');
+    Route::get('pos/getLoteriasSuperPale', 'PosController@getLoteriasSuperPale');
+
     // Route::get('pos/getLoteriasSuperPale', 'PosController@getLoteriasSuperPale');
 
     Route::get('/pos/{ticket}/ticket', 'PosController@printTicket')->name('pos.printTicket');
 
-    Route::middleware(['bloquearBanca','SetSessionData', 'timezone'])->group(function () {
-        Route::get('pos/getHorarioLoteriasDia', 'PosController@getHorarioLoteriasDia');
-        Route::get('pos/getLoteriasSuperPale', 'PosController@getLoteriasSuperPale');
+    Route::middleware(['bloquearBanca'])->group(function () {
         Route::get('/pos/create', 'PosController@create')->name('pos.create');
         Route::post('pos', 'PosController@store')->name('pos.store');
-       
     });
 
     Route::get('pos', 'PosController@index')->name('pos.index');
