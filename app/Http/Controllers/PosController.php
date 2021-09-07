@@ -94,18 +94,17 @@ class PosController extends Controller
         $horaRD = HorarioLoterias::horaRD();
 
         $bancas_id = request()->session()->get('user.banca');
-        $users_id = session()->get('user.id');
+        // $users_id = session()->get('user.id');
         $symbol = request()->session()->get('currency.symbol');
-        $limite_venta = session()->get('banca.limite_venta');
+        // $limite_venta = session()->get('banca.limite_venta');
 
-        $loterias = $this->marketService->getHorarioLoteriasBanca($bancas_id, $dia);
+      
         $parametros =  $this->marketService->getParametrosBanca($bancas_id);
-        dump($loterias,$parametros);
+        dump($parametros);
         $fechaActual = Carbon::now()->tz('America/Santo_Domingo')->format('d/m/Y');
 
 
-            return view('sale_pos.create')->with([
-                'loterias' => $loterias,
+            return view('sale_pos.create')->with([               
                 'symbol' => $symbol,
                 'horaRD' => $horaRD,
                 'parametros' => $parametros,
