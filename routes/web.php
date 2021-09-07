@@ -10,19 +10,19 @@ Auth::routes(['register' => false, 'reset' => false ]);
 
 Route::middleware(['SetSessionData', 'timezone'])->group(function () {
 
-Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/home/get-totals', 'HomeController@getTotals');
+    Route::get('/home/get-totals', 'HomeController@getTotals');
 
-Route::get('/dashboard/getVentasMes', 'HomeController@getVentasMes');
+    Route::get('/dashboard/getVentasMes', 'HomeController@getVentasMes');
 
-Route::get('/dashboard/getVentasMesPrint', 'HomeController@getVentasMesPrint');
+    Route::get('/dashboard/getVentasMesPrint', 'HomeController@getVentasMesPrint');
 
-Route::get('/dashboard/getTickesPremiados', 'HomeController@getTickesPremiados');
+    Route::get('/dashboard/getTickesPremiados', 'HomeController@getTickesPremiados');
 
-// Route::get('/', 'WelcomeController@showWelcomePage')->name('welcome');
+    // Route::get('/', 'WelcomeController@showWelcomePage')->name('welcome');
 
-Route::get('authorization', 'Auth\LoginController@authorization')->name('authorization');
+    Route::get('authorization', 'Auth\LoginController@authorization')->name('authorization');
 
     //SELECT
     Route::get('select/getbancas', 'BancasController@getbancas');
@@ -30,27 +30,27 @@ Route::get('authorization', 'Auth\LoginController@authorization')->name('authori
     //Route::get('publisher/getequipos', 'PublisherController@getequipos')->name('getequipos');
 
 
-//ajustes Empresa
- Route::get('ajustesEmpresa', 'AjustesEmpresaController@index')->name('ajustesEmpresa');
+    //ajustes Empresa
+    Route::get('ajustesEmpresa', 'AjustesEmpresaController@index')->name('ajustesEmpresa');
 
 
-//numeros calientes
-Route::get('ajustes/calientes', 'NumerosCalientesController@index')->name('NumerosCalientes');
-Route::post('NumerosCalientes', 'NumerosCalientesController@store')->name('NumerosCalientes.store');
- Route::get('getNumerosCalientesEstado', 'NumerosCalientesController@getNumerosCalientesEstado');
- Route::get('getNumerosCalientesDelete/{resultado_id}', 'NumerosCalientesController@getNumerosCalientesDelete');
+    //numeros calientes
+    Route::get('ajustes/calientes', 'NumerosCalientesController@index')->name('NumerosCalientes');
+    Route::post('NumerosCalientes', 'NumerosCalientesController@store')->name('NumerosCalientes.store');
+    Route::get('getNumerosCalientesEstado', 'NumerosCalientesController@getNumerosCalientesEstado');
+    Route::get('getNumerosCalientesDelete/{resultado_id}', 'NumerosCalientesController@getNumerosCalientesDelete');
 
 
-//loterias empresa
-Route::get('ajustes/loterias', 'EmpresaLoteriasController@index')->name('loteriasEmpresa');
+    //loterias empresa
+    Route::get('ajustes/loterias', 'EmpresaLoteriasController@index')->name('loteriasEmpresa');
 
-//loterias superpale empresa
+    //loterias superpale empresa
 
-Route::get('ajustes/superpales', 'EmpresaSuperPaleController@index')->name('superPaleEmpresa');
-Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('superPaleEmpresa.store');
-Route::get('getSuperPaleEmpresaDelete/{loterias_id}', 'EmpresaSuperPaleController@getSuperPaleEmpresaDelete');
-Route::get('superPaleEmpresa/{loteria_id}', 'EmpresaSuperPaleController@getModificarLoteriaSuperPale');
-Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['show','destroy','create','edit']]);
+    Route::get('ajustes/superpales', 'EmpresaSuperPaleController@index')->name('superPaleEmpresa');
+    Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('superPaleEmpresa.store');
+    Route::get('getSuperPaleEmpresaDelete/{loterias_id}', 'EmpresaSuperPaleController@getSuperPaleEmpresaDelete');
+    Route::get('superPaleEmpresa/{loteria_id}', 'EmpresaSuperPaleController@getModificarLoteriaSuperPale');
+    Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['show','destroy','create','edit']]);
 
 //IMPRESORAS
 //     Route::get('ajustes/impresoraPos', 'ImpresoraPosController@index')->name('impresoraPos');
@@ -175,18 +175,18 @@ Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['
     // Route::resource('TicketDetalle', 'Ticket\TicketDetalleController', ['only' => ['index', 'store', 'update', 'destroy']]);
 
 
-
-    Route::get('pos/getHorarioLoteriasDia', 'PosController@getHorarioLoteriasDia');
-    Route::get('pos/getLoteriasSuperPale', 'PosController@getLoteriasSuperPale');
-
-    Route::get('pos/getLoteriasSuperPale', 'PosController@getLoteriasSuperPale');
+    // Route::get('pos/getLoteriasSuperPale', 'PosController@getLoteriasSuperPale');
 
     Route::get('/pos/{ticket}/ticket', 'PosController@printTicket')->name('pos.printTicket');
 
-    Route::middleware(['bloquearBanca'])->group(function () {
+    Route::middleware(['bloquearBanca','SetSessionData', 'timezone'])->group(function () {
+        Route::get('pos/getHorarioLoteriasDia', 'PosController@getHorarioLoteriasDia');
+        Route::get('pos/getLoteriasSuperPale', 'PosController@getLoteriasSuperPale');
         Route::get('/pos/create', 'PosController@create')->name('pos.create');
         Route::post('pos', 'PosController@store')->name('pos.store');
+       
     });
+
     Route::get('pos', 'PosController@index')->name('pos.index');
     // Route::resource('pos','PosController', ['except' => ['edit', 'show', 'destroy']]);
 
