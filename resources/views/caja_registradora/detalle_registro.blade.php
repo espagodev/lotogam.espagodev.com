@@ -51,17 +51,7 @@
                         </table>
                     </div>
                 </div>
-
-
-            {{-- <div class="row">
-                <div class="col-xs-6">
-                <b>Usuario:</b> <br>
-                <b>Email:</b> <br>
-                <b>Banca:</b> <br>
-                </div>
-            </div> --}}
         </div>
-
         <div class="modal-footer">
             <button type="button" class="btn btn-primary no-print"
                 aria-label="Print"
