@@ -341,6 +341,7 @@ class PosController extends Controller
 
             // $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($empresas_id, $dia);
             $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($data);
+            
             $detalles = $this->marketService->getProgressBar($users_id);
 
             
@@ -397,6 +398,7 @@ class PosController extends Controller
 
             $horaRD = HorarioLoterias::horaRD();
             $horarioLoteria = HorarioLoterias::getLoteriasSuperPaleDia($empresas_id, $dia);
+
             $detalles = $this->marketService->getProgressBar($users_id);
 
             $output = '';

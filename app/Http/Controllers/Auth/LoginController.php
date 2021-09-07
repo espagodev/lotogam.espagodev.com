@@ -77,7 +77,6 @@ class LoginController extends Controller
             $tokenData = $this->marketAuthenticationService->getCodeToken($request->code);
 
             $userData = $this->marketService->getUserInformation();
-
             $user = $this->registerOrUpdateUser($userData, $tokenData);
 
             $this->loginUser($user);

@@ -112,6 +112,7 @@ class HorarioLoterias
     public static function getHorarioLoteriasDia($data)
     {
         $marketService = resolve(MarketService::class);
+     
         $data =  $marketService->getHorarioLoteriasDia($data);
 
         return $data;
