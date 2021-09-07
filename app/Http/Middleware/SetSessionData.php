@@ -23,7 +23,7 @@ class SetSessionData
         $marketService = resolve(MarketService::class);
 
         $user = $marketService->getUserInformation();
-
+        dd($user);
         $util = new Util;
 
 
