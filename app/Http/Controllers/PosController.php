@@ -338,8 +338,7 @@ class PosController extends Controller
             $data['users_id'] = session()->get('user.id');
             $data['horario'] = session()->get('user.userHoraro');
             $data['dia'] = HorarioLoterias::dia();
-            dd($data, $users_id);
-            // $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($empresas_id, $dia);
+
             $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($data);
                
             $detalles = $this->marketService->getProgressBar($users_id);

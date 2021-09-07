@@ -1307,6 +1307,7 @@ class MarketService
 
     public function  getHorarioLoteriasDia($data)
     {
+        dd($data);
         return $this->makeRequest('GET', "getHorarioLoteriasDia", $data);
     }
 
