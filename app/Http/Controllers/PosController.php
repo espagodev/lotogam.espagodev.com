@@ -327,9 +327,9 @@ class PosController extends Controller
 
         if ($request->ajax()) {
 
-            $empresas_id = session()->get('user.emp_id');
+            // $empresas_id = session()->get('user.emp_id');
             $users_id = session()->get('user.id');
-            $dia = HorarioLoterias::dia();
+            // $dia = HorarioLoterias::dia();
 
             $horaRD = HorarioLoterias::horaRD();
 
@@ -338,7 +338,7 @@ class PosController extends Controller
             $data['users_id'] = session()->get('user.id');
             $data['horario'] = session()->get('user.userHoraro');
             $data['dia'] = HorarioLoterias::dia();
-
+            dd($data, $users_id);
             // $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($empresas_id, $dia);
             $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($data);
                
