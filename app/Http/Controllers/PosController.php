@@ -340,9 +340,9 @@ class PosController extends Controller
             $data['dia'] = HorarioLoterias::dia();
 
             $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($data);
-               dump($horarioLoteria);
+              
             $detalles = $this->marketService->getProgressBar($users_id);
-            dump($detalles);
+          
             
             $output = '';
             $limiteVenta = Util::compararValores($detalles->limite, $detalles->total);
