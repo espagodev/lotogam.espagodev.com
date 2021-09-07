@@ -14,7 +14,8 @@
     $app_dir1 = '/var/www';
     $app_dir = '/var/www/lotogam.espagodev.com';
 
-    $app_dir_lotogam = '/var/www/lotogam.com';
+    // $app_dir_lotogam = '/var/www/lotogam.com';
+    $app_dir_lotogam = '/var/www/prueba.lotogam.com';
 
     if ( !isset($on)) {
         throw new Exception('La variable --on no está definida');

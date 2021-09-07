@@ -1,7 +1,7 @@
 <div class="modal-dialog modal-lg" role="document">
   <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title">Detalles Caja Registradora  ({{\Carbon::createFromFormat('Y-m-d H:i:s', $close_time)->format('j M, Y h:i A')}}) </h3>
+            <h3 class="modal-title">Detalles Caja Registradora  </h3>
             <button type="button" class="close no-print" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
 
