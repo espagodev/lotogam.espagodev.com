@@ -25,7 +25,7 @@ class SetSessionData
         $marketService = resolve(MarketService::class);
 
         $user = $marketService->getUserInformation();
-            dump($user);
+           
         $util = new Util;
 
 
