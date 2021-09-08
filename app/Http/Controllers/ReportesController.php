@@ -352,7 +352,6 @@ class ReportesController extends Controller
     {
         if ($request->ajax()) {
 
-
             if (session()->get('user.TipoUsuario') == 2) {  
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion',  'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
@@ -360,7 +359,9 @@ class ReportesController extends Controller
                 $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
                 $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
             }
+
             $data['empresas_id'] = session()->get('user.emp_id');
+            
             $reporteJugadas = $this->reportes->getReporteJugadas($data);
             return $datatable = dataTables::of($reporteJugadas)
 
@@ -613,6 +614,7 @@ class ReportesController extends Controller
 
     public function reporteModalidadesDetalle(Request $request)
     {
+        
         if ($request->ajax()) {
 
             $data = $request->only(['start_date', 'end_date', 'bancas_id', 'loterias_id', 'users_id', 'modalidades_id']);

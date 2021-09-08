@@ -20,11 +20,14 @@ class SetSessionData
     public function handle($request, Closure $next)
     {
 
+        if (!$request->session()->has('user')) {
+
         $marketService = resolve(MarketService::class);
 
         $user = $marketService->getUserInformation();
-        
+            dump($user);
         $util = new Util;
+
 
         $session_data = [
             'id' => $user->identificador,
@@ -47,6 +50,7 @@ class SetSessionData
                 'date_format' => $empresa->emp_formato_fecha,
                 'time_zone ' => $empresa->emp_zona_horaria,
                 'logo ' => $empresa->emp_imagen,
+
             ];
 
             $currency_data = [
@@ -71,7 +75,7 @@ class SetSessionData
         $financial_year = $util->getCurrentFinancialYear();
         $request->session()->put('financial_year', $financial_year);
         // }
-
+        }
         return $next($request);
     }
 }

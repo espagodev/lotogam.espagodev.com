@@ -67,7 +67,7 @@ class BancasController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        // $data['empresas_id'] = $this->marketService->getUserInformation()->idEmpresa;
+  
         $data['empresas_id'] =  session()->get('user.emp_id');
 
         $data = $this->marketService->nuevaBanca($data);

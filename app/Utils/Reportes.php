@@ -7,7 +7,7 @@ class Reportes
 {
     public static function getReporteVentas($data)
     {
-        // dd($data);
+
         $marketService = resolve(MarketService::class);
         $data =  $marketService->getReporteVentas($data);
 

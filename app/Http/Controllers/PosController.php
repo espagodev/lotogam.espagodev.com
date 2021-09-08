@@ -321,17 +321,17 @@ class PosController extends Controller
 
     public function getHorarioLoteriasDia(Request $request)
     {
-
+       
         if ($request->ajax()) {
             
-            $users_id = request()->session()->get('user.id');
+            $users_id = session()->get('user.id');
 
             $horaRD = HorarioLoterias::horaRD();
 
-            $data['empresas_id'] = request()->session()->get('user.emp_id');
-            $data['bancas_id'] = request()->session()->get('user.banca');
-            $data['users_id'] = request()->session()->get('user.id');
-            $data['horario'] = request()->session()->get('user.userHoraro');
+            $data['empresas_id'] = session()->get('user.emp_id');
+            $data['bancas_id'] = session()->get('user.banca');
+            $data['users_id'] = session()->get('user.id');
+            $data['horario'] = session()->get('user.userHoraro');
             $data['dia'] = HorarioLoterias::dia();
 
             $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($data);

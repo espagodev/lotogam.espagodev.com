@@ -16,7 +16,7 @@ class AjustesEmpresaController extends Controller
     }
     public function index()
     {
-        $data = $this->marketService->getUserInformation()->idEmpresa;
+        $data = session()->get('user.emp_id');
         $empresa  = $this->marketService->getEmpresaDetalle($data);
         $comisiones  = $this->marketService->getComisionesEmpresa($data);
         $montosGlobales  = $this->marketService->getMontosGlobalesEmpresa($data);

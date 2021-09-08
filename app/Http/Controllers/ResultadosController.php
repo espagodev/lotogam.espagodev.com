@@ -110,7 +110,7 @@ class ResultadosController extends Controller
 
      public function imprimir(Request $request)
     {
-        $empresa_id  = $this->marketService->getUserInformation()->emp_id;
+        $empresa_id  = session()->get('user.emp_id');
 
         $receipt = '';
         $receipt = $this->receiptContent($empresa_id);
