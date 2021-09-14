@@ -5,7 +5,7 @@
                 <h3 class="modal-title text-white">Nueva Loteria</h3>
                 <button type="button" class="close text-white no-print" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-            <form method="post" action="{{ route('loterias.store')}}"  id="store" enctype="multipart/form-data">
+            <form method="post" action="{{ route('loterias.store')}}"  id="store" enctype="multipart/form-data" id="store">
              @csrf
              <div class="modal-body">
                    @include('loterias.partials.form_create')

@@ -203,6 +203,10 @@ function __show_date_diff_for_human(element) {
 }
 
 
+function __select2(selector) {
+    if ($('html').attr('dir') == 'rtl') selector.select2({ dir: 'rtl' });
+    else selector.select2();
+}
 
 
 function sum_table_col(table, class_name) {

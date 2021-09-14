@@ -38,7 +38,7 @@ class SetSessionData
             'banca' => $user->idBanca,
             'resultados' => $user->resultado,
             'bancaBloqueo' => $user->bancaBloqueo,
-            'userHoraro' => $user->userHoraro,
+            'userHorario' => $user->userHorario,
         ];
 
         if ($user->tipoUsuario != 1) {

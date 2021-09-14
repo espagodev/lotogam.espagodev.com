@@ -71,8 +71,6 @@ class UserLoteriasController extends Controller
             ->with('success', ['El Horario se ha Modificado Satisfactoriamente']);
     }
 
-
-
     public function getModificarHorarioUser($loteria, $users_id)
     {       
        
@@ -98,6 +96,43 @@ class UserLoteriasController extends Controller
 
         return json_encode($estado);
 
+    }
+
+
+
+
+    /**
+     * SUPERPALE USUARIOS
+     */
+
+    public function loteriasSuper($users_id)
+    {       
+        
+        if (request()->ajax()) {
+
+            $loteriasusuario  = $this->marketService->getLoteriasSuperUserFaltantes($users_id);
+            
+            return DataTables::of($loteriasusuario)
+
+            ->addColumn('action', function ($row) use ($users_id) {    
+                    if($row->lou_estado)
+                    {
+                    $estado = " btn-danger";
+                      $mensaje = "Inactivar Loteria";
+                    }else{
+                        
+                        $estado = " btn-success";
+                        $mensaje = "Activar Loteria";
+                    }
+                        return  '<button type="button"  data-href="'. action('UserLoteriasController@activarDesactivarUserLoteria', [$row->id, $users_id ]).'" class="btn btn-sm activar-inactivar-loteria'. $estado .'"><i class="fa fa-power-off"></i> '.$mensaje.'</button>';
+                })
+
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        
+        return view('usuarios.loteriasSuper')->with(['users_id' => $users_id]);
     }
 
 }

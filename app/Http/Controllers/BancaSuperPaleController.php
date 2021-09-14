@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\MarketService;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class BancaSuperPaleController extends Controller
 {
@@ -18,78 +19,47 @@ class BancaSuperPaleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($banca)
+    public function index($banca_url)
     {
-        $banca  = $this->marketService->getBancaDetalle($banca);
 
-        $loterias = $this->marketService->getLoteriasBanca($banca->id);
+        $banca  = $this->marketService->getBancaDetalle($banca_url);     
+ 
+        if (request()->ajax()) {
 
-        return view('ajustesBanca.superpale.index')->with(['banca' => $banca, 'loterias' => $loterias]);
+            $loteriasBanca  = $this->marketService->getLoteriasSuperPaleBancaFaltantes($banca);
+
+            return DataTables::of($loteriasBanca)
+           
+                ->addColumn('action', function ($row) use ($banca) {    
+                    if($row->lob_estado)
+                    {
+                      $estado = " btn-danger";
+                      $mensaje = "Inactivar Loteria";
+                    }else{
+                        $estado = " btn-success";
+                        $mensaje = "Activar Loteria";
+                    }
+                        return  '<button type="button"  data-href="'. action('BancaSuperPaleController@activarDesactivarBancaLoteriaSuper', [$row->id, $banca->id ]).'" class="btn btn-sm activar-inactivar-loteria'. $estado .'"><i class="fa fa-power-off"></i> '.$mensaje.'</button>';
+                })
+
+                ->rawColumns(['action'])
+                ->make(true);
+        } 
+        return view('ajustesBanca.superpale.index')->with(['banca' => $banca]);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function activarDesactivarBancaLoteriaSuper($loterias_id, $bancas_id)
     {
-        //
-    }
+         
+        $data['loterias_id'] = $loterias_id;
+        $data['bancas_id'] = $bancas_id;
+        $data['empresas_id'] = session()->get('user.emp_id');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $estado = $this->marketService->getBancaLoteriaSuperEstado($data);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        return json_encode($estado);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

@@ -1,7 +1,4 @@
 
-<div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-8 col-md-8">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <label >Nombre</label>
@@ -16,7 +13,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="form-group">
                         <strong><i class="fa fa-clock-o"></i> Zona Horaria:</strong>
-                             <select class="form-control  single-select" name="lot_zona_horaria" id="lot_zona_horaria" required>
+                             <select class="form-control  select2" name="lot_zona_horaria" id="lot_zona_horaria" required>
                                 <option value="">Seleccione</option>
                                     @foreach($zonasHoraria as $zonaHoraria)
                                     <option value="{{ $zonaHoraria }}" @if($zonaHoraria == old('lot_zona_horaria', $loteria->lot_zona_horaria)) selected @endif>{{ $zonaHoraria }}</option>
@@ -40,7 +37,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="form-group">
                         <strong><i class="fa fa-flag" aria-hidden="true"></i> Pais:</strong>
-                             <select class="form-control  single-select" name="lot_pais" id="lot_pais" >
+                             <select class="form-control  select2" name="lot_pais" id="lot_pais" >
                                 <option value="">Seleccione</option>
                                     @foreach($zonasHoraria as $zonaHoraria)
                                     <option value="{{ $zonaHoraria }}" @if($zonaHoraria == old('lot_pais', $loteria->lot_pais)) selected @endif>{{ $zonaHoraria }}</option>
@@ -48,10 +45,11 @@
                             </select>
                     </div>
                 </div>
+               
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="form-group">              
                         <strong><i class="fa fa-users" aria-hidden="true"></i> Grupo:</strong>
-                             <select class="form-control  single-select" name="lot_grupo" id="lot_grupo" >
+                             <select class="form-control " name="lot_grupo" id="lot_grupo" >
                                 <option value="">Seleccione</option>
                                     @foreach($grupos as $key => $grupo)
                                     <option value="{{ $key }}" @if($key == old('lot_grupo', $loteria->lot_grupo)) selected @endif>{{ $grupo }}</option>
@@ -80,10 +78,16 @@
                     <input type="file" class="mb-3 form-control" id="lot_imagen" name="lot_imagen" >
                 </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-4 col-md-4">
-            <label>Modalidades</label>
-        </div>
-    </div>
-</div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <label>Modalidades</label>
+                    {{-- @dd($loteria->modalidades) --}}
+                    <select class="form-control loterias select2" name="modalidades_id[]" id="modalidades_id"  multiple="multiple" required>
+                        @foreach($modalidades as $modalidad)
+                            <option {{ collect(old('modalidades_id', $loteria->modalidades))->pluck('modalidades_id')->contains($modalidad->identificador) ? 'selected' : ''}} value="{{ $modalidad->identificador }}" >{{ $modalidad->modalidad }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
    

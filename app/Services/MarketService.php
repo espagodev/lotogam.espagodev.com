@@ -111,18 +111,6 @@ class MarketService
     }
 
 
-    public function nuevaLoteriaSuperpale($data)
-    {
-
-        return $this->makeRequest(
-            'POST',
-            "loteriasSuperPale",
-            $data,
-            [],
-            [],
-            false
-        );
-    }
 
     //MODALIDADES
     public function getModalidades()
@@ -695,12 +683,7 @@ class MarketService
         return $this->makeRequest('GET', "getEmpresaLoteriaEstado", $data);
     }
 
-    //LOTERIAS SUPERPALE
-    public function getLoteriasSuperpale($empresa)
-    {
-        return $this->makeRequest('GET', "superpale/{$empresa}/empresa");
-    }
-
+    
     //horario loteria
     public function ModificarHorarioLoteria($loteria, $data)
     {
@@ -1303,11 +1286,7 @@ class MarketService
         return $this->makeRequest('GET', "getHorarioLoteriasDia", $data);
     }
 
-    //horario loterias empresa por dia
-    public function  getLoteriasSuperPaleDia($empresas_id, $dia)
-    {
-        return $this->makeRequest('GET', "getLoteriasSuperPaleDia/{$empresas_id}/{$dia}");
-    }
+    
 
     /**
      * ESTADOS
@@ -1583,4 +1562,75 @@ class MarketService
     {
         return $this->makeRequest('GET', "getReporteTrasladoNumeros", $data);
     }
+
+    /*************************************************/
+    /**
+     * LOTERIAS SUPERPALE
+     */
+    /*************************************************/
+
+    public function getLoteriaSuperpale($loteria)
+    {
+        return $this->makeRequest('GET', "loteriaSuperPale/{$loteria}");
+    }
+
+    public function getLoteriasSuperpale($empresa)
+    {
+        return $this->makeRequest('GET', "superpale/{$empresa}/empresa");
+    }
+
+    //horario loterias empresa por dia
+    public function  getLoteriasSuperPaleDia($data)
+    {
+        return $this->makeRequest('GET', "getLoteriasSuperPaleDia", $data);
+    }
+
+    // public function  getHorarioLoteriasDia($data)
+    // {
+    //     return $this->makeRequest('GET', "getHorarioLoteriasDia", $data);
+    // }
+
+    public function nuevaLoteriaSuperpale($data)
+    {
+
+        return $this->makeRequest(
+            'POST',
+            "loteriaSuperPale",
+            $data,
+            [],
+            [],
+            false
+        );
+    }
+
+    public function ModificarSuperpale($loteria, $data)
+    {
+        $data['_method'] = 'PUT';
+      
+        return $this->makeRequest(
+            'POST',
+            "loteriaSuperPale/{$loteria}",
+            [],
+            $data,
+            [],
+            false
+        );
+    }
+
+    public function  getLoteriasSuperPaleBancaFaltantes($banca)
+    {           
+        return $this->makeRequest('GET', "getloteriasSuperBanca/{$banca->id}");
+    }
+    //ESTADO LOTERIA BANCA
+    public function  getBancaLoteriaSuperEstado($data)
+    {
+        return $this->makeRequest('GET', "getBancaLoteriaSuperEstado", $data);
+    }
+
+    //LOTERIAS SUPER USUARIO
+    public function  getLoteriasSuperUserFaltantes($user)
+    {           
+        return $this->makeRequest('GET', "getloteriasSuperUser/{$user}");
+    }
+
 }

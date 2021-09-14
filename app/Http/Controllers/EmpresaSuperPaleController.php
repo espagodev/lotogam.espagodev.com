@@ -80,7 +80,8 @@ class EmpresaSuperPaleController extends Controller
     {
         $data = $request->all();
         $data = $request->except('_token');
-
+        $data['empresas_id'] =   session()->get('user.emp_id');
+        
         $this->marketService->ModificarSuperPale($id, $data);
 
         return redirect()
@@ -88,6 +89,15 @@ class EmpresaSuperPaleController extends Controller
             'superPaleEmpresa.index'
             )
             ->with('success', ['El SuperPale se ha modificado Satisfactoriamente']);
+    }
+
+
+    public function getNuevoSuperPale()
+    {
+
+        $loterias = $this->marketService->getLoterias();
+
+        return view('ajustes.superpales.superpale_nueva')->with(['loterias' =>$loterias]);
     }
 
         /**
@@ -99,8 +109,8 @@ class EmpresaSuperPaleController extends Controller
     public function getModificarLoteriaSuperPale($id)
     {
         $loterias = $this->marketService->getLoterias();
-        $loteria = $this->marketService->getLoteria($id);
+        $loteria = $this->marketService->getLoteriaSuperpale($id);
        
-        return view('ajustes.superpales.superpale_modificar')->with(['loteria' => $loteria,  'loterias' => $loterias]);
+        return view('ajustes.superpales.superpale_modificar')->with(['loteria' => $loteria, 'loterias' =>$loterias]);
     }
 }

@@ -694,18 +694,16 @@ function horarioLoteriasDia() {
 
 function horarioSuperPale() {
     var bancas_id = $("#bancas_id").val();
-
-    var data = { bancas_id: bancas_id };
+    // var data = { bancas_id: bancas_id };
 
     var loader = __fa_awesome();
-
     $(".superPale").html(loader);
 
     $.ajax({
         method: "GET",
-        url: "/pos/getLoteriasSuperPale",
+        url: "/pos/getLoteriasSuperPaleDia",
         dataType: "html",
-        data: data,
+        // data: data,
         success: function(data) {
             $(".superPale").html(data);
         }

@@ -45,7 +45,7 @@
     @section('scripts')
     <script src="{{ asset('js/ajustes/loterias/loteriasEmpresa.js?v=' . $asset_v) }}"></script>
     <script type="text/javascript">
-    $(document).ready( function(){
+    $(document).ready( function(){ 
         //Status table
        
          loterias = $('#loterias').DataTable({        

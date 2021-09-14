@@ -26,27 +26,6 @@
                                             <th scope="col">Opciones</th>
                                         </tr>
                                     </thead>
-                                    {{-- <tbody>
-                                        @foreach($loterias as $key => $loteria)
-                                        <tr>
-                                           
-                                            <td>
-                                                <div class="media align-items-center">
-                                                     <img src="{{$loteria->lot_imagen}}" class="customer-img rounded">
-                                                </div>
-                                            </td>
-                                            <td>{{ $loteria->lot_nombre }}</td>
-                                            <td>{{ $loteria->lot_abreviado }}</td>
-                                           <td  class="card-body bt-switch">
-                                                <input type="checkbox" data-id="{{$loteria->id}}"  data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" {{ $loteria->lot_estado ? 'checked' : '' }}>
-                                            </td>
-                                            <td>
-                                                <a data-href="{{action('LoteriasController@getModificarLoteria', [$loteria->id]) }}"  class="btn btn-outline-warning modificar-modal" rel="tooltip" title="Editar Comision" ><i class="fa fa-pencil"></i></a>
-                                               
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody> --}}
                                 </table>
                             </div>
                     </div>

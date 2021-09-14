@@ -80,5 +80,16 @@
                     <input type="file" class="mb-3 form-control" id="lot_imagen" name="lot_imagen">
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <label>Modalidades</label>
+                    <select class="form-control loterias select2" name="modalidades_id[]" id="modalidades_id"  multiple="multiple" required>
+                        @foreach($modalidades as $modalidad)
+                            <option {{ collect(old('modalidades_id'))->contains($modalidad->identificador) ? 'selected' : ''}} value="{{ $modalidad->identificador }}" >{{ $modalidad->modalidad }}</option>
+                            
+                        @endforeach
+                    </select>
+                </div>
+            </div>
         
    

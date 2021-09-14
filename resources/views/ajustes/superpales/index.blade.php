@@ -5,11 +5,11 @@
         <div class="col-sm-9">
 		    <h4 class="page-title">Ajustes Empresa / Listado de Loterias</h4>
 	   </div>
-        <div class="col-sm-3">
-            <div class="btn-group float-sm-right">
-
-            </div>
+       <div class="col-sm-3">
+        <div class="btn-group float-sm-right">
+            <button type="button" class="btn btn-primary waves-effect waves-primary nuevo-modal" data-href="{{action('EmpresaSuperPaleController@getNuevoSuperPale') }}"><i class="fa fa-plus mr-1"></i> Nuevo SuperPale</button>
         </div>
+    </div>
      </div>
 
         <div class="row">
@@ -40,6 +40,9 @@
                 </div>
             </div>
       </div><!--End Row-->
+      <div class="modal fade nuevo_modal" tabindex="-1" role="dialog"
+      aria-labelledby="gridSystemModalLabel">
+  </div>
                 <div class="modal fade modificar_modal" tabindex="-1" role="dialog"
         aria-labelledby="gridSystemModalLabel">
     </div>

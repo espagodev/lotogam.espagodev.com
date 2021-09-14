@@ -41,14 +41,14 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
     Route::get('getNumerosCalientesDelete/{resultado_id}', 'NumerosCalientesController@getNumerosCalientesDelete');
 
 
-    //loterias empresa
-    Route::get('ajustes/loterias', 'EmpresaLoteriasController@index')->name('loteriasEmpresa');
+    
 
     //loterias superpale empresa
-
+    
     Route::get('ajustes/superpales', 'EmpresaSuperPaleController@index')->name('superPaleEmpresa');
     Route::post('superPaleEmpresa', 'EmpresaSuperPaleController@store')->name('superPaleEmpresa.store');
     Route::get('getSuperPaleEmpresaDelete/{loterias_id}', 'EmpresaSuperPaleController@getSuperPaleEmpresaDelete');
+    Route::get('getNuevoSuperPale', 'EmpresaSuperPaleController@getNuevoSuperPale');
     Route::get('superPaleEmpresa/{loteria_id}', 'EmpresaSuperPaleController@getModificarLoteriaSuperPale');
     Route::resource('superPaleEmpresa','EmpresaSuperPaleController', ['except' => ['show','destroy','create','edit']]);
 
@@ -59,7 +59,7 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
     //ajustes ticket
 
 
-    Route::get('activarDesactivarLoteria/{loterias_id}', 'EmpresaLoteriasController@activarDesactivarLoteria');
+    
 
 
     Route::prefix('ajustes')->group(function () {
@@ -89,6 +89,9 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
         Route::resource('premios', 'PremiosController');
         
         // Route::get('ajustesLoterias', 'EmpresaLoteriasController@index')->name('ajustesLoterias');
+        //loterias empresa
+        Route::get('ajustes/loterias', 'EmpresaLoteriasController@index')->name('loteriasEmpresa');
+        Route::get('activarDesactivarLoteria/{loterias_id}', 'EmpresaLoteriasController@activarDesactivarLoteria');
         Route::get('getModificarHorario/{loteria}', 'EmpresaLoteriasController@getModificarHorario');
         Route::resource('ajustesLoterias', 'EmpresaLoteriasController');
 
@@ -142,7 +145,7 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
     Route::get('ajustesBanca/montos/{banca}', 'BancaMontosController@index')->name('bancaMonto');
     Route::get('ajustesBanca/impresoraPos/{banca}', 'BancaImpresoraPosController@index')->name('bancaImpresoraPos');
 
-
+    /**Loterias */
     Route::get('ajustesBanca/loterias/{banca}', 'BancaLoteriasController@index')->name('bancaLoterias');
     Route::get('getModificarHorarioBanca/{loteria}/{banca}', 'BancaLoteriasController@getModificarHorarioBanca');
     Route::get('activarDesactivarBancaLoteria/{loterias_id}/{banca}', 'BancaLoteriasController@activarDesactivarBancaLoteria');
@@ -150,9 +153,11 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
     Route::post('ajustesBanca/loterias', 'BancaLoteriasController@store')->name('bancaLoterias.store');
    
 
-
+    /**SuperPale */
     Route::get('ajustesBanca/superpale/{banca}', 'BancaSuperPaleController@index')->name('bancaSuperPale');
+    Route::get('activarDesactivarBancaLoteriaSuper/{loterias_id}/{banca}', 'BancaSuperPaleController@activarDesactivarBancaLoteriaSuper');
     Route::post('ajustesBanca/superpale', 'BancaSuperPaleController@store')->name('bancaSuperPale.store');
+
 
     Route::get('ajustesBanca/modalidades/{banca}', 'BancaModalidadesController@index')->name('bancaModalidades');
     Route::post('ajustesBanca/modalidades', 'BancaModalidadesController@store')->name('bancaModalidades.store');
@@ -176,12 +181,12 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
 
 
 
-    Route::get('pos/getHorarioLoteriasDia', 'PosController@getHorarioLoteriasDia');
-    Route::get('pos/getLoteriasSuperPale', 'PosController@getLoteriasSuperPale');
+    Route::get('pos/getHorarioLoteriasDia',     'PosController@getHorarioLoteriasDia');
+    Route::get('pos/getLoteriasSuperPaleDia',   'PosController@getLoteriasSuperPaleDia');
 
-    // Route::get('pos/getLoteriasSuperPale', 'PosController@getLoteriasSuperPale');
 
     Route::get('/pos/{ticket}/ticket', 'PosController@printTicket')->name('pos.printTicket');
+
 
     Route::middleware(['bloquearBanca'])->group(function () {
         Route::get('/pos/create', 'PosController@create')->name('pos.create');
@@ -275,6 +280,11 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
     Route::get('getModificarHorarioUser/{loteria}/{user}', 'UserLoteriasController@getModificarHorarioUser');
     Route::get('activarDesactivarUserLoteria/{loterias_id}/{user}', 'UserLoteriasController@activarDesactivarUserLoteria');
     Route::put('userLoterias/{loterias_id}', 'UserLoteriasController@update')->name('userLoterias.update');
+
+    //LOTERIAS SUPERPALE USUARIOS
+    Route::get('userLoteriasSuper/{users_id}', 'UserLoteriasController@loteriasSuper');
+    Route::get('activarDesactivarUserLoteriaSUper/{loterias_id}/{user}', 'UserLoteriasController@activarDesactivarUserLoteriaSuper');
+    
 
     /**
      * Traslado de NUmeros

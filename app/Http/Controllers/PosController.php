@@ -331,7 +331,7 @@ class PosController extends Controller
             $data['empresas_id'] = session()->get('user.emp_id');
             $data['bancas_id'] = session()->get('user.banca');
             $data['users_id'] = session()->get('user.id');
-            $data['horario'] = session()->get('user.userHoraro');
+            $data['horario'] = session()->get('user.userHorario');
             $data['dia'] = HorarioLoterias::dia();
 
             $horarioLoteria = HorarioLoterias::getHorarioLoteriasDia($data);
@@ -376,22 +376,25 @@ class PosController extends Controller
                 }
                 return $output;
             }
-
-
         }
     }
 
-    public function getLoteriasSuperPale(Request $request)
+    public function getLoteriasSuperPaleDia(Request $request)
     {
         if ($request->ajax()) {
 
-            $empresas_id = session()->get('user.emp_id');
-            $dia = HorarioLoterias::dia();
             $users_id = session()->get('user.id');
 
             $horaRD = HorarioLoterias::horaRD();
-            $horarioLoteria = HorarioLoterias::getLoteriasSuperPaleDia($empresas_id, $dia);
 
+            $data['empresas_id'] = session()->get('user.emp_id');
+            $data['bancas_id'] = session()->get('user.banca');
+            $data['users_id'] = session()->get('user.id');
+            $data['horario'] = session()->get('user.userHorario');
+            $data['dia'] = HorarioLoterias::dia();
+
+            $horarioLoteria = HorarioLoterias::getLoteriasSuperPaleDia($data);
+          
             $detalles = $this->marketService->getProgressBar($users_id);
 
             $output = '';
