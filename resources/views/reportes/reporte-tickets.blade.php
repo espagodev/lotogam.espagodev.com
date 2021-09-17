@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title','Reporte de Tickets')
     @section('content')
-   @if((request()->session()->get('user.TipoUsuario') == 2) || (request()->session()->get('user.useCuadreCaja') == 1))
+   @if((request()->session()->get('user.TipoUsuario') == 2) || (request()->session()->get('user.useSupervisor') == 1))
         @include('reportes.partials.opcionesAdmin')
         @elseif((request()->session()->get('user.TipoUsuario') == 3))
             @include('reportes.partials.opcionesBanca')
