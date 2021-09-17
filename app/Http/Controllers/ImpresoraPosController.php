@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ConfigEmpresa\ConfigEmpresa;
 use Illuminate\Http\Request;
 use App\Services\MarketService;
 use App\Utils\Util;
@@ -80,11 +81,24 @@ class ImpresoraPosController extends Controller
 
         $empresas_id = session()->get('user.emp_id');
         $impresora = $this->marketService->getImpresoraDetalle($empresas_id, $id);
-        // dd($impresora);
+ 
         $conexiones = Util::tipoConexion();
         $capacidades = Util::perfilCapacidad();
 
 
         return view('ajustes.impresoraPos.impresorapos_modificar')->with(['impresora' => $impresora,  'conexiones' => $conexiones, 'capacidades' => $capacidades]);
+    }
+
+    public function getImpresoraBanca()
+    {
+        $ban_url  =  session()->get('banca.ban_url');
+        $banca  = $this->marketService->getBancaDetalle($ban_url);
+
+        $empresa  =  session()->get('user.emp_id');
+        $impresoras = $this->marketService->getImpresorasEmpresa($empresa);       
+        $tipoImpresoras = ConfigEmpresa::tipoImpresora();
+
+
+        return view('impresora.modal')->with([ 'banca' => $banca,  'impresoras' => $impresoras,  'tipoImpresoras' => $tipoImpresoras]);
     }
 }

@@ -107,13 +107,25 @@ class BancaUtil
     public static function forDropdown($empresas_id)
     {
         $marketService = resolve(MarketService::class);
-
         $query =  $marketService->getListaBancaEmpresa($empresas_id);
-
         $locations = $query;
 
         return $locations;
+    }
 
+    /**
+     * Devolver lista de bancas para el supervisor
+     *
+     * @param int $bancas_id
+     *
+     * @return array
+     */
+    public static function bancasSupervisor($users_id)
+    {
+        $marketService = resolve(MarketService::class);
+        $data =  $marketService->getListaBancaSupervisor($users_id);
+        
+        return $data;
     }
 
 
@@ -151,7 +163,6 @@ class BancaUtil
 
         return $output;
     }
-
 
     public static function progressBar($users_id){
 

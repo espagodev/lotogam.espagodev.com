@@ -47,8 +47,12 @@ class HomeController extends Controller
         $date_filters['this_week']['end'] = date('Y-m-d', strtotime('sunday this week'));
 
         //ventas para bancas individuales
-        $bancas = BancaUtil::forDropdown($empresas_id);
-        // dd($bancas);
+        if(session()->get('user.useSupervisor') == 1){
+            $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
+        }else{
+            $bancas = BancaUtil::forDropdown($empresas_id);
+        }
+
 
         return view('home', compact('date_filters' , 'bancas'));
     }

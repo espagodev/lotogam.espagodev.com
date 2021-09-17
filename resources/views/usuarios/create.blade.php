@@ -120,50 +120,75 @@
                     </div>
                 </div>
                 <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xs-3 col-sm-3 col-md-3">
-                                        <div class="form-group">
-                                            <strong>Bancas:</strong>
-                                            <select class="form-control" name="bancas_id" id="bancas_id" required>
-                                                <option value="">Seleccione</option>
-                                                    @foreach($bancas as $banca)
-                                                    <option value="{{ $banca->id }}" @if($banca->id == old('tipos_banca_id')) selected @endif >{{ $banca->ban_nombre }}</option>
-                                                    @endforeach
-                                            </select>
-                                        </div>
-                                </div>
-                                <div class="col-xs-3 col-sm-3 col-md-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
                                     <div class="form-group">
-                                        <strong>Horario:</strong>
-                                        <select class="form-control" name="use_horario" id="use_horario" required>
+                                        <strong>Bancas:</strong>
+                                        <select class="form-control" name="bancas_id" id="bancas_id" required>
                                             <option value="">Seleccione</option>
-                                                @foreach($horarios as $key => $horario)
-                                                <option value="{{ $key }}" >{{ $horario }}</option>
+                                                @foreach($bancas as $banca)
+                                                <option value="{{ $banca->id }}" @if($banca->id == old('tipos_banca_id')) selected @endif >{{ $banca->ban_nombre }}</option>
                                                 @endforeach
                                         </select>
                                     </div>
                             </div>
-                                 <div class="col-xs-3 col-sm-3 col-md-3">
-                                    <div class="form-group">
-                                        <div class="icheck-material-info">
-                                            <input type="checkbox" id="use_resultados" name="use_resultados" value="1"/>
-                                            <label for="use_resultados">Ingresa Resultados.</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-3 col-sm-3 col-md-3">
-                                    <div class="form-group">
-                                        <div class="icheck-material-info">
-                                            <input type="checkbox" id="use_bloquea_banca" name="use_bloquea_banca" value="1"/>
-                                            <label for="use_bloquea_banca">Bloquear Banca.</label>
-                                        </div>
-                                    </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <strong>Horario:</strong>
+                                    <select class="form-control" name="use_horario" id="use_horario" required>
+                                        <option value="">Seleccione</option>
+                                            @foreach($horarios as $key => $horario)
+                                            <option value="{{ $key }}" >{{ $horario }}</option>
+                                            @endforeach
+                                    </select>
                                 </div>
                             </div>
 
+                        </div>
                     </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                             <div class="col-xs-12 col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <div class="icheck-material-info">
+                                        <input type="checkbox" id="use_resultados" name="use_resultados" value="1"/>
+                                        <label for="use_resultados">Ingresa Resultados.</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <div class="icheck-material-info">
+                                        <input type="checkbox" id="use_bloquea_banca" name="use_bloquea_banca" value="1"/>
+                                        <label for="use_bloquea_banca">Bloquear Banca.</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <div class="icheck-material-info">
+                                        <input type="checkbox" id="use_supervisor" name="use_supervisor" value="1"/>
+                                        <label for="use_supervisor">Usuario Supervisor.</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <div class="icheck-material-info">
+                                        <input type="checkbox" id="use_cuadre_caja" name="use_cuadre_caja" value="1"/>
+                                        <label for="use_cuadre_caja">Permite Cuadre de Caja.</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
                  <div class="form-footer">
                               <a href="{{ route('usuarios.index') }}"  class="btn btn-danger waves-effect waves-danger"><i class="fa fa-times mr-1"></i> Cancelar</a>
                             <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> CREAR</button>

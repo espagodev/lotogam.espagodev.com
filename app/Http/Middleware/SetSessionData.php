@@ -39,6 +39,8 @@ class SetSessionData
             'resultados' => $user->resultado,
             'bancaBloqueo' => $user->bancaBloqueo,
             'userHorario' => $user->userHorario,
+            'useCuadreCaja' => $user->useCuadreCaja,
+            'useSupervisor' => $user->useSupervisor,
         ];
 
         if ($user->tipoUsuario != 1) {
@@ -62,7 +64,8 @@ class SetSessionData
             ];
 
             $banca_data = [
-                'limite_venta' => isset($banca->ban_limite_venta) ? $banca->ban_limite_venta : '0'
+                'limite_venta' => isset($banca->ban_limite_venta) ? $banca->ban_limite_venta : '0',
+                'ban_url' => isset($banca->ban_url) ? $banca->ban_url : ''
             ];
 
             $request->session()->put('business', $empresa_data);

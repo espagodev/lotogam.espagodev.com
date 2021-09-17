@@ -7,7 +7,7 @@
     </div>
     <div class="col-sm-3">
         <div class="btn-group float-sm-right">
-            @if (request()->session()->get('user.TipoUsuario') == 2)
+            @if ((request()->session()->get('user.TipoUsuario') == 2) || (request()->session()->get('user.useCuadreCaja') == 1))
                 <a href="#" data-href="{{ action('CajaGeneralController@create') }}"
                     class="btn btn-primary waves-effect waves-light nuevo-registro" rel="tooltip"
                     title="ingresar Registro"><i class="fa fa-plus m-1"></i>Nuevo Registro</a>

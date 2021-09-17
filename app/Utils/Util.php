@@ -445,7 +445,9 @@ class Util
         return [
             'use_resultados' => 0,
             'use_bloquea_banca' => 0,
-            'use_horario' => 0
+            'use_horario' => 0,
+            'use_supervisor' => 0,
+            'use_cuadre_caja' => 0
         ];
     }
 

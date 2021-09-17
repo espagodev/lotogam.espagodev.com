@@ -1,5 +1,3 @@
-
-
 {{-- Modal para crear Ingresar resultados --}}
 
 <div class="modal fade" id="nuevo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

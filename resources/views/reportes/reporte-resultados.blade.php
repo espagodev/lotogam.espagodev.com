@@ -2,7 +2,7 @@
 @section('title', 'Reporte de Resultados')
 
     @section('content')
-   @include('reportes.partials.resultados')
+        @include('reportes.partials.resultados')
     <div class="row">
             <div class="col-lg-8">
                     <div class="card">

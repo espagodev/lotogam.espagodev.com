@@ -27,8 +27,8 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
     //SELECT
     Route::get('select/getbancas', 'BancasController@getbancas');
     Route::get('select/getusuarios', 'UsuariosController@getusuarios');
-    //Route::get('publisher/getequipos', 'PublisherController@getequipos')->name('getequipos');
-
+    Route::get('getBancasSuperVisor/{usuario}', 'UsuariosController@getBancasSuperVisor');
+    Route::put('updatedSupervisor/{usuario}', 'UsuariosController@updatedSupervisor')->name('updatedSupervisor');
 
     //ajustes Empresa
     Route::get('ajustesEmpresa', 'AjustesEmpresaController@index')->name('ajustesEmpresa');
@@ -58,7 +58,7 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
 //     Route::resource('impresoraPos', 'ImpresoraPosController');
     //ajustes ticket
 
-
+    Route::get('impresora', 'ImpresoraPosController@getImpresoraBanca');
     
 
 
@@ -77,7 +77,7 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
         Route::get('getNuevoMontoIndividual', 'MontosIndividualesController@getNuevoMontoIndividual');
         Route::resource('montosIndividuales', 'MontosIndividualesController');
 
-
+        
         Route::get('impresoraPos/{impresora}', 'ImpresoraPosController@getModificarImpresoraPos');
         Route::resource('impresoraPos','ImpresoraPosController', ['except' => ['show','destroy','create','edit']]);
 
@@ -127,7 +127,6 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
 
     Route::resource('tiposDocumento','TiposDocumentoController', ['except' => ['show']]);
     Route::resource('mediosPago', 'MediosPagoController', ['except' => ['show']]);
-
     Route::resource('modalidades', 'ModalidadesController', ['except' => ['show']]);
 
     //ajustes bancas
@@ -178,7 +177,6 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
     Route::delete('eliminarApuesta/{jugada}', 'Temp\ApuestaDetalleTempController@eliminarApuesta');
     Route::delete('eliminar/{banca}/jugadas/{usuario}', 'Temp\ApuestaDetalleTempController@eliminarJugadas');
     // Route::resource('TicketDetalle', 'Ticket\TicketDetalleController', ['only' => ['index', 'store', 'update', 'destroy']]);
-
 
 
     Route::get('pos/getHorarioLoteriasDia',     'PosController@getHorarioLoteriasDia');

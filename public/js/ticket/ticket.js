@@ -17,6 +17,8 @@ $(document).ready(function() {
                 $(container)
                     .html(result)
                     .modal('show');
+
+                    opcionesImpresora();
             },
         });
     });
@@ -208,6 +210,7 @@ $(document).ready(function() {
                 }
             });
     });
+    
 
     $(document).on('click', '.print-invoice-link', function (e) { 
         e.preventDefault();
@@ -271,6 +274,27 @@ $(document).ready(function() {
 
 
 
+
+function  opcionesImpresora(){
+    if ($('form#opciones_impresora_pos').length == 1) {
+        if ($('select#ban_tipo_impresora').val() == 'printer') {
+            $('div#location_printer_div').removeClass('hide');
+        } else {
+            $('div#location_printer_div').addClass('hide');
+        }
+
+        $('select#ban_tipo_impresora').change(function() {
+            var printer_type = $(this).val();
+            if (printer_type == 'printer') {
+                $('div#location_printer_div').removeClass('hide');
+            } else {
+                $('div#location_printer_div').addClass('hide');
+            }
+        });
+
+        $('form#opciones_impresora_pos').validate();
+    }
+}
 
 function pos_print(receipt) {
 

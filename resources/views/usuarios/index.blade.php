@@ -34,10 +34,15 @@
          @foreach($usuarios as $usuario)
             <div class="col-lg-3 col-sm-5">
                 <div class="card card-default">
-                    <div class="card-header"></div>
+                    <div class="card-header">
+                        @if( $usuario->use_supervisor == 1 )
+                        <a href="#" data-href="{{action('UsuariosController@getBancasSuperVisor',$usuario->id) }}"  class="btn btn-outline-primary nuevo-modal" rel="tooltip" title="Asignar Bancas" ><i class="fa fa-address-book-o" aria-hidden="true"></i> </a>                           
+                        @endif
+                        <a class="btn btn-outline-warning " href="{{route('usuarios.edit',$usuario->id)}}" title="Modificar" ><i class="fa fa-edit" aria-hidden="true"></i></a>
+                    </div>
 
-                    <div class="card-body text-center "><i class="fa fa-user-circle-o fa-4x" style="color: green;"></i>
-                        <h4>{{ $usuario->name }}</h4>
+                    <div class="card-body text-center "><i class="fa fa-user-circle-o fa-3x" style="color: green;"></i>
+                        <h5>{{ $usuario->name }}</h5>
                     </div>
                     <div class="card-footer d-flex">
                         <div>
@@ -47,8 +52,7 @@
                                 <p class="mb-1"><span class="circle bg-danger circle-lg text-left"></span>
                             @endif --}}
                         </div>
-                        <div class="ml-auto bt-switch">
-                            <a class="btn btn-outline-warning btn-sm" href="{{route('usuarios.edit',$usuario->id)}}">Modificar</a>
+                        <div class="ml-auto bt-switch">                            
                             <a class="btn btn-outline-info btn-sm" href="{{action('UserLoteriasController@loterias', [$usuario->id])}}">Loterias</a>
                             <a class="btn btn-outline-info btn-sm" href="{{action('UserLoteriasController@loteriasSuper', [$usuario->id])}}">Loterias Super</a>
                              {{-- <input type="checkbox" data-id="{{$usuario->id}}" {{ $usuario->estado ? 'checked' : '' }} data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" > --}}
@@ -60,8 +64,12 @@
     </div>
       @endif
 
-
+      <div class="modal fade nuevo_modal" tabindex="-1" role="dialog"
+      aria-labelledby="gridSystemModalLabel">
+  </div>
    @endsection
-
+   @section('scripts')
+   <script src="{{ asset('js/usuarios.js?v=' . $asset_v) }}"></script>
+  @endsection
 
 

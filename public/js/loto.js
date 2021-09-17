@@ -7,7 +7,7 @@ $(document).ready(function() {
 //option-div
 
 
-        //Business Location Receipt setting
+    
     if ($('form#opciones_impresora_pos').length == 1) {
         if ($('select#ban_tipo_impresora').val() == 'printer') {
             $('div#location_printer_div').removeClass('hide');
@@ -28,11 +28,6 @@ $(document).ready(function() {
     }
 
 });
-
-
-
-
-
 
 
 function pad_zero(str, max) {

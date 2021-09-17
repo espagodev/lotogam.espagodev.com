@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title','Listado Numeros')
     @section('content')
-    @if((request()->session()->get('user.TipoUsuario') == 2))
+    @if((request()->session()->get('user.TipoUsuario') == 2) || (request()->session()->get('user.useCuadreCaja') == 1))
         @include('reportes.partials.opcionesAdmin')
         @elseif((request()->session()->get('user.TipoUsuario') == 3))
             @include('reportes.partials.opcionesBanca')

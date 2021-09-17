@@ -156,9 +156,18 @@
 				</a>
 			</li>
 			<li>
+				@if (session()->get('banca.ban_url'))
+				<a data-container=".view_register" href="#" data-href="{{ action('ImpresoraPosController@getImpresoraBanca') }}" class="btn-modal">
+					<i class="fa fa-print"></i>
+					<span class="menu-text">Impresion Pos</span>
+				</a>
+				@else
 				<a href="{{ asset('printServer/pos_print_server_v1.7.7z') }}" class="waves-effect">
 					<i class="fa fa-download"></i> <span>Impresion Pos</span>
 				</a>
+				@endif
+				
+
 			</li>
 		</ul>
 	</div>

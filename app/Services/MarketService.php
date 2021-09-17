@@ -1633,4 +1633,24 @@ class MarketService
         return $this->makeRequest('GET', "getloteriasSuperUser/{$user}");
     }
 
+    //MODIFICAR BANCAS SUPERVISOR
+    public function ModificarBancasSupervisor($user_id, $data)
+    {
+        
+        $data['_method'] = 'PUT';
+
+        return $this->makeRequest(
+            'POST',
+            "updatedSupervisor/{$user_id}",
+            [],
+            $data,
+            []
+        );
+    }
+
+    //BANCAS SUPERVISOR
+    public function getListaBancaSupervisor($user_id)
+    {
+        return $this->makeRequest('GET', "getListaBancaSupervisor/{$user_id}");
+    }
 }

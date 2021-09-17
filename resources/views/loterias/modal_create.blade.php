@@ -21,8 +21,6 @@
         </div><!-- /.modal-content -->
 
 </div><!-- /.modal-dialog -->
-@section('scripts')
-{{-- <script src="{{ asset('js/loterias/loteria_nueva.js?v=' . $asset_v) }}"></script> --}}
-@endsection
+
 
 

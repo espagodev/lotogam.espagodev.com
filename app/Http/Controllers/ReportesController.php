@@ -42,7 +42,7 @@ class ReportesController extends Controller
 
         if ($request->ajax()) {
 
-            if (session()->get('user.TipoUsuario') == 2) {
+            if ((session()->get('user.TipoUsuario') == 2) || (session()->get('user.useSupervisor') == 1)) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
                 $data = $request->only(['start_date', 'end_date', 'loterias_id', 'estado', 'promocion']);
@@ -89,7 +89,12 @@ class ReportesController extends Controller
 
 
         $empresas_id = session()->get('user.emp_id');
-        $bancas = BancaUtil::forDropdown($empresas_id);
+        if(session()->get('user.useSupervisor') == 1){
+            $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
+        }else{
+            $bancas = BancaUtil::forDropdown($empresas_id);
+        }
+        
         $loterias =  $this->reportes->getloteriasEmpresaReporte($empresas_id);
         $estadosTicket = Util::estadosTicket();
         $estadosPromocionTicket = Util::estadosPromocionTicket();
@@ -103,7 +108,7 @@ class ReportesController extends Controller
 
         if ($request->ajax()) {
 
-            if (session()->get('user.TipoUsuario') == 2) {
+            if ((session()->get('user.TipoUsuario') == 2) || (session()->get('user.useSupervisor') == 1)) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
                 $isAnular = 0;
             } else if (session()->get('user.TipoUsuario') == 3) {
@@ -192,7 +197,13 @@ class ReportesController extends Controller
 
 
         $empresas_id = session()->get('user.emp_id');
-        $bancas = BancaUtil::forDropdown($empresas_id);
+
+        if(session()->get('user.useSupervisor') == 1){
+            $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
+        }else{
+            $bancas = BancaUtil::forDropdown($empresas_id);
+        }
+        
         $loterias =  $this->reportes->getloteriasEmpresaReporte($empresas_id);
         $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
         $estadosTicket = Util::estadosTicket();
@@ -205,7 +216,7 @@ class ReportesController extends Controller
     {
         if ($request->ajax()) {
 
-            if (session()->get('user.TipoUsuario') == 2) {
+            if ((session()->get('user.TipoUsuario') == 2) || (session()->get('user.useSupervisor') == 1)) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id']);
@@ -258,7 +269,11 @@ class ReportesController extends Controller
 
         $empresas_id = session()->get('user.emp_id');
 
-        $bancas = BancaUtil::forDropdown($empresas_id);
+        if(session()->get('user.useSupervisor') == 1){
+            $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
+        }else{
+            $bancas = BancaUtil::forDropdown($empresas_id);
+        }
         $loterias =  $this->reportes->getloteriasEmpresaReporte($empresas_id);
         $estadosTicket = Util::estadosTicket();
         $estadosPromocionTicket = Util::estadosPromocionTicket();
@@ -271,7 +286,7 @@ class ReportesController extends Controller
     {
         if ($request->ajax()) {
 
-            if (session()->get('user.TipoUsuario') == 2) {
+            if ((session()->get('user.TipoUsuario') == 2) || (session()->get('user.useSupervisor') == 1)) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id']);
@@ -314,7 +329,7 @@ class ReportesController extends Controller
     {
         if ($request->ajax()) {
 
-            if (session()->get('user.TipoUsuario') == 2) {
+            if ((session()->get('user.TipoUsuario') == 2) || (session()->get('user.useSupervisor') == 1)) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id']);
@@ -339,7 +354,11 @@ class ReportesController extends Controller
 
 
         $empresas_id = session()->get('user.emp_id');
-        $bancas = BancaUtil::forDropdown($empresas_id);
+        if(session()->get('user.useSupervisor') == 1){
+            $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
+        }else{
+            $bancas = BancaUtil::forDropdown($empresas_id);
+        }
         $loterias =  $this->reportes->getloteriasEmpresaReporte($empresas_id);
         $estadosTicket = Util::estadosTicket();
         $estadosPromocionTicket = Util::estadosPromocionTicket();
@@ -352,7 +371,7 @@ class ReportesController extends Controller
     {
         if ($request->ajax()) {
 
-            if (session()->get('user.TipoUsuario') == 2) {  
+            if ((session()->get('user.TipoUsuario') == 2) || (session()->get('user.useSupervisor') == 1)) {  
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion',  'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id']);
@@ -375,7 +394,11 @@ class ReportesController extends Controller
 
 
         $empresas_id = session()->get('user.emp_id');
-        $bancas = BancaUtil::forDropdown($empresas_id);
+        if(session()->get('user.useSupervisor') == 1){
+            $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
+        }else{
+            $bancas = BancaUtil::forDropdown($empresas_id);
+        }
         $estadosTicket = Util::estadosTicket();
         $estadosPromocionTicket = Util::estadosPromocionTicket();
         $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
@@ -387,7 +410,7 @@ class ReportesController extends Controller
     {
 
         if ($request->ajax()) {
-            if (session()->get('user.TipoUsuario') == 2) {
+            if ((session()->get('user.TipoUsuario') == 2) || (session()->get('user.useSupervisor') == 1)) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id']);
@@ -426,7 +449,11 @@ class ReportesController extends Controller
         }
 
         $empresas_id = session()->get('user.emp_id');
-        $bancas = BancaUtil::forDropdown($empresas_id);
+        if(session()->get('user.useSupervisor') == 1){
+            $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
+        }else{
+            $bancas = BancaUtil::forDropdown($empresas_id);
+        }
         $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
 
         return view('reportes/informe-ventas-pagos', compact('bancas',  'usuarios'));
@@ -438,7 +465,7 @@ class ReportesController extends Controller
 
         if ($request->ajax()) {
 
-            if (session()->get('user.TipoUsuario') == 2) {
+            if ((session()->get('user.TipoUsuario') == 2) || (session()->get('user.useSupervisor') == 1)) {
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado',  'bancas_id']);
             } else if (session()->get('user.TipoUsuario') == 3) {
                 $data = $request->only(['start_date', 'end_date', 'loterias_id', 'estado']);
@@ -493,7 +520,11 @@ class ReportesController extends Controller
                 ->make(true);
         }
         $empresas_id = session()->get('user.emp_id');
-        $bancas = BancaUtil::forDropdown($empresas_id);
+        if(session()->get('user.useSupervisor') == 1){
+            $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
+        }else{
+            $bancas = BancaUtil::forDropdown($empresas_id);
+        }
         $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
         $registroInformes = Util::registroInformes();
 

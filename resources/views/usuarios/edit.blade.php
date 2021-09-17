@@ -92,24 +92,14 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
                                             <div class="form-group">
                                                 <strong>Email:</strong>
                                                 <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="email" type="text" value="{{ old('email', $usuario->email) }}" >
                                                 <p>Este es el correo electrónico utilizado para iniciar sesión, y  donde recibirá sus recordatorios.</p>
                                             </div>
                                     </div>
-                                    <div class="col-xs-6 col-sm-6 col-md-6">
-                                        <div class="form-group">
-                                            <strong>Bancas:</strong>
-                                            <select class="form-control" name="bancas_id" id="bancas_id" required>
-                                                <option value="">Seleccione</option>
-                                                    @foreach($bancas as $banca)
-                                                    <option value="{{ $banca->id }}" @if($banca->id == old('bancas_id', $usuario->bancas_id)) selected @endif >{{ $banca->ban_nombre }}</option>
-                                                    @endforeach
-                                            </select>
-                                        </div>
-                                </div>
+                                    
                             </div>
                             <div class="row">
 
@@ -135,7 +125,7 @@
                 <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-xs-4 col-sm-4 col-md-4">
+                                <div class="col-xs-12 col-sm-6 col-md-6">
                                     <div class="form-group">
                                         <strong>Horario:</strong>
                                             <select class="form-control" name="use_horario" id="use_horario">
@@ -146,24 +136,58 @@
                                             </select>
                                     </div>
                                 </div>
-                                 <div class="col-xs-4 col-sm-4 col-md-4">
+                                <div class="col-xs-12 col-sm-6 col-md-6">
                                     <div class="form-group">
-                                        <div class="icheck-material-info">
-                                            <input type="checkbox" id="use_resultados" name="use_resultados" value="1" @if($usuario->use_resultados) checked @endif/>
-                                            <label for="use_resultados">Ingresa Resultados.</label>
-                                        </div>
+                                        <strong>Bancas:</strong>
+                                        <select class="form-control" name="bancas_id" id="bancas_id" required>
+                                            <option value="">Seleccione</option>
+                                                @foreach($bancas as $banca)
+                                                <option value="{{ $banca->id }}" @if($banca->id == old('bancas_id', $usuario->bancas_id)) selected @endif >{{ $banca->ban_nombre }}</option>
+                                                @endforeach
+                                        </select>
                                     </div>
-                                </div>
-                                 <div class="col-xs-4 col-sm-4 col-md-4">
-                                    <div class="form-group">
-                                        <div class="icheck-material-info">
-                                            <input type="checkbox" id="use_bloquea_banca" name="use_bloquea_banca" value="1" @if($usuario->use_bloquea_banca) checked @endif/>
-                                            <label for="use_bloquea_banca">Bloquear Banca.</label>
-                                        </div>
+                            </div>
+
+                            </div>
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                             <div class="col-xs-12 col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <div class="icheck-material-info">
+                                        <input type="checkbox" id="use_resultados" name="use_resultados" value="1" @if($usuario->use_resultados) checked @endif/>
+                                        <label for="use_resultados">Ingresa Resultados.</label>
                                     </div>
                                 </div>
                             </div>
-
+                             <div class="col-xs-12 col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <div class="icheck-material-info">
+                                        <input type="checkbox" id="use_bloquea_banca" name="use_bloquea_banca" value="1" @if($usuario->use_bloquea_banca) checked @endif/>
+                                        <label for="use_bloquea_banca">Bloquear Banca.</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <div class="icheck-material-info">
+                                        <input type="checkbox" id="use_supervisor" name="use_supervisor" value="1" @if($usuario->use_supervisor) checked @endif/>
+                                        <label for="use_supervisor">Usuario Supervisor.</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <div class="icheck-material-info">
+                                        <input type="checkbox" id="use_cuadre_caja" name="use_cuadre_caja" value="1" @if($usuario->use_cuadre_caja) checked @endif/>
+                                        <label for="use_cuadre_caja">Permite Cuadre de Caja.</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                  <div class="form-footer">

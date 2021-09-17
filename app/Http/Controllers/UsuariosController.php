@@ -158,5 +158,27 @@ class UsuariosController extends Controller
         return response()->json($usuarios);
     }
 
+    public function getBancasSuperVisor($user_id)
+    {
+        $usuario = $this->marketService->getUsuario($user_id);
+
+        $empresa = session()->get('user.emp_id');
+        $bancas = $this->marketService->getBancasEmpresa($empresa);
+        
+        return view('usuarios.partials.modal')->with(compact('bancas','usuario'));
+    }
+
+    public function updatedSupervisor(Request $request, $id)
+    {
+        $data = $request->all();
+        
+        $this->marketService->ModificarBancasSupervisor($id, $data);
+
+        return redirect()
+            ->route(
+                'usuarios.index'
+            )
+            ->with('success', ['Supervisor Actualizado Correctamente.']);
+    }
 
 }
