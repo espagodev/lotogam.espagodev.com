@@ -50,4 +50,5 @@
 @section('scripts')
 	<script src="{{ asset('js/reporte_tickets.js?v=' . $asset_v) }}"></script>
     <script src="{{ asset('js/ticket/ticket.js?v=' . $asset_v) }}"></script>
+    <script src="{{ asset('js/select.js?v=' . $asset_v) }}"></script>
 @endsection

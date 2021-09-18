@@ -25,7 +25,7 @@ class SetSessionData
         $marketService = resolve(MarketService::class);
 
         $user = $marketService->getUserInformation();
-           
+         
         $util = new Util;
 
 
@@ -38,7 +38,7 @@ class SetSessionData
             'banca' => $user->idBanca,
             'resultados' => $user->resultado,
             'bancaBloqueo' => $user->bancaBloqueo,
-            'userHorario' => $user->userHorario,
+            'userHorario' =>  isset($user->userHorario) ? $user->userHorario : '1',
             'useCuadreCaja' => $user->useCuadreCaja,
             'useSupervisor' => $user->useSupervisor,
         ];

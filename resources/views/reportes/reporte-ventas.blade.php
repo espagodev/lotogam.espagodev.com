@@ -67,4 +67,5 @@
     @endsection
 @section('scripts')
     <script src="{{ asset('js/reportes.js?v=' . $asset_v) }}"></script>
+    <script src="{{ asset('js/select.js?v=' . $asset_v) }}"></script>
 @endsection

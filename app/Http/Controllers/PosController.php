@@ -57,7 +57,11 @@ class PosController extends Controller
 
         $tickets = $this->marketService->getTicketsEmpresa($empresas_id);
         $loterias =  Reportes::getloteriasEmpresaReporte($empresas_id);
-        $bancas = $this->bancaUtil->forDropdown($empresas_id);
+        if(session()->get('user.useSupervisor') == 1){
+            $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
+        }else{
+            $bancas = BancaUtil::forDropdown($empresas_id);
+        }
         $estadosTicket = Util::estadosTicket();
         $estadosPromocionTicket = Util::estadosPromocionTicket();
         $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);

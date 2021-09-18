@@ -35,7 +35,12 @@ class CajaGeneralController extends Controller
     {
         $empresas_id = session()->get('user.emp_id');
 
-        $bancas = BancaUtil::forDropdown($empresas_id);
+        if(session()->get('user.useSupervisor') == 1){
+            $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
+        }else{
+            $bancas = BancaUtil::forDropdown($empresas_id);
+        }
+        
         $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
         $movimientosCaja = Util::movimientosCaja();
         return view('caja_general.index', compact('bancas',  'usuarios', 'movimientosCaja'));
@@ -50,7 +55,12 @@ class CajaGeneralController extends Controller
     {
         $empresas_id = session()->get('user.emp_id');
 
-        $bancas = BancaUtil::forDropdown($empresas_id);
+        if(session()->get('user.useSupervisor') == 1){
+            $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
+        }else{
+            $bancas = BancaUtil::forDropdown($empresas_id);
+        }
+        
         $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
         $movimientosCaja = Util::movimientosCaja();
         return view('caja_general.create', compact('bancas',  'usuarios', 'movimientosCaja'));

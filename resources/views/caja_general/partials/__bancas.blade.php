@@ -6,9 +6,9 @@
         </div>
         <select class="form-control " name="bancas_id" id="bancas_id">
             <option value="">Seleccione</option>
-                {{-- @foreach($bancas as $banca)
+                @foreach($bancas as $banca)
                     <option value="{{ $banca->id }}"  >{{ $banca->ban_nombre}}</option>
-                @endforeach --}}
+                @endforeach
         </select>
     </div>
 </div>

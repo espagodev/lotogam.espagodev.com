@@ -14,7 +14,7 @@
         </div>
      </div>
      {{-- @dump($tickets) --}}
-      @if((request()->session()->get('user.TipoUsuario') == 2))
+     @if((request()->session()->get('user.TipoUsuario') == 2) || (request()->session()->get('user.useSupervisor') == 1))
         @include('reportes.partials.opcionesAdmin')
         @elseif((request()->session()->get('user.TipoUsuario') == 3))
             @include('reportes.partials.opcionesBanca')
@@ -60,4 +60,5 @@
 @section('scripts')
         <script src="{{ asset('js/reportes/tickets.js?v=' . $asset_v) }}"></script>
         <script src="{{ asset('js/ticket/ticket.js?v=' . $asset_v) }}"></script>
+        <script src="{{ asset('js/select.js?v=' . $asset_v) }}"></script>
  @endsection

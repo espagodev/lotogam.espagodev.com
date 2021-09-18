@@ -27,7 +27,12 @@ class ControlJugadasController extends Controller
         $users_id = session()->get('user.id');
         $empresas_id = session()->get('user.emp_id');
 
-        $bancas = BancaUtil::forDropdown($empresas_id);
+        if(session()->get('user.useSupervisor') == 1){
+            $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
+        }else{
+            $bancas = BancaUtil::forDropdown($empresas_id);
+        }
+
         $loterias =  Reportes::getloteriasEmpresaReporte($empresas_id);
         return view('controlJugadas.index')->with(['loterias' => $loterias,'bancas' => $bancas,]);
 

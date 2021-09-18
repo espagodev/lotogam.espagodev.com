@@ -89,6 +89,7 @@ class ReportesController extends Controller
 
 
         $empresas_id = session()->get('user.emp_id');
+
         if(session()->get('user.useSupervisor') == 1){
             $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
         }else{
