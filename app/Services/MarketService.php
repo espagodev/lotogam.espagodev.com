@@ -1653,4 +1653,15 @@ class MarketService
     {
         return $this->makeRequest('GET', "getListaBancaSupervisor/{$user_id}");
     }
+
+    /*************************************************/
+    /**
+     * APUESTAS
+     */
+    /*************************************************/
+
+    public function getApuesta($data)
+    {
+        return $this->makeRequest('GET', "getApuesta", $data);
+    }
 }

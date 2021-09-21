@@ -58,6 +58,18 @@ class ApuestaDetalleTempController extends Controller
      */
     public function store(Request $request)
     {
+
+        
+        // $data = $request->all();
+        // $data['empresas_id'] =  session()->get('user.emp_id');
+        // $data['users_id'] =  request()->session()->get('user.id');
+        // $data['bancas_id'] =  request()->session()->get('user.banca');
+
+      
+        // $apuesta = $this->marketService->getApuesta($data);
+
+        // dd($apuesta);
+
         $empresas_id = session()->get('user.emp_id');
         $users_id = request()->session()->get('user.id');
         $bancas_id = request()->session()->get('user.banca');

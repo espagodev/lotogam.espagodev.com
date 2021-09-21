@@ -17,6 +17,7 @@
                     </div>
                 </div>
             </div>
+            @if((request()->session()->get('user.TipoUsuario') == 2) || (request()->session()->get('user.useSupervisor') == 1))
             <div class="col-xs-12 col-sm-12 col-md-4">
                 <div class="form-group">
                      <strong>Bancas:</strong>
@@ -33,6 +34,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="col-xs-12 col-sm-12 col-md-4">
                 <div class="form-group">
                     <strong>Rango de Fechas:</strong>

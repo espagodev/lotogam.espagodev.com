@@ -13,7 +13,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="form-group">
                         <strong><i class="fa fa-clock-o"></i> Zona Horaria:</strong>
-                             <select class="form-control  select2" name="lot_zona_horaria" id="lot_zona_horaria" required>
+                             <select class="form-control" name="lot_zona_horaria" id="lot_zona_horaria" required>
                                 <option value="">Seleccione</option>
                                     @foreach($zonasHoraria as $zonaHoraria)
                                     <option value="{{ $zonaHoraria }}" @if($zonaHoraria == old('lot_zona_horaria', $loteria->lot_zona_horaria)) selected @endif>{{ $zonaHoraria }}</option>
@@ -37,7 +37,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="form-group">
                         <strong><i class="fa fa-flag" aria-hidden="true"></i> Pais:</strong>
-                             <select class="form-control  select2" name="lot_pais" id="lot_pais" >
+                            <select class="form-control" name="lot_pais" id="lot_pais" >
                                 <option value="">Seleccione</option>
                                     @foreach($zonasHoraria as $zonaHoraria)
                                     <option value="{{ $zonaHoraria }}" @if($zonaHoraria == old('lot_pais', $loteria->lot_pais)) selected @endif>{{ $zonaHoraria }}</option>
@@ -82,7 +82,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <label>Modalidades</label>
                     {{-- @dd($loteria->modalidades) --}}
-                    <select class="form-control loterias select2" name="modalidades_id[]" id="modalidades_id"  multiple="multiple" required>
+                    <select class="form-control select2" name="modalidades_id[]" id="modalidades_id"  multiple="multiple" required>
                         @foreach($modalidades as $modalidad)
                             <option {{ collect(old('modalidades_id', $loteria->modalidades))->pluck('modalidades_id')->contains($modalidad->identificador) ? 'selected' : ''}} value="{{ $modalidad->identificador }}" >{{ $modalidad->modalidad }}</option>
                         @endforeach

@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-
+    $('.single-select').select2();
 
     $(document).on('click', '.nuevo-modal', function (e) {
         e.preventDefault();
@@ -10,7 +10,7 @@ $(document).ready(function () {
             url: $(this).data('href'),
             dataType: 'html',
             success: function (result) {
-                container.html(result).modal('show').modal('show').find('.select2').each( function(){
+                container.html(result).modal('show').find('.select2').each( function(){
                     $(this).select2();
                 });
             },
@@ -29,6 +29,7 @@ $(document).ready(function () {
                     $(this).select2();
                 });
 
+               
             },
         });
     });

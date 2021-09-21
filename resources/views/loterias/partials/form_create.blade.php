@@ -13,7 +13,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="form-group">
                         <strong><i class="fa fa-clock-o"></i> Zona Horaria:</strong>
-                             <select class="form-control  single-select" name="lot_zona_horaria" id="lot_zona_horaria" required>
+                             <select class="form-control" name="lot_zona_horaria" id="lot_zona_horaria" required>
                                 <option value="">Seleccione</option>
                                     @foreach($zonasHoraria as $zonaHoraria)
                                     <option value="{{ $zonaHoraria }}" @if($zonaHoraria == old('lot_zona_horaria')) selected @endif>{{ $zonaHoraria }}</option>
@@ -40,7 +40,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="form-group">
                         <strong><i class="fa fa-flag" aria-hidden="true"></i> Pais:</strong>
-                             <select class="form-control  single-select" name="lot_zona_horaria" id="lot_zona_horaria" required>
+                             <select class="form-control" name="lot_zona_horaria" id="lot_zona_horaria" required>
                                 <option value="">Seleccione</option>
                                     @foreach($zonasHoraria as $zonaHoraria)
                                     <option value="{{ $zonaHoraria }}" @if($zonaHoraria == old('lot_zona_horaria')) selected @endif>{{ $zonaHoraria }}</option>
@@ -51,7 +51,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="form-group">
                         <strong><i class="fa fa-users" aria-hidden="true"></i> Grupo:</strong>
-                        <select class="form-control  single-select" name="lot_grupo" id="lot_grupo" >
+                        <select class="form-control" name="lot_grupo" id="lot_grupo" >
                             <option value="">Seleccione</option>
                                 @foreach($grupos as $key => $grupo)
                                 <option value="{{ $key }}" @if($key == old('lot_grupo')) selected @endif>{{ $grupo }}</option>

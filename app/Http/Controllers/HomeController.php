@@ -68,7 +68,7 @@ class HomeController extends Controller
 
             if (session()->get('user.TipoUsuario') == 2) {
                 $data = request()->only([ 'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
-            } else if (session()->get('user.TipoUsuario') == 3) {
+            } else if ((session()->get('user.TipoUsuario') == 3) || (session()->get('user.useSupervisor') == 1)) {
                 $data = request()->only(['loterias_id', 'estado', 'promocion']);
                 $data['bancas_id'] = !empty(request()->bancas_id) ? request()->bancas_id : session()->get('user.banca');
                 $data['users_id'] = !empty(request()->users_id) ? request()->users_id : session()->get('user.id');
@@ -114,7 +114,7 @@ class HomeController extends Controller
             if (session()->get('user.TipoUsuario') == 2) {
                 $data =  $request->only(['start_date', 'end_date', 'users_id',  'bancas_id']);
 
-            } else if (session()->get('user.TipoUsuario') == 3) {
+            } else if ((session()->get('user.TipoUsuario') == 3) || (session()->get('user.useSupervisor') == 1)) {
                 $data =  $request->only(['start_date', 'end_date', 'loterias_id', 'estado', 'promocion',]);
                 $data['bancas_id'] = !empty( $request->bancas_id) ?  $request->bancas_id : session()->get('user.banca');
                 $data['users_id'] = !empty( $request->users_id) ?  $request->users_id : session()->get('user.id');
@@ -175,7 +175,7 @@ class HomeController extends Controller
                 if (session()->get('user.TipoUsuario') == 2) {
                     $data = $request->only(['users_id', 'bancas_id']);
 
-                } else if (session()->get('user.TipoUsuario') == 3) {
+                } else if ((session()->get('user.TipoUsuario') == 3) || (session()->get('user.useSupervisor') == 1)) {
 
                     $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
                     $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
@@ -211,7 +211,7 @@ class HomeController extends Controller
 
             if (session()->get('user.TipoUsuario') == 2) {
                 $data =  $request->only(['start_date', 'end_date', 'users_id',  'bancas_id']);
-            } else if (session()->get('user.TipoUsuario') == 3) {
+            } else if ((session()->get('user.TipoUsuario') == 3) || (session()->get('user.useSupervisor') == 1)) {
                 $data =  $request->only(['start_date', 'end_date', 'loterias_id', 'estado', 'promocion',]);
                 $data['bancas_id'] = !empty($request->bancas_id) ?  $request->bancas_id : session()->get('user.banca');
                 $data['users_id'] = !empty($request->users_id) ?  $request->users_id : session()->get('user.id');
