@@ -2,7 +2,7 @@
         $("#loterias_id").bind("change", function() {
 
             var loterias_id = $('#loterias_id').val();
-            console.log(loterias_id);
+            
             var fecha = $('#res_fecha').val();
             var HoraCierre = $(".loterias-id select#loterias_id option:selected").data("hora");
             var horaDetalle = HoraCierre.split(" ");

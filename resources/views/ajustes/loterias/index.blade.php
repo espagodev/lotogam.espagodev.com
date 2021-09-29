@@ -98,12 +98,6 @@
                                         });
                                 loterias.ajax.reload();
                         }
-                        // if (result.success == true) {
-                        //     Lobibox.success(result.msg);
-                        //     loterias.ajax.reload();
-                        // } else {
-                        //     toastr.error(result.msg);
-                        // }
                     },
                 });
             }

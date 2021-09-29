@@ -121,14 +121,12 @@ $(document).ready(function() {
      $(document).on('click', '.anularTicket', function(e) {
 
         var tickets_id = $('#tickets_id').val();
-        var loterias_id = $('#loterias_id').val();
         var pin = $('#tic_pin').val();
         var detalle = $('#tia_detalle').val();
 
 
 
-        var data = { tickets_id: tickets_id, loterias_id: loterias_id, pin: pin, detalle: detalle };
-
+        var data = { tickets_id: tickets_id, pin: pin, detalle: detalle };
 
             $.ajax({
                 method: 'GET',
@@ -150,6 +148,7 @@ $(document).ready(function() {
                                 position: "top right",
                                 msg: result.msg,
                             });
+                            reporte_tickets.ajax.reload();
                      } else {
                             // toastr.error(result.msg);
                              Lobibox.notify("error", {

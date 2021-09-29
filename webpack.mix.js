@@ -30,7 +30,7 @@ mix.js('resources/js/app.js', 'public/js/init.js')
         'resources/plugins/moment/moment-timezone-with-data.min.js',
         'resources/plugins/jquery-timepicker/jquery.timepicker.js',
         'resources/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-        'resources/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js',
+        // 'resources/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js',
         'resources/plugins/daterangepicker/daterangepicker.js',
         'resources/plugins/bootstrap-datatable/js/jquery.dataTables.min.js',
         'resources/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js',

@@ -14,7 +14,7 @@ $(document).ready(function() {
             updateClosingTime($(this))
         })
 
-        $('.hlo_hora_fin').on( 'change load', function(){      
+        $('.hlo_hora_fin').on('change load', function(){      
 
             var horaInicio = moment($(`#Horariols_L`).val(), 'HH:mm');
             var horaFin = moment($(this).val(), 'HH:mm');
@@ -57,20 +57,44 @@ $(document).ready(function() {
 
 
     function horaInicio() {
-            $('.hlo_hora_inicio, .hlo_hora_fin').timepicker({
-            timeFormat: 'HH:mm',
+        // $('.hlo_hora_inicio').timepicker({
+        //     timeFormat: 'hh:mm',
+        //     interval: 60,
+        //     minTime: '07',
+        //     maxTime: '6:00pm',
+        //     defaultTime: '07',
+        //     startTime: '07',
+        //     dynamic: false,
+        //     dropdown: true,
+        //     scrollbar: true
+        // });
+
+        $('.hlo_hora_fin').timepicker({
+            timeFormat: 'hh:mm',
             interval: 5,
-            // minTime: '7',
-            // maxTime: '10:00pm',
-            // defaultTime: '7',
-            // startTime: '07:00',
+            // minTime: '07',
+            maxTime: '00:00pm',
+            // defaultTime: '07',
+            // startTime: '07',
             dynamic: false,
             dropdown: true,
-            showMeridian: false,
+            scrollbar: true
+        });
+
+            $('.hlo_hora_inicio').timepicker({
+                timeFormat: 'hh:mm',
+                interval: 5,
+                minTime: '07',
+                maxTime: '00:00pm',
+                defaultTime: '07',
+                startTime: '07',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true
         });
     }
 
-function updateClosingTime(element) {
+function updateClosingTime(element) { 
     var id = element.attr('rel')
     var raffle_time  = moment.utc( $(`#Horariols_L`).val(), 'HH:mm' )
     $(`#hlo_hora_fin_L_${id}`).val(

@@ -326,3 +326,12 @@ function __reporteResultadosDetalle() {
             });
     }
 
+function getSelectedRows() {
+        var selected_rows = [];
+        var i = 0;
+        $('.row-select:checked').each(function () {
+            selected_rows[i++] = $(this).val();
+        });
+    
+        return selected_rows; 
+    }

@@ -291,4 +291,5 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
     Route::get('trasladoNumeros', 'TrasladoNumerosController@index')->name('trasladoNumeros.index');
     Route::get('traslado-numeros', 'TrasladoNumerosController@getReporteTrasladoNumeros');
     Route::get('getPrintReporteTrasladoNumeros', 'TrasladoNumerosController@getPrintReporteTrasladoNumeros');
+    Route::get('trasladar/{traslado}', 'TrasladoNumerosController@trasladar');
 });

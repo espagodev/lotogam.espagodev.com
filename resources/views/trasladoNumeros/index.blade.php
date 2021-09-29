@@ -18,14 +18,17 @@
                 <div class="card">
                     <div class="card-body">
                             <div class="table-responsive">
-                               <table class="table table-bordered table-striped"  id="control_apuestas">
+                               <table class="table table-bordered table-striped table-sm"  id="control_apuestas">
                                     <thead>
                                         <tr>
+                                            
                                             <th>Loteria</th>
                                             <th>Modalidad</th>
                                             <th>Numero</th>
                                             <th>Contador</th>
+                                            <th>Traslado</th>
                                             <th>Fecha</th>
+                                            <th>Opciones</th>
                                         </tr>
                                     </thead>
                                 </table>

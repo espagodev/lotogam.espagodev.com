@@ -47,6 +47,8 @@ class ReportesController extends Controller
                 $data = $request->only(['start_date', 'end_date',  'loterias_id', 'users_id', 'estado', 'promocion', 'bancas_id']);
 
             } else if ((session()->get('user.TipoUsuario') == 3) || (session()->get('user.useSupervisor') == 1)) {
+                
+
                 $data = $request->only(['start_date', 'end_date', 'loterias_id', 'estado', 'promocion']);
                 $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
                 $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
@@ -89,11 +91,12 @@ class ReportesController extends Controller
                 ->make(true);
         }
 
-
         $empresas_id = session()->get('user.emp_id');
 
         if(session()->get('user.useSupervisor') == 1){
             $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
+            $arrayBancas = Util::arrayBancas($bancas);
+            
         }else{
             $bancas = BancaUtil::forDropdown($empresas_id);
         }
@@ -311,7 +314,7 @@ class ReportesController extends Controller
                 ->editColumn('res_fecha', '{{@format_date($res_fecha)}}')
                 ->addColumn('action', function ($row) {
                     $action = '';
-                    $action .= '<button data-href="' . action('ResultadosController@getResultadosDelete', [$row->id]) . '" class="btn btn-xs btn-danger delete_resultado_button"><i class="fa fa-trash"></i></button>
+                    $action .= '<button data-href="' . action('ResultadosController@getResultadosDelete', [$row->id]) . '" class="btn btn-sm btn-danger delete_resultado_button"><i class="fa fa-trash"></i></button>
                     ';
                     return  $action;
                 })

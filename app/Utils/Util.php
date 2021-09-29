@@ -523,4 +523,18 @@ class Util
 
        return false;
     }
+
+    public static function arrayBancas($bancas)
+    {        
+        $arrayBancas = [];
+
+        foreach ($bancas as  $banca) {           
+            $arrayBancas[] = $banca->id;
+        }
+        
+        $ceros = trim(implode("','", $arrayBancas));
+        $ceros = "['" . $ceros . "']";
+
+       return $ceros;
+    }
 }

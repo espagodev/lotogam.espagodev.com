@@ -1312,10 +1312,10 @@ class MarketService
         return $this->makeRequest('GET', "getTicketPin/{$empresas_id}/{$users_id}/{$tickets_id}/{$pin}/{$premio}");
     }
 
-    public function getTicketAnular($empresas_id, $tickets_id, $pin, $users_id, $bancas_id, $tia_detalle, $loterias_id)
+    public function getTicketAnular($empresas_id, $tickets_id, $pin, $users_id, $tia_detalle)
     {
 
-        return $this->makeRequest('GET', "getTicketAnular/{$empresas_id}/{$tickets_id}/{$pin}/{$users_id}/{$bancas_id}/{$tia_detalle}/{$loterias_id}");
+        return $this->makeRequest('GET', "getTicketAnular/{$empresas_id}/{$tickets_id}/{$pin}/{$users_id}/{$tia_detalle}");
     }
 
     //PROGRESSBAR
@@ -1561,6 +1561,12 @@ class MarketService
     public function getReporteTrasladoNumeros($data)
     {
         return $this->makeRequest('GET', "getReporteTrasladoNumeros", $data);
+    }
+
+    public function modificarTraslado($data)
+    {
+                return $this->makeRequest('GET', "updateTraslado", $data);
+
     }
 
     /*************************************************/

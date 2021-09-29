@@ -36,9 +36,7 @@ class TrasladoNumerosController extends Controller
      public function getReporteTrasladoNumeros(Request $request)
     {
 
-            $data = $request->only(['start_date', 'end_date',  'loterias_id',  'modalidades_id',  'bancas_id']);
-            // $data['bancas_id'] = !empty($request->bancas_id) ? $request->bancas_id : session()->get('user.banca');
-            // $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id'); 
+            $data = $request->only(['start_date', 'end_date',  'loterias_id',  'modalidades_id']);
             $data['empresas_id'] = session()->get('user.emp_id');
             
         $reporteJugadas = $this->marketService->getReporteTrasladoNumeros($data);
@@ -46,10 +44,15 @@ class TrasladoNumerosController extends Controller
         if ($request->ajax()) {
         return $datatable = DataTables::of($reporteJugadas)
 
-        ->editColumn('cnj_fecha', '{{@format_date($cnj_fecha)}}')
-        ->rawColumns(['cnj_fecha'])
+        ->editColumn('tln_fecha', '{{@format_date($tln_fecha)}}')
+
+        ->addColumn('action', function ($row) {
+            return  '<input type="input" class="tln_contador_traslado input-small" id="tln_contador_traslado_'. $row->id .'" data-id="' . $row->id .'" value="">' ;
+        })
+        ->rawColumns(['tln_fecha','action'])
         ->make(true);
         }
+
     }
 
     public function getPrintReporteTrasladoNumeros(Request $request)
@@ -96,6 +99,17 @@ class TrasladoNumerosController extends Controller
         }
     }
 
+    public function trasladar(Request $request, $traslado ){ 
+
+     
+        $data['traslado_id'] = $traslado;
+        $data['empresas_id'] = session()->get('user.emp_id');
+        $data['tln_contador_traslado'] =  $request->input('tln_contador_traslado');
+
+         $traslado =  $this->marketService->modificarTraslado($data);
+
+         return json_encode($traslado);
+    }
 
         /**
      * Devuelve el contenido del recibo
@@ -170,4 +184,5 @@ class TrasladoNumerosController extends Controller
 
         return $output;
     }
+
 }

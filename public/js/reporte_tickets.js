@@ -74,6 +74,7 @@ $(document).ready(function() {
 
 });
 
+
    //Reporte Detalle
   function reporteTicketDetalle(tickets_id) {
 

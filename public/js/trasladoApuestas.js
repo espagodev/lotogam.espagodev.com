@@ -47,11 +47,14 @@ $(document).ready(function() {
             },
         },
         columns: [
+                
                 { data: 'lot_nombre', name: 'loteria', orderable: false, searchable: false  },
                 { data: 'mod_nombre', name: 'mod_nombre', orderable: false, searchable: true  },
-                { data: 'cnj_numero', name: 'cnj_numero', orderable: false, searchable: false  },
-                { data: 'cnj_contador', name: 'cnj_contador', orderable: false, searchable: false  },
-                { data: 'cnj_fecha', name: 'cnj_fecha', orderable: false, searchable: false  },
+                { data: 'tln_numero', name: 'tln_numero', orderable: false, searchable: false  },
+                { data: 'tln_contador', name: 'tln_contador', orderable: false, searchable: false  },
+                { data: 'tln_contador_traslado', name: 'tln_contador_traslado', orderable: false, searchable: false  },
+                { data: 'tln_fecha', name: 'tln_fecha', orderable: false, searchable: false  },
+                { data: 'action', name: 'action', orderable: false, searchable: false  },
          ],
           fnDrawCallback: function(oSettings) {
             __currency_convert_recursively($('#control_apuestas'));
@@ -107,4 +110,73 @@ $(document).ready(function() {
             }
         });
     });
+
+    $(document).on('click', '#deactivate-selected', function(e){
+        e.preventDefault();
+        var selected_rows = [];
+        var i = 0;
+        $('.row-select:checked').each(function () {
+            selected_rows[i++] = $(this).val();
+        }); 
+        
+        if(selected_rows.length > 0){
+            $('input#selected_discounts').val(selected_rows);
+            swal({
+                title: LANG.sure,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $('form#mass_deactivate_form').submit();
+                }
+            });
+        } else{
+            $('input#selected_discounts').val('');
+            swal('@lang("lang_v1.no_row_selected")');
+        }    
+    });
 });
+
+$(document).on('change', 'input.tln_contador_traslado', function() {
+
+    var id = $(this).data('id');
+    var traslado = $(`#tln_contador_traslado_${id}`).val();
+    
+    $.ajax({
+        method: "get",
+        url: "/trasladar/" + id,
+        dataType: 'json',
+        data: {           
+            tln_contador_traslado: traslado,
+        },
+
+        success: function(result) {
+            if (result.success == "actualizado") {
+
+                Lobibox.notify("success", {
+                    position: "top right",
+                    title:false,
+                    icon:false,
+                    size: "mini",
+                    rounded: true,
+                    msg: result.msg,
+                    });
+
+                control_apuestas.ajax.reload();
+            } 
+            if(result.success == "error") {
+                Lobibox.notify("info", {
+                    position: "top right",
+                    title:false,
+                    icon:false,
+                    size: "mini",
+                    rounded: true,
+                    msg: result.msg,
+                    });
+
+            }
+        },
+    });
+});
+

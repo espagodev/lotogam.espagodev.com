@@ -78,17 +78,7 @@ class HomeController extends Controller
             $data['start_date'] = request()->start;
             $data['end_date'] = request()->end;
 
-            // $start = request()->start;
-            // $end = request()->end;
-            // $bancas_id = request()->bancas_id;
-            // $empresas_id = session()->get('user.emp_id');
-            // $users_id = Null;
-
-            // $purchase_details = $this->homeReports->getPurchaseTotals($empresas_id, $start, $end, $bancas_id);
-
             $detalle_ventas = $this->homeReports->getPurchaseTotals($data);
-
-            // dump($detalle_ventas);
 
             $output['total_tickets'] = $detalle_ventas->total_tickets;
             $output['total_venta'] =    $detalle_ventas->total_venta;
@@ -115,15 +105,13 @@ class HomeController extends Controller
                 $data =  $request->only(['start_date', 'end_date', 'users_id',  'bancas_id']);
 
             } else if ((session()->get('user.TipoUsuario') == 3) || (session()->get('user.useSupervisor') == 1)) {
-                $data =  $request->only(['start_date', 'end_date', 'loterias_id', 'estado', 'promocion',]);
+                $data =  $request->only(['start_date', 'end_date', 'loterias_id', 'estado', 'promocion']);
                 $data['bancas_id'] = !empty( $request->bancas_id) ?  $request->bancas_id : session()->get('user.banca');
                 $data['users_id'] = !empty( $request->users_id) ?  $request->users_id : session()->get('user.id');
             }
 
             $data['empresas_id'] = session()->get('user.emp_id');
 
-            // $data = $request->only(['start_date', 'end_date', 'bancas_id', 'loterias_id', 'users_id']);
-            // $data['empresas_id'] = session()->get('user.emp_id');
 
             $reporteVentas = Reportes::getReporteVentas($data);
 

@@ -171,17 +171,16 @@ class TicketController extends Controller
     public function getTicketAnular(Request $request)
     {
         if ($request->ajax()) {
-
+            // dd($request);
             $tickets_id = $request->get('tickets_id');
             $tia_detalle = $request->get('detalle');
-            $loterias_id = $request->get('loterias_id');
             $pin = $request->get('pin');
 
             $empresas_id = session()->get('user.emp_id');
             $bancas_id =  session()->get('user.banca');
             $users_id =  request()->session()->get('user.id');
-
-            $data = $this->marketService->getTicketAnular($empresas_id, $tickets_id, $pin, $users_id, $bancas_id, $tia_detalle, $loterias_id);
+            
+            $data = $this->marketService->getTicketAnular($empresas_id, $tickets_id, $pin, $users_id,  $tia_detalle);
 
             return response()->json($data);
 
