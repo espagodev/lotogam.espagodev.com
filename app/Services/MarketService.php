@@ -688,7 +688,7 @@ class MarketService
     public function ModificarHorarioLoteria($loteria, $data)
     {
         $data['_method'] = 'PUT';
-
+        
         return $this->makeRequest(
             'POST',
             "HorarioLoterias/{$loteria}",

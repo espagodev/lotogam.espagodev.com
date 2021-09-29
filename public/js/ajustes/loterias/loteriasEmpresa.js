@@ -71,6 +71,7 @@ $(document).ready(function() {
 
         $('.hlo_hora_fin').timepicker({
             timeFormat: 'hh:mm',
+            zindex:  999999,
             interval: 5,
             // minTime: '07',
             maxTime: '00:00pm',
@@ -83,6 +84,7 @@ $(document).ready(function() {
 
             $('.hlo_hora_inicio').timepicker({
                 timeFormat: 'hh:mm',
+                zindex:  999999,
                 interval: 5,
                 minTime: '07',
                 maxTime: '00:00pm',
