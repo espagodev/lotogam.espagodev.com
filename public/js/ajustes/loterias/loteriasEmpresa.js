@@ -86,10 +86,10 @@ $(document).ready(function() {
                 timeFormat: 'hh:mm',
                 zindex:  999999,
                 interval: 5,
-                minTime: '07',
+                // minTime: '07',
                 maxTime: '00:00pm',
                 defaultTime: '07',
-                startTime: '07',
+                // startTime: '07',
                 dynamic: false,
                 dropdown: false,
                 scrollbar: false
