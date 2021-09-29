@@ -78,8 +78,8 @@ $(document).ready(function() {
             // defaultTime: '07',
             // startTime: '07',
             dynamic: false,
-            dropdown: true,
-            scrollbar: true
+            dropdown: false,
+            scrollbar: false
         });
 
             $('.hlo_hora_inicio').timepicker({
@@ -91,8 +91,8 @@ $(document).ready(function() {
                 defaultTime: '07',
                 startTime: '07',
                 dynamic: false,
-                dropdown: true,
-                scrollbar: true
+                dropdown: false,
+                scrollbar: false
         });
     }
 
