@@ -25,16 +25,16 @@
             <div class="card-body">
                 <ul class="nav nav-tabs nav-tabs-primary">
                     <li class="nav-item active">
-                        <a class="nav-link" data-toggle="tab" href="#balance_diario"><span>Balances Diarios</span></a>
+                        <a href="#balance_diario" class="nav-link" data-toggle="tab" ><span>Balances Diarios</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#caja_general"> <span>Movimientos</span></a>
+                        <a href="#caja_general" class="nav-link " data-toggle="tab" > <span>Movimientos</span></a>
                     </li>
                   
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div id="balance_diario" class="tab-pane active ">
+                    <div  class="tab-pane active" id="balance_diario">
                         @include('caja_general.partials.balance')
                     </div>
                     <div id="caja_general" class="tab-pane fade">

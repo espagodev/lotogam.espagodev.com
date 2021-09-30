@@ -26,9 +26,9 @@
                                             <th>Modalidad</th>
                                             <th>Numero</th>
                                             <th>Contador</th>
-                                            <th>Traslado</th>
+                                            <th>Trasladar</th>
                                             <th>Fecha</th>
-                                            <th>Opciones</th>
+
                                         </tr>
                                     </thead>
                                 </table>

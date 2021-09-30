@@ -36,21 +36,22 @@ class TrasladoNumerosController extends Controller
      public function getReporteTrasladoNumeros(Request $request)
     {
 
-            $data = $request->only(['start_date', 'end_date',  'loterias_id',  'modalidades_id']);
-            $data['empresas_id'] = session()->get('user.emp_id');
+        $data = $request->only(['start_date', 'end_date',  'loterias_id',  'modalidades_id']);
+        $data['empresas_id'] = session()->get('user.emp_id');
             
         $reporteJugadas = $this->marketService->getReporteTrasladoNumeros($data);
 
         if ($request->ajax()) {
-        return $datatable = DataTables::of($reporteJugadas)
+            return $datatable = DataTables::of($reporteJugadas)
 
-        ->editColumn('tln_fecha', '{{@format_date($tln_fecha)}}')
+            ->editColumn('tln_fecha', '{{@format_date($tln_fecha)}}')
 
-        ->addColumn('action', function ($row) {
-            return  '<input type="input" class="tln_contador_traslado input-small" id="tln_contador_traslado_'. $row->id .'" data-id="' . $row->id .'" value="">' ;
-        })
-        ->rawColumns(['tln_fecha','action'])
-        ->make(true);
+            ->addColumn('contador', function ($row) {
+                return  '<input type="input" class="tln_contador_traslado input-small" id="tln_contador_traslado_'. $row->id .'" data-id="' . $row->id .'" value="' . $row->tln_contador_traslado .'">' ;
+            })
+            ->removeColumn('tln_contador_traslado')
+            ->rawColumns(['tln_fecha','contador']) 
+            ->make(true);
         }
 
     }

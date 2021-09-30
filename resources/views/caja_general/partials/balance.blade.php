@@ -12,6 +12,7 @@
                         <th scope="col">Venta Neta</th>
                         <th scope="col">Comisiones</th>
                         <th scope="col">Premios</th>
+                        <th scope="col">Disponible</th>
                         <th scope="col">Balance Final</th>
                         <th scope="col">Fecha</th>
                     </tr>

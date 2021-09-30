@@ -1,41 +1,30 @@
 $(document).ready(function() {
     if ($("#spr_date_filter").length == 1) {
-        $("#spr_date_filter").daterangepicker(dateRangeSettings, function(
-            start,
-            end
-        ) {
-            $("#spr_date_filter span").val(
-                start.format(moment_date_format) +
-                    " ~ " +
-                    end.format(moment_date_format)
-            );
-            caja_general_datatable.ajax.reload();
+        $("#spr_date_filter").daterangepicker(dateRangeSettings, function(start,end) {
+            $("#spr_date_filter span").val(start.format(moment_date_format) + " ~ " +  end.format(moment_date_format));
+            
             balance_diario_datatable.ajax.reload();
-            $(".nav-tabs li.active")
-                .find('a[data-toggle="tab"]')
-                .trigger("shown.bs.tab");
+            caja_general_datatable.ajax.reload();
+
+            $(".nav-tabs li.active").find('a[data-toggle="tab"]').trigger("shown.bs.tab");
+
             getCajaGeneral();
         });
-        $("#spr_date_filter").on("cancel.daterangepicker", function(
-            ev,
-            picker
-        ) {
-            $("#spr_date_filter").val("");
-            caja_general_datatable.ajax.reload();
+
+        $("#spr_date_filter").on("cancel.daterangepicker", function(ev,picker) {
+            $("#spr_date_filter").val("");            
             balance_diario_datatable.ajax.reload();
-            $(".nav-tabs li.active")
-                .find('a[data-toggle="tab"]')
-                .trigger("shown.bs.tab");
+            caja_general_datatable.ajax.reload();
+            $(".nav-tabs li.active").find('a[data-toggle="tab"]').trigger("shown.bs.tab");
             getCajaGeneral();
         });
         getCajaGeneral();
     }
 
-    $(
-        "#balance_diario_table, #bancas_id, #users_id, #movimiento"
-    ).change(function() {
-        // caja_general_datatable.ajax.reload();
+    $("#balance_diario_table, #caja_general_table, #bancas_id, #users_id, #movimiento").change(function() {
         balance_diario_datatable.ajax.reload();
+        caja_general_datatable.ajax.reload();
+        
         $(".nav-tabs li.active")
             .find('a[data-toggle="tab"]')
             .trigger("shown.bs.tab");
@@ -44,7 +33,7 @@ $(document).ready(function() {
 
 
 
-    balance_diario_datatable = $("#balance_diario_table").DataTable(
+    balance_diario_datatable = $("table#balance_diario_table").DataTable(
         {
             processing: true,
             serverSide: true,
@@ -120,6 +109,12 @@ $(document).ready(function() {
                     searchable: false
                 },
                 {
+                    data: "ban_limite_venta",
+                    name: "ban_limite_venta",
+                    orderable: false,
+                    searchable: false
+                },
+                {
                     data: "cgc_balance_final",
                     name: "cgc_balance_final",
                     orderable: false,
@@ -139,94 +134,169 @@ $(document).ready(function() {
             }
         }
     );
-   
-    $('a[data-toggle="tab"]').on("shown.bs.tab", function(e) {
-        var target = $(e.target).attr("href");
-        if (target == "#caja_general") {
-            if (typeof caja_general_datatable == "undefined") {
 
-                caja_general_datatable = $("#caja_general_table").DataTable({
-                    processing: true,
-                    serverSide: true,
-                    aaSorting: false,
-                    ajax: {
-                        url: "/caja_general/getCajaGeneral",
-                        dataType: "json",
-                        data: function(d) {
-                            d.bancas_id = $("select#bancas_id").val();
-                            d.users_id = $("select#users_id").val();
-                            d.movimiento = $("select#movimiento").val();
-            
-                            var start = "";
-                            var end = "";
-                            if ($("input#spr_date_filter").val()) {
-                                start = $("input#spr_date_filter")
-                                    .data("daterangepicker")
-                                    .startDate.format("YYYY-MM-DD");
-                                end = $("input#spr_date_filter")
-                                    .data("daterangepicker")
-                                    .endDate.format("YYYY-MM-DD");
-                            }
-                            d.start_date = start;
-                            d.end_date = end;
-                        }
-                    },
-                    columns: [
-                        {
-                            data: "cag_movimiento",
-                            name: "cag_movimiento",
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: "cag_fecha_movimiento",
-                            name: "cag_fecha_movimiento",
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: "bancas_id",
-                            name: "bancas_id",
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: "users_id",
-                            name: "users_id",
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: "cag_monto",
-                            name: "cag_monto",
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: "cag_nota_movimiento",
-                            name: "cag_nota_movimiento",
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: "action",
-                            name: "action",
-                            orderable: false,
-                            searchable: false
-                        }
-                    ],
-                    fnDrawCallback: function(oSettings) {
-                        __currency_convert_recursively($("#caja_general"));
-                    }
-                });
-            } else {
-                
-                caja_general_datatable.ajax.reload();
+    caja_general_datatable = $("table#caja_general_table").DataTable({
+        processing: true,
+        serverSide: true,
+        aaSorting: false,
+        ajax: {
+            url: "/caja_general/getCajaGeneral",
+            dataType: "json",
+            data: function(d) {
+                d.bancas_id = $("select#bancas_id").val();
+                d.users_id = $("select#users_id").val();
+                d.movimiento = $("select#movimiento").val();
+
+                var start = "";
+                var end = "";
+                if ($("input#spr_date_filter").val()) {
+                    start = $("input#spr_date_filter")
+                        .data("daterangepicker")
+                        .startDate.format("YYYY-MM-DD");
+                    end = $("input#spr_date_filter")
+                        .data("daterangepicker")
+                        .endDate.format("YYYY-MM-DD");
+                }
+                d.start_date = start;
+                d.end_date = end;
             }
-        } else if (target == "#balance_diario") {
-            balance_diario_datatable.ajax.reload();
+        },
+        columns: [
+            {
+                data: "cag_movimiento",
+                name: "cag_movimiento",
+                orderable: false,
+                searchable: false
+            },
+            {
+                data: "cag_fecha_movimiento",
+                name: "cag_fecha_movimiento",
+                orderable: false,
+                searchable: false
+            },
+            {
+                data: "bancas_id",
+                name: "bancas_id",
+                orderable: false,
+                searchable: false
+            },
+            {
+                data: "users_id",
+                name: "users_id",
+                orderable: false,
+                searchable: false
+            },
+            {
+                data: "cag_monto",
+                name: "cag_monto",
+                orderable: false,
+                searchable: false
+            },
+            {
+                data: "cag_nota_movimiento",
+                name: "cag_nota_movimiento",
+                orderable: false,
+                searchable: false
+            },
+            {
+                data: "action",
+                name: "action",
+                orderable: false,
+                searchable: false
+            }
+        ],
+        fnDrawCallback: function(oSettings) {
+            __currency_convert_recursively($("#caja_general"));
         }
     });
+   
+    // $('a[data-toggle="tab"]').on("shown.bs.tab", function(e) {
+    //     var target = $(e.target).attr("href");
+    //     if (target == "#caja_general") {
+    //         if (typeof caja_general_datatable == "undefined") {
+
+    //             caja_general_datatable = $("#caja_general_table").DataTable({
+    //                 processing: true,
+    //                 serverSide: true,
+    //                 aaSorting: false,
+    //                 ajax: {
+    //                     url: "/caja_general/getCajaGeneral",
+    //                     dataType: "json",
+    //                     data: function(d) {
+    //                         d.bancas_id = $("select#bancas_id").val();
+    //                         d.users_id = $("select#users_id").val();
+    //                         d.movimiento = $("select#movimiento").val();
+            
+    //                         var start = "";
+    //                         var end = "";
+    //                         if ($("input#spr_date_filter").val()) {
+    //                             start = $("input#spr_date_filter")
+    //                                 .data("daterangepicker")
+    //                                 .startDate.format("YYYY-MM-DD");
+    //                             end = $("input#spr_date_filter")
+    //                                 .data("daterangepicker")
+    //                                 .endDate.format("YYYY-MM-DD");
+    //                         }
+    //                         d.start_date = start;
+    //                         d.end_date = end;
+    //                     }
+    //                 },
+    //                 columns: [
+    //                     {
+    //                         data: "cag_movimiento",
+    //                         name: "cag_movimiento",
+    //                         orderable: false,
+    //                         searchable: false
+    //                     },
+    //                     {
+    //                         data: "cag_fecha_movimiento",
+    //                         name: "cag_fecha_movimiento",
+    //                         orderable: false,
+    //                         searchable: false
+    //                     },
+    //                     {
+    //                         data: "bancas_id",
+    //                         name: "bancas_id",
+    //                         orderable: false,
+    //                         searchable: false
+    //                     },
+    //                     {
+    //                         data: "users_id",
+    //                         name: "users_id",
+    //                         orderable: false,
+    //                         searchable: false
+    //                     },
+    //                     {
+    //                         data: "cag_monto",
+    //                         name: "cag_monto",
+    //                         orderable: false,
+    //                         searchable: false
+    //                     },
+    //                     {
+    //                         data: "cag_nota_movimiento",
+    //                         name: "cag_nota_movimiento",
+    //                         orderable: false,
+    //                         searchable: false
+    //                     },
+    //                     {
+    //                         data: "action",
+    //                         name: "action",
+    //                         orderable: false,
+    //                         searchable: false
+    //                     }
+    //                 ],
+    //                 fnDrawCallback: function(oSettings) {
+    //                     __currency_convert_recursively($("#caja_general"));
+    //                 }
+    //             });
+    //         } else {
+                
+    //             caja_general_datatable.ajax.reload();
+    //         }
+    //     } else if (target == "#balance_diario") {
+    //         balance_diario_datatable.ajax.reload();
+    //     }
+    // });
 
     $(document).on("click", ".nuevo-registro", function(e) {
         e.preventDefault();
@@ -312,7 +382,7 @@ function getCajaGeneral() {
         url: "/caja_general/getCajaGeneralDetalle",
         dataType: "json",
         data: data,
-        success: function(data) {
+        success: function(data) { 
             $(".balance_inicial").html(
                 __currency_trans_from_en(data.balance_inicial, true)
             );
