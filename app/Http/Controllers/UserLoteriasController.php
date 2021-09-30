@@ -73,12 +73,13 @@ class UserLoteriasController extends Controller
 
     public function getModificarHorarioUser($loteria, $users_id)
     {       
-       
+        $empresas_id = session()->get('user.emp_id');
         $loteria = $this->marketService->getLoteria($loteria);
      
         $sorteos = json_decode($loteria->lot_sorteo, true);
 
-        $horarios = HorarioLoterias::UsuarioHorario($users_id, $loteria->id);
+        $horarios = HorarioLoterias::UsuarioHorario($empresas_id, $users_id, $loteria->id);
+        
         $dias = Util::dias();
 
         return view('usuarios.modal_edit')->with(compact('loteria', 'dias','sorteos', 'horarios','users_id'));

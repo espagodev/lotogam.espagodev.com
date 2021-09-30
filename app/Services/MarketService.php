@@ -689,6 +689,7 @@ class MarketService
     {
         $data['_method'] = 'PUT';
         
+
         return $this->makeRequest(
             'POST',
             "HorarioLoterias/{$loteria}",
@@ -1444,8 +1445,10 @@ class MarketService
         //horario loteria banca
     public function ModificarHorarioBancaLoteria($loteria, $data)
     {
-        $data['_method'] = 'PUT';
         
+        // return $this->makeRequest('GET', "HorarioBancaLoterias", $data);
+
+        $data['_method'] = 'PUT';        
         return $this->makeRequest(
             'POST',
             "HorarioBancaLoterias/{$loteria}",
@@ -1455,9 +1458,9 @@ class MarketService
         );
     }
 
-    public function getloteriaBancaHorario($bancas_id, $loterias_id)
+    public function getloteriaBancaHorario($empresas_id, $bancas_id, $loterias_id)
     {
-        return $this->makeRequest('GET', "getloteriaBancaHorario/{$bancas_id}/{$loterias_id}");
+        return $this->makeRequest('GET', "getloteriaBancaHorario/{$empresas_id}/{$bancas_id}/{$loterias_id}");
     }
 
     //LOTERIAS USER
@@ -1490,9 +1493,9 @@ class MarketService
         );
     }
 
-    public function getloteriaUsuarioHorario($users_id, $loterias_id)
+    public function getloteriaUsuarioHorario($empresas_id, $users_id, $loterias_id) 
     {
-        return $this->makeRequest('GET', "getloteriaUsuarioHorario/{$users_id}/{$loterias_id}");
+        return $this->makeRequest('GET', "getloteriaUsuarioHorario/{$empresas_id}/{$users_id}/{$loterias_id}");
     }
 
 

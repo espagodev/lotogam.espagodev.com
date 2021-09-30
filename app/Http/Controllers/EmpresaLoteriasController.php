@@ -63,10 +63,9 @@ class EmpresaLoteriasController extends Controller
         $data = $request->except('_token');
         $data['loterias_id'] = $loteria;
         $data['empresas_id'] = session()->get('user.emp_id');
-
-
+        
          $data = HorarioLoterias::getActualizarHorarioLoteria($loteria, $data);
-
+        
         return back()
             ->with('success', ['El Horario se ha Modificado Satisfactoriamente']);
     }

@@ -98,14 +98,14 @@ class BancaLoteriasController extends Controller
 
     public function getModificarHorarioBanca($loteria, $banca)
     {
-
+        
         $empresas_id = session()->get('user.emp_id');
 
         $loteria = $this->marketService->getLoteria($loteria);      
-       
+   
         $sorteos = json_decode($loteria->lot_sorteo, true);
         
-        $horarios = HorarioLoterias::BancaHorario($banca,  $loteria->id);
+        $horarios = HorarioLoterias::BancaHorario($empresas_id, $banca,  $loteria->id);       
         
         $dias = Util::dias();
         
