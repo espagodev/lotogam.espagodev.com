@@ -50,23 +50,22 @@ $(document).ready(function() {
                 { data: 'lot_nombre', name: 'loteria', orderable: false, searchable: false  },
                 { data: 'mod_nombre', name: 'mod_nombre', orderable: false, searchable: true  },
                 { data: 'tln_numero', name: 'tln_numero', orderable: false, searchable: false  },
-                { data: 'tln_contador', name: 'tln_contador', orderable: false, searchable: false  },
-                // { data: 'tln_contador_traslado', name: 'tln_contador_traslado', orderable: false, searchable: false  },
+                { data: 'tln_contador', name: 'tln_contador', orderable: false, searchable: false  },                
                 { data: 'contador', name: 'contador', orderable: false, searchable: false  },
                 { data: 'tln_fecha', name: 'tln_fecha', orderable: false, searchable: false  },
          ],
           fnDrawCallback: function(oSettings) {
             __currency_convert_recursively($('#control_apuestas'));
         }
-        // ,
-        // createdRow: function( row, data, dataIndex){
-        //     console.log(data["tln_contador_traslado"]);
-        //     if( data["tln_contador_traslado"] != "0")
-        //     {             
-        //         $(row).css('background-color', '#9EF395');
-        //     }          
+        ,
+        createdRow: function( row, data, dataIndex){
+            
+            if( data["tln_contador_traslado"] != "0")
+            {             
+                $(row).css('background-color', '#9EF395');
+            }          
 
-        // }
+        }
     });
 
     //imprimir reporte de numeros a pasar
