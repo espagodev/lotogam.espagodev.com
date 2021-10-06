@@ -24,6 +24,7 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
          aaSorting: false,
+         paging:    false,
         ajax: {
                 url: '/traslado-numeros',
                 dataType: "json",
@@ -60,10 +61,14 @@ $(document).ready(function() {
         ,
         createdRow: function( row, data, dataIndex){
             
-            if( data["tln_contador_traslado"] != "0")
+            if((data["tln_contador_traslado"] != "0") && (data["tln_contador_updated"] == "0"))
             {             
-                $(row).css('background-color', '#9EF395');
-            }          
+                $('td:eq(4)', row).css('background-color', '#9EF395');    
+
+            } else if((data["tln_contador_traslado"] != "0") && (data["tln_contador_updated"] == "1"))
+            {
+                $('td:eq(4)', row).css('background-color', '#F3959E');      
+            }   
 
         }
     });

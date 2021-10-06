@@ -30,10 +30,16 @@ mix.js('resources/js/app.js', 'public/js/init.js')
         'resources/plugins/moment/moment-timezone-with-data.min.js',
         'resources/plugins/jquery-timepicker/jquery.timepicker.js',
         'resources/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-        // 'resources/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js',
+        'resources/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js',
         'resources/plugins/daterangepicker/daterangepicker.js',
-        'resources/plugins/bootstrap-datatable/js/jquery.dataTables.min.js',
-        'resources/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js',
+
+        // 'resources/plugins/bootstrap-datatable/js/jquery.dataTables.min.js',
+        // 'resources/plugins/bootstrap-datatable/js/dataTables.bootstrap4.min.js',
+
+        'resources/plugins/DataTables/DataTables-1.11.3/js/jquery.dataTables.min.js',
+        'resources/plugins/DataTables/DataTables-1.11.3/js/dataTables.bootstrap4.min.js',
+        'resources/plugins/DataTables/FixedColumns-4.0.0/js/dataTables.fixedColumns.min.js',
+
         // 'resources/plugins/bootstrap-datatable/js/buttons.bootstrap4.min.js',
         // 'resources/plugins/bootstrap-datatable/js/jszip.min.js',
         // 'resources/plugins/bootstrap-datatable/js/pdfmake.min.js',
@@ -68,8 +74,13 @@ mix.js('resources/js/app.js', 'public/js/init.js')
         'resources/plugins/daterangepicker/daterangepicker.css',
         'resources/plugins/select2/css/select2.min.css',
         'resources/plugins/pace/themes/blue/pace-theme-flash.css',
-        'resources/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css',
-        'resources/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css',
+
+        // 'resources/plugins/bootstrap-datatable/css/dataTables.bootstrap4.min.css',
+        // 'resources/plugins/bootstrap-datatable/css/buttons.bootstrap4.min.css',
+
+        'resources/plugins/DataTables/DataTables-1.11.3/css/dataTables.bootstrap4.min.css',
+        'resources/plugins/DataTables/FixedColumns-4.0.0/css/fixedColumns.bootstrap4.min.css',
+
         'resources/plugins/simplebar/css/simplebar.css',
         'resources/plugins/switchery/css/switchery.min.css',
         'resources/plugins/bootstrap-switch/bootstrap-switch.min.css'

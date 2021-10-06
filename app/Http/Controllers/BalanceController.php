@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DataTables;
+
 use App\Services\MarketService;
 use App\Utils\Util;
+use Yajra\DataTables\Facades\DataTables;
 
 class BalanceController extends Controller
 {
@@ -75,7 +76,7 @@ class BalanceController extends Controller
                     return '<span class="display_currency" data-currency_symbol="true">' .
                         $row->cgc_total_premios . '</span>';
                 })
-                ->editColumn('ban_limite_venta', function ($row) {
+                ->editColumn('disponible', function ($row) { 
                     return '<span class="display_currency" data-currency_symbol="true">' .
                         $row->ban_limite_venta . '</span>';
                 })
@@ -83,15 +84,22 @@ class BalanceController extends Controller
                     return '<span class="display_currency" data-currency_symbol="true">' .
                         $row->cgc_balance_final . '</span>';
                 })
+                // ->editColumn('cgc_total_venta', function ($row) {
+                //     return '<span class="display_currency" data-currency_symbol="true">' .
+                //         $row->cgc_total_venta . '</span>';
+                // })
                 ->editColumn('cgc_total_venta', function ($row) {
-                    return '<span class="display_currency" data-currency_symbol="true">' .
-                        $row->cgc_total_venta . '</span>';
+                  return '<span class="display_currency" data-currency_symbol="true">' .
+                                             $row->cgc_total_venta . '</span>';
+                                       
+                                    
+                                
                 })
                 ->editColumn('cgc_fecha_movimiento', function ($row) {
                     return $this->util->format_date($row->cgc_fecha_movimiento, false);
                 })
 
-                ->rawColumns([ 'cgc_balance_inicial','cgc_total_entradas','cgc_total_salidas','cgc_total_venta','cgc_total_venta_neta','cgc_total_comisiones','cgc_total_premios','cgc_balance_final','cgc_fecha_movimiento','ban_limite_venta'])
+                ->rawColumns([ 'cgc_balance_inicial','cgc_total_entradas','cgc_total_salidas','cgc_total_venta','cgc_total_venta_neta','cgc_total_comisiones','cgc_total_premios','cgc_balance_final','cgc_fecha_movimiento','disponible'])
             ->make(true);
 
         }

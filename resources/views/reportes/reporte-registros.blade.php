@@ -8,8 +8,8 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped"  id="reporte_registro">
+                             {{-- <div class="table-responsive"> --}}
+                                <table class="table table-bordered table-striped table-sm"  id="reporte_registro">
                                     <thead>
                                         <tr>
                                             <th>Hora Apertura</th>
@@ -22,7 +22,7 @@
                                         </tr>
                                     </thead>
                                 </table>
-                             </div>
+                             {{-- </div> --}}
                         </div>
                     </div>
                 </div>

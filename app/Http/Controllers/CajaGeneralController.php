@@ -6,7 +6,7 @@ use App\Utils\BancaUtil;
 use Illuminate\Http\Request;
 use App\Services\MarketService;
 use App\Utils\Util;
-use DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class CajaGeneralController extends Controller
 {

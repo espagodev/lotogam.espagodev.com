@@ -25,7 +25,9 @@
   <!--favicon-->
   <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
   <!-- simplebar CSS-->
+  {{-- <link href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css')}}" rel="stylesheet" /> --}}
 
+  
             @include('layouts.partials.css')
 
         @yield('css')

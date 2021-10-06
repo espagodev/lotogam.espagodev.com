@@ -37,6 +37,12 @@ $(document).ready(function() {
         {
             processing: true,
             serverSide: true,
+            scrollY:        "500px",
+            scrollX:        true,
+            scrollCollapse: true,
+            paging:         false,
+            fixedColumns:   true,
+            
             ajax: {
                 url: "/balance/getBalance",
                 dataType: "json",
@@ -108,15 +114,16 @@ $(document).ready(function() {
                     orderable: false,
                     searchable: false
                 },
+                
                 {
-                    data: "ban_limite_venta",
-                    name: "ban_limite_venta",
+                    data: "cgc_balance_final",
+                    name: "cgc_balance_final",
                     orderable: false,
                     searchable: false
                 },
                 {
-                    data: "cgc_balance_final",
-                    name: "cgc_balance_final",
+                    data: "disponible",
+                    name: "disponible",
                     orderable: false,
                     searchable: false
                 },
@@ -131,14 +138,25 @@ $(document).ready(function() {
                 __currency_convert_recursively(
                     $("#balance_diario_table")
                 );
+            },
+            createdRow: function (row, data, dataIndex) {
+                $('td:eq(9)', row).css('background-color', '#9EF395');                
             }
+            
         }
+       
     );
 
     caja_general_datatable = $("table#caja_general_table").DataTable({
         processing: true,
         serverSide: true,
         aaSorting: false,
+        scrollY:        "500px",
+        scrollX:        true,
+        scrollCollapse: true,
+        paging:         false,
+       
+
         ajax: {
             url: "/caja_general/getCajaGeneral",
             dataType: "json",

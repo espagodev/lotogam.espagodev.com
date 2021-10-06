@@ -24,6 +24,11 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         aaSorting: false,
+        // scrollX:        true,
+        // scrollCollapse: true,
+        paging:         false,
+        // fixedColumns:   true,
+        
         ajax: {
                 url: '/reportes/reporte-ventas',
                 dataType: "json",

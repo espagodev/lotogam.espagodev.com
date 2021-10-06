@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <div class="table-responsive">
+        {{-- <div class="table-responsive"> --}}
             <table class="table table-bordered table-striped table-sm " id="caja_general_table">
                 <thead>
                     <tr>
@@ -14,7 +14,7 @@
                     </tr>
                 </thead>
             </table>
-        </div>
+        {{-- </div> --}}
     </div>
 </div>
 <!--End Row-->
