@@ -7,7 +7,7 @@
             <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
-                             {{-- <div class="table-responsive"> --}}
+                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped table-sm"  id="reporte_resultados">
                                     <thead>
                                         <tr>
@@ -19,7 +19,7 @@
                                         </tr>
                                     </thead>
                                 </table>
-                             {{-- </div> --}}
+                             </div>
                         </div>
                     </div>
             </div>

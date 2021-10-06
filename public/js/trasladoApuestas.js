@@ -23,8 +23,8 @@ $(document).ready(function() {
      control_apuestas =  $('#control_apuestas').DataTable({
         processing: true,
         serverSide: true,
-         aaSorting: false,
          paging:    false,
+ 
         ajax: {
                 url: '/traslado-numeros',
                 dataType: "json",

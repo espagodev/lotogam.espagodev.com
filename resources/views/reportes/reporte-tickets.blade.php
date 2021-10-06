@@ -10,7 +10,7 @@
             <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                             {{-- <div class="table-responsive"> --}}
+                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped  table-sm no-print"  id="reporte_tickets">
                                     <thead>
                                         <tr>
@@ -25,7 +25,7 @@
                                         </tr>
                                     </thead>
                                 </table>
-                             {{-- </div> --}}
+                             </div>
                         </div>
                     </div>
             </div>
