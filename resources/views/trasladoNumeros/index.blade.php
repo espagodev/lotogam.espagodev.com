@@ -31,6 +31,14 @@
 
                                         </tr>
                                     </thead>
+                                    <tfoot>
+                                        <tr class="bg-gray font-17 footer-total text-center">
+                                            <td colspan="3"></td>
+                                            <td></td>
+                                            <td></td>                                            
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                     </div>

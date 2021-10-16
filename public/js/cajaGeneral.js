@@ -8,7 +8,7 @@ $(document).ready(function() {
 
             $(".nav-tabs li.active").find('a[data-toggle="tab"]').trigger("shown.bs.tab");
 
-            getCajaGeneral();
+            getCajaGeneral(); 
         });
 
         $("#spr_date_filter").on("cancel.daterangepicker", function(ev,picker) {
@@ -316,10 +316,16 @@ $(document).ready(function() {
     //     }
     // });
 
+    // $(document).on('change', '#bancas_id', function() {
+    //     var bancaSelect = $('#bancas_id');
+    //     console.log(bancaSelect);
+    //     show_user();
+    // });
+
     $(document).on("click", ".nuevo-registro", function(e) {
         e.preventDefault();
         var container = $(".nuevo_modal");
-
+     
         $.ajax({
             url: $(this).data("href"),
             dataType: "html",
@@ -422,3 +428,6 @@ function getCajaGeneral() {
         }
     });
 }
+
+
+

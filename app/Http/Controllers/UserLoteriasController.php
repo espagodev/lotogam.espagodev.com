@@ -57,7 +57,8 @@ class UserLoteriasController extends Controller
         return back();
     }
 
-    public function update(Request $request,  $loteria){
+    public function update(Request $request,  $loteria)
+    {
 
         $data = $request->all();
         $data = $request->except('_token');
@@ -69,6 +70,19 @@ class UserLoteriasController extends Controller
 
         return back()
             ->with('success', ['El Horario se ha Modificado Satisfactoriamente']);
+    }
+
+    public function activarDesactivarUserLoteria($loterias_id, $users_id){
+
+
+        $data['loterias_id'] = $loterias_id;
+        $data['users_id'] = $users_id;
+        $data['empresas_id'] = session()->get('user.emp_id');
+
+        $estado = $this->marketService->getUserLoteriaEstado($data);
+
+        return json_encode($estado);
+
     }
 
     public function getModificarHorarioUser($loteria, $users_id)
@@ -85,19 +99,6 @@ class UserLoteriasController extends Controller
         return view('usuarios.modal_edit')->with(compact('loteria', 'dias','sorteos', 'horarios','users_id'));
     }
 
-    public function activarDesactivarUserLoteria($loterias_id, $users_id){
-
-
-        $data['loterias_id'] = $loterias_id;
-        $data['users_id'] = $users_id;
-        $data['empresas_id'] = session()->get('user.emp_id');
-
-        $estado = $this->marketService->getUserLoteriaEstado($data);
-
-
-        return json_encode($estado);
-
-    }
 
 
 

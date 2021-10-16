@@ -91,16 +91,6 @@ class BancasController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -117,9 +107,7 @@ class BancasController extends Controller
         $this->marketService->ModificarBanca($id, $data);
 
         return redirect()
-            ->back(
-
-            )
+            ->back()
             ->with('success', ['La Banca se ha modificado Satisfactoriamente']);
     }
 
@@ -144,5 +132,29 @@ class BancasController extends Controller
             return response()->json(['message' => 'Hubo un error al recuperar los registros.'], 500);
         }
         return response()->json($bancas);
+    }
+
+
+    public function duplicarBanca($ban_url)
+    {
+        return view('bancas.modal_clonar')->with(['ban_url' => $ban_url]);
+
+    }
+
+    public function bancaDuplicada(Request $request)
+    {
+        $data = $request->all();
+        $data = $request->except('_token');
+        $data['empresas_id'] =  session()->get('user.emp_id');
+        $data['ban_url'] = $request->ban_url;
+        $data['ban_cod'] = $request->ban_cod;
+        $data['ban_nombre'] = $request->ban_nombre;
+
+        $banca = $this->marketService->getBancaDuplicar($data);
+ 
+        return redirect()
+            ->route('ajustesBanca', $banca->ban_url)
+            ->with('success', ['Banca Duplicada Satisfactoriamente']);
+
     }
 }

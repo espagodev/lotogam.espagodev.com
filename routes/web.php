@@ -26,6 +26,9 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
 
     //SELECT
     Route::get('select/getbancas', 'BancasController@getbancas');
+    Route::get('duplicarBanca/{banca_id}', 'BancasController@duplicarBanca');
+    Route::post('bancaDuplicada', 'BancasController@bancaDuplicada')->name('bancaDuplicada.store');
+
     Route::get('select/getusuarios', 'UsuariosController@getusuarios');
     Route::get('getBancasSuperVisor/{usuario}', 'UsuariosController@getBancasSuperVisor');
     Route::put('updatedSupervisor/{usuario}', 'UsuariosController@updatedSupervisor')->name('updatedSupervisor');
@@ -144,20 +147,14 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
     Route::get('ajustesBanca/montos/{banca}', 'BancaMontosController@index')->name('bancaMonto');
     Route::get('ajustesBanca/impresoraPos/{banca}', 'BancaImpresoraPosController@index')->name('bancaImpresoraPos');
 
-    /**Loterias */
-    Route::get('ajustesBanca/loterias/{banca}', 'BancaLoteriasController@index')->name('bancaLoterias');
-    Route::get('getModificarHorarioBanca/{loteria}/{banca}', 'BancaLoteriasController@getModificarHorarioBanca');
-    Route::get('activarDesactivarBancaLoteria/{loterias_id}/{banca}', 'BancaLoteriasController@activarDesactivarBancaLoteria');
-    Route::put('ajustesBanca/loterias/{loterias_id}', 'BancaLoteriasController@update')->name('bancaLoterias.update');
-    Route::post('ajustesBanca/loterias', 'BancaLoteriasController@store')->name('bancaLoterias.store');
-   
+    
 
     /**SuperPale */
     Route::get('ajustesBanca/superpale/{banca}', 'BancaSuperPaleController@index')->name('bancaSuperPale');
     Route::get('activarDesactivarBancaLoteriaSuper/{loterias_id}/{banca}', 'BancaSuperPaleController@activarDesactivarBancaLoteriaSuper');
     Route::post('ajustesBanca/superpale', 'BancaSuperPaleController@store')->name('bancaSuperPale.store');
 
-
+    /**BANCAS MODALIDADES */
     Route::get('ajustesBanca/modalidades/{banca}', 'BancaModalidadesController@index')->name('bancaModalidades');
     Route::post('ajustesBanca/modalidades', 'BancaModalidadesController@store')->name('bancaModalidades.store');
 
@@ -272,8 +269,19 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
     //BALANCE
     Route::get('/balance/getBalance', 'BalanceController@getBalances');
 
+    /**LOTERIAS BANCA */
+    Route::get('bancaLoterias/{banca_id}', 'BancaLoteriasController@loterias');
+    Route::get('getModificarHorarioBanca/{loteria}/{banca}', 'BancaLoteriasController@getModificarHorarioBanca');
+    Route::get('activarDesactivarBancaLoteria/{loterias_id}/{banca}', 'BancaLoteriasController@activarDesactivarBancaLoteria');
+    Route::put('bancaLoterias/{loterias_id}', 'BancaLoteriasController@update')->name('bancaLoterias.update');
+    // Route::post('ajustesBanca/loterias', 'BancaLoteriasController@store')->name('bancaLoterias.store');
 
-    //LOTERIAS USUARIOS
+   
+    //LOTERIAS SUPERPALE BANCAS
+    Route::get('userLoteriasSuper/{banca_id}', 'BancaLoteriasController@loteriasSuper');
+    Route::get('activarDesactivarUserLoteriaSUper/{loterias_id}/{banca_id}', 'BancaLoteriasController@activarDesactivarUserLoteriaSuper');
+
+    /**LOTERIAS USUARIOS */
     Route::get('userLoterias/{users_id}', 'UserLoteriasController@loterias');
     Route::get('getModificarHorarioUser/{loteria}/{user}', 'UserLoteriasController@getModificarHorarioUser');
     Route::get('activarDesactivarUserLoteria/{loterias_id}/{user}', 'UserLoteriasController@activarDesactivarUserLoteria');

@@ -6,6 +6,7 @@ use App\Services\MarketService;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Cache;
 
 class User extends Authenticatable
 {
@@ -54,5 +55,10 @@ class User extends Authenticatable
         $userInformation = $marketService->getUserInformation();
 
         return $userInformation->nombre;
+    }
+
+    public function isOnline()
+    {
+        return Cache::has('user-is-online-' . $this->service_id);
     }
 }

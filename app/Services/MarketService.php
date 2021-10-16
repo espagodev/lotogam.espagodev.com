@@ -1287,7 +1287,14 @@ class MarketService
         return $this->makeRequest('GET', "getHorarioLoteriasDia", $data);
     }
 
-    
+    /**
+     * CONSULTA EL HORARIO POR LOTERIA 
+     */
+    public function  getHorarioCierre($data)
+    {
+        return $this->makeRequest('GET', "getHorarioCierre", $data);
+    }
+
 
     /**
      * ESTADOS
@@ -1434,7 +1441,7 @@ class MarketService
 
     public function  getLoteriasBancaFaltantes($banca)
     {           
-        return $this->makeRequest('GET', "getloteriasBanca/{$banca->id}");
+        return $this->makeRequest('GET', "getloteriasBanca/{$banca}");
     }
     //ESTADO LOTERIA BANCA
     public function  getBancaLoteriaEstado($data)
@@ -1445,9 +1452,7 @@ class MarketService
         //horario loteria banca
     public function ModificarHorarioBancaLoteria($loteria, $data)
     {
-        
-        // return $this->makeRequest('GET', "HorarioBancaLoterias", $data);
-
+        // dd($loteria, $data);
         $data['_method'] = 'PUT';        
         return $this->makeRequest(
             'POST',
@@ -1628,8 +1633,9 @@ class MarketService
 
     public function  getLoteriasSuperPaleBancaFaltantes($banca)
     {           
-        return $this->makeRequest('GET', "getloteriasSuperBanca/{$banca->id}");
+        return $this->makeRequest('GET', "getloteriasSuperBanca/{$banca}");
     }
+
     //ESTADO LOTERIA BANCA
     public function  getBancaLoteriaSuperEstado($data)
     {
@@ -1672,5 +1678,15 @@ class MarketService
     public function getApuesta($data)
     {
         return $this->makeRequest('GET', "getApuesta", $data);
+    }
+
+    /*************************************************/
+    /**
+     * DUPLICAR BANCA
+     */
+    /*************************************************/
+    public function  getBancaDuplicar($data)
+    {
+        return $this->makeRequest('GET', "getBancaDuplicar", $data);
     }
 }

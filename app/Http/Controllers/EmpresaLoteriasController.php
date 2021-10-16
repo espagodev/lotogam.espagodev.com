@@ -30,8 +30,7 @@ class EmpresaLoteriasController extends Controller
             ->addColumn('horario', function ($row) {
                     if ($row->loe_estado != null) { 
                         return '<button type="button" data-href="' . action('EmpresaLoteriasController@getModificarHorario', [$row->id]) . '"  class="btn btn-sm btn-outline-info btn-modal"
-                        data-container=".view_register"><i class="fa fa-clock-o"></i> </button>
-                            ';
+                        data-container=".view_register"><i class="fa fa-clock-o"></i> </button>';
                     }
                 })
                  ->addColumn(

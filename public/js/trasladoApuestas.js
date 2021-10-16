@@ -19,12 +19,12 @@ $(document).ready(function() {
         }
     );
 
-    //Reporte de tickets
+    //TRASLADO DE NUMEROS
      control_apuestas =  $('#control_apuestas').DataTable({
         processing: true,
         serverSide: true,
          paging:    false,
- 
+         responsive: false,
         ajax: {
                 url: '/traslado-numeros',
                 dataType: "json",
@@ -49,13 +49,14 @@ $(document).ready(function() {
             },
         columns: [                
                 { data: 'lot_nombre', name: 'loteria', orderable: false, searchable: false  },
-                { data: 'mod_nombre', name: 'mod_nombre', orderable: false, searchable: true  },
+                { data: 'mod_nombre', name: 'mod_nombre', orderable: false, searchable: false  },
                 { data: 'tln_numero', name: 'tln_numero', orderable: false, searchable: false  },
                 { data: 'tln_contador', name: 'tln_contador', orderable: false, searchable: false  },                
                 { data: 'contador', name: 'contador', orderable: false, searchable: false  },
                 { data: 'tln_fecha', name: 'tln_fecha', orderable: false, searchable: false  },
          ],
           fnDrawCallback: function(oSettings) {
+           
             __currency_convert_recursively($('#control_apuestas'));
         }
         ,
@@ -69,6 +70,36 @@ $(document).ready(function() {
             {
                 $('td:eq(4)', row).css('background-color', '#F3959E');      
             }   
+
+        },
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api(), data;
+            console.log(api.column( 4 ).data());
+              // converting to interger to find total
+              var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            var totalControl = api
+            .column( 3 )
+            .data()
+            .reduce( function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0 );
+
+            var totalTraslado = api
+            .column( 4 )
+            .data()
+            .reduce( function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0 );
+
+            $( api.column( 0 ).footer() ).html('Total');
+            $( api.column( 3 ).footer() ).html(totalControl);
+            $( api.column( 4 ).footer() ).html(totalTraslado);
 
         }
     });

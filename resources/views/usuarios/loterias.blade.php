@@ -20,7 +20,7 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <input type="hidden" id="users_id" value="{{ $users_id }}">
-                    <table class="table table-striped" id="loterias">
+                    <table class="table table-striped table-sm" id="loterias">
                         <thead>
                             <tr>
                                 <th scope="col">Loteria</th>
@@ -51,6 +51,7 @@
          loterias = $('#loterias').DataTable({        
                 processing: true,
                 serverSide: true,
+                paging:    false,
                 'ajax': {
                     url: "{{action('UserLoteriasController@loterias', [$users_id])}}",
                     // data: function (d) {

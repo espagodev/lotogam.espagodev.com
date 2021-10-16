@@ -41,6 +41,8 @@ class SetSessionData
             'userHorario' =>  isset($user->userHorario) ? $user->userHorario : '1',
             'useCuadreCaja' => $user->useCuadreCaja,
             'useSupervisor' => $user->useSupervisor,
+            'useVentaFuturo' => $user->useVentaFuturo,
+            'usePromocion' => $user->usePromocion,
         ];
 
         if ($user->tipoUsuario != 1) {

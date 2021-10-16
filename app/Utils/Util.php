@@ -447,7 +447,9 @@ class Util
             'use_bloquea_banca' => 0,
             'use_horario' => 0,
             'use_supervisor' => 0,
-            'use_cuadre_caja' => 0
+            'use_cuadre_caja' => 0,
+            'use_venta_futuro' => 0,
+            'use_promocion' => 0
         ];
     }
 

@@ -40,7 +40,7 @@ class TrasladoNumerosController extends Controller
         $data['empresas_id'] = session()->get('user.emp_id');
             
         $reporteJugadas = $this->marketService->getReporteTrasladoNumeros($data);
-
+       
         if ($request->ajax()) {
             return $datatable = DataTables::of($reporteJugadas)
 

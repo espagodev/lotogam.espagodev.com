@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\MarketService;
 use App\Utils\BancaUtil;
+use App\Utils\HorarioLoterias;
 use Illuminate\Http\Request;
 use App\Utils\Reportes;
 use App\Utils\Util;
@@ -123,10 +124,13 @@ class ReportesController extends Controller
                 $data['users_id'] = !empty($request->users_id) ? $request->users_id : session()->get('user.id');
             }
             $data['empresas_id'] = session()->get('user.emp_id');
+            $data['horario'] = session()->get('user.userHorario');
 
-            $reporteTickets = $this->reportes->getReporteTickets($data);
 
-            return $datatable = dataTables::of($reporteTickets)
+            $tickets = $this->reportes->getReporteTickets($data);
+            
+
+            return $datatable = dataTables::of($tickets)
                 ->editColumn('loteria', '$loteria')
                 // ->editColumn('tic_ticket', function ($row) {
                 //     return '<a data-ticket=' . $row->id . ' href="#" class="detalle-ticket">' . $row->tic_ticket  . ' </a>';
@@ -156,12 +160,15 @@ class ReportesController extends Controller
                         return '<h5<span class="badge badge-danger m-1">Anulado</span></h5>';
                     }
                 })
-                ->addColumn('action', function ($row) {
+                ->addColumn('action', function ($row) {                  
+                    
+
                     if (session()->get('user.TipoUsuario') == 2) {
                         $isAnular = 0;
                     } elseif (session()->get('user.TipoUsuario') == 3) {
-                        $isAnular = BancaUtil::calcularMinutos($row->tic_fecha_sorteo);
+                        $isAnular = $row->isAnular;
                     }
+                   
                     $estado = '';
                     if ($row->tic_estado == 1) {
                         $estado .= '   <button type="button" data-href="' . action('Ticket\TicketController@show', [$row->id]) . '"  class="btn btn-sm btn-outline-info btn-modal"
@@ -189,11 +196,15 @@ class ReportesController extends Controller
                     $estado .= ' <button type="button" data-href="' . action('Ticket\TicketController@showDuplicarTicket', [$row->id]) . '" class="btn btn-sm btn-outline-secondary btn-modal"
                                 data-container=".view_register"><i class="fa fa-clone"></i></button>';
 
-                    if (($isAnular == 0) && $row->tic_estado != 0) {
-                        $estado .= ' <button type="button" href="' . action('Ticket\TicketController@getAnularTicket', [$row->id]) . '" class="btn btn-sm btn-outline-danger anular_ticket_modal"
-                                    ><i class="fa fa-window-close"></i></button>';
+                   
+                    if($row->anularCierre == 0){
+                        if (($isAnular == 0) && $row->tic_estado != 0) {
+                            $estado .= ' <button type="button" href="' . action('Ticket\TicketController@getAnularTicket', [$row->id]) . '" class="btn btn-sm btn-outline-danger anular_ticket_modal"
+                                        ><i class="fa fa-window-close"></i></button>';
+                        }
                     }
-
+                  
+                   
                     return $estado;
                 })
 

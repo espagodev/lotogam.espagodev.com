@@ -5,10 +5,10 @@
                 @include('reportes.partials.__bancas')
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
-                @include('reportes.partials.__loterias')
+                @include('reportes.partials.__usuarios')
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
-                @include('reportes.partials.__usuarios')
+                @include('reportes.partials.__loterias')
             </div>
         </div>
         <div class="row">

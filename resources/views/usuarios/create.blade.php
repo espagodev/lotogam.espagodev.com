@@ -185,7 +185,30 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-3">
+                               <div class="form-group">
+                                   <div class="icheck-material-info">
+                                       <input type="checkbox" id="use_venta_futuro" name="use_venta_futuro" value="1"/>
+                                       <label for="use_venta_futuro">Venta Futuro.</label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-xs-12 col-sm-3 col-md-3">
+                               <div class="form-group">
+                                   <div class="icheck-material-info">
+                                       <input type="checkbox" id="use_promocion" name="use_promocion" value="1"/>
+                                       <label for="use_promocion">Promociòn.</label>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-xs-12 col-sm-3 col-md-3">
+                               
+                           </div>
+                           <div class="col-xs-12 col-sm-3 col-md-3">
+                               
+                           </div>
+                       </div>
                     </div>
                 </div>
 

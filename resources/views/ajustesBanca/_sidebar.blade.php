@@ -29,7 +29,7 @@
                     'banca' => $banca->ban_url])
                 @endcomponent
 
-                @component('components.sidebarBanca', [
+                {{-- @component('components.sidebarBanca', [
                     'route' => 'bancaLoterias',
                     'icon' => 'fa  fa-bookmark',
                     'title' => 'Loterias',
@@ -41,7 +41,7 @@
                     'icon' => 'fa  fa-bookmark',
                     'title' => 'Loterias SuperPale',
                     'banca' => $banca->ban_url ])
-                @endcomponent
+                @endcomponent --}}
 
 
 
@@ -52,12 +52,12 @@
                     'banca' => $banca->ban_url])
                 @endcomponent
 
-                @component('components.sidebarBanca', [
+                {{-- @component('components.sidebarBanca', [
                     'route' => 'bancaModalidades',
                     'icon' => 'fa fa-print',
                     'title' => 'Modalidades',
                     'banca' => $banca->ban_url])
-                @endcomponent
+                @endcomponent --}}
 
 
             </ul>

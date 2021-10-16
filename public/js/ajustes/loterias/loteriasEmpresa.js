@@ -19,7 +19,7 @@ $(document).ready(function() {
             var horaInicio = moment($(`#Horariols_L`).val(), 'HH:mm');
             var horaFin = moment($(this).val(), 'HH:mm');
 
-            // console.log(horaInicio.isBefore(horaFin)); // deberá aparecer true
+            // console.log(horaInicio.isBefore(horaFin)); // deberá aparecer true 
 
             if(horaInicio.isBefore(horaFin)) {
 
@@ -74,7 +74,7 @@ $(document).ready(function() {
             zindex:  999999,
             interval: 5,
             // minTime: '07',
-            maxTime: '00:00pm',
+            maxTime: '00:00',
             // defaultTime: '07',
             // startTime: '07',
             dynamic: false,
@@ -87,7 +87,7 @@ $(document).ready(function() {
                 zindex:  999999,
                 interval: 5,
                 // minTime: '07',
-                maxTime: '00:00pm',
+                maxTime: '00:00',
                 defaultTime: '07',
                 // startTime: '07',
                 dynamic: false,

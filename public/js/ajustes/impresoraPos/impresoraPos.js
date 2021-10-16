@@ -21,7 +21,7 @@ $(document).ready(function() {
             dataType: 'html',
             success: function(result) {
                 container.html(result).modal('show');
-                console.log($('select#imp_conexion').val());
+                // console.log($('select#imp_conexion').val());
                 printer_connection_type_field($('select#imp_conexion').val());
 
             },

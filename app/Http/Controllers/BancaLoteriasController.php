@@ -10,52 +10,41 @@ use App\Utils\HorarioLoterias;
 
 class BancaLoteriasController extends Controller
 {
-    public function __construct(MarketService $marketService)
-    {
-        $this->middleware('auth');
 
-        parent::__construct($marketService);
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($banca_url)
-    {
-       
-        $banca  = $this->marketService->getBancaDetalle($banca_url);     
-
+    public function loterias($banca_id)
+    {       
+        
         if (request()->ajax()) {
 
-            $loteriasBanca  = $this->marketService->getLoteriasBancaFaltantes($banca);
-          
-            return Datatables::of($loteriasBanca)
-           
-            ->addColumn('horario', function ($row) {
-
+            $loteriasBanca  = $this->marketService->getLoteriasBancaFaltantes($banca_id);            
+               
+            return DataTables::of($loteriasBanca)
+            ->addColumn('horario', function ($row) use ($banca_id) {
                     if ($row->lob_estado != null) { 
-                        return '<button type="button"  data-href="' . action('BancaLoteriasController@getModificarHorarioBanca', [$row->id, $row->bancas_id ]) . '"  class="btn btn-sm btn-outline-info btn-modal"
+                        return '<button type="button" data-href="' . action('BancaLoteriasController@getModificarHorarioBanca', [$row->id, $banca_id]) . '"  class="btn btn-sm btn-outline-info btn-modal"
                         data-container=".view_register"><i class="fa fa-clock-o"></i> </button>
                             ';
                     }
                 })
-                ->addColumn('action', function ($row) use ($banca) {    
+            ->addColumn('action', function ($row) use ($banca_id) {    
                     if($row->lob_estado)
                     {
-                      $estado = " btn-danger";
+                    $estado = " btn-danger";
                       $mensaje = "Inactivar Loteria";
                     }else{
+                        
                         $estado = " btn-success";
                         $mensaje = "Activar Loteria";
                     }
-                        return  '<button type="button"  data-href="'. action('BancaLoteriasController@activarDesactivarBancaLoteria', [$row->id, $banca->id ]).'" class="btn btn-sm activar-inactivar-loteria'. $estado .'"><i class="fa fa-power-off"></i> '.$mensaje.'</button>';
+                        return  '<button type="button"  data-href="'. action('BancaLoteriasController@activarDesactivarBancaLoteria', [$row->id, $banca_id ]).'" class="btn btn-sm activar-inactivar-loteria'. $estado .'"><i class="fa fa-power-off"></i> '.$mensaje.'</button>';
                 })
 
                 ->rawColumns(['action', 'horario'])
                 ->make(true);
-        } 
-        return view('ajustesBanca.loterias.index')->with(['banca' => $banca]);
+        }
+
+        
+        return view('bancas.loterias')->with(['banca_id' => $banca_id]);
     }
 
     public function store(Request $request)
@@ -70,10 +59,11 @@ class BancaLoteriasController extends Controller
 
     public function update(Request $request,  $loteria)
     {
-       
+        
         $data = $request->all();
         $data = $request->except('_token');
         $data['loterias_id'] = $loteria;       
+        $data['bancas_id'] = $request->bancas_id;
         $data['empresas_id'] = session()->get('user.emp_id');
 
          $data = HorarioLoterias::getActualizarHorarioBancaLoteria($loteria, $data);
@@ -109,6 +99,41 @@ class BancaLoteriasController extends Controller
         
         $dias = Util::dias();
         
-        return view('ajustesBanca.loterias.modal_edit')->with(compact('loteria', 'dias','sorteos','horarios','banca'));
+        return view('bancas.modal_edit')->with(compact('loteria', 'dias','sorteos','horarios','banca'));
+    }
+
+
+    /**
+     * SUPERPALE BANCAS
+     */
+
+    public function loteriasSuper($banca_id)
+    {       
+        
+        if (request()->ajax()) {
+
+            $loteriasBanca  = $this->marketService->getLoteriasSuperPaleBancaFaltantes($banca_id);
+            
+            return DataTables::of($loteriasBanca)
+
+            ->addColumn('action', function ($row) use ($banca_id) {    
+                    if($row->lob_estado)
+                    {
+                    $estado = " btn-danger";
+                      $mensaje = "Inactivar Loteria";
+                    }else{
+                        
+                        $estado = " btn-success";
+                        $mensaje = "Activar Loteria";
+                    }
+                        return  '<button type="button"  data-href="'. action('BancaLoteriasController@activarDesactivarBancaLoteria', [$row->id, $banca_id ]).'" class="btn btn-sm activar-inactivar-loteria'. $estado .'"><i class="fa fa-power-off"></i> '.$mensaje.'</button>';
+                })
+
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        
+        return view('bancas.loteriasSuper')->with(['banca_id' => $banca_id]);
     }
 }

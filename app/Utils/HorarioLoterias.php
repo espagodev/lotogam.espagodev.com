@@ -119,6 +119,15 @@ class HorarioLoterias
         return $data;
     }
 
+    public static function getHorarioCierre($data)
+    {
+        $marketService = resolve(MarketService::class);
+       
+        $data =  $marketService->getHorarioCierre($data);
+
+        return $data;
+    }
+
     public static function getLoteriasSuperPaleDia($data)
     {
         $marketService = resolve(MarketService::class);

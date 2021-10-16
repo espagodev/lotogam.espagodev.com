@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="loterias">
+                            <table class="table table-striped table-sm" id="loterias">
                                 <thead>
                                     <tr>
                                         <th scope="col">Loteria</th>
@@ -45,6 +45,7 @@
             loterias = $('#loterias').DataTable({        
                     processing: true,
                     serverSide: true,
+                    paging:    false,
                     // ajax: 'ajustesBanca/loterias?banca=' + banca,
                     ajax: {
                         url: '/ajustesBanca/superpale',

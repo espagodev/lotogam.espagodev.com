@@ -21,7 +21,7 @@
                 <div class="card">
                     <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped" id="loterias">
+                                <table class="table table-striped table-sm" id="loterias">
                                     <thead>
                                         <tr>
                                             <th scope="col">Loteria</th>
@@ -51,9 +51,10 @@
          loterias = $('#loterias').DataTable({        
                 processing: true,
                 serverSide: true,
+                paging:    false,
                 // ajax: 'ajustesBanca/loterias?banca=' + banca,
                 ajax: {
-                     url: '/ajustesBanca/loterias',
+                     url: '/getLoteriasBanca',
                      dataType: "json",
                         data: function(d) {
                             d.banca = $('#banca_url').val();                               
@@ -107,12 +108,6 @@
                                         });
                                 loterias.ajax.reload();
                         }
-                        // if (result.success == true) {
-                        //     Lobibox.success(result.msg);
-                        //     loterias.ajax.reload();
-                        // } else {
-                        //     toastr.error(result.msg);
-                        // }
                     },
                 });
             }
