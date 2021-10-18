@@ -1314,10 +1314,10 @@ class MarketService
         return $this->makeRequest('GET', "getGenerarTicket/{$empresas_id}/{$tickets_id}/{$bancas_id}");
     }
 
-    public function getTicketPin($empresas_id, $users_id, $tickets_id, $pin, $premio)
+    public function getTicketPin($data)
     {
 
-        return $this->makeRequest('GET', "getTicketPin/{$empresas_id}/{$users_id}/{$tickets_id}/{$pin}/{$premio}");
+        return $this->makeRequest('GET', "getTicketPin", $data);
     }
 
     public function getTicketAnular($empresas_id, $tickets_id, $pin, $users_id, $tia_detalle)
@@ -1402,7 +1402,7 @@ class MarketService
 
     public function postCajaGeneal($data)
     {
-
+        
         return $this->makeRequest(
             'POST',
             "caja-general",

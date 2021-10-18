@@ -9,10 +9,10 @@
     <div class="modal-body">
 
         <div class="row">
-            <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+            <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
                 @include('ticket.partials.ticket')
             </div>
-            <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7">
+            <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7">
 
                 {{-- RESULTADO --}}
                 <div class="card">
@@ -28,7 +28,7 @@
                  {{-- NUMEROS GANADORES Y EL VALOR --}}
                 <div class="card">
                     <div class="card-body ">
-                        <h5 class="card-title border-success">Numero Premiados</h5>
+                        <h5 class="card-title border-success ">Numero Premiados</h5>
                             <div class="table-responsive">
                                 <table class="table table-sm">
                                     <thead>
@@ -52,23 +52,29 @@
                             </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        {{-- Total a Pagar --}}
-
-                        <div class="card">
-                            <div class="card-body ">
+                <div class="card">
+                    <div class="card-body ">                      
+                 
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                {{-- Total a Pagar --}}
                                 <h5 class="card-title">Total a Pagar:</h5>
-                                    @php
-                                        $total = 0;
-                                    @endphp
-                                @foreach ($jugadas as  $jugada)
-                                    @php
-                                     $total = $total + $jugada->tid_ganado;
-                                    @endphp
-                                @endforeach
-                                <h3><span class="display_currency badge badge-pill badge-success m-1" data-orig-value='{{ $total }}' data-currency_symbol=true>{{ $total }}</span></h3>
+                                @php
+                                    $total = 0;
+                                @endphp
+                            @foreach ($jugadas as  $jugada)
+                                @php
+                                $total = $total + $jugada->tid_ganado;
+                                @endphp
+                            @endforeach
+                            <h3><span class="display_currency badge badge-pill badge-success m-1" data-orig-value='{{ $total }}' data-currency_symbol=true>{{ $total }}</span></h3>
+                            <input type="hidden" id="tic_ganado" name="tic_ganado" value="{{ $total }}">
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                <div class="form-group">
+                                    <h5 class="card-title">Pin:</h5>
+                                    <input class="form-control" type="text" name="tic_pin" id="tic_pin" value=""   required>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -78,7 +84,11 @@
     </div>
 
     <div class="modal-footer">
-     <button type="button" class="btn btn-success btn-xs  pagar_premio" data-href="{{action('Ticket\TicketController@getPagarTicketPremiado', [$ticket[0]->id]) }}"><i class="fa fa-money"></i> Realizar Pago</button>
+        <input type="hidden" id="tickets_id" name="tickets_id" value="{{ $ticket[0]->id }}">
+   
+
+        <a href="#" data-href="{{action('Ticket\TicketController@getPagarPremio')}}" class="pagarPremio btn btn-success" ><i class="fa fa-money" aria-hidden="true"></i> Realizar Pago</a>
+     {{-- <button type="button" class="btn btn-success btn-xs  pagarPremio" data-href="{{action('Ticket\TicketController@getPagarTicketPremiado', [$ticket[0]->id]) }}"><i class="fa fa-money"></i> Realizar Pago</button> --}}
       <button type="button" class="btn btn-info no-print"
         data-dismiss="modal"> Cerrar
       </button>

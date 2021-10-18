@@ -126,13 +126,13 @@ class TicketController extends Controller
     {
         if ($request->ajax()) {
 
-            $tickets_id = $request->get('tickets_id');
-            $pin = $request->get('pin');
-            $premio = $request->get('premio');
-            $empresas_id = session()->get('user.emp_id');
-            $users_id = session()->get('user.id');
+            $data['tickets_id'] = $request->get('tickets_id');
+            $data['pin'] = $request->get('pin');
+            $data['premio'] = $request->get('premio');
+            $data['empresas_id'] = session()->get('user.emp_id');
+            $data['users_id'] = session()->get('user.id');
 
-            $data = $this->marketService->getTicketPin($empresas_id, $users_id, $tickets_id, $pin, $premio);
+            $data = $this->marketService->getTicketPin($data);
 
             return response()->json($data);
 

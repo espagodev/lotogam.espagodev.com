@@ -8,10 +8,10 @@
 
             <div class="modal-body">
              <div class="row">
-            <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+            <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
                 @include('ticket.partials.ticket')
             </div>
-            <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7">
+            <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7">
 
                 {{-- RESULTADO --}}
 
