@@ -34,8 +34,8 @@
                                     <tfoot>
                                         <tr class="bg-gray font-17 footer-total text-center">
                                             <td colspan="3"></td>
-                                            <td></td>
-                                            <td></td>                                            
+                                            <td class="total_control"></td>
+                                            <td class="total_traslado"></td>                                            
                                             <td></td>
                                         </tr>
                                     </tfoot>

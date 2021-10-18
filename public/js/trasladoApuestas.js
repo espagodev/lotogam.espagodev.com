@@ -51,9 +51,10 @@ $(document).ready(function() {
                 { data: 'lot_nombre', name: 'loteria', orderable: false, searchable: false  },
                 { data: 'mod_nombre', name: 'mod_nombre', orderable: false, searchable: false  },
                 { data: 'tln_numero', name: 'tln_numero', orderable: false, searchable: false  },
-                { data: 'tln_contador', name: 'tln_contador', orderable: false, searchable: false  },                
+                { data: 'tln_contador', name: 'tln_contador', orderable: false, searchable: false  },  
                 { data: 'contador', name: 'contador', orderable: false, searchable: false  },
                 { data: 'tln_fecha', name: 'tln_fecha', orderable: false, searchable: false  },
+                // { data: 'tln_contador_traslado', name: 'tln_contador_traslado', orderable: false, searchable: false  },
          ],
           fnDrawCallback: function(oSettings) {
            
@@ -70,40 +71,26 @@ $(document).ready(function() {
             {
                 $('td:eq(4)', row).css('background-color', '#F3959E');      
             }   
-
+           
         },
         footerCallback: function (row, data, start, end, display) {
-            var api = this.api(), data;
-            console.log(api.column( 4 ).data());
-              // converting to interger to find total
-              var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };
 
-            var totalControl = api
-            .column( 3 )
-            .data()
-            .reduce( function (a, b) {
-                return intVal(a) + intVal(b);
-            }, 0 );
+            var total_control = 0;
+            var total_traslado = 0;
 
-            var totalTraslado = api
-            .column( 4 )
-            .data()
-            .reduce( function (a, b) {
-                return intVal(a) + intVal(b);
-            }, 0 );
 
-            $( api.column( 0 ).footer() ).html('Total');
-            $( api.column( 3 ).footer() ).html(totalControl);
-            $( api.column( 4 ).footer() ).html(totalTraslado);
+            for (var r in data){               
+                total_control +=  parseFloat(data[r].tln_contador) ? parseFloat(data[r].tln_contador) : 0;
+                total_traslado += parseFloat(data[r].tln_contador_traslado) ? parseFloat(data[r].tln_contador_traslado) : 0;                
+            }
+            
+            $('.total_control').html(__currency_trans_from_en(total_control));
+            $('.total_traslado').html(__currency_trans_from_en(total_traslado));
+
 
         }
     });
-
+    
     //imprimir reporte de numeros a pasar
     $(document).on("click", "a.numeros-traslado", function(e) {
         e.preventDefault();
