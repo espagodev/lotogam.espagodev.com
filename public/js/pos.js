@@ -229,7 +229,7 @@ $(document).ready(function() {
         // }
 
         var pay_method = $(this).data("pay_method");
-
+        
         //Change payment method.
         $("#payment_rows_div")
             .find(".payment_types_dropdown")
@@ -433,7 +433,7 @@ $(document).on("show.bs.modal", "#recent_transactions_modal", function() {
 $(document).ready(function() {
     $(document).on("click", ".borrar", function() {
         var id = $(this).attr("data-record-id");
-
+        
         $.when(
             $.ajax({
                 async: false,

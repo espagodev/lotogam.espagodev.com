@@ -79,6 +79,11 @@ $(document).ready(function() {
 
         var data = { tickets_id: tickets_id, pin: pin, premio: premio };
 
+        $(this).prop("disabled", true);
+        $(this).html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
+          );
+
             $.ajax({
                 method: 'GET',
                 url: $(this).data('href'),
@@ -124,14 +129,16 @@ $(document).ready(function() {
         var pin = $('#tic_pin').val();
         var detalle = $('#tia_detalle').val();
 
-
-
+        $(this).prop("disabled", true);
+        $(this).html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
+          );
         var data = { tickets_id: tickets_id, pin: pin, detalle: detalle };
 
             $.ajax({
                 method: 'GET',
                 url: $(this).data('href'),
-
+                
                 dataType: 'json',
                 data: data,
                 success: function(result) {
@@ -150,7 +157,6 @@ $(document).ready(function() {
                             });
                             reporte_tickets.ajax.reload();
                      } else {
-                            // toastr.error(result.msg);
                              Lobibox.notify("error", {
                                 pauseDelayOnHover: true,
                                 size: "mini",
@@ -160,7 +166,7 @@ $(document).ready(function() {
                                 position: "top right",
                                 msg: result.msg,
                             });
-                        }
+                    }
                 }
             });
     });
@@ -170,7 +176,10 @@ $(document).ready(function() {
         var tickets_id = $('#tickets_id').val();
 
         var data = { tickets_id: tickets_id};
-
+        $(this).prop("disabled", true);
+        $(this).html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
+          );
             $.ajax({
                 method: 'GET',
                 url: $(this).data('href'),

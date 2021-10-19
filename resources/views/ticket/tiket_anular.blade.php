@@ -41,9 +41,9 @@
 
             <div class="modal-footer">
             <input type="hidden" id="tickets_id" name="tickets_id" value="{{ $tickets_id }}">
-            {{-- <input type="hidden" id="loterias_id" name="loterias_id" value="{{ $ticket['0']->loterias_id }}"> --}}
+            
             <a href="#" data-href="{{action('Ticket\TicketController@getTicketAnular')}}" class="anularTicket btn btn-danger" ><i class="fa fa-times-circle-o" aria-hidden="true"></i> Anular</a>
-
+            
             <button type="button" class="btn btn-info no-print"
                 data-dismiss="modal"> Cerrar
             </button>
