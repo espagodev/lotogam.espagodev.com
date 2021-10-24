@@ -138,11 +138,13 @@
 </div>
 <div class="modal fade register_details_modal " tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
 </div>
-<div class="modal fade close_register_modal no-print" tabindex="-1" role="dialog"
-    aria-labelledby="gridSystemModalLabel">
+<div class="modal fade close_register_modal no-print" tabindex="-1" role="dialog"  aria-labelledby="gridSystemModalLabel">
 </div>
+
 @endsection
 @include('sale_pos.partials.tickets_modal')
+
+@include('sale_pos.partials.generar_modal')
 
 @section('scripts')
 <script src="{{ asset('js/pos.js?v=' . $asset_v) }}"></script>

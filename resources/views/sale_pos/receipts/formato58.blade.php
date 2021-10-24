@@ -13,7 +13,9 @@
             <div class="ticket">
 
         	@if(!empty($ticket->logo))
-        		<img  style="max-height: 100px; width:100px" src="{{$ticket->logo}}" alt="Logo">
+            <div class="centered margin-bottom">                    
+                <img  src="{{$ticket->logo}}" alt="Logo">
+             </div>        		
         	@endif
             <div class="text-box">
                 <!-- Logo -->
@@ -188,7 +190,7 @@
 
             {{-- Barcode --}}
 			@if($ticket->tcon_show_barcode)
-                <div class="centered margin-bottom">
+                <div class="centered margin-bottom">                    
 				    <img  src="data:image/png;base64,{{DNS1D::getBarcodePNG($ticket->barcode, 'C39', 1,40,array(0, 0, 0), true)}}">
                  </div>
 			@endif

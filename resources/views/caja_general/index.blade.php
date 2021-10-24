@@ -8,8 +8,8 @@
     <div class="col-sm-3">
         <div class="btn-group float-sm-right">
             @if ((request()->session()->get('user.TipoUsuario') == 2) || (request()->session()->get('user.useCuadreCaja') == 1))
-                <a href="#" data-href="{{ action('CajaGeneralController@create') }}"
-                    class="btn btn-primary waves-effect waves-light nuevo-registro" rel="tooltip"
+                <a href="{{ route('cuadre-caja.create') }}" 
+                    class="btn btn-primary waves-effect waves-light " rel="tooltip"
                     title="ingresar Registro"><i class="fa fa-plus m-1"></i>Nuevo Registro</a>
             @endif
         </div>
@@ -35,9 +35,11 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div  class="tab-pane active" id="balance_diario">
+                        <button type="button" class="btn btn-info btnSave" data-dismiss="modal"><i class="fa fa-file-image-o"></i></button>
                         @include('caja_general.partials.balance')
                     </div>
                     <div id="caja_general" class="tab-pane fade">
+                       
                         @include('caja_general.partials.movimientos')
                         
                     </div>
@@ -48,11 +50,7 @@
     </div>
 
 </div>
-<!--End Row-->
 
-
-<div class="modal fade nuevo_modal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
-</div>
 @endsection
 @section('scripts')
 <script src="{{ asset('js/cajaGeneral.js?v=' . $asset_v) }}"></script>

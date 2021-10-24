@@ -1,22 +1,30 @@
-<div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content border-info">
-
-            <div class="modal-header bg-info">
-                <h3 class="modal-title text-white">Agregar Nuevo Movimiento</h3>
-                <button type="button" class="close text-white no-print" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+@extends('layouts.app')
+@section('title', 'Nuevo Movimiento')
+@section('content')
+    <div class="row pt-2 pb-2">
+        <div class="col-sm-9">
+            <h4 class="page-title">Nuevo Movimiento de Caja</h4>
+        </div>
+        <div class="col-sm-3">
+            <div class="btn-group float-sm-right">
+                <a href="{{ route('cuadre-caja.index') }}" class="btn btn-danger waves-effect waves-danger"><i
+                        class="fa fa-times mr-1"></i> Regresar</a>
             </div>
-            <form method="post" action="{{ route('cuadre-caja.store')}}"  id="store">
-             @csrf
-             <div class="modal-body">
-                   @include('caja_general.partials.form')
-            </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger no-print"
-                        data-dismiss="modal"><i class="fa fa-times"></i> Cerrar
-                    </button>
-                     <button class="btn btn-success" type="submit"><i class="fa fa-check-square-o"></i> Guaradar</button>
+        </div>
+    </div>
+    <form method="post" action="{{ route('cuadre-caja.store') }}" id="store">
+        @csrf
+        @include('caja_general.partials.form')
 
-                </div>
-             </form>
-        </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
+        <div class="form-footer">
+            <a href="{{ route('bancas.index') }}" class="btn btn-danger waves-effect waves-danger"><i
+                    class="fa fa-times"></i> cancelar</a>
+            <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> CREAR</button>
+        </div>
+    </form>
+@endsection
+@section('scripts')
+
+    <script src="{{ asset('js/select.js?v=' . $asset_v) }}"></script>
+
+@endsection

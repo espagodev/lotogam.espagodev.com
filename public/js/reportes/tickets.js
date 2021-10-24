@@ -66,5 +66,18 @@ $(document).ready(function() {
     // $('.view_register').on('shown.bs.modal', function() {
     //     __currency_convert_recursively($(this));
     //   });
+    
+    // $(document).on('click', '.btnSaveImagen', function(e) {
+    //     html2canvas(document.getElementById('receipt')).then(function(canvas) {
+    //         // document.body.appendChild(canvas);
+    //         var a = document.createElement('a');
+    //         // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+    //         a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    //         a.download = 'ticket.png';
+    //         a.click();
+    //        });
+    // });
+
+   
 
 });

@@ -100,7 +100,10 @@ class TransactionUtil extends Util
         }
 
         $output['invoice_no_prefix'] = $il->tcon_etiqueta_ticket;
-        $output['invoice_eslogan'] = $il->tcon_slogan;
+
+        if ($il->tcon_show_eslogan == 1 ){
+            $output['invoice_eslogan'] = $il->tcon_slogan;
+        }
 
         $output['date_label'] = $il->tcon_date_label;
         $output['invoice_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $tickets[0]->tic_fecha_sorteo)->format($il->tcon_date_time_format);
@@ -257,7 +260,10 @@ class TransactionUtil extends Util
         $ticket = self::_receiptDetailsSellTckets($tickets);
         $output['tickets'] = $ticket;
 
-        $output['invoice_eslogan'] = $il->tcon_slogan;
+        if ($il->tcon_show_eslogan == 1) {
+            $output['invoice_eslogan'] = $il->tcon_slogan;
+        }
+
 
 
         $output['date_label'] = $il->tcon_date_label;

@@ -28,9 +28,9 @@
                                 </div>
                                 <select class="form-control " name="users_id" id="users_id">
                                     <option value="">Seleccione</option>
-                                    @foreach ($usuarios as $usuario)
+                                    {{-- @foreach ($usuarios as $usuario)
                                                                 <option value="{{ $usuario->id }}"  >{{ $usuario->name}}</option>
-                                                            @endforeach
+                                                            @endforeach --}}
                                 </select>
                             </div>
                         </div>

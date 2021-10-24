@@ -56,12 +56,14 @@ mix.js('resources/js/app.js', 'public/js/init.js')
         'resources/plugins/jquery-multi-select/jquery.quicksearch.js',
         'resources/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js',
         'resources/plugins/printThis.js',
-        'resources/assets/validate/validate.js'
+        'resources/assets/validate/validate.js',
+        'resources/plugins/html2canvas/html2canvas.js'
     ], 'public/js/vendor.js')
     .combine([
         'resources/assets/js/jquery.min.js',
         'resources/assets/js/popper.min.js',
-        'resources/plugins/bootstrap/js/bootstrap.min.js'
+        'resources/plugins/bootstrap/js/bootstrap.min.js',
+        'resources/plugins/html2canvas/html2canvas.js'
     ], 'public/js/theme.js')
     .combine([
         'resources/plugins/bootstrap/css/bootstrap.css',

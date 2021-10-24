@@ -8,9 +8,9 @@
     </head>
      <body>
         <div class="ticket">
-        	<div class="text-box centered">
+        	<div class="text-box ">
         	@if(!empty($detalle_ticket->logo))
-        		<img style="max-height: 100px; width: auto;" src="{{$detalle_ticket->logo}}" alt="Logo">
+        		<img class="centered" style="max-height: 100px; width: auto;" src="{{$detalle_ticket->logo}}" alt="Logo">
         	@endif
             <div class="text-box">
         	<!-- Logo -->
@@ -223,7 +223,7 @@
     max-width: 100%;
 }
 
-img {
+/* img {
     max-width: inherit;
     width: auto;
 }
@@ -232,7 +232,7 @@ img {
     .hidden-print * {
         display: none !important;
     }
-}
+} */
 .table-info {
 	width: 100%;
 }

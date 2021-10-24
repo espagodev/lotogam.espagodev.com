@@ -68,5 +68,10 @@ moment.tz.setDefault('{{ Session::get("business.time_zone") }}');
 <script src="{{ asset('js/common.js?v=' . $asset_v) }}"></script>
     <script src="{{ asset('js/loto.js?v=' . $asset_v) }}"></script>
     <script src="{{ asset('js/printer.js?v=' . $asset_v) }}"></script>
+    
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas2image@1.0.5/canvas2image.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script> --}}
 
+    
  @yield('scripts')

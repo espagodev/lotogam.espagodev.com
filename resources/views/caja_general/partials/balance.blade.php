@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="col-lg-12">
-        {{-- <div class="table-responsive"> --}}
+    <div class="col-lg-12" id="balance_diario_img">
+       
             <table class="table table-bordered table-striped table-sm " id="balance_diario_table">
                 <thead>
                     <tr>
@@ -18,7 +18,7 @@
                     </tr>
                 </thead>
             </table>
-        {{-- </div> --}}
+       
     </div>
 </div>
 <!--End Row-->

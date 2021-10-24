@@ -55,7 +55,7 @@ class PosController extends Controller
 
         $empresas_id = session()->get('user.emp_id');
 
-        $tickets = $this->marketService->getTicketsEmpresa($empresas_id);
+        // $tickets = $this->marketService->getTicketsEmpresa($empresas_id); // quitar esto
         $loterias =  Reportes::getloteriasEmpresaReporte($empresas_id);
         if(session()->get('user.useSupervisor') == 1){
             $bancas = BancaUtil::bancasSupervisor(session()->get('user.id'));
@@ -66,8 +66,11 @@ class PosController extends Controller
         $estadosPromocionTicket = Util::estadosPromocionTicket();
         $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
 
-        return view('sale_pos.index')->with(['tickets' => $tickets, 'loterias' => $loterias, 'bancas' => $bancas, 'estadosTicket' => $estadosTicket, 'estadosPromocionTicket' => $estadosPromocionTicket, 'usuarios' => $usuarios]);
+        // return view('sale_pos.index')->with(['tickets' => $tickets, 'loterias' => $loterias, 'bancas' => $bancas, 'estadosTicket' => $estadosTicket, 'estadosPromocionTicket' => $estadosPromocionTicket, 'usuarios' => $usuarios]);
+            return view('sale_pos.index')->with(['loterias' => $loterias, 'bancas' => $bancas, 'estadosTicket' => $estadosTicket, 'estadosPromocionTicket' => $estadosPromocionTicket, 'usuarios' => $usuarios]);
+
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -123,11 +126,12 @@ class PosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-
+    { 
+       
         $empresas_id =  request()->session()->get('user.emp_id');
         $bancas_id =  request()->session()->get('user.banca');
         $users_id =  request()->session()->get('user.id');
+        $getImagen = $request->getImagen;
 
         $data['empresas_id'] =  $empresas_id;
         $data['users_id'] =  $users_id;
@@ -162,7 +166,8 @@ class PosController extends Controller
             $mensaje = 'Venta añadida con éxito';
             $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
         } else {
-            $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $tickets, null, false, true);
+            
+            $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $tickets, null, false, true, null, $getImagen);
             $mensaje = 'Venta añadida con éxito';
             $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
         }
@@ -183,12 +188,12 @@ class PosController extends Controller
     private function receiptContent(
         $empresas_id,
         $bancas_id,
-        // $tickets_id,
         $tickets,
         $printer_type = null,
         $from_pos_screen = true,
         $invoice_layout_id = null,
-        $ticket_copia = null
+        $ticket_copia = null,
+        $getImagen
     ) {
         $output = [
             'is_enabled' => false,
@@ -229,7 +234,7 @@ class PosController extends Controller
             $ticketDetalle = $this->marketService->getTicketDetalle($ticketIndi);
 
             $isAnular = Util::calcularMinutos($ticket[0]->tic_fecha_sorteo, $banca->ban_tiempo_anular);
-
+            
             $detalle_ticket[] = $this->transactionUtil->getReceiptDetails($ticketIndi, $ticket, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular, $ticket_copia);
         }
 
@@ -238,15 +243,14 @@ class PosController extends Controller
             'thousand_separator' => $moneda->separador_miles,
             'decimal_separator' => $moneda->separador_decimal
         ];
-
+      
         //Si el tipo de impresión es navegador: devuelve el contenido, impresora: devuelve los datos de configuración de la impresora y la configuración del formato de factura
-        if ($receipt_printer_type == 'printer') {
+        if ($receipt_printer_type == 'printer' &&  $getImagen == '0') {
             $output['print_type'] = 'printer';
             $output['printer_config'] = $this->bancaUtil->printerConfig($empresas_id, $banca->impresoras_pos_id);
             $output['data'] = $detalle_ticket;
             $output['print'] = "ticket";
-        } else {
-
+        } else {           
             $layout = !empty($invoice_layout->tcon_formato_browser) ? 'sale_pos.receipts.' . $invoice_layout->tcon_formato_browser : 'sale_pos.receipts.classic';
             $output['html_content'] = view($layout, compact('detalle_ticket', 'isAnular'))->render();
         }
@@ -480,8 +484,9 @@ class PosController extends Controller
                 }
                 $invoice_layout_id = !empty($invoice_layout_id) ? $invoice_layout_id : $banca->app_config_tickets_id;
                 $invoice_layout = $this->bancaUtil->invoiceLayout($empresas_id, $bancas_id, $banca->app_config_tickets_id);
+               
 
-                $receipt = $this->receiptContent($empresas_id, $bancas_id, $ticket, $printer_type, false, $invoice_layout, $ticket_copia);
+                $receipt = $this->receiptContent($empresas_id, $bancas_id, $ticket, $printer_type, false, $invoice_layout, $ticket_copia, 0);
 
 
                 if (!empty($receipt)) {

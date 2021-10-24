@@ -268,6 +268,8 @@ $(document).ready(function() {
             screenfull.toggle(element);
         }
     });
+
+   
 });
 
 

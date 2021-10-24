@@ -94,7 +94,6 @@ $(document).ready(function() {
     //imprimir reporte de numeros a pasar
     $(document).on("click", "a.numeros-traslado", function(e) {
         e.preventDefault();
-        // var href = $(this).data("href") + "?ticket_copia=true";
         var href = $(this).data("href");
         var start = $('#spr_date_filter')
         .data('daterangepicker')

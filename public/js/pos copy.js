@@ -52,7 +52,6 @@ $(document).ready(function() {
     //     pos_form_obj = $("form#edit_pos_sell_form");
     // } else {
     pos_form_obj = $("form#add_pos_sell_form");
-    pos_generar_obj = $("form#add_pos_sell_form");
     // }
     if ($("input#product_row_count").length > 0) {
         initialize_printer();
@@ -61,6 +60,7 @@ $(document).ready(function() {
     horarioLoteriasDia();
     horarioSuperPale();
     progressBar();
+
 
     //VALIDA EL MONTO Y NUMERO PARA SER INGRESADOS
 
@@ -189,7 +189,7 @@ $(document).ready(function() {
         // }
     }
 
-    $("button.pos-validar, button.pos-generar").click(function() {
+    $("button.pos-validar").click(function() {
         //Compruebe si hay almenos una apuesta.
         if ($("table#pos_table tbody").find(".product_row").length <= 0) {
             Lobibox.notify("warning", {
@@ -222,179 +222,105 @@ $(document).ready(function() {
 
     //Finalize without showing payment options
     $("button.pos-express-finalize").click(function() {
-        pos_form_obj.submit();
+
+            pos_form_obj.submit();
+        
     });
-
-    $("button.pos-generar").click(function() {
-  
-        var loterias = $("input[name='lot_id[]']:checked")
-            .map(function() {
-                return this.value;
-            })
-            .get();
-        var product_row = $("input#product_row_count").val();
-        var promocion = $("input[name='tic_promocion']:checked").val();
-        var agrupado = $("input[name='tic_agrupado']:checked").val();
-        var tic_fecha_sorteo = $("input#tic_fecha_sorteo").val();
-        var token = $('meta[name="csrf-token"]').attr("content");
-        var getImagen = 1;
-
-        $.ajax({
-            method: "POST",
-            url: $("#add_pos_sell_form").attr("action"),
-            dataType: "json",
-            data: {
-                product_row: product_row,
-                _token: token,
-                loterias_id: loterias,
-                tic_promocion: promocion,
-                tic_fecha_sorteo: tic_fecha_sorteo,
-                tic_agrupado: agrupado,
-                getImagen: getImagen
-            },
-            success: function(result) {
-                if (result.success == true) {
-                   
-                    var receipt = result.receipt[0].html_content;                    
-                    $("#receipt_section_generar").html(receipt);
-                    $("#generarModal").modal("show");
-                    
-                    Lobibox.notify("success", {
-                        pauseDelayOnHover: true,
-                        size: "mini",
-                        rounded: true,
-                        delayIndicator: false,
-                        continueDelayOnInactiveTab: false,
-                        position: "top right",
-                        msg: result.mensaje
-                    });
-
-                    reset_pos_form();
-                    horarioLoteriasDia();
-                    horarioSuperPale();
-                    progressBar();
-                } else {
-                    Lobibox.notify("error", {
-                        pauseDelayOnHover: true,
-                        size: "mini",
-                        rounded: true,
-                        delayIndicator: false,
-                        continueDelayOnInactiveTab: false,
-                        position: "top right",
-                        msg: result.mensaje
-                    });
-                    horarioLoteriasDia();
-                    horarioSuperPale();
-                }
-
-                $("div.pos-processing").hide();
-                $("#pos-save").removeAttr("disabled");
-                $("span#total_payable").text(
-                    __currency_trans_from_en(0, true)
-                );
-                $("span#total_loterias").text(0);
-                $("input[name='tic_promocion']").each(function() {
-                    this.checked = false;
-                });
-                $("input[name='tic_agrupado']").prop("disabled", true);
-                $("input[name='tic_agrupado']").each(function() {
-                    this.checked = false;
-                });
-                enable_pos_form_actions();
-            }
-        });
-        $("input[name=tid_valor]").focus();
-        return false;
-    });
-
 
     pos_form_obj.validate({
         submitHandler: function(form) {
-            disable_pos_form_actions();
 
-            var loterias = $("input[name='lot_id[]']:checked")
-                .map(function() {
-                    return this.value;
-                })
-                .get();
-            var product_row = $("input#product_row_count").val();
-            var promocion = $("input[name='tic_promocion']:checked").val();
-            var agrupado = $("input[name='tic_agrupado']:checked").val();
-            var tic_fecha_sorteo = $("input#tic_fecha_sorteo").val();
-            var token = $('meta[name="csrf-token"]').attr("content");
-            var getImagen = 0;
+            var cnf = true;
 
-            var url = $(form).attr("action");
+            if (cnf) {
+                disable_pos_form_actions();
 
-            $.ajax({
-                method: "POST",
-                url: url,
-                data: {
-                    product_row: product_row,
-                    _token: token,
-                    loterias_id: loterias,
-                    tic_promocion: promocion,
-                    tic_fecha_sorteo: tic_fecha_sorteo,
-                    tic_agrupado: agrupado,
-                    getImagen: getImagen
-                },
-                dataType: "json",
-                success: function(result) {
-                    var receipt = result.receipt;
+                var loterias = $("input[name='lot_id[]']:checked")
+                    .map(function() {
+                        return this.value;
+                    })
+                    .get();
+                var product_row = $("input#product_row_count").val();
+                var promocion = $("input[name='tic_promocion']:checked").val();
+                var agrupado = $("input[name='tic_agrupado']:checked").val();
+                var tic_fecha_sorteo = $("input#tic_fecha_sorteo").val();
+                var token = $('meta[name="csrf-token"]').attr("content");
 
-                    if (result.success == 1) {
-                        Lobibox.notify("success", {
-                            pauseDelayOnHover: true,
-                            size: "mini",
-                            rounded: true,
-                            delayIndicator: false,
-                            continueDelayOnInactiveTab: false,
-                            position: "top right",
-                            msg: result.mensaje
+                var url = $(form).attr("action");
+
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    data: {
+                        product_row: product_row,
+                        _token: token,
+                        loterias_id: loterias,
+                        tic_promocion: promocion,
+                        tic_fecha_sorteo: tic_fecha_sorteo,
+                        tic_agrupado: agrupado
+                    },
+                    dataType: "json",
+                    success: function(result) {
+                        var receipt = result.receipt;
+
+                        if (result.success == 1) {
+                            $("#modal_payment").modal("hide");
+                            Lobibox.notify("success", {
+                                pauseDelayOnHover: true,
+                                size: "mini",
+                                rounded: true,
+                                delayIndicator: false,
+                                continueDelayOnInactiveTab: false,
+                                position: "top right",
+                                msg: result.mensaje
+                            });
+
+                            reset_pos_form();
+                            horarioLoteriasDia();
+                            horarioSuperPale();
+                            progressBar();
+
+                            // if (result.receipt.is_enabled) {
+                            // __pos_print(result.receipt);
+                            console.log(receipt);
+                            receipt.forEach(function(elemento, index, arr) {
+                                if (arr[index].is_enabled) {
+                                    // console.log(arr[index] = elemento)
+                                    __pos_print((arr[index] = elemento));
+                                }
+                            });
+                            // }
+                        } else {
+                            Lobibox.notify("error", {
+                                pauseDelayOnHover: true,
+                                size: "mini",
+                                rounded: true,
+                                delayIndicator: false,
+                                continueDelayOnInactiveTab: false,
+                                position: "top right",
+                                msg: result.mensaje
+                            });
+                            horarioLoteriasDia();
+                            horarioSuperPale();
+                        }
+
+                        $("div.pos-processing").hide();
+                        $("#pos-save").removeAttr("disabled");
+                        $("span#total_payable").text(
+                            __currency_trans_from_en(0, true)
+                        );
+                        $("span#total_loterias").text(0);
+                        $("input[name='tic_promocion']").each(function() {
+                            this.checked = false;
                         });
-
-                        reset_pos_form();
-                        horarioLoteriasDia();
-                        horarioSuperPale();
-                        progressBar();
-
-                        receipt.forEach(function(elemento, index, arr) {
-                            if (arr[index].is_enabled) {
-                                // console.log(arr[index] = elemento)
-                                __pos_print((arr[index] = elemento));
-                            }
+                        $("input[name='tic_agrupado']").prop("disabled", true);
+                        $("input[name='tic_agrupado']").each(function() {
+                            this.checked = false;
                         });
-                        // }
-                    } else {
-                        Lobibox.notify("error", {
-                            pauseDelayOnHover: true,
-                            size: "mini",
-                            rounded: true,
-                            delayIndicator: false,
-                            continueDelayOnInactiveTab: false,
-                            position: "top right",
-                            msg: result.mensaje
-                        });
-                        horarioLoteriasDia();
-                        horarioSuperPale();
+                        enable_pos_form_actions();
                     }
-
-                    $("div.pos-processing").hide();
-                    $("#pos-save").removeAttr("disabled");
-                    $("span#total_payable").text(
-                        __currency_trans_from_en(0, true)
-                    );
-                    $("span#total_loterias").text(0);
-                    $("input[name='tic_promocion']").each(function() {
-                        this.checked = false;
-                    });
-                    $("input[name='tic_agrupado']").prop("disabled", true);
-                    $("input[name='tic_agrupado']").each(function() {
-                        this.checked = false;
-                    });
-                    enable_pos_form_actions();
-                }
-            });
+                });
+            }
 
             $("input[name=tid_valor]").focus();
             return false;
@@ -479,33 +405,17 @@ $(document).ready(function() {
             __currency_convert_recursively($("#reporte_tickets"));
         }
     });
-
-    $(function() {
-        $(".btnSave").click(function() {          
-            html2canvas(document.getElementById('receipt')).then(function(canvas) {
-                // document.body.appendChild(canvas);
-                var a = document.createElement('a');
-                      // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
-                      a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-                      a.download = 'ticket.png';
-                      a.click();
-               });
-
-        });
-    });
 });
 
 $(document).on("show.bs.modal", "#recent_transactions_modal", function() {
     reporte_tickets.ajax.reload();
 });
 
-$(document).on("shown.bs.modal", "#generarModal", function() {});
-
 //BORRAR
 $(document).ready(function() {
     $(document).on("click", ".borrar", function() {
         var id = $(this).attr("data-record-id");
-
+        
         $.when(
             $.ajax({
                 async: false,
@@ -809,19 +719,15 @@ function __pos_print(receipt) {
 }
 
 function disable_pos_form_actions() {
-    $("div.pos-processing").show();
-    $("#pos-save").attr("disabled", "true");
-    $("div.pos-form-actions")
-        .find("button")
-        .attr("disabled", "true");
+    // $('div.pos-processing').show();
+    // $('#pos-save').attr('disabled', 'true');
+    // $('div.pos-form-actions').find('button').attr('disabled', 'true');
 }
 
 function enable_pos_form_actions() {
-    $("div.pos-processing").hide();
-    $("#pos-save").removeAttr("disabled");
-    $("div.pos-form-actions")
-        .find("button")
-        .removeAttr("disabled");
+    // $('div.pos-processing').hide();
+    // $('#pos-save').removeAttr('disabled');
+    // $('div.pos-form-actions').find('button').removeAttr('disabled');
 }
 
 //VALIDAR LOTERIAS ACTIVAS
@@ -885,3 +791,5 @@ function progressBar() {
         }
     });
 }
+
+

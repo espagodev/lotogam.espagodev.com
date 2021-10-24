@@ -28,14 +28,17 @@
         </div>
     </div>
     <div class="row no-print">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
             <button type="button" class="btn btn-info btn-sm no-print btn-block waves-effect waves-light m-1" disabled>Borrador</button>
         </div>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
             <button type="button" class="btn btn-warning btn-sm no-print btn-block waves-effect waves-light m-1 " disabled><i class="fa fa-pause"></i> Suspender</button>
         </div>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
-        <button type="button" class="btn btn-success btn-sm no-print btn-block pos-express-btn pos-express-finalize pull-right" data-pay_method="cash"><i class="fa fa-money"></i> Pagar</button>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
+            <button type="button" class="btn btn-info btn-sm no-print btn-block pos-express-btn pos-generar pos-validar pull-right"><i class="fa fa-print"></i> Generar</button>
+            </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
+        <button type="button" class="btn btn-success btn-sm no-print btn-block pos-express-btn pos-express-finalize pos-validar pull-right" ><i class="fa fa-money"></i> Pagar</button>
         </div>
     </div>
 </div>

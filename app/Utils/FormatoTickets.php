@@ -91,7 +91,10 @@ class FormatoTickets
          }
 
         $output['invoice_no_prefix'] = $il->tcon_etiqueta_ticket;
-        $output['invoice_eslogan'] = $il->tcon_slogan;
+        if ($il->tcon_show_eslogan == 1) {
+            $output['invoice_eslogan'] = $il->tcon_slogan;
+        }
+        
 
 
 

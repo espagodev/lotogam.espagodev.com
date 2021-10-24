@@ -11,8 +11,10 @@
     <body>
         <div class="ticket">
 
-        	@if(!empty($detalle_ticket->logo))
-        		<img  style="max-height: 100px; width:100px" src="{{$detalle_ticket->logo}}" alt="Logo">
+            @if(!empty($detalle_ticket->logo))
+            <div class="centered margin-bottom">                    
+                <img  src="{{$detalle_ticket->logo}}" alt="Logo">
+             </div>        		
         	@endif
             <div class="text-box">
         	<!-- Logo -->
@@ -175,11 +177,12 @@
 				</p>
                 <br>
 			    @endif
-
-            {{-- Barcode --}}
+                           {{-- Barcode --}}
 			@if($detalle_ticket->tcon_show_barcode)
-				 <strong><img class="centered" src="data:image/png;base64,{{DNS1D::getBarcodePNG($detalle_ticket->barcode, 'C39', 1,40,array(0, 0, 0), true)}}"> </strong>
-			@endif
+            <div class="centered margin-bottom">                    
+                <img  src="data:image/png;base64,{{DNS1D::getBarcodePNG($detalle_ticket->barcode, 'C39', 1,40,array(0, 0, 0), true)}}">
+             </div>
+        @endif
             <br/>
                 <!-- business information here -->
             @if(!empty($detalle_ticket->tcon_nota_informativa))

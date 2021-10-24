@@ -325,13 +325,17 @@ $(document).ready(function() {
     $(document).on("click", ".nuevo-registro", function(e) {
         e.preventDefault();
         var container = $(".nuevo_modal");
-     
+        
         $.ajax({
-            url: $(this).data("href"),
-            dataType: "html",
+            url: $(this).data('href'),
+            dataType: 'html',
             success: function(result) {
-                container.html(result).modal("show");
-            }
+
+                $(container)
+                    .html(result)
+                    .modal('show');
+                    bancaUsuario();
+            },
         });
     });
 
@@ -377,6 +381,20 @@ $(document).ready(function() {
                     }
                 });
             }
+        });
+    });
+
+    $(function() {
+        $(".btnSave").click(function() {          
+            html2canvas(document.getElementById('balance_diario_img')).then(function(canvas) {
+                // document.body.appendChild(canvas);
+                var a = document.createElement('a');
+                      // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+                      a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                      a.download = 'balanceDiario.png';
+                      a.click();
+               });
+
         });
     });
 });
@@ -427,6 +445,38 @@ function getCajaGeneral() {
             );
         }
     });
+}
+
+
+function bancaUsuario() {
+
+    var bancas = $('select#bancas_id').val()
+
+    console.log(bancas);
+
+    // bancaSelect.change(function () {
+    //     var bancas_id = $(this).val();
+    //     userSelect.empty();
+
+    //     if (bancas_id) {
+    //         $.ajax({
+    //             url: "/select/getusuarios",
+    //             type: 'GET',
+    //             data: { bancas_id: bancas_id },
+    //             dataType: 'json',
+    //             success: function (response) {
+    //                 userSelect.append('<option value="">Seleccione un Usuario</option>')
+    //                 $.each(response, function (key, value) {
+    //                     userSelect.append("<option value='" + value.id + "'>" + value.name + "</option>");
+    //                 });
+    //             },
+    //             error: function () {
+    //                 alert('Hubo un error obteniendo los Usuarios!');
+    //             }
+    //         });
+    //     }
+    // });
+
 }
 
 
