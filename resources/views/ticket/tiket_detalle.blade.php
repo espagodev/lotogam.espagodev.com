@@ -2,7 +2,7 @@
   <div class="modal-content border-info">
 
     <div class="modal-header bg-info">
-         <h3 class="modal-title text-white">Ticket # {{ $receipt_details->invoice_no }}  Para el Sorteo del  ( {{ $receipt_details->invoice_date }} )</h3>
+         <h3 class="modal-title text-white">Ticket # {{ $ticket->invoice_no }}  Para el Sorteo del  ( {{ $ticket->invoice_date }} )</h3>
          <button type="button" class="close text-white no-print" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     </div>
 

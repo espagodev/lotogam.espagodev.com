@@ -96,8 +96,6 @@ class FormatoTickets
         }
         
 
-
-
         $output['date_label'] = $il->tcon_date_label;
         $output['invoice_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $transaction->tic_fecha_sorteo)->format($il->tcon_date_time_format);
         $output['time_label'] = 'Hora:';
@@ -116,7 +114,7 @@ class FormatoTickets
         }
 
         $output['lines'] = [];
-        $details = self::detalleTicket($detalle, $moneda);
+        $details = self::_receiptDetailsSellLines($detalle, $tcon_show_currency, $moneda);
         $output['lines'] = $details;
 
         $output['promocion_label'] = '';
@@ -126,7 +124,7 @@ class FormatoTickets
             $output['promocion_label'] = $promocion;
         }
             $output['total_label'] =  'Total :';
-            $output['total'] = Util::num_f($transaction->tic_apostado, $moneda);
+            $output['total'] = Util::num_f($transaction->tic_apostado, $tcon_show_currency, $moneda, false);
 
 
             $output['estado_label'] = '';
@@ -148,6 +146,31 @@ class FormatoTickets
         }
 
         return (object) $output;
+    }
+
+    protected static function _receiptDetailsSellLines($lines, $tcon_show_currency, $moneda) 
+    {
+        // dd($lines, $tcon_show_currency, $moneda);
+        foreach ($lines as $line) {
+
+            $apuesta = $line->tid_apuesta;
+            $valor = $line->tid_valor;
+            $modalidad = $line->mod_codigo;
+
+            $line_array = [
+
+                'modalidad' => $modalidad,
+                'apuesta' => $apuesta,
+                'valor' => Util::num_f($valor, $tcon_show_currency, $moneda, false),
+
+            ];
+
+            //If modifier is set set modifiers line to parent sell line
+
+            $output_lines[] = $line_array;
+        }
+
+        return  $output_lines;
     }
 
     public static function detalleTicket($detalles, $moneda)
@@ -176,7 +199,7 @@ class FormatoTickets
         $output = '';
         if (count($arrayQ)  != 0) {
             // $output .=  self::drawLine();
-            $output .=  "<div class='flex-box border-top'><strong>Quiniela</strong></div>";
+            $output .=  "<div class='flex-box '><strong>Quiniela</strong></div>";
             foreach ($arrayQ as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
 
@@ -195,7 +218,7 @@ class FormatoTickets
             // $output .=  self::drawLine();
         }
         if (count($arrayPL)  != 0) {
-            $output .=  "<div class='flex-box border-top'><strong>Pales</strong></div>";
+            $output .=  "<div class='flex-box border-top '><strong>Pales</strong></div>";
             foreach ($arrayPL as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
 
@@ -215,7 +238,7 @@ class FormatoTickets
         }
         if (count($arrayTP)  != 0) {
 
-            $output .=  "<div class='flex-box border-top'><strong>Tripletas</strong></div>";
+            $output .=  "<div class='flex-box border-top '><strong>Tripletas</strong></div>";
             foreach ($arrayTP as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
 
@@ -236,7 +259,7 @@ class FormatoTickets
         }
         if (count($arraySP)  != 0) {
             $output .=  self::drawLine();
-            $output .=  "<div class='flex-box border-top'><strong>SuperPale</strong></div>";
+            $output .=  "<div class='flex-box border-top  '><strong>SuperPale</strong></div>";
             foreach ($arraySP as $numeros) {
                 $valor =  Util::num_f($numeros->tid_valor, $moneda);
 

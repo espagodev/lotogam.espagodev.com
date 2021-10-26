@@ -13,7 +13,6 @@ class TransactionUtil extends Util
     /**
      * Gives the receipt details in proper format.
      *
-     * @param int $tickets_id
      * @param int $location_id
      * @param object $invoice_layout
      * @param array $empresas_detalle
@@ -22,7 +21,7 @@ class TransactionUtil extends Util
      *
      * @return array
      */
-    public function getReceiptDetails($tickets_id, $tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular , $ticket_copia)
+    public function getReceiptDetails($tickets, $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $ticketDetalle, $isAnular , $ticket_copia)
     {
 
         $il = $invoice_layout;
@@ -167,7 +166,6 @@ class TransactionUtil extends Util
     /**
      * Gives the receipt details in proper format.
      *
-     * @param int $tickets_id
      * @param int $location_id
      * @param object $invoice_layout
      * @param array $empresas_detalle
@@ -325,7 +323,7 @@ class TransactionUtil extends Util
      *
      * @return array
      */
-    protected static function _receiptDetailsSellLines($lines, $tcon_show_currency, $moneda)
+    protected static function _receiptDetailsSellLines($lines, $tcon_show_currency, $moneda) 
     {
         // dd($lines, $tcon_show_currency, $moneda);
         foreach ($lines as $line) {
@@ -413,5 +411,6 @@ class TransactionUtil extends Util
 
         return $output;
     }
+
 
 }

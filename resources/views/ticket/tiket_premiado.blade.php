@@ -2,7 +2,7 @@
   <div class="modal-content border-success">
 
     <div class="modal-header bg-success">
-         <h3 class="modal-title text-white">Ticket # {{ $receipt_details->invoice_no }}  Para el Sorteo del  ( {{ $receipt_details->invoice_date }} )</h3>
+         <h3 class="modal-title text-white">Ticket # {{ $ticket->invoice_no }}  Para el Sorteo del  ( {{ $ticket->invoice_date }} )</h3>
          <button type="button" class="close text-white no-print" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     </div>
 
@@ -17,11 +17,11 @@
                 {{-- RESULTADO --}}
                 <div class="card">
                     <div class="card-body ">
-                        <h5 class="card-title border-success">Resultados Para {{ $ticket[0]->lot_nombre }}</h5>
+                        <h5 class="card-title border-success">Resultados Para {{ $resultado[0]->lot_nombre }}</h5>
 
-                              <h3>  <span class='badge badge-pill badge-primary m-1'> {{  $ticket[0]->res_premio1}}</span>
-                                <span class='badge badge-pill badge-secondary m-1'> {{  $ticket[0]->res_premio2}}</span>
-                                <span class='badge badge-pill badge-success m-1'> {{  $ticket[0]->res_premio3}}</span></h3>
+                              <h3>  <span class='badge badge-pill badge-primary m-1'> {{  $resultado[0]->res_premio1}}</span>
+                                <span class='badge badge-pill badge-secondary m-1'> {{  $resultado[0]->res_premio2}}</span>
+                                <span class='badge badge-pill badge-success m-1'> {{  $resultado[0]->res_premio3}}</span></h3>
                     </div>
                 </div>
                 {{-- @dump($jugadas) --}}
@@ -84,7 +84,7 @@
     </div>
 
     <div class="modal-footer">
-        <input type="hidden" id="tickets_id" name="tickets_id" value="{{ $ticket[0]->id }}">
+        <input type="hidden" id="tickets_id" name="tickets_id" value="{{ $resultado[0]->id }}">
    
 
         <a href="#" data-href="{{action('Ticket\TicketController@getPagarPremio')}}" class="pagarPremio btn btn-success" ><i class="fa fa-money" aria-hidden="true"></i> Realizar Pago</a>

@@ -8,6 +8,7 @@ use App\Utils\FormatoTickets;
 use App\Utils\Tickets;
 use App\Services\MarketService;
 use App\Utils\BancaUtil;
+use App\Utils\TransactionUtil;
 
 class TicketController extends Controller
 {
@@ -49,10 +50,10 @@ class TicketController extends Controller
         $empresas_id = session()->get('user.emp_id');
         $bancas_id =  session()->get('user.banca');
 
-        $ticket = $this->marketService->getTicket($tickets_id);
+        $resultado = $this->marketService->getTicket($tickets_id);
 
-        $promocion = $ticket[0]->tic_promocion;
-        $estado = $ticket[0]->tic_estado;
+        $promocion = $resultado[0]->tic_promocion;
+        $estado = $resultado[0]->tic_estado;
 
         $jugadas = $this->marketService->getTicketDetalle($tickets_id);
 
@@ -60,12 +61,12 @@ class TicketController extends Controller
              $isAnular = 0;
         } else if (session()->get('user.TipoUsuario') == 3) {
             $parametros =  $this->marketService->getParametrosBanca($bancas_id);
-            $isAnular = BancaUtil::calcularMinutos($ticket[0]->tic_fecha_sorteo, $parametros->ban_tiempo_anular);
+            $isAnular = BancaUtil::calcularMinutos($resultado[0]->tic_fecha_sorteo, $parametros->ban_tiempo_anular);
         }
 
-        $receipt_details = FormatoTickets::receiptContent($empresas_id, $ticket, $bancas_id, $jugadas, $isAnular);
+        $ticket = FormatoTickets::receiptContent($empresas_id, $resultado, $bancas_id, $jugadas, $isAnular);
         
-        return view('ticket.tiket_detalle')->with(compact('receipt_details', 'tickets_id', 'isAnular', 'promocion','estado'));
+        return view('ticket.tiket_detalle')->with(compact('ticket', 'tickets_id', 'isAnular', 'promocion','estado'));
     }
 
 
@@ -81,8 +82,8 @@ class TicketController extends Controller
         $empresas_id = session()->get('user.emp_id');
         $bancas_id =  session()->get('user.banca');
 
-        $ticket = $this->marketService->getTicket($tickets_id);
-
+        $resultado = $this->marketService->getTicket($tickets_id);
+       
         $jugadas = $this->marketService->getTicketDetallePremiado($tickets_id);
 
         $jugada = $this->marketService->getTicketDetalle($tickets_id);
@@ -91,12 +92,12 @@ class TicketController extends Controller
             $isAnular = 0;
         } else if (session()->get('user.TipoUsuario') == 3) {
             $parametros =  $this->marketService->getParametrosBanca($bancas_id);
-            $isAnular = BancaUtil::calcularMinutos($ticket[0]->tic_fecha_sorteo, $parametros->ban_tiempo_anular);
+            $isAnular = BancaUtil::calcularMinutos($resultado[0]->tic_fecha_sorteo, $parametros->ban_tiempo_anular);
         }
 
-        $receipt_details = FormatoTickets::receiptContent($empresas_id, $ticket, $bancas_id, $jugada, $isAnular );
-        // dd($receipt_details, $tickets_id, $ticket, $jugadas, $isAnular);
-        return view('ticket.tiket_premiado')->with(compact('receipt_details', 'tickets_id', 'ticket', 'jugadas', 'isAnular'));
+        $ticket = FormatoTickets::receiptContent($empresas_id, $resultado, $bancas_id, $jugada, $isAnular );
+        
+        return view('ticket.tiket_premiado')->with(compact('ticket', 'tickets_id', 'resultado', 'jugadas', 'isAnular'));
     }
 
     /**
@@ -157,9 +158,9 @@ class TicketController extends Controller
             $isAnular = BancaUtil::calcularMinutos($ticket[0]->tic_fecha_sorteo, $parametros->ban_tiempo_anular);
         }
 
-        $receipt_details = FormatoTickets::receiptContent($empresas_id, $ticket, $bancas_id,$jugadas, $isAnular);
+        $ticket = FormatoTickets::receiptContent($empresas_id, $ticket, $bancas_id,$jugadas, $isAnular);
 
-        return view('ticket.tiket_anular')->with(compact('receipt_details', 'tickets_id','ticket', 'isAnular'));
+        return view('ticket.tiket_anular')->with(compact('ticket', 'tickets_id','ticket', 'isAnular'));
     }
 
          /**
@@ -214,9 +215,9 @@ class TicketController extends Controller
             $isAnular = BancaUtil::calcularMinutos($ticket[0]->tic_fecha_sorteo, $parametros->ban_tiempo_anular);
         }
 
-        $receipt_details = FormatoTickets::receiptContent($empresas_id, $ticket, $bancas_id, $jugadas, $isAnular);
+        $ticket = FormatoTickets::receiptContent($empresas_id, $ticket, $bancas_id, $jugadas, $isAnular);
 
-        return view('ticket.tiket_duplicar')->with(compact('receipt_details', 'tickets_id', 'isAnular', 'promocion', 'estado'));
+        return view('ticket.tiket_duplicar')->with(compact('ticket', 'tickets_id', 'isAnular', 'promocion', 'estado'));
     }
 
 }

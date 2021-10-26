@@ -487,17 +487,22 @@ $(document).ready(function() {
                 var a = document.createElement('a');
                       // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
                       a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-                      a.download = 'ticket.png';
+                      a.download = Math.random()+'.png';
                       a.click();
                });
 
         });
     });
+
+    
 });
 
 $(document).on("show.bs.modal", "#recent_transactions_modal", function() {
     reporte_tickets.ajax.reload();
+    
 });
+
+
 
 $(document).on("shown.bs.modal", "#generarModal", function() {});
 
