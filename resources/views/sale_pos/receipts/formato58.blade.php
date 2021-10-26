@@ -14,8 +14,10 @@
         <div class="ticket">
 
             @if (!empty($ticket->logo))
-                <div class="centered margin-bottom">
-                    <img src="{{ $ticket->logo }}" alt="Logo">
+                <div class="centered">
+                    {{-- <img src="{{ $ticket->logo }}" alt="Logo"> --}}
+                    <img
+                    src="data:image/png;base64,{{ $ticket->logo }}">
                 </div>
             @endif
             <div class="text-box">
@@ -43,7 +45,7 @@
                     @endif
                     @if (!empty($ticket->slogan))
                         <span class="slogan margin-bottom">
-                            {{ $ticket->slogan }}
+                            <strong> {{ $ticket->slogan }} </strong>
                         </span>
                         <br />
                     @endif

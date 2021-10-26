@@ -35,7 +35,7 @@
                          @endif
                          @if (!empty($ticket->slogan))
                              <span class="slogan margin-bottom">
-                                 {{ $ticket->slogan }}
+                                <strong> {{ $ticket->slogan }} </strong>
                              </span>
                              <br />
                          @endif
