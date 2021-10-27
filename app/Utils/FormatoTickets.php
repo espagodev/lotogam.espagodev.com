@@ -291,9 +291,7 @@ class FormatoTickets
         if($promocion == 1){
         $output .=
             "<div class='centered'>" .
-            "<p>*****************************</p>" .
-            "<p>**       PROMOCION         **</p>" .
-            "<p>*****************************</p>" .
+            "<p>****     PROMOCION       ****</p>" .           
             "</div>";
         }
         return $output;
@@ -306,24 +304,18 @@ class FormatoTickets
         if ($estado == 0) {
             $output .=
                 "<div class='centered'>" .
-                "<p>*****************************</p>" .
-                "<p>**       ANULADO           **</p>" .
-                "<p>*****************************</p>" .
+                "<p>****     ANULADO         ****</p>" .
                 "</div>";
         }elseif($estado == 2){
             $output .=
                 "<div class='centered'>" .
-                "<p>*****************************</p>" .
-                "<p>**       PREMIADO          **</p>" .
-                "<p>*****************************</p>" .
+                "<p>****     PREMIADO        ****</p>" .
                 "</div>";
         }
         elseif($estado == 3){
             $output .=
                 "<div class='centered'>" .
-                "<p>*****************************</p>" .
-                "<p>**       PAGADO            **</p>" .
-                "<p>*****************************</p>" .
+                "<p>****     PAGADO          ****</p>" .
                 "</div>";
         }
 

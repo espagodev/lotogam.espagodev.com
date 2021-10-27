@@ -160,25 +160,25 @@
                      <strong>{{ $ticket->total }}**</strong>
                  </p>
              </div>
-             <br />
+
              @if (!empty($ticket->promocion_label))
                  <div class='centered'>
                      <p><strong>{!! $ticket->promocion_label !!}</strong></p>
                  </div>
-                 <br>
+
              @endif
              @if (!empty($ticket->estado_label))
                  <div class='centered margin-bottom'>
                      <p><strong> {!! $ticket->estado_label !!} </strong></p>
                  </div>
-                 <br>
+
              @endif
-             <br>
+            
              @if (!empty($ticket->footer_text))
                  <p class="centered margin-bottom">
                      <strong> {!! $ticket->footer_text !!} </strong>
                  </p>
-                 <br>
+                
              @endif
 
              {{-- Barcode --}}

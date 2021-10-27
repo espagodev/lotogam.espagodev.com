@@ -16,8 +16,7 @@
             @if (!empty($ticket->logo))
                 <div class="centered">
                     {{-- <img src="{{ $ticket->logo }}" alt="Logo"> --}}
-                    <img
-                    src="data:image/png;base64,{{ $ticket->logo_base }}">
+                    <img src="data:image/png;base64,{{ $ticket->logo_base }}">
                 </div>
             @endif
             <div class="text-box">
@@ -71,7 +70,6 @@
                     <p><strong>Fecha: {{ $ticket->copia_date }} </strong></p>
                     <p><strong>******* ***** *******</strong></p>
                 </div>
-                <br>
             @endif
             <div class="flex-box">
 
@@ -163,32 +161,29 @@
                 </div>
             @endforeach
         @endif
-        <br>
+
         <div class="centered border-top border-bottom">
             <p>
                 <strong>**{!! $ticket->total_label !!}</strong>
                 <strong>{{ $ticket->total }}**</strong>
             </p>
         </div>
-        <br />
+
         @if (!empty($ticket->promocion_label))
             <div class='centered'>
                 <p><strong>{!! $ticket->promocion_label !!}</strong></p>
             </div>
-            <br>
+
         @endif
         @if (!empty($ticket->estado_label))
             <div class='centered margin-bottom'>
                 <p><strong> {!! $ticket->estado_label !!} </strong></p>
             </div>
-            <br>
         @endif
-        <br>
         @if (!empty($ticket->footer_text))
             <p class="centered margin-bottom">
                 <strong> {!! $ticket->footer_text !!} </strong>
             </p>
-            <br>
         @endif
 
         {{-- Barcode --}}
