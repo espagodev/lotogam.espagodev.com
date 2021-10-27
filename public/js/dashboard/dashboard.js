@@ -107,6 +107,20 @@ $(document).ready(function() {
         });
     });
 
+    $(function() {
+        $(".btnGenerarResultados").click(function() {     
+            // console.log(document.getElementById('receipt_detalle'))     
+            html2canvas(document.getElementById('resultado_fecha')).then(function(canvas) {
+                // document.body.appendChild(canvas);
+                var a = document.createElement('a');
+                      // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+                      a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                      a.download = 'Resultados.png';
+                      a.click();
+               });
+
+        });
+    });
 });
     function update_statistics(start, end) {
 

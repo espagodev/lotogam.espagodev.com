@@ -35,6 +35,7 @@ class FormatoTickets
         // $output['logo'] = $il->tcon_show_logo != 0 && !empty($il->logo) && file_exists(public_path('uploads/invoice_logos/' . $il->logo)) ? asset('uploads/invoice_logos/' . $il->logo) : false;
         if ($il->tcon_show_logo == 1) {
             $output['logo']  = $il->tcon_logo;
+            $output['logo_base']  = $il->tcon_logo_base;
         }
         //$output['logo'] = $il->logo == 1 && !empty($il->logo) && file_exists(public_path('uploads/invoice_logos/' . $il->logo)) ? asset('uploads/invoice_logos/' . $il->logo) : false;
 

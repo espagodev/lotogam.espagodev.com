@@ -1,13 +1,13 @@
  <div class="containerTicket lista-scroll">
      <div class="invoice">
-         <div class="receipt" id="receipt">
+         <div class="receipt" id="receipt_imagen">
              <div class="ticket">
                 
                  @if (!empty($ticket->logo))
                      <div class="centered margin-bottom">
                          {{-- <img src="{{ $ticket->logo }}" alt="Logo"> --}}
                          <img
-                         src="data:image/png;base64,{{ $ticket->logo }}">
+                         src="data:image/png;base64,{{ $ticket->logo_base }}">
                      </div>
                  @endif
                  <div class="text-box">

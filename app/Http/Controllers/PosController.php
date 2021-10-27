@@ -252,7 +252,7 @@ class PosController extends Controller
             $output['print'] = "ticket";
         } else {           
             $layout = !empty($invoice_layout->tcon_formato_browser) ? 'sale_pos.receipts.' . $invoice_layout->tcon_formato_browser : 'sale_pos.receipts.classic';
-            $output['html_content'] = view($layout, compact('detalle_ticket', 'isAnular'))->render();
+            $output['html_content'] = view($layout, compact('detalle_ticket', 'isAnular'))->render(); 
         }
 
         return $output;
@@ -458,6 +458,7 @@ class PosController extends Controller
      */
     public function printTicket($tickets_id)
     {
+       
         $ticket[] = $tickets_id;
         if (request()->ajax()) {
             try {
@@ -468,10 +469,9 @@ class PosController extends Controller
 
                 $empresas_id = session()->get('user.emp_id');
                 $bancas_id =  session()->get('user.banca');
-                // dd($bancas_id);
 
 
-                $banca = $this->marketService->getBanca($bancas_id);
+                $banca = $this->marketService->getBanca($bancas_id);                
                 $invoice_layout = $this->bancaUtil->invoiceLayout($empresas_id, $bancas_id, $banca->app_config_tickets_id);
 
                 $printer_type = 'browser';
@@ -487,7 +487,7 @@ class PosController extends Controller
                
 
                 $receipt = $this->receiptContent($empresas_id, $bancas_id, $ticket, $printer_type, false, $invoice_layout, $ticket_copia, 0);
-
+              
 
                 if (!empty($receipt)) {
                     $output = ['success' => 1, 'receipt' => $receipt];

@@ -17,7 +17,7 @@
                 <div class="centered">
                     {{-- <img src="{{ $ticket->logo }}" alt="Logo"> --}}
                     <img
-                    src="data:image/png;base64,{{ $ticket->logo }}">
+                    src="data:image/png;base64,{{ $ticket->logo_base }}">
                 </div>
             @endif
             <div class="text-box">

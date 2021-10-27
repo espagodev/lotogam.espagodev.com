@@ -481,7 +481,7 @@ $(document).ready(function() {
     });
 
     $(function() {
-        $(".btnSave").click(function() {          
+        $(".btnGenerarTicket").click(function() {          
             html2canvas(document.getElementById('receipt')).then(function(canvas) {
                 // document.body.appendChild(canvas);
                 var a = document.createElement('a');

@@ -13,6 +13,8 @@ $(document).ready(function() {
         }
 
     });
+
+   
 });
 function update_statistics(start, end) {
 

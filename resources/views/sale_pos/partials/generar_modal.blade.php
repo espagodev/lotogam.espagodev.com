@@ -18,7 +18,7 @@
                
 			</div>
 			<div class="modal-footer">
-                <button type="button" class="btn btn-info btnSave" data-dismiss="modal"><i class="fa fa-file-image-o"></i></button>
+                <button type="button" class="btn btn-info btnGenerarTicket" data-dismiss="modal"><i class="fa fa-file-image-o"></i></button>
 			    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 			</div>
 		</div><!-- /.modal-content -->
