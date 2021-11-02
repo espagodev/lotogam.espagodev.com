@@ -161,8 +161,8 @@
                 </div>
             @endforeach
         @endif
-
-        <div class="centered border-top border-bottom">
+           <br>     
+        <div class="centered border-top border-bottom"> 
             <p>
                 <strong>**{!! $ticket->total_label !!}</strong>
                 <strong>{{ $ticket->total }}**</strong>
@@ -247,7 +247,6 @@
             font-size: 9px;
             font-weight: 700;
         }
-
 
 
         .border-top {
