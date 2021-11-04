@@ -21,6 +21,26 @@ $(document).ready(function() {
         });
     });
 
+    $('.view_register_agrupado').on('shown.bs.modal', function() {
+       
+        // $('#recent_transactions_modal').modal('hide');
+        __currency_convert_recursively($(this));
+
+        $(function() {
+            $(".btnSaveAgrupado").click(function() {     
+                // console.log(document.getElementById('receipt_detalle'))     
+                html2canvas(document.getElementById('receipt_imagen_agrupado')).then(function(canvas) {
+                    // document.body.appendChild(canvas);
+                    var a = document.createElement('a');
+                          // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+                          a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                          a.download = Math.random()+'.png';
+                          a.click();
+                   });
+    
+            });
+        });
+    });
 
      $(document).on('click', '.btn-modal', function(e) {
         e.preventDefault();
@@ -236,7 +256,6 @@ $(document).ready(function() {
             });
     });
     
-
     $(document).on('click', '.print-invoice-link', function (e) { 
         e.preventDefault();
         $.ajax({
@@ -263,7 +282,6 @@ $(document).ready(function() {
             },
         });
     });
-
 
     //Se utiliza para el ticket
     $(document).on('click', 'a.print-invoice', function (e) {
@@ -296,8 +314,6 @@ $(document).ready(function() {
         });
     });
 
-   
-  
 });
 
 

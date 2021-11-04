@@ -8,6 +8,7 @@ use App\Utils\FormatoTickets;
 use App\Utils\Tickets;
 use App\Services\MarketService;
 use App\Utils\BancaUtil;
+use App\Utils\TicketAgrupado;
 use App\Utils\TransactionUtil;
 
 class TicketController extends Controller
@@ -36,7 +37,6 @@ class TicketController extends Controller
 
         return $ticket->id;
     }
-
 
 
     /**
@@ -68,8 +68,6 @@ class TicketController extends Controller
         
         return view('ticket.tiket_detalle')->with(compact('ticket', 'tickets_id', 'isAnular', 'promocion','estado'));
     }
-
-
 
     /**
      * Display the specified resource.
@@ -191,10 +189,7 @@ class TicketController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * MOSTRAR TICKET 
      */
     public function showDuplicarTicket($tickets_id)
     {
@@ -220,4 +215,65 @@ class TicketController extends Controller
         return view('ticket.tiket_duplicar')->with(compact('ticket', 'tickets_id', 'isAnular', 'promocion', 'estado'));
     }
 
+    /**
+     * MOSTRAR TICKET AGRUPADO
+     */
+    public function showAgrupado($tickets_agrupado)
+    {
+  
+        $data['empresas_id'] = session()->get('user.emp_id');
+        $data['bancas_id'] =  session()->get('user.banca');
+        $data['users_id'] = session()->get('user.id');
+        $data['tipoUsuario'] = session()->get('user.TipoUsuario');
+        $data['ticketAgrupado'] = $tickets_agrupado;
+        $data['ticket_copia'] =  true;
+        $data['printer_type'] =  'browser';
+
+        $detalle_ticket = $this->marketService->getTicketAgrupado($data);
+    
+        return view('ticket.tiket_agrupado')->with(compact('detalle_ticket','tickets_agrupado'));
+    }
+
+    /**
+     * Imprimir ticket agrupado
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function printTicketAgrupado($tickets_agrupado)
+    {
+       
+        if (request()->ajax()) {
+            try {
+                $output = [
+                    'success' => 0,
+                    'msg' => "Algo salió mal, por favor intente de nuevo más tarde"
+                ];
+
+                $data['ticketAgrupado'] = $tickets_agrupado;
+                $data['empresas_id'] = session()->get('user.emp_id');
+                $data['bancas_id'] =  session()->get('user.banca');
+                $data['ticket_copia'] =  true;
+                $data['printer_type'] =  'browser';
+
+                $detalle_ticket = $this->marketService->getTicketAgrupado($data);
+
+                $layout = 'sale_pos.receipts.formatoAgrupadoCopia58';                     
+                $receipt['html_content'] = view($layout, compact('detalle_ticket'))->render();  
+                
+                if (!empty($receipt)) {              
+                    $output = ['success' => 1, 'receipt' => $receipt];
+                }
+            } catch (\Exception $e) {
+                \Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
+
+                $output = [
+                    'success' => 0,
+                    'msg' => "Algo salió mal, Error al imprimir"
+                ];
+            }
+
+            return $output;
+        }
+    }
 }

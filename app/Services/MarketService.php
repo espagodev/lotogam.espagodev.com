@@ -349,7 +349,6 @@ class MarketService
     // EMPRESA MONEDA
     public function getEmpresaMoneda($empresa)
     {
-        // dd($empresa);
         return $this->makeRequest('GET', "empresa/{$empresa}/moneda");
     }
 
@@ -960,7 +959,7 @@ class MarketService
     //nuevo ticket
     public function postNuevoTicket($data)
     {
-
+       
         return $this->makeRequest(
             'POST',
             "tickets",
@@ -995,7 +994,6 @@ class MarketService
     //TICKET
     public function getTicket($ticket)
     {
-
         return $this->makeRequest('GET', "getTicket/{$ticket}");
     }
 
@@ -1010,6 +1008,12 @@ class MarketService
         return $this->makeRequest('GET', "getTicketDetallePremiado/{$ticket}");
     }
 
+    //TICKET AGRUPADO
+
+    public function getTicketAgrupado($data)
+    {
+        return $this->makeRequest('GET', "getTicketAgrupado", $data);
+    }
 
 
     //BORRAR JUGADA DE TICKET DETALLE

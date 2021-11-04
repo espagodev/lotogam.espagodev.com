@@ -131,7 +131,8 @@
 <!-- Esto se imprimirá-->
 <section class="invoice print_section" id="receipt_section">
 </section>
-
+<div class="modal fade view_register_agrupado no-print" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+</div>
 <div class="modal fade view_register no-print" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
 </div>
 <div class="modal fade anular_modal no-print" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">

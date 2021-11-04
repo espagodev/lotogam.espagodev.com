@@ -2,6 +2,7 @@
 {{-- @servers([ 'aws' => ['ubuntu@3.18.107.107']]) --}}
 {{-- envoy run git:clone --on=aws --}}
 {{-- envoy run git:pull --on=aws --}}
+{{-- envoy run lot_pull --on=lot --}}
 @include('vendor/autoload.php')
 
 @setup

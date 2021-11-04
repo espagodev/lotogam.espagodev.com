@@ -8,7 +8,7 @@ class Tickets
 {
 
     public static function ticketAgrupado($tickets)
-    {
+    {        
         $output['tickets'] =  self::encabezadoAgrupado($tickets);
         $output['detalleTicket'] =  self::detalleAgrupado($tickets[0]);
         $output['ajustes'] =  self::ajustesAgrupado($tickets[0]);

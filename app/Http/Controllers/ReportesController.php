@@ -133,7 +133,13 @@ class ReportesController extends Controller
             return $datatable = dataTables::of($tickets)
                 ->editColumn('loteria', '$loteria')
                 // ->editColumn('tic_ticket', function ($row) {
-                //     return '<a data-ticket=' . $row->id . ' href="#" class="detalle-ticket">' . $row->tic_ticket  . ' </a>';
+                //     if($row->tic_agrupado != ''){
+                //         return  $row->tic_ticket . ' <i class="fa fa-object-group"></i>' ;
+                //     }
+                //     else{
+                //         return  $row->tic_ticket ;
+                //     }
+
                 // })
                 ->editColumn('tic_fecha_sorteo', '{{@format_datetime($tic_fecha_sorteo)}}')
                 ->editColumn('tic_apostado', function ($row) {
@@ -160,8 +166,7 @@ class ReportesController extends Controller
                         return '<h5<span class="badge badge-danger m-1">Anulado</span></h5>';
                     }
                 })
-                ->addColumn('action', function ($row) {                  
-                    
+                ->addColumn('action', function ($row) {
 
                     if (session()->get('user.TipoUsuario') == 2) {
                         $isAnular = 0;
@@ -169,9 +174,15 @@ class ReportesController extends Controller
                         $isAnular = $row->isAnular;
                     }
                    
+
                     $estado = '';
+                    if($row->tic_agrupado != ''){
+                        $estado .= '<button type="button" data-href="' . action('Ticket\TicketController@showAgrupado', [$row->tic_agrupado]) . '"  class="btn btn-sm btn-outline-success btn-modal"
+                                    data-container=".view_register_agrupado"><i class="fa fa fa-object-group"></i> </button> ';
+                    }
+                    
                     if ($row->tic_estado == 1) {
-                        $estado .= '   <button type="button" data-href="' . action('Ticket\TicketController@show', [$row->id]) . '"  class="btn btn-sm btn-outline-info btn-modal"
+                        $estado .= '<button type="button" data-href="' . action('Ticket\TicketController@show', [$row->id]) . '"  class="btn btn-sm btn-outline-info btn-modal"
                                     data-container=".view_register"><i class="fa fa-eye"></i> </button>
 
                                      <a href="#" data-href="' . route('pos.printTicket', [$row->id]) . '" class="btn btn-sm btn-outline-warning print-invoice"

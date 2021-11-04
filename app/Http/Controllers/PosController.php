@@ -66,8 +66,7 @@ class PosController extends Controller
         $estadosPromocionTicket = Util::estadosPromocionTicket();
         $usuarios =  $this->marketService->getUsuariosEmpresa($empresas_id);
 
-        // return view('sale_pos.index')->with(['tickets' => $tickets, 'loterias' => $loterias, 'bancas' => $bancas, 'estadosTicket' => $estadosTicket, 'estadosPromocionTicket' => $estadosPromocionTicket, 'usuarios' => $usuarios]);
-            return view('sale_pos.index')->with(['loterias' => $loterias, 'bancas' => $bancas, 'estadosTicket' => $estadosTicket, 'estadosPromocionTicket' => $estadosPromocionTicket, 'usuarios' => $usuarios]);
+        return view('sale_pos.index')->with(['loterias' => $loterias, 'bancas' => $bancas, 'estadosTicket' => $estadosTicket, 'estadosPromocionTicket' => $estadosPromocionTicket, 'usuarios' => $usuarios]);
 
     }
 
@@ -142,6 +141,7 @@ class PosController extends Controller
         // $data['tic_fecha_sorteo']  =  $request->tic_fecha_sorteo ? carbon::createFromFormat('d/m/Y', $request->tic_fecha_sorteo)->format('Y-m-d') : Carbon::now()->format('Y-m-d');
         $data['tic_fecha_sorteo']  =  !empty($request->tic_fecha_sorteo) ? Carbon::createFromFormat('d/m/Y', $request->tic_fecha_sorteo, 'America/Santo_Domingo')->format('Y-m-d H:i:s') : (new Carbon(date('Y-m-d H:i:s')))->tz('America/Santo_Domingo')->format('Y-m-d H:i:s');
         $data['tic_promocion']  = $request->tic_promocion;
+        $data['tic_agrupado']  = !empty($request->tic_agrupado) ? $request->tic_agrupado : 0;
         $ticket_promocion_show = $this->util->ticketPromocionShow();
 
         foreach ($ticket_promocion_show as  $key => $value) {
@@ -155,7 +155,7 @@ class PosController extends Controller
         if ($validarHoracierreLoteria) {
             return  $output = ['error' => 1, 'mensaje' => 'La Loteria no Esta Disponible Para Realizar Jugadas'];
         }
-        // dd($data, Carbon::now()->tz('America/Santo_Domingo')->format('Y-m-d H:i:s'));
+     
         $ticket = $this->marketService->postNuevoTicket($data);
         $tickets = $ticket->ticket;
 
@@ -286,7 +286,7 @@ class PosController extends Controller
         ];
 
         $empresas_detalle = $this->marketService->getEmpresaDetalle($empresas_id);
-        $moneda = $this->marketService->getEmpresaMoneda($empresas_id);
+        $moneda = $this->marketService->getEmpresaMoneda($empresas_id); 
 
         //informacion de la impresora
         $banca = $this->marketService->getBanca($bancas_id);
@@ -306,11 +306,11 @@ class PosController extends Controller
 
         $detalle_ticket = $this->transactionUtil->getReceiptDetailsAgrupado($agrupado['tickets'], $invoice_layout, $empresas_detalle, $moneda, $banca, $receipt_printer_type, $agrupado['detalleTicket'], $agrupado['ajustes'], $agrupado['total'], $isAnular);
 
-        $currency_details = [
-            'symbol' => $moneda->simbolo,
-            'thousand_separator' => $moneda->separador_miles,
-            'decimal_separator' => $moneda->separador_decimal
-        ];
+        // $currency_details = [
+        //     'symbol' => $moneda->simbolo,
+        //     'thousand_separator' => $moneda->separador_miles,
+        //     'decimal_separator' => $moneda->separador_decimal
+        // ];
 
         //Si el tipo de impresión es navegador: devuelve el contenido, impresora: devuelve los datos de configuración de la impresora y la configuración del formato de factura
         if ($receipt_printer_type == 'printer') {
@@ -320,11 +320,11 @@ class PosController extends Controller
             $output['print'] = "ticketAgrupado";
         } else {
 
-            $layout = 'sale_pos.receipts.formatoAgrupado58';
-            $output['html_content'] = view($layout, compact('detalle_ticket', 'isAnular'))->render();
+            $layout = 'sale_pos.receipts.formatoAgrupado58'; 
+            $output['html_content'] = view($layout, compact('detalle_ticket'))->render();
         }
 
-        return $output;
+        return $output; 
     }
 
     public function getHorarioLoteriasDia(Request $request)
@@ -504,4 +504,6 @@ class PosController extends Controller
             return $output;
         }
     }
+
+
 }

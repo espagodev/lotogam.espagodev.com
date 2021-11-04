@@ -151,7 +151,6 @@ $(document).on('click', 'a.print-invoice', function(e) {
                var start_date = start;
                var end_date = end;
 
-
         var data = { start_date: start, end_date: end, loterias_id: loterias_id, bancas_id: bancas_id, users_id: users_id, promocion: promocion};
         $.ajax({
             method: 'GET',

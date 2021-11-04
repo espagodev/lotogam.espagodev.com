@@ -181,6 +181,7 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
 
 
     Route::get('/pos/{ticket}/ticket', 'PosController@printTicket')->name('pos.printTicket');
+    Route::get('/pos/{ticket}/ticketAgrupado', 'Ticket\TicketController@printTicketAgrupado')->name('pos.printTicketAgrupado');
 
 
     Route::middleware(['bloquearBanca'])->group(function () {
@@ -190,8 +191,6 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
 
     Route::get('pos', 'PosController@index')->name('pos.index');
     // Route::resource('pos','PosController', ['except' => ['edit', 'show', 'destroy']]);
-
-   
 
     /**
      * control de Jugadas
@@ -244,7 +243,7 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
     Route::get('/ticketAnular', 'Ticket\TicketController@getTicketAnular');
     Route::get('/pagarPremio', 'Ticket\TicketController@getPagarPremio');
     Route::get('showDuplicarTicket/{ticket}', 'Ticket\TicketController@showDuplicarTicket');
-
+    Route::get('showAgrupado/{agrupado}', 'Ticket\TicketController@showAgrupado');
     Route::resource('Ticket', 'Ticket\TicketController');
 
     /**

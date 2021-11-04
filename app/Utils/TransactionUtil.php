@@ -244,16 +244,6 @@ class TransactionUtil extends Util
             $output['contact'] .= 'Email: ' . $banca->email;
         }
 
-        //Información del ticket
-        // $output['invoice_no_prefix'] = $il->tcon_etiqueta_ticket;
-        // $output['invoice_no'] = $tickets[0]->tic_ticket;
-
-        // if ($isAnular == '0') {
-        //     $output['pin_no'] = $tickets[0]->tic_pin;
-        //     $output['pin_no_prefix'] = $il->tcon_etiqueta_pin;
-        // }
-
-
         $output['tickets'] = [];
 
         $ticket = self::_receiptDetailsSellTckets($tickets);
@@ -262,8 +252,6 @@ class TransactionUtil extends Util
         if ($il->tcon_show_eslogan == 1) {
             $output['invoice_eslogan'] = $il->tcon_slogan;
         }
-
-
 
         $output['date_label'] = $il->tcon_date_label;
         $output['invoice_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $agrupado['created_at'])->format($il->tcon_date_time_format);

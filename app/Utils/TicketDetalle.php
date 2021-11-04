@@ -7,8 +7,6 @@ use App\Services\MarketService;
 class TicketDetalle
 {
 
-
-
     public static function GenerarApuesta($request, $numeroOrdenado, $modalidad, $comision)
     {
         $marketService = resolve(MarketService::class);

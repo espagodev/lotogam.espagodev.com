@@ -67,7 +67,7 @@
                 <div class='centered margin-bottom'>
                     <p><strong>{!! $detalle_ticket->copia_label !!}</strong></p>
                     <p><strong>Fecha: {{ $detalle_ticket->copia_date }} </strong></p>
-                    <p>******* ***** *******</p>
+                    <p><strong>******* ***** *******</strong></p>
                 </div>
             @endif
         <div class="flex-box">
@@ -98,9 +98,9 @@
         <tbody>
             @foreach ($detalle_ticket->tickets as $ticket)
                 <tr>
-                    <td class="descriptionLote"><strong>{{ $ticket['loteria'] }}</strong></td>
-                    <td class="description"><strong>{{ $ticket['ticket'] }}</strong></td>
-                    <td class="description"><strong>{{ $ticket['pin'] }}</strong></td>
+                    <td class="descriptionLote"><strong>{{ $ticket->loteria }}</strong></td>
+                    <td class="description"><strong>{{ $ticket->ticket }}</strong></td>
+                    <td class="description"><strong>{{ $ticket->pin }}</strong></td>
                 </tr>
             @endforeach
         </tbody>
@@ -115,16 +115,16 @@
 
     @foreach ($detalle_ticket->lines as $line)
 
-        @if ($line['modalidad'] == '1')
+        @if ($line->modalidad == '1')
             @php $arrayQ[] = $line; @endphp
         @endif
-        @if ($line['modalidad'] == '2')
+        @if ($line->modalidad == '2')
             @php $arrayPL[] = $line; @endphp
         @endif
-        @if ($line['modalidad'] == '3')
+        @if ($line->modalidad == '3')
             @php $arrayTP[] = $line; @endphp
         @endif
-        @if ($line['modalidad'] == '4')
+        @if ($line->modalidad == '4')
             @php $arraySP[] = $line; @endphp
         @endif
 
@@ -134,8 +134,8 @@
         <div class='flex-box border-top'><strong>Quiniela</strong></div>
         @foreach ($arrayQ as $jugada)
             <div class="textbox-info">
-                <p class="f-left"><strong>{{ $jugada['apuesta'] }}</strong></p>
-                <p class="f-right"><strong>{{ $jugada['valor'] }}</strong></p>
+                <p class="f-left"><strong>{{ $jugada->apuesta }}</strong></p>
+                <p class="f-right"><strong>{{ $jugada->valor }}</strong></p>
             </div>
         @endforeach
     @endif
@@ -143,8 +143,8 @@
         <div class='flex-box border-top'><strong>Pales</strong></div>
         @foreach ($arrayPL as $jugada)
             <div class="textbox-info">
-                <p class="f-left"><strong>{{ $jugada['apuesta'] }}</strong></p>
-                <p class="f-right"><strong>{{ $jugada['valor'] }}</strong></p>
+                <p class="f-left"><strong>{{ $jugada->apuesta }}</strong></p>
+                <p class="f-right"><strong>{{ $jugada->valor }}</strong></p>
             </div>
         @endforeach
     @endif
@@ -152,8 +152,8 @@
         <div class='flex-box border-top'><strong>Tripletas</strong></div>
         @foreach ($arrayTP as $jugada)
             <div class="textbox-info">
-                <p class="f-left"><strong>{{ $jugada['apuesta'] }}</strong> </p>
-                <p class="f-right"><strong>{{ $jugada['valor'] }}</strong></p>
+                <p class="f-left"><strong>{{ $jugada->apuesta }}</strong> </p>
+                <p class="f-right"><strong>{{ $jugada->valor }}</strong></p>
             </div>
         @endforeach
     @endif
@@ -161,8 +161,8 @@
         <div class='flex-box border-top'><strong>SuperPale</strong></div>
         @foreach ($arraySP as $jugada)
             <div class="textbox-info">
-                <p class="f-left"><strong>{{ $jugada['apuesta'] }}</strong> </p>
-                <p class="f-right"><strong>{{ $jugada['valor'] }}</strong></p>
+                <p class="f-left"><strong>{{ $jugada->apuesta }}</strong> </p>
+                <p class="f-right"><strong>{{ $jugada->valor }}</strong></p>
             </div>
         @endforeach
     @endif
