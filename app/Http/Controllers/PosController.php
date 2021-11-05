@@ -151,7 +151,6 @@ class PosController extends Controller
         }
 
         $validarHoracierreLoteria = Util::validarHoracierreLoteria($request->loterias_id);
-        // dd($validarHoracierreLoteria);
         if ($validarHoracierreLoteria) {
             return  $output = ['error' => 1, 'mensaje' => 'La Loteria no Esta Disponible Para Realizar Jugadas'];
         }
@@ -160,17 +159,16 @@ class PosController extends Controller
         $tickets = $ticket->ticket;
 
         if ($request->tic_agrupado == 1) {
-
             $agrupado = Tickets::ticketAgrupado($tickets);
-            $receipt[] = $this->receiptContentAgrupado($empresas_id, $bancas_id, $ticket, $agrupado, null, false, true);
+            $receipt[] = $this->receiptContentAgrupado($empresas_id, $bancas_id, $ticket, $agrupado, null, false, true, $getImagen);
             $mensaje = 'Venta añadida con éxito';
             $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
-        } else {
-            
+        } else {            
             $receipt[] = $this->receiptContent($empresas_id, $bancas_id, $tickets, null, false, true, null, $getImagen);
             $mensaje = 'Venta añadida con éxito';
             $output = ['success' => 1, 'mensaje' => $mensaje, 'receipt' => $receipt];
         }
+
         return $output;
     }
 
@@ -275,7 +273,8 @@ class PosController extends Controller
         $agrupado,
         $printer_type = null,
         $from_pos_screen = true,
-        $invoice_layout_id = null
+        $invoice_layout_id = null,
+        $getImagen
     ) {
         $output = [
             'is_enabled' => false,
@@ -313,7 +312,7 @@ class PosController extends Controller
         // ];
 
         //Si el tipo de impresión es navegador: devuelve el contenido, impresora: devuelve los datos de configuración de la impresora y la configuración del formato de factura
-        if ($receipt_printer_type == 'printer') {
+        if ($receipt_printer_type == 'printer' &&  $getImagen == '0') {
             $output['print_type'] = 'printer';
             $output['printer_config'] = $this->bancaUtil->printerConfig($empresas_id, $banca->impresoras_pos_id);
             $output['data'] = $detalle_ticket;

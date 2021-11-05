@@ -254,8 +254,9 @@ $(document).ready(function() {
             },
             success: function(result) {
                 if (result.success == true) {
-                   
-                    var receipt = result.receipt[0].html_content;                    
+                    console.log(result);  
+                    var receipt = result.receipt[0].html_content;      
+                               
                     $("#receipt_section_generar").html(receipt);
                     $("#generarModal").modal("show");
                     
@@ -341,7 +342,7 @@ $(document).ready(function() {
                 dataType: "json",
                 success: function(result) {
                     var receipt = result.receipt;
-
+                    
                     if (result.success == 1) {
                         Lobibox.notify("success", {
                             pauseDelayOnHover: true,
