@@ -125,7 +125,6 @@ class UsuariosController extends Controller
                 $data[$key] = $value;
             }
         }
-
         $this->marketService->ModificarUsuario($id, $data);
 
         return redirect()

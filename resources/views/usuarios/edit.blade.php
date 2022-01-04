@@ -206,12 +206,43 @@
                                </div>
                            </div>
                            <div class="col-xs-12 col-sm-3 col-md-3">
-                               
+                            <div class="form-group">
+                                <div class="icheck-material-info">
+                                    <input type="checkbox" id="use_venta_agrupada" name="use_venta_agrupada" value="1" @if($usuario->use_venta_agrupada) checked @endif/>
+                                    <label for="use_venta_agrupada">Venta Agrupada.</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 col-md-3">
+                            <div class="form-group">
+                                <div class="icheck-material-info">
+                                    <input type="checkbox" id="use_ticket_imagen" name="use_ticket_imagen" value="1" @if($usuario->use_ticket_imagen) checked @endif/>
+                                    <label for="use_ticket_imagen">Crear Ticket en Imagen.</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-3 col-md-3">
+                               <div class="form-group">
+                                   <div class="icheck-material-info">
+                                       <input type="checkbox" id="use_traslado" name="use_traslado" value="1" @if($usuario->use_traslado) checked @endif/>
+                                       <label for="use_traslado">Traslado Numeros.</label>
+                                   </div>
+                               </div>
                            </div>
                            <div class="col-xs-12 col-sm-3 col-md-3">
-                               
+                              
                            </div>
+                           <div class="col-xs-12 col-sm-3 col-md-3">
+                                
+                            </div>
+                     
+                            <div class="col-xs-12 col-sm-3 col-md-3">
+                               
+                            </div>
                        </div>
+                       
                     </div>
                 </div>
                  <div class="form-footer">

@@ -449,7 +449,10 @@ class Util
             'use_supervisor' => 0,
             'use_cuadre_caja' => 0,
             'use_venta_futuro' => 0,
-            'use_promocion' => 0
+            'use_promocion' => 0,
+            'use_venta_agrupada' => 0,
+            'use_ticket_imagen' => 0,
+            'use_traslado' => 0
         ];
     }
 
