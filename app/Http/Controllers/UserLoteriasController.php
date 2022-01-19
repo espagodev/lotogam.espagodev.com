@@ -65,7 +65,7 @@ class UserLoteriasController extends Controller
         $data['loterias_id'] = $loteria; 
         $data['empresas_id'] = session()->get('user.emp_id');
 
-    
+        
          $data = HorarioLoterias::getActualizarHorarioUsuarioLoteria($loteria, $data);
 
         return back()

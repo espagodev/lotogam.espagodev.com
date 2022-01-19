@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-lg" role="document">
+<div class="modal-dialog modal-xl" role="document">
         <div class="modal-content border-warning">
             <div class="modal-header bg-warning">
                 <h3 class="modal-title text-white">Modificar Loteria</h3>

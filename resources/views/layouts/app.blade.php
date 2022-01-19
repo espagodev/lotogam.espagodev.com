@@ -61,13 +61,13 @@
             @yield('vue')
         </div>
      <!-- Agregar campo relacionado con la moneda-->
-                <input type="hidden" id="__code" value="{{session('currency')['code']}}">
+                {{-- <input type="hidden" id="__code" value="{{session('currency')['code']}}">
                 <input type="hidden" id="__symbol" value="{{session('currency')['symbol']}}">
                 <input type="hidden" id="__thousand" value="{{session('currency')['thousand_separator']}}">
                 <input type="hidden" id="__decimal" value="{{session('currency')['decimal_separator']}}">
                 <input type="hidden" id="__symbol_placement" value="{{session('business.currency_symbol_placement')}}">
                 <input type="hidden" id="__precision" value="{{config('constants.currency_precision', 2)}}">
-                <input type="hidden" id="__quantity_precision" value="{{config('constants.quantity_precision', 2)}}">
+                <input type="hidden" id="__quantity_precision" value="{{config('constants.quantity_precision', 2)}}"> --}}
                 <!-- Fin del campo relacionado con la moneda-->
         <div class="@if(!$pos_layout) container-fluid @endif ">
              @include('layouts.partials.message')

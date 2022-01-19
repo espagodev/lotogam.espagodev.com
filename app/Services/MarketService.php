@@ -99,7 +99,7 @@ class MarketService
     public function ModificarLoteria($loteria, $data)
     {
         $data['_method'] = 'PUT';
-      
+        
         return $this->makeRequest(
             'POST',
             "loterias/{$loteria}",
@@ -688,7 +688,6 @@ class MarketService
     {
         $data['_method'] = 'PUT';
         
-
         return $this->makeRequest(
             'POST',
             "HorarioLoterias/{$loteria}",

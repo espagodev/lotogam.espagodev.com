@@ -51,7 +51,7 @@
                             <div class="col-sm-1">Activo</div>
                             <div class="col-sm-3">Inicio de Venta</div>
                             <div class="col-sm-3">Horario Cierre</div>
-                            {{-- <div class="col-sm-2">Minutos a cerrar antes del sorteo</div> --}}
+                            <div class="col-sm-2">Minutos a cerrar antes del sorteo</div>
                         </div>
                         @foreach($horarios as $key => $horario)
                             {{-- @dump($dias, $key+1, $horario) --}}
@@ -60,7 +60,7 @@
                                 <div class="col-sm-1"><input type="checkbox" name="hlo_activo[]" value="{{ $key+1  }}" @if($horario->hlo_activo) checked @endif></div>
                                 <div class="col-sm-3"> <input name="hlo_hora_inicio[{{ $key+1  }}]" id="hlo_hora_inicio_{{ $key+1 }}"  type="text" value="{{ $horario->hlo_hora_inicio }}" class="form-control input-small hlo_hora_inicio"></div>
                                 <div class="col-sm-3"><input name="hlo_hora_fin[{{ $key+1  }}]" id="hlo_hora_fin_L_{{ $key+1 }}"  type="text" class="form-control input-small hlo_hora_fin" value="{{ $horario->hlo_hora_fin }}" ></div>
-                                {{-- <div class="col-sm-2"><input name="hlo_minutos[{{ $key+1  }}]" rel="{{ $key+1 }}" id="hlo_minutos_{{ $key+1 }}" type="number" min="0" value="{{ $horario->hlo_minutos }}" class="form-control input-small updateTime" ></div> --}}
+                                <div class="col-sm-2"><input name="hlo_minutos[{{ $key+1  }}]" rel="{{ $key+1 }}" id="hlo_minutos_{{ $key+1 }}" type="number" min="5" value="{{ $horario->hlo_minutos }}" class="form-control input-small" ></div>
                             </div>
                         @endforeach
                     </div>

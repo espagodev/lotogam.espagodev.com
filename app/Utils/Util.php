@@ -514,6 +514,14 @@ class Util
         ];
     }
 
+    public static function jornada()
+    {
+        return [
+            'AM' => 'AM',
+            'PM' => 'PM',
+        ];
+    }
+
     public static function validarHoracierreLoteria($loterias)
     {
         $horaRd = HorarioLoterias::horaRD();

@@ -75,7 +75,8 @@ class LoteriasController extends Controller
         // $horaSorteo = $request->input('sorteo');
         // $data['lot_sorteo'] = json_encode($horaSorteo);
         // $data = $this->validate($request, $rules);
-        $data = $request->only('lot_nombre','lot_abreviado','lot_zona_horaria','lot_grupo','lot_comision','modalidades_id');
+        // $data = $request->only('lot_nombre','lot_abreviado','lot_zona_horaria','lot_grupo','lot_comision','modalidades_id');
+        $data = $request->all();
       
 
         if ($request->hasFile('lot_imagen')) {
@@ -107,7 +108,6 @@ class LoteriasController extends Controller
         }
         // $data['lot_sorteo'] = json_encode($sorteos);
 
-        
         $this->marketService->ModificarLoteria($id, $data);
 
         return redirect()
@@ -132,9 +132,10 @@ class LoteriasController extends Controller
         $totalLoterias = json_decode($countLoterias);
         $zonasHoraria = ConfigEmpresa::zonaHoraria();
         $grupos = Util::loteriaGrupo();
+        $jornadas = Util::jornada();
         $modalidades = $this->marketService->getModalidades();
 
-        return view('loterias.modal_create')->with(['zonasHoraria' => $zonasHoraria, 'totalLoterias' => $totalLoterias, 'grupos' => $grupos, 'modalidades' => $modalidades ]);
+        return view('loterias.modal_create')->with(['zonasHoraria' => $zonasHoraria, 'totalLoterias' => $totalLoterias, 'grupos' => $grupos, 'modalidades' => $modalidades, 'jornadas' => $jornadas ]);
     }
 
     public function getModificarLoteria($id) 
@@ -143,9 +144,10 @@ class LoteriasController extends Controller
         $loteria = $this->marketService->getLoteria($id);
         
         // $sorteos = json_decode($loteria[0]->lot_sorteo, true);
-        $grupos = Util::loteriaGrupo();       
+        $grupos = Util::loteriaGrupo(); 
+        $jornadas = Util::jornada();      
         $modalidades = $this->marketService->getModalidades();
-
-        return view('loterias.modal_edit')->with(['loteria' => $loteria, /*'sorteos' => $sorteos,*/'zonasHoraria' => $zonasHoraria, 'grupos' => $grupos, 'modalidades' => $modalidades]);
+        
+        return view('loterias.modal_edit')->with(['loteria' => $loteria, /*'sorteos' => $sorteos,*/'zonasHoraria' => $zonasHoraria, 'grupos' => $grupos, 'modalidades' => $modalidades, 'jornadas' => $jornadas]);
     }
 }
