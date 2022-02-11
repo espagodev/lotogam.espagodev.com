@@ -230,7 +230,12 @@
                            </div>
                        </div>
                        <div class="col-xs-12 col-sm-3 col-md-3">
-                          
+                        <div class="form-group">
+                            <div class="icheck-material-info">
+                                <input type="checkbox" id="use_permite_limite" name="use_permite_limite" value="1"/>
+                                <label for="use_permite_limite">Permite Limite de Numeros Vendidos.</label>
+                            </div>
+                        </div>
                        </div>
                        <div class="col-xs-12 col-sm-3 col-md-3">
                             
@@ -243,6 +248,18 @@
                     </div>
                 </div>
 
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <strong>Limite Numeros Vendidos:</strong>
+                                <input class="form-control{{ $errors->has('use_limite_numeros') ? ' is-invalid' : '' }}" max="2" name="use_limite_numeros" id="use_limite_numeros" type="number" value="{{ old('use_limite_numeros') }}" required>
+                                <p>Este limite solo se usa para quinielas (0) permite todos los numeros desde (00 as 99).</p>
+                                <p>Un valor diferente a (0) sera el limte de numeros a vender por cada loteria.</p>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
                  <div class="form-footer">
                               <a href="{{ route('usuarios.index') }}"  class="btn btn-danger waves-effect waves-danger"><i class="fa fa-times mr-1"></i> Cancelar</a>
                             <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> CREAR</button>

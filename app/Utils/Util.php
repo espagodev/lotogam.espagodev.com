@@ -452,7 +452,9 @@ class Util
             'use_promocion' => 0,
             'use_venta_agrupada' => 0,
             'use_ticket_imagen' => 0,
-            'use_traslado' => 0
+            'use_traslado' => 0,
+            'use_permite_limite' => 0,
+            'use_limite_numeros' => 0,
         ];
     }
 
