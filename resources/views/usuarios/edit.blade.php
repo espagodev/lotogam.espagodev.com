@@ -254,8 +254,8 @@
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <strong>Limite Numeros Vendidos:</strong>
                                 <input class="form-control{{ $errors->has('use_limite_numeros') ? ' is-invalid' : '' }}"  name="use_limite_numeros" id="use_limite_numeros" type="number" value="{{ old('use_limite_numeros', $usuario->use_limite_numeros) }}" required>
-                                <p>Este limite solo se usa para quinielas (0) permite todos los numeros desde (00 as 99).</p>
-                                <p>Un valor diferente a (0) sera el limte de numeros a vender por cada loteria.</p>
+                                {{-- <p>Este limite solo se usa para quinielas (0) permite todos los numeros desde (00 as 99).</p>
+                                <p>Un valor diferente a (0) sera el limte de numeros a vender por cada loteria.</p> --}}
                             </div>                            
                         </div>
                     </div>
