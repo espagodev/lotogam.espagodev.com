@@ -232,7 +232,7 @@
                        <div class="col-xs-12 col-sm-3 col-md-3">
                         <div class="form-group">
                             <div class="icheck-material-info">
-                                <input type="checkbox" id="use_permite_limite" name="use_permite_limite" value="1"/>
+                                <input type="checkbox" id="use_permite_limite" class="use_permite_limite" name="use_permite_limite" value="1"/>
                                 <label for="use_permite_limite">Permite Limite de Numeros Vendidos.</label>
                             </div>
                         </div>
@@ -248,7 +248,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card numeroVendido">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6">
@@ -267,3 +267,6 @@
             </div>
         </form>
     @endsection
+    @section('scripts')
+    <script src="{{ asset('js/usuarios.js?v=' . $asset_v) }}"></script>
+   @endsection
