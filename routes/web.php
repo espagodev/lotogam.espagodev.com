@@ -118,6 +118,8 @@ Route::middleware(['SetSessionData', 'timezone'])->group(function () {
     Route::resource('appConfigFacturas', 'AppConfigFacturasController');
 
     Route::resource('empresas', 'EmpresasController');
+    Route::put('empresas-status-change', 'EmpresasController@statusChane')->name('empresas.status.change');
+
     Route::resource('planes', 'PlanesController');
     Route::resource('bancas', 'BancasController');
     Route::resource('usuarios', 'UsuariosController');

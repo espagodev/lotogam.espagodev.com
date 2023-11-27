@@ -195,6 +195,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Brian2694\Toastr\ToastrServiceProvider::class,
+
+
     ],
 
     /*
@@ -251,6 +254,8 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
+        'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
+
     ],
 
 ];

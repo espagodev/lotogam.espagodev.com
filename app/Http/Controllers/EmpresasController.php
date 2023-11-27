@@ -6,6 +6,7 @@ use App\ConfigEmpresa\ConfigEmpresa;
 use App\ConfigFacturas\ConfigFacturas;
 use App\Services\MarketService;
 use App\Utils\Util;
+use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -80,6 +81,7 @@ class EmpresasController extends Controller
         $documentos = $this->marketService->getTipoDocumento();
         $monedas = $this->marketService->getMonedas();
         $empresa = $this->marketService->getEmpresaDetalle($id);
+        $admin = $this->marketService->getAdminDetalle($id);
         //HELPER
         $zonasHoraria = ConfigEmpresa::zonaHoraria();
         $formatoFechas = ConfigEmpresa::formatoFecha();
@@ -92,7 +94,8 @@ class EmpresasController extends Controller
             'monedas',
             'formatoFechas',
             'formatoHoras',
-            'ubicacionSiombolos'
+            'ubicacionSiombolos',
+            'admin'
         ));
     }
 
@@ -118,7 +121,7 @@ class EmpresasController extends Controller
             ->route(
                 'empresas.index'
             )
-            ->with('success', ['La Banca se ha modificado Satisfactoriamente']);
+            ->with('success', ['La Empresa se ha modificado Satisfactoriamente']);
     }
 
     /**
@@ -138,6 +141,22 @@ class EmpresasController extends Controller
         $emp_ajustes_comunes = !empty($empresa->emp_ajustes_comunes) ? $empresa->emp_ajustes_comunes : [];
 
         return view('ajustes.ajustesComunes.index')->with(compact('registrosPorPagina', 'themeColors', 'emp_ajustes_comunes'));
+    }
+
+    public function statusChane(Request $request, $id){
+        
+        
+        try {
+            $this->marketService->getEmpresaStatusChange($id);
+
+            $response['message'] = __('Updated Successfully');
+            $response['title'] = __('Success');
+            $response['status'] = 'success';
+            return response()->json($response);
+        } catch (\Exception $e) {
+            Toastr::error($e->getMessage());
+            return redirect()->back();
+        }
     }
 }
 

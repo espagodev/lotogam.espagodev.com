@@ -73,5 +73,8 @@ moment.tz.setDefault('{{ Session::get("business.time_zone") }}');
     <script src="https://cdn.jsdelivr.net/npm/canvas2image@1.0.5/canvas2image.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script> --}}
 
+    <script src="{{ asset('/assets/js/toastr.min.js?v=' . $asset_v) }}"></script>
+
     
+    {!! Toastr::message() !!}
  @yield('scripts')

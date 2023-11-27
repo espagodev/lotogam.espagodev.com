@@ -40,8 +40,13 @@
                                             <td>{{ $empresa->emp_nombre }}</td>
                                             <td>{{ $empresa->emp_telefono }}</td>
                                             <td>{{ $empresa->emp_direccion }}</td>
-                                             <td  class="bt-switch">
+                                             {{-- <td  class="bt-switch">
                                                 <input type="checkbox" data-id="{{$empresa->id}}" {{ $empresa->emp_estado ? 'checked' : '' }} data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" >
+                                            </td> --}}
+                                            <td  class="bt-switch">
+                                                {{-- <input type="checkbox" data-id="{{$empresa->id}}" {{ $empresa->emp_estado ? 'checked' : '' }} data-size="small" data-on-color="success" data-off-color="default" data-on-text="<i class='fa fa-check-circle-o'></i>" data-off-text="<i class='fa  fa-ban'></i>" > --}}
+                                                <input type="checkbox" value="empresas-status-change/{{$empresa->id}}" {{$empresa->emp_estado==1 ? 'checked' : ''}} name="custom-switch-checkbox" class="status-change custom-switch-input">
+                                                <span class="custom-switch-indicator"></span>
                                             </td>
                                             <td>
                                                 <a href="{{route('empresas.edit',$empresa->id)}}" class="btn btn-outline-warning" rel="tooltip" title="Editar empresa" >

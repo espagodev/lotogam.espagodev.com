@@ -8,6 +8,8 @@
 
   <link href="{{ asset('css/ticket.css')}}" rel="stylesheet" />
 
+  <link rel="stylesheet" href="{{ asset('/assets/css/toastr.css') }}">
+
 @yield('styles')
 
 <!-- app css -->

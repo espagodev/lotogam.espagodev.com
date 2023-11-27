@@ -76,12 +76,12 @@
                                     </div>
                             </div>
                         </div>
-                        {{-- <div class="card">
+                         <div class="card">
                             <div class="card-body">
                                 @include('empresas/_admin')
                             </div>
                         </div>
-                        <div class="card">
+                       {{-- <div class="card">
                             <div class="card-body">
                                 @include('empresas/_plan')
                             </div>

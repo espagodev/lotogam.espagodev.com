@@ -345,6 +345,20 @@ class MarketService
         return $this->makeRequest('GET', "getEmpresaDetalle/{$empresa}");
     }
 
+    //ADMIN EMPRESA
+    public function getAdminDetalle($empresa)
+    {
+        // dd($empresa);
+        return $this->makeRequest('GET', "getAdminDetalle/{$empresa}");
+    }
+
+    public function getEmpresaStatusChange($empresa)
+    {
+        // dd($empresa);
+        return $this->makeRequest('GET', "getEmpresaStatusChange/{$empresa}");
+    }
+
+    
 
     // EMPRESA MONEDA
     public function getEmpresaMoneda($empresa)
@@ -370,7 +384,6 @@ class MarketService
     {
 
         $data['_method'] = 'PUT';
-        
         return $this->makeRequest(
             'POST',
             "empresas/{$empresa}",

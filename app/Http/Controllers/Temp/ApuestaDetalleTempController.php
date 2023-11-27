@@ -123,7 +123,7 @@ class ApuestaDetalleTempController extends Controller
 
         $comision = Montos::Comision($parametrosBanca->comisiones_id, $modalidad);
 
-        if ($comision == 0) {
+        if (empty($comision)) {
             return response()->json(
                 array(
                     'mensaje' => 'No tiene una comisiòn asignada para esta modalidad',
